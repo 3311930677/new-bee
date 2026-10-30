@@ -342,6 +342,16 @@ func _ready() -> void:
 
 
 # ================= 布局 =================
+func _battle_backdrop(theme: String) -> Texture2D:
+	# art_v2 统一保留地区远景、清理战斗区噪点；缺图时仍回退原始主题资源。
+	if theme == "forest":
+		return load(FOREST_CLEARING) as Texture2D
+	var refined := "res://image/battle/art_v2/%s_clearing.png" % theme
+	if ResourceLoader.exists(refined):
+		return load(refined) as Texture2D
+	return G.res_tex(String(TableCache.theme_config(theme).get("battle_bg", "")))
+
+
 func _build_background() -> void:
 	# 保留现有战斗/回图生命周期，表现层使用独立地区地表构图。
 	if _classic_presentation():
@@ -351,7 +361,7 @@ func _build_background() -> void:
 	# 无素材时回退主题 tint 底色 + tile 平铺地面
 	var theme: String = String(_cfg.get("enemy", {}).get("theme", "forest"))
 	var tc := TableCache.theme_config(theme)
-	var bg_tex: Texture2D = G.res_tex(String(tc.get("battle_bg", "")))
+	var bg_tex: Texture2D = _battle_backdrop(theme)
 	if bg_tex != null:
 		var bg := TextureRect.new()
 		bg.texture = bg_tex
@@ -397,7 +407,7 @@ func _build_background() -> void:
 
 func _build_classic_region_floor() -> void:
 	var theme := String(_cfg.get("enemy", {}).get("theme", "forest"))
-	var backdrop: Texture2D = load(FOREST_CLEARING) if theme == "forest" else G.res_tex(String(TableCache.theme_config(theme).get("battle_bg", "")))
+	var backdrop: Texture2D = _battle_backdrop(theme)
 	if backdrop != null:
 		var scenery := TextureRect.new()
 		scenery.name = "ClassicRegionFloor"
@@ -405,9 +415,9 @@ func _build_classic_region_floor() -> void:
 		scenery.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		scenery.stretch_mode = TextureRect.STRETCH_SCALE
 		scenery.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-		# Bring the open ground up to the rearmost row of the combat grid.
-		scenery.position = Vector2(0,-110)
-		scenery.size = Vector2(VIEW_W,maxf(VIEW_H,get_viewport_rect().size.y)+110)
+		# 保留完整 skyline；战斗区噪点已在 art_v2 素材中按纵向分区收敛。
+		scenery.position = Vector2.ZERO
+		scenery.size = Vector2(VIEW_W,maxf(VIEW_H,get_viewport_rect().size.y))
 		scenery.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_shake_root.add_child(scenery)
 		_add_shade_gradient(0,100,true)
@@ -1314,6 +1324,12 @@ func _sync_views() -> void:
 		if unit.side!="enemy":continue
 		if not enemy_rows.has(unit.row):enemy_rows[unit.row]=[]
 		enemy_rows[unit.row].append(unit)
+	var front_lane: Array = (enemy_rows.get(Combatant.ROW_FRONT, []) as Array).duplicate()
+	var back_lane: Array = (enemy_rows.get(Combatant.ROW_BACK, []) as Array).duplicate()
+	while front_lane.size() > 3 and back_lane.size() < 3:
+		back_lane.append(front_lane.pop_back())
+	while back_lane.size() > 3 and front_lane.size() < 3:
+		front_lane.append(back_lane.pop_back())
 	for u in sim.units:
 		if not _views.has(u.uid):
 			_views[u.uid] = _spawn_view(u)
@@ -1323,16 +1339,17 @@ func _sync_views() -> void:
 		# Large boss art and summoned front units need separate horizontal lanes.
 		view._formation_offset = Vector2.ZERO
 		if u.side == "enemy":
-			var row_units: Array=enemy_rows[u.row]
-			var index:=row_units.find(u)
-			var back:=u.row==Combatant.ROW_BACK
-			var top:=176.0+(0 if back else 36)
-			var bottom:=clampf((get_viewport_rect().size.y-350.0-_field.position.y)/maxf(.5,_field.scale.y),250,470)-(36 if back else 0)
-			var span:=minf(maxf(0,bottom-top),112.0*maxi(0,row_units.size()-1))
-			var y: float=(top+bottom)*.5+(-span*.5+span*index/(row_units.size()-1) if row_units.size()>1 else 0.0)
-			var x:=410.0 if back else 300.0
-			if spread_boss and String(u.data.get("tier",""))=="boss":x-=20
-			view._formation_offset=Vector2(x,y)-classic_grid_pos(u.side,u.row,u.col)
+			var back := back_lane.has(u)
+			var row_units: Array = back_lane if back else front_lane
+			var index := maxi(0, row_units.find(u))
+			var top := 148.0 + (0.0 if back else 20.0)
+			var max_field_y := (get_viewport_rect().size.y - 296.0 - _field.position.y) / maxf(0.5, _field.scale.y)
+			var bottom := clampf(max_field_y, 316.0, 470.0) - (20.0 if back else 0.0)
+			var span := minf(maxf(0.0, bottom - top), 104.0 * maxi(0, row_units.size() - 1))
+			var y: float = (top + bottom) * 0.5 + (-span * 0.5 + span * index / (row_units.size() - 1) if row_units.size() > 1 else 0.0)
+			var x := 404.0 if back else 292.0
+			if spread_boss and String(u.data.get("tier", "")) == "boss": x -= 20.0
+			view._formation_offset = Vector2(x, y) - classic_grid_pos(u.side, u.row, u.col)
 		view.sync(u)
 		(_views[u.uid] as UnitView).set_focused(
 			u.alive and u.uid == sim.role_focus_target_uid)
@@ -2560,7 +2577,7 @@ class UnitView extends Node2D:
 				asp.sprite_frames = frames
 				asp.material = BattleScene.WorldArtFinish.character_material(role_id)
 				asp.animation = &"idle" if frames.has_animation(&"idle") else &"walk_down"
-				var role_scale := 0.75 if _classic else 0.55
+				var role_scale := 0.75
 				asp.scale = Vector2.ONE * role_scale
 				asp.position = Vector2(0, 5.0-56.0*role_scale)
 				asp.play()
@@ -2571,8 +2588,8 @@ class UnitView extends Node2D:
 						asp.play(&"idle"))
 				body.add_child(asp)
 				sprite = asp
-			# 128px帧按表现模式缩放，脚点仍约在单位原点下方5px。
-			name_y = -100.0 if _classic else -75.0
+			# 128px帧统一按0.75大比例缩放，脚点仍约在单位原点下方5px。
+			name_y = -100.0
 			hp_y = 12.0
 		else:
 			var unit_id := String(u.data.get("id", ""))
@@ -2583,10 +2600,10 @@ class UnitView extends Node2D:
 			if registered: tex = MonsterArt.texture(unit_id)
 			if tex != null:
 				# 精灵素材（1254×1254 透明底，自带投影）：按档位缩放到目标身高
-				var disp_h := 78.0
+				var disp_h := 110.0
 				if u.kind == "monster":
 					var tier := String(u.data.get("tier", "normal"))
-					disp_h = 128.0 if tier == "boss" else (94.0 if tier == "elite" else (110.0 if _classic else 78.0))
+					disp_h = 128.0 if tier == "boss" else (94.0 if tier == "elite" else 110.0)
 				else:
 					disp_h = 64.0
 				var sp := Sprite2D.new()
@@ -2595,7 +2612,7 @@ class UnitView extends Node2D:
 				sp.scale = Vector2.ONE * (disp_h / float(tex.get_height()))
 				sp.position = Vector2(0, -disp_h * 0.42)  # 脚底落在站位附近
 				if registered:
-					if _classic and String(u.data.get("tier", "normal")) == "normal": disp_h = 84.0
+					if String(u.data.get("tier", "normal")) == "normal": disp_h = 84.0
 					sp.scale = Vector2.ONE * MonsterArt.display_scale(unit_id, disp_h, true)
 					disp_h = tex.get_height() * sp.scale.y
 					sp.position = Vector2(0, -disp_h * 0.5)
@@ -2674,6 +2691,8 @@ class UnitView extends Node2D:
 		hp_fg.size = Vector2(82, 4)
 		body.add_child(hp_fg)
 		hp_value=preload("res://src/ui/TravelChestUI.gd").label("","tag")
+		hp_value.add_theme_color_override("font_outline_color", Color("120d0a", 0.94))
+		hp_value.add_theme_constant_override("outline_size", 2)
 		hp_value.position=hp_bg.position+Vector2(0,8)
 		hp_value.size=Vector2(84,22)
 		hp_value.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER

@@ -3,8 +3,20 @@ class_name QuestPanel
 extends Control
 signal closed
 const UI := preload("res://src/ui/TravelChestUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const Art := preload("res://src/ui/InventoryQuestSkin.gd")
 const Page := preload("res://src/ui/ChestPageUI.gd")
+const NPC_BUST_KEYS := {
+	"npc_steward": "npc_steward_bust",
+	"npc_guard": "npc_guard_bust",
+	"npc_scribe": "npc_scribe_bust",
+	"npc_keeper": "npc_keeper_bust",
+	"npc_smith": "npc_smith_bust",
+	"npc_mentor": "npc_mentor_bust",
+	"npc_stablemaster": "npc_stablemaster_bust",
+	"npc_warden": "npc_warden_bust",
+	"npc_child": "npc_child_bust",
+}
 const INNER_W := 420.0
 var _panel: PanelContainer
 var _content: VBoxContainer
@@ -57,6 +69,7 @@ func _build() -> void:
 	top_back.tooltip_text = "返回"
 	top_back.pressed.connect(_close_self)
 	head_row.add_child(top_back)
+	_back = top_back
 	var mark := G.ui_icon("quest", Vector2(28,28), Art.GOLD)
 	mark.name="HeaderIcon"
 	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -88,12 +101,6 @@ func _build() -> void:
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("separation", 10)
 	_scroll.add_child(_list)
-	_back = Art.action("返回")
-	_back.name = "ReturnButton"
-	_back.custom_minimum_size = Vector2(160,48)
-	_back.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_back.pressed.connect(_close_self)
-	_content.add_child(_back)
 
 func _resize_frame(safe_override := Rect2()) -> void:
 	if _panel == null: return
@@ -136,31 +143,55 @@ func _section(words: String, icon: String) -> Control:
 const Journey := preload("res://src/world/JourneyService.gd")
 var _region_map: Control
 
+func _npc_avatar(npc_id: String, sz := Vector2(52, 64)) -> Control:
+	var frame := Panel.new()
+	frame.custom_minimum_size = sz
+	frame.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	frame.add_theme_stylebox_override("panel", KitV4.style("slot_common", 2))
+	var bkey: String = String(NPC_BUST_KEYS.get(npc_id, "npc_steward_bust"))
+	var tex: Texture2D = KitV4.commercial_tex(bkey)
+	if tex == null:
+		tex = G.res_tex(npc_id + "_portrait")
+	if tex != null:
+		var tr := TextureRect.new()
+		tr.texture = tex
+		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		tr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		tr.position = Vector2(2, 2)
+		tr.size = sz - Vector2(4, 4)
+		tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		frame.add_child(tr)
+	return frame
+
 func _story_card(story: Dictionary) -> void:
 	var card := PanelContainer.new()
 	card.name = "MainStoryCard"
-	card.custom_minimum_size.y = 128 if not story.is_empty() else 56
+	card.custom_minimum_size.y = 136 if not story.is_empty() else 56
 	card.mouse_filter = Control.MOUSE_FILTER_PASS
 	card.add_theme_stylebox_override("panel", Art.box("card", 12))
 	_content.add_child(card)
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	row.add_theme_constant_override("separation", 10)
 	card.add_child(row)
-	var mark := G.ui_icon("quest", Vector2(44,44), Art.GOLD)
-	mark.name="StoryIcon"
-	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var mark := _npc_avatar("npc_steward", Vector2(54, 72))
+	mark.name = "StoryIcon"
 	row.add_child(mark)
 	var info := VBoxContainer.new()
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	info.add_theme_constant_override("separation", 5)
+	info.add_theme_constant_override("separation", 4)
 	row.add_child(info)
 	if story.is_empty():
 		info.add_child(_line(G.story_goal_short(),"caption",Art.MUTED))
 		return
 	var top := HBoxContainer.new()
 	info.add_child(top)
-	var title := _line(String(story.get("title","")),"object",Art.PAPER)
+	var title := _line(String(story.get("title","")),"object",KitV4.GOLD)
 	title.name = "MainStoryTitle"
+	if G.font_art != null:
+		title.add_theme_font_override("font", G.font_art)
+		title.add_theme_font_size_override("font_size", G.FS_LG)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(title)
 	var badge := PanelContainer.new()
@@ -172,7 +203,7 @@ func _story_card(story: Dictionary) -> void:
 	badge.add_child(badge_l)
 	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(badge)
-	info.add_child(_line("目标：" + String(story.get("goal","")),"body"))
+	info.add_child(_line("◆ 目标：" + String(story.get("goal","")),"body"))
 	var target_map_id := String(story.get("map","lorin_wilds"))
 	var target := TableCache.main_world_map(target_map_id)
 	var bottom_row := HBoxContainer.new()
@@ -184,9 +215,9 @@ func _story_card(story: Dictionary) -> void:
 	bottom_row.add_child(text_col)
 	text_col.add_child(_line("前往：" + String(target.get("name","昭元边城")),"caption",Art.MUTED))
 	text_col.add_child(_line("奖励：" + " · ".join(G.reward_lines(story.get("reward",{}))),"tag",Art.GOLD))
-	var nav_btn := Art.action("行路图", "secondary")
+	var nav_btn := Art.action("前往", "primary")
 	nav_btn.name = "StoryMapButton"
-	nav_btn.custom_minimum_size = Vector2(88, 40)
+	nav_btn.custom_minimum_size = Vector2(88, 42)
 	nav_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	nav_btn.caption.add_theme_font_size_override("font_size", G.FS_XS)
 	nav_btn.pressed.connect(func(): _open_region_map(target_map_id))
@@ -194,8 +225,8 @@ func _story_card(story: Dictionary) -> void:
 
 func _badge_box() -> StyleBoxFlat:
 	var box := StyleBoxFlat.new()
-	box.bg_color = Color("21433e")
-	box.border_color = Color("527e66")
+	box.bg_color = Color("221a16")
+	box.border_color = Color("c9a45c")
 	box.set_border_width_all(1)
 	box.content_margin_left = 8
 	box.content_margin_right = 8
@@ -337,8 +368,8 @@ func _row(qid: String) -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation",10)
 	body.add_child(row)
-	var mark := G.ui_icon("swords" if String(d.get("kind","")) == "slay" else "quest",Vector2(32,32),Art.GOLD)
-	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var npc_id := String(d.get("npc", "npc_steward"))
+	var mark := _npc_avatar(npc_id, Vector2(48, 60))
 	row.add_child(mark)
 	var info := VBoxContainer.new()
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL

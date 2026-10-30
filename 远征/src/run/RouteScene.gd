@@ -401,7 +401,7 @@ func _show_end(win: bool) -> void:
 	box.add_child(G.gold_label("词条 ×%d（随局重置）" % st.traits.size(), G.FS_SM,
 		false, Color("8a6a34"), false))
 
-	var btn := G.gold_button("回 到 主 城" if _settled else "重试结算 · 报酬仍保留", 260, 48)
+	var btn := G.gold_button("回到主城" if _settled else "重试结算 · 报酬仍保留", 260, 48)
 	btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			if _settled: G.go("res://src/ui/GameHome.tscn")

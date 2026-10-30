@@ -4,6 +4,7 @@ const UI:=preload("res://src/ui/TravelChestUI.gd")
 const Page:=preload("res://src/ui/ChestPageUI.gd")
 const Flow:=preload("res://src/ui/FlowChestUI.gd")
 const Fix:=preload("res://src/ui/ReviewFixUI.gd")
+const KitV4:=preload("res://src/ui/KitV4.gd")
 var host:Control
 var tray:Control
 var commands:Control
@@ -24,6 +25,8 @@ var _acting_until:=0
 var _title:Control
 var _enemy_scroll:ScrollContainer
 var _enemy_strip:HBoxContainer
+var _role_avatar_frame:Control
+var _role_avatar:TextureRect
 var _hp_graph:Control
 var _pet_graph:Control
 var _energy_graph:Control
@@ -60,6 +63,19 @@ func _ready() -> void:
 	_target_hint=UI.label("敌方目标 · 横向滑动选择","tag",UI.AGED)
 	_target_hint.add_theme_font_size_override("font_size",G.FS_DENSE)
 	add_child(_target_hint)
+	_role_avatar_frame=Control.new()
+	_role_avatar_frame.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	add_child(_role_avatar_frame)
+	var ring_tex:Texture2D=KitV4.commercial_tex("avatar_ring")
+	if ring_tex!=null:
+		var ring_rect:=Page.picture(ring_tex,Vector2(32,32))
+		ring_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_role_avatar_frame.add_child(ring_rect)
+	var rid:String=String((host._cfg.get("ally",{}) as Dictionary).get("role_id",G.selected_role))
+	if rid.is_empty():rid="zs"
+	_role_avatar=Page.picture(KitV4.commercial_tex("%s_avatar"%rid),Vector2(26,26))
+	_role_avatar.position=Vector2(3,3)
+	_role_avatar_frame.add_child(_role_avatar)
 	_hp_graph=Fix.Gauge.new("旅人");add_child(_hp_graph)
 	_pet_graph=Fix.Gauge.new("伙伴");add_child(_pet_graph)
 	_energy_graph=Fix.Gauge.new("能量",UI.BLUE);add_child(_energy_graph)
@@ -151,12 +167,13 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	Page.place(tray,Vector2(x,bottom-264),Vector2(_safe.size.x,264))
 	Page.place(_target_hint,Vector2(x+16,bottom-260),Vector2(_safe.size.x-32,22))
 	Page.place(_enemy_scroll,Vector2(x+12,bottom-234),Vector2(_safe.size.x-24,60))
-	var gauge_width:=(_safe.size.x-40)
+	Page.place(_role_avatar_frame,Vector2(x+12,bottom-158),Vector2(32,32))
+	var gauge_width:=(_safe.size.x-76)
 	var hp_width:=floorf(gauge_width*.38)
 	var pet_width:=floorf(gauge_width*.29)
-	Page.place(_hp_graph,Vector2(x+12,bottom-156),Vector2(hp_width,28))
-	Page.place(_pet_graph,Vector2(x+20+hp_width,bottom-156),Vector2(pet_width,28))
-	Page.place(_energy_graph,Vector2(x+28+hp_width+pet_width,bottom-156),Vector2(gauge_width-hp_width-pet_width,28))
+	Page.place(_hp_graph,Vector2(x+48,bottom-156),Vector2(hp_width,28))
+	Page.place(_pet_graph,Vector2(x+56+hp_width,bottom-156),Vector2(pet_width,28))
+	Page.place(_energy_graph,Vector2(x+64+hp_width+pet_width,bottom-156),Vector2(gauge_width-hp_width-pet_width,28))
 	Page.place(_now,Vector2(x+16,bottom-200),Vector2(_safe.size.x-32,24))
 	Page.place(_hp,Vector2(x+16,bottom-172),Vector2(200,32))
 	Page.place(_pet,Vector2(x+220,bottom-172),Vector2(120,32))
@@ -211,6 +228,7 @@ func refresh() -> void:
 	_buttons.partner.tooltip_text="本场已换过" if sim.pet_swap_used else "没有替补伙伴" if sim.pet_bench_id.is_empty() else "换上替补伙伴 · 每场一次"
 	_buttons.speed.caption.text="×%d"%int(host.cur_speed())
 	_buttons.auto.caption.text="自动中" if sim.auto_mode else "自动"
+	_buttons.auto.caption.add_theme_color_override("font_color",KitV4.GOOD if sim.auto_mode else UI.PAPER)
 	_buttons.auto.get_node("CommandIcon").texture=Flow.texture("auto_on" if sim.auto_mode else "auto_off")
 	_enemy_cards(sim)
 	_buttons.attack.subtitle.text="集火 · "+target.name.left(5) if target!=null and target.alive else "自动选敌"
@@ -237,7 +255,10 @@ func refresh() -> void:
 				if other_uid==uid:continue
 				var other:Combatant=sim.unit_by_uid(int(other_uid))
 				if other!=null and other.side=="enemy" and other.alive and area.intersects(host._views[other_uid]._actor_rect()):crowded=true;break
-			view.name_l.visible=not crowded;view.hp_value.visible=not crowded
+			var is_boss_or_elite := String(unit.data.get("tier","normal")) != "normal"
+			var is_focused := int(uid) == sim.role_focus_target_uid
+			view.name_l.visible = not crowded and (is_boss_or_elite or is_focused)
+			view.hp_value.visible = not crowded and (is_focused or unit.hp < unit.get_max_hp())
 			view.compact_health(crowded)
 			var health_rect := Rect2(Vector2(area.get_center().x-view.hp_bg.size.x*.5,area.end.y+7),view.hp_bg.size)
 			for attempt in 12:
@@ -247,6 +268,8 @@ func refresh() -> void:
 			view.hp_bg.global_position=health_rect.position
 			view.hp_ghost.global_position=health_rect.position+Vector2.ONE
 			view.hp_fg.global_position=health_rect.position+Vector2.ONE
+			if view.hp_value!=null:
+				view.hp_value.global_position=health_rect.position+Vector2(0,-18)
 			for index in 3:
 				var bar=[view.hp_bg,view.hp_ghost,view.hp_fg][index]
 				bar.visible=true
@@ -404,7 +427,11 @@ class Attack extends UI.ChestButton:
 		subtitle.size=Vector2(size.x-10,22)
 		subtitle.add_theme_font_size_override("font_size",G.FS_XS)
 	func _draw() -> void:
-		UI.nine(self,Flow.texture("attack"),size)
+		var k_tex:Texture2D=KitV4.commercial_tex("btn_primary_pressed" if is_pressed() else ("btn_primary_hover" if is_hovered() else "btn_primary_normal"))
+		if k_tex!=null:
+			UI.nine(self,k_tex,size,18)
+		else:
+			UI.nine(self,Flow.texture("attack"),size)
 		if is_hovered() or has_focus():
 			draw_rect(Rect2(2,2,size.x-4,size.y-4),UI.GOLD,false,2.0)
 		if is_pressed():

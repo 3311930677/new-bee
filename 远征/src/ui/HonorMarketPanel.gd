@@ -3,6 +3,7 @@ signal closed
 const Reading := preload("res://src/ui/ReadingSkin.gd")
 const View := preload("res://src/ui/ShowcaseUI.gd")
 const TouchScroll := preload("res://src/ui/TouchScroll.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 var _category := "all"
 var _category_buttons: Dictionary = {}
 var _categories: HBoxContainer
@@ -39,7 +40,10 @@ func _ready() -> void:
 	column.add_theme_constant_override("separation",12)
 	_panel.add_child(column)
 	var heading := HBoxContainer.new()
+	heading.add_theme_constant_override("separation", 10)
 	column.add_child(heading)
+	_back = G.top_back_button(heading, _on_back)
+	_back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	heading.add_child(View.text("荣誉商城","title",View.GOLD))
 	var balance := HBoxContainer.new()
 	heading.add_child(balance)
@@ -48,7 +52,10 @@ func _ready() -> void:
 	_honor_l.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_honor_l.size_flags_horizontal = Control.SIZE_SHRINK_END
 	balance.add_child(_honor_l)
-	_hero = View.banner("行旅备藏","以演武荣誉，备齐下一程。\n材料与宝石，按需兑换。",load("res://assets/ui/experience_20261026/market_banner.png"))
+	var canopy_tex: Texture2D = KitV4.commercial_tex("market_canopy")
+	if canopy_tex == null:
+		canopy_tex = load("res://assets/ui/experience_20261026/market_banner.png")
+	_hero = View.banner("行旅备藏","以演武荣誉，备齐下一程。\n材料与宝石，按需兑换。",canopy_tex)
 	column.add_child(_hero)
 	_categories = HBoxContainer.new()
 	_categories.add_theme_constant_override("separation",8)
@@ -89,9 +96,6 @@ func _ready() -> void:
 	_rebuild_products()
 	_hint = View.text("选择商品查看用途与兑换详情","caption",View.MUTED)
 	column.add_child(_hint)
-	_back = View.button("返回")
-	_back.pressed.connect(func():closed.emit())
-	column.add_child(_back)
 	get_viewport().size_changed.connect(layout)
 	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 	_panel.minimum_size_changed.connect(layout.call_deferred)
@@ -187,10 +191,17 @@ func open_product(id: String) -> void:
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation",12)
 	_detail.add_child(column)
-	column.add_child(Reading.label("商品详情",28,Reading.TEXT))
+	var detail_head := HBoxContainer.new()
+	detail_head.add_theme_constant_override("separation", 10)
+	column.add_child(detail_head)
+	_detail_back = G.top_back_button(detail_head, close_product, Vector2.ZERO, "返回商品区")
+	_detail_back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var detail_title := Reading.label("商品详情",G.FS_BIG,Reading.TEXT)
+	detail_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	detail_head.add_child(detail_title)
 	column.add_child(_picture(entry,80))
-	column.add_child(Reading.label(String(entry.name),24,Reading.TEXT))
-	column.add_child(Reading.label("单次消耗 %d 荣誉 · 持有 %d"%[int(entry.cost),int(G.wallet.honor)],20,Color("e7ce97")))
+	column.add_child(Reading.label(String(entry.name),G.FS_SECTION,Reading.TEXT))
+	column.add_child(Reading.label("单次消耗 %d 荣誉 · 持有 %d"%[int(entry.cost),int(G.wallet.honor)],G.FS_SM,Color("e7ce97")))
 	var paper := Reading.frame(true)
 	paper.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(paper)
@@ -203,17 +214,13 @@ func open_product(id: String) -> void:
 	reading.add_child(_detail_body)
 	for key in entry.give:
 		var item := String(key).trim_prefix("item_")
-		_detail_body.add_child(Reading.label("获得 %s ×%d"%[G.item_name(item),int(entry.give[key])],22))
+		_detail_body.add_child(Reading.label("获得 %s ×%d"%[G.item_name(item),int(entry.give[key])],G.FS_READING))
 		var purpose: String = String(entry.get("description",{"enhance_stone":"用于强化装备。","refine_stone":"用于精炼装备。","lock_rune":"用于锁定装备属性。"}.get(item,"可在养成中的装备宝石槽镶嵌，提升对应属性。" if item.begins_with("gem_") else "行旅物品，可在背包查看。")))
-		_detail_body.add_child(Reading.label(String(purpose),20))
+		_detail_body.add_child(Reading.label(String(purpose),G.FS_SM))
 	_confirm = Reading.button("确认兑换 · %d 荣誉"%int(entry.cost),true)
 	_confirm.disabled = int(G.wallet.honor)<int(entry.cost) or not _supported(entry)
 	_confirm.pressed.connect(confirm_purchase)
 	column.add_child(_confirm)
-	var back := Reading.button("返回商品区")
-	_detail_back = back
-	back.pressed.connect(close_product)
-	column.add_child(back)
 	layout()
 	layout.call_deferred()
 	_focus_detail.call_deferred()

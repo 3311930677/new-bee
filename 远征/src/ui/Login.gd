@@ -132,7 +132,7 @@ func _build_panel() -> void:
 	content.add_child(div2)
 
 	# 8. 主按钮：登录入城（富丽堂皇的朱红金边大主纽）
-	var login := _LoginCTAButton.new("登 录 入 城", true)
+	var login := _LoginCTAButton.new("登录入城", true)
 	login.name = "LoginButton"
 	login.position = Vector2(6, 280)
 	login.size = Vector2(364, 48)
@@ -140,7 +140,7 @@ func _build_panel() -> void:
 	content.add_child(login)
 
 	# 9. 次按钮：游客入城（沉稳典雅的玄铁岩青纽）
-	var guest := _LoginCTAButton.new("游 客 入 城", false)
+	var guest := _LoginCTAButton.new("游客入城", false)
 	guest.name = "GuestButton"
 	guest.position = Vector2(6, 336)
 	guest.size = Vector2(364, 42)
@@ -325,8 +325,8 @@ class _TitlePlaque extends Control:
 		draw_line(Vector2(w - 3, h - 3), Vector2(w - 3, h - 3 - arm), gc, 1.0)
 
 		# 标题书法字：居中金字
-		var art_font := preload("res://assets/fonts/MaShanZheng-Regular.ttf")
-		var title_text := "旅 人 登 记"
+		var art_font := G.spaced_font(4, true, true)
+		var title_text := "旅人登记"
 		var t_size := art_font.get_string_size(title_text, HORIZONTAL_ALIGNMENT_CENTER, -1, 24)
 		var tx := (w - t_size.x) * 0.5
 		# 阴影
@@ -334,8 +334,8 @@ class _TitlePlaque extends Control:
 		draw_string(art_font, Vector2(tx, 26), title_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color("fff2c0"))
 
 		# 副标
-		var sub_text := "— 昭 元 行 旅 通 关 文 牒 —"
-		var sub_font := G.font_reg
+		var sub_text := "— 昭元行旅通关文牒 —"
+		var sub_font := G.spaced_font(2, false)
 		var s_size := sub_font.get_string_size(sub_text, HORIZONTAL_ALIGNMENT_CENTER, -1, 11)
 		var sx := (w - s_size.x) * 0.5
 		draw_string(sub_font, Vector2(sx, 44), sub_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("c8a870"))
@@ -455,7 +455,7 @@ class _LoginCTAButton extends Button:
 		var h := size.y
 		var dy := 1.0 if is_pressed() else 0.0
 		var words := String(get_meta("custom_text", ""))
-		var art_font := preload("res://assets/fonts/MaShanZheng-Regular.ttf")
+		var art_font := G.spaced_font(4, true, true)
 
 		if _primary:
 			# ---- 主按钮：深红帝王朱漆金边大主纽 ----
@@ -504,7 +504,7 @@ class _LoginCTAButton extends Button:
 			draw_rect(Rect2(0, dy, w, h), bcol, false, 1.0)
 			draw_line(Vector2(1, dy + 1), Vector2(w - 1, dy + 1), Color("8aa6c4", 0.35), 1.0)
 
-			var serif_font := G.font_serif
+			var serif_font := G.spaced_font(4, true, true)
 			var t_size := serif_font.get_string_size(words, HORIZONTAL_ALIGNMENT_CENTER, -1, 17)
 			var tx := (w - t_size.x) * 0.5
 			var ty := (h + t_size.y * 0.65) * 0.5 + dy

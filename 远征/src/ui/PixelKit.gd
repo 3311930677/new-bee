@@ -8,11 +8,11 @@ const RARITY := {"common": Color("c8c2b4"), "uncommon": Color("6fbf73"), "rare":
 
 ## 材质色板：face 面、face2 纹理、rim 边框、lit 受光、dark 轮廓、rivet 铆钉。
 const MATERIALS := {
-	"iron": {"face": Color("2a2530"), "face2": Color("221e28"), "rim": Color("5c4a34"), "lit": Color("c99b5a"), "dark": Color("0e0c11"), "rivet": Color("d9b26a")},
-	"wood": {"face": Color("4a3222"), "face2": Color("3c2819"), "rim": Color("2b1b10"), "lit": Color("8d6342"), "dark": Color("160d07"), "rivet": Color("c99b5a")},
-	"paper": {"face": Color("e6d6b0"), "face2": Color("d8c596"), "rim": Color("8a6a3a"), "lit": Color("f6ecd2"), "dark": Color("4a3420"), "rivet": Color("8a6a3a")},
-	"stone": {"face": Color("3d4045"), "face2": Color("34373b"), "rim": Color("1f2124"), "lit": Color("7c8187"), "dark": Color("111214"), "rivet": Color("9aa0a6")},
-	"crimson": {"face": Color("7c2418"), "face2": Color("761f15"), "rim": Color("3a120b"), "lit": Color("b8452c"), "dark": Color("170503"), "rivet": Color("f0c070")},
+	"iron": {"face": Color("1a1412"), "face2": Color("14100e"), "rim": Color("c9a45c"), "lit": Color("f2c76a"), "dark": Color("0c0908"), "rivet": Color("f2c76a")},
+	"wood": {"face": Color("2a201a"), "face2": Color("221a16"), "rim": Color("c9a45c"), "lit": Color("f2c76a"), "dark": Color("120e0c"), "rivet": Color("c9a45c")},
+	"paper": {"face": Color("e8dcc0"), "face2": Color("dfd0b0"), "rim": Color("a68854"), "lit": Color("f6ecd2"), "dark": Color("4a3420"), "rivet": Color("a68854")},
+	"stone": {"face": Color("221a16"), "face2": Color("1a1412"), "rim": Color("7a6142"), "lit": Color("c9a45c"), "dark": Color("110d0b"), "rivet": Color("c9a45c")},
+	"crimson": {"face": Color("8e251d"), "face2": Color("6e1a12"), "rim": Color("c9a45c"), "lit": Color("f2c76a"), "dark": Color("170503"), "rivet": Color("f2c76a")},
 }
 
 static func snap(r: Rect2) -> Rect2:
@@ -115,15 +115,24 @@ static func enter(node: CanvasItem, delay := 0.0, from := Vector2(0, 22)) -> voi
 	tw.tween_property(node, "modulate:a", 1.0, .3)
 	tw.parallel().tween_property(node, "position", target, .46).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
+## 字距字体变体缓存：FontVariation 每 new 一个，TextServer 就多一份 shaping 缓存。
+## 这个 label() 是标签工厂，一页几十个标签，每次 new 会明显拖慢进场（同 G.spaced_font）。
+static var _label_font_cache := {}
+
 static func label(words: String, px := G.FS_SM, color := Color("e9d9b6"), spacing := 1) -> Label:
 	var l := Label.new()
 	l.text = words
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	var f := FontVariation.new()
-	f.base_font = G.font_serif
-	f.spacing_glyph = spacing
+	var f: FontVariation = _label_font_cache.get(spacing)
+	if f == null:
+		f = FontVariation.new()
+		f.base_font = G.font_serif
+		f.spacing_glyph = spacing
+		# font_serif 尚未加载时不缓存，否则会把 null base 永久记住。
+		if G.font_serif != null:
+			_label_font_cache[spacing] = f
 	l.add_theme_font_override("font", f)
 	l.add_theme_font_size_override("font_size", maxi(px, G.FS_XS))
 	l.add_theme_color_override("font_color", color)

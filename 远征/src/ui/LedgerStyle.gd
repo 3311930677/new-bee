@@ -1,16 +1,17 @@
 class_name LedgerStyle
 extends RefCounted
 ## Shared travel panels: lacquered wood, brass fittings, paper and semantic status seals.
-const WOOD := Color("20332f")
-const EDGE := Color("42382b")
-const BRASS := Color("ae9567")
-const PAPER := Color("e4ddc9")
-const LIGHT := Color("f3ecd9")
-const INK := Color("35443b")
-const MUTED := Color("82765e")
+const KitV4 := preload("res://src/ui/KitV4.gd")
+const WOOD := Color("1a1412")
+const EDGE := Color("120e0c")
+const BRASS := Color("c9a45c")
+const PAPER := Color("e8dcc0")
+const LIGHT := Color("f3e3c0")
+const INK := Color("35291e")
+const MUTED := Color("8f8376")
 const JADE := Color("356653")
-const BLUE := Color("345a69")
-const RUST := Color("985b42")
+const BLUE := Color("7a6142")
+const RUST := Color("8e251d")
 
 static func text(words: String, px := G.FS_SM, ink := INK, numeric := false) -> Label:
 	var node := Label.new()
@@ -59,7 +60,7 @@ static func badge(words: String, status: String) -> PanelContainer:
 	return node
 
 static func apply_button(button: Control, kind := "primary") -> void:
-	var fill: Color = {"primary": JADE, "rules": BLUE, "danger": RUST, "quiet": WOOD}.get(kind, LIGHT)
+	var fill: Color = {"primary": Color("8e251d"), "rules": WOOD, "danger": WOOD, "quiet": WOOD}.get(kind, WOOD)
 	if button.has_method("set_surface"): button.call("set_surface", fill, BRASS)
 	button.set_meta("primary_action", kind == "primary")
 	button.set_meta("tab_selected", false)
@@ -67,7 +68,7 @@ static func apply_button(button: Control, kind := "primary") -> void:
 	for child in button.get_children():
 		if child is Label:
 			child.add_theme_font_override("font", G.font_serif)
-			child.add_theme_color_override("font_color", INK if kind == "secondary" else LIGHT)
+			child.add_theme_color_override("font_color", LIGHT)
 
 static func header_plaque(words: String, at: Vector2, width := 360.0) -> Control:
 	var h := G.Visuals.header_plaque(words, width, 38.0)
@@ -88,23 +89,18 @@ static func paint(item: CanvasItem, extent: Vector2, fill: Color, accent := BRAS
 		return
 	item.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var bounds := Rect2(Vector2.ZERO, extent)
-	item.draw_rect(Rect2(Vector2(2, 5), extent - Vector2(2, 2)), Color("0d1612", .52))
+	var is_outer_page := paper and extent.y >= 500
+	var actual_paper := paper and not is_outer_page
+	var actual_fill := WOOD if is_outer_page else fill
+	item.draw_rect(Rect2(Vector2(2, 5), extent - Vector2(2, 2)), Color("080605", .58))
 	item.draw_colored_polygon(_cut(bounds, 4), EDGE)
-	item.draw_colored_polygon(_cut(bounds.grow(-2), 2), fill)
+	item.draw_colored_polygon(_cut(bounds.grow(-2), 2), actual_fill)
 
-	# 叠加像素九宫格材质：子卡片用茶宣嵌铜框，大账本用古卷宣纸，木框/主按钮用玄铁木纹或暗铜底板
+	# 叠加像素九宫格材质：子卡片用茶宣嵌铜框，外层大框与木框用玄漆鎏金，主按钮用朱砂金边
 	if extent.x >= 44 and extent.y >= 28:
-		if paper:
-			var is_subcard := extent.y < 520
-			var slip_tex := G.Visuals._kit_tex("card_frame_parchment.png" if is_subcard else "quest_slip.png")
-			G.Visuals.nine_slice(item, slip_tex, bounds.grow(-1), 14.0, 12.0, Color(1, 1, 1, 0.90 if is_subcard else 0.72))
-			if not is_subcard:
-				# 保持大账本内芯宣纸纯净，防止外框暗边侵入 x=16 文本区
-				item.draw_rect(bounds.grow(-6), Color(fill, 0.92))
-			if extent.x >= 180 and extent.y >= 56 and not is_subcard:
-				# 左侧古籍细装订线（收窄至 5px，绝不压内文）
-				item.draw_rect(Rect2(2, 4, 3, extent.y - 8), fill.darkened(0.08))
-				item.draw_line(Vector2(5, 4), Vector2(5, extent.y - 4), Color(accent, 0.42), 1.0)
+		if actual_paper:
+			var slip_tex := G.Visuals._kit_tex("card_frame_parchment.png")
+			G.Visuals.nine_slice(item, slip_tex, bounds.grow(-1), 14.0, 12.0, Color(1, 1, 1, 0.92))
 			if extent.x >= 260 and extent.y >= 90:
 				var seal_tex := G.Visuals._kit_tex("seal_stamps.png")
 				if seal_tex != null:
@@ -113,25 +109,28 @@ static func paint(item: CanvasItem, extent: Vector2, fill: Color, accent := BRAS
 						Rect2(float(seal_idx * 32), 0, 32, 32), Color(1, 1, 1, 0.22))
 		else:
 			var is_large := extent.x >= 240 and extent.y >= 120
-			var frame_tex := G.Visuals._kit_tex("panel_iron.png" if is_large else "button_dark.png")
-			G.Visuals.nine_slice(item, frame_tex, bounds, 14.0 if is_large else 10.0, 14.0 if is_large else 8.0, Color(1, 1, 1, 0.68 if is_large else 0.42))
+			var is_red_btn := not is_large and actual_fill.r > actual_fill.g * 1.3
+			var frame_tex := G.Visuals._kit_tex("panel_iron.png" if is_large else ("button_red.png" if is_red_btn else "button_dark.png"))
+			G.Visuals.nine_slice(item, frame_tex, bounds, 14.0 if is_large else 10.0, 14.0 if is_large else 8.0, Color(1, 1, 1, 0.88 if is_large else 0.72))
 			if is_large:
 				# 顶部商行匾额横幅衬底
-				var banner_tex := G.Visuals._kit_tex("trade_header_banner.png")
+				var banner_tex: Texture2D = KitV4.commercial_tex("market_canopy")
+				if banner_tex == null:
+					banner_tex = G.Visuals._kit_tex("trade_header_banner.png")
 				if banner_tex != null and extent.y >= 260:
-					item.draw_texture_rect(banner_tex, Rect2(6, 6, extent.x - 12, 64), false, Color(1, 1, 1, 0.32))
+					item.draw_texture_rect(banner_tex, Rect2(6, 6, extent.x - 12, 64), false, Color(1, 1, 1, 0.38))
 					item.draw_line(Vector2(8, 70), Vector2(extent.x - 8, 70), Color(accent, 0.55), 1.0)
 
 	item.draw_rect(bounds.grow(-4), Color(accent, .68), false, 1)
 	if extent.x >= 80 and extent.y >= 40:
-		item.draw_rect(bounds.grow(-6), Color("983e2b" if paper else "e4c77a", 0.22), false, 1)
+		item.draw_rect(bounds.grow(-6), Color("983e2b" if actual_paper else "e4c77a", 0.22), false, 1)
 	item.draw_line(Vector2(8, 4), Vector2(extent.x - 8, 4), Color("fff1cf", .28), 1)
-	item.draw_line(Vector2(4, extent.y - 4), Vector2(extent.x - 4, extent.y - 4), Color("101d17", .30), 1)
+	item.draw_line(Vector2(4, extent.y - 4), Vector2(extent.x - 4, extent.y - 4), Color("100c0a", .30), 1)
 	# Restrained deterministic fibers/grain at the margins keep content areas clean.
 	for i in range(4):
 		var y := 12.0 + i * maxf(8, (extent.y - 24) / 4)
 		item.draw_line(Vector2(8, roundf(y)), Vector2(12 + i, roundf(y)),
-			Color("765d39", .06) if paper else Color("e1d4ad", .05), 1)
+			Color("765d39", .06) if actual_paper else Color("e1d4ad", .05), 1)
 	for p in [Vector2(6, 6), Vector2(extent.x - 8, 6), Vector2(6, extent.y - 8), extent - Vector2(8, 8)]:
 		item.draw_rect(Rect2(p, Vector2(2, 2)), accent.lightened(0.15))
 

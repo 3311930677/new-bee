@@ -18,6 +18,7 @@ const BUILD_R := 26.0      # 建筑轮廓外扩的交互边距
 const REARM_R := 90.0      # 走出这么远才允许再次触发
 
 const Journal := preload("res://src/ui/JournalUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")   # 委托板（浮层）
 const MountVisual := preload("res://src/world/MountVisual.gd")
 
@@ -395,7 +396,7 @@ func _build_hud() -> void:
 	_hud.add_child(home)
 
 	# 底部中央：出征（主页把出征搬进主城后，这里是主城最显眼的主操作）
-	var go := G.gold_button("出 征", 190, 54, G.FS_LG)
+	var go := G.gold_button("出征", 190, 54, G.FS_LG)
 	go.position = Vector2((VIEW_W - 190.0) * 0.5, VIEW_H - 78)
 	go.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -685,13 +686,13 @@ func _show_build_panel(bd: Dictionary) -> void:
 			content.add_child(line)
 			y += 24.0
 
-	var build := G.gold_button("建 造", 140, 42)
+	var build := G.gold_button("建造", 140, 42)
 	build.position = Vector2(16, 252)
 	build.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_try_build(id))
 	content.add_child(build)
-	var back := G.gold_button("返 回", 140, 42)
+	var back := G.gold_button("返回", 140, 42)
 	back.position = Vector2(172, 252)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -954,7 +955,7 @@ func _show_notice() -> void:
 	var acts := G.city_activities()
 	# P05-C：布告栏常驻一条「路西兽影」悬赏行（72px），线索与状态随支线／首胜变化
 	var h := 120.0 + acts.size() * 60.0 + 76.0
-	var content := _panel_base("布 告 板", 400, h)
+	var content := _panel_base("布告板", 400, h)
 
 	var tip := G.gold_label("城中的营生都在这儿。冷却好了就来领。",
 		G.FS_XS, false, Color("7a5a2e"), false)
@@ -987,7 +988,7 @@ func _show_notice() -> void:
 		content.add_child(sub_l)
 
 		if G.activity_ready(aid):
-			var claim := G.gold_button("领 取", 72, 34, G.FS_SM)
+			var claim := G.gold_button("领取", 72, 34, G.FS_SM)
 			claim.position = Vector2(286, y + 9)
 			claim.gui_input.connect(func(e: InputEvent):
 				if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -1033,7 +1034,7 @@ func _notice_lost_beast_line() -> String:
 func _show_guests() -> void:
 	if _panel != null:
 		return
-	var content := _panel_base("访 客 簿", 400, 470)
+	var content := _panel_base("访客簿", 400, 470)
 
 	var tip := G.gold_label("你的据点码——抄给别人，人家便能上门串门",
 		G.FS_XS, false, Color("7a5a2e"), false)
@@ -1173,6 +1174,25 @@ func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
 	return tex
 
 
+func _npc_bust_tex(npc_id: String, guest: bool) -> Texture2D:
+	if guest:
+		var g_bust: Texture2D = KitV4.commercial_tex("npc_warden_bust")
+		if g_bust != null:
+			return g_bust
+	var bust_alias := {
+		"npc_port_trader": "npc_warden_bust",
+		"npc_harbormaster": "npc_scribe_bust",
+		"npc_port_keeper": "npc_keeper_bust",
+		"npc_frost_envoy": "npc_guard_bust",
+		"npc_frost_miner": "npc_smith_bust",
+	}
+	var key: String = String(bust_alias.get(npc_id, "%s_bust" % npc_id))
+	var bust: Texture2D = KitV4.commercial_tex(key)
+	if bust != null:
+		return bust
+	return _npc_portrait_tex(npc_id, guest)
+
+
 func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void:
 	if _panel != null:
 		return
@@ -1230,8 +1250,29 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 	var layer := Control.new()
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.mouse_filter = Control.MOUSE_FILTER_STOP
-	var panel := G.parchment_box(432, 150, 16.0)
-	panel.position = Vector2(24, maxf(VIEW_H, get_viewport_rect().size.y) - 190.0)
+	G.veil(layer, 0.42, false)
+	var bust_tex := _npc_bust_tex(String(nd.get("id", "")), guest)
+	var bust_pic: TextureRect = null
+	if bust_tex != null:
+		bust_pic = TextureRect.new()
+		bust_pic.name = "NpcBust"
+		bust_pic.texture = bust_tex
+		bust_pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		bust_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		bust_pic.position = Vector2(8, maxf(VIEW_H, get_viewport_rect().size.y) - 430.0)
+		bust_pic.size = Vector2(220, 260)
+		bust_pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		layer.add_child(bust_pic)
+	var panel := PanelContainer.new()
+	var dlg_sb := KitV4.style("dialog_box", 18)
+	dlg_sb.content_margin_left = 18.0
+	dlg_sb.content_margin_right = 18.0
+	dlg_sb.content_margin_top = 16.0
+	dlg_sb.content_margin_bottom = 14.0
+	panel.add_theme_stylebox_override("panel", dlg_sb)
+	panel.custom_minimum_size = Vector2(448, 150)
+	panel.size = Vector2(448, 150)
+	panel.position = Vector2(16, maxf(VIEW_H, get_viewport_rect().size.y) - 190.0)
 	layer.add_child(panel)
 	var content := Control.new()
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -1241,82 +1282,57 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 	var title := String(nd.get("title", ""))
 	var head := String(nd.get("name", "???"))
 	if title != "":
-		head += " · " + title
-	var np_tex := G.Visuals._kit_tex("speaker_nameplate_jade.png")
+		head = title + " · " + head
+	var np_tex: Texture2D = KitV4.commercial_tex("name_plate")
+	if np_tex == null:
+		np_tex = G.Visuals._kit_tex("speaker_nameplate_jade.png")
 	if np_tex != null:
 		var np_tr := TextureRect.new()
 		np_tr.texture = np_tex
 		np_tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		np_tr.stretch_mode = TextureRect.STRETCH_SCALE
-		np_tr.position = Vector2(0, -2)
-		np_tr.size = Vector2(236, 30)
-		np_tr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		np_tr.position = Vector2(0, -6)
+		np_tr.size = Vector2(228, 34)
 		np_tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		content.add_child(np_tr)
-	var name_l := G.serif_label(head, G.FS_MD, Color("f4dfb5") if np_tex != null else G.BANNER)
+	var name_l := G.serif_label(head, G.FS_MD, KitV4.CREAM)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_l.position = Vector2(14, -1) if np_tex != null else Vector2(0, 0)
-	name_l.custom_minimum_size = Vector2(216, 28)
+	name_l.position = Vector2(14, -4) if np_tex != null else Vector2(0, 0)
+	name_l.custom_minimum_size = Vector2(204, 30)
 	content.add_child(name_l)
 
-	# 对话立绘：优先生成图 npc_<id>_portrait，无则走旧三杰映射（merchant/blacksmith/courier）
 	var text_x := 0.0
-	var text_w := 400.0
-	var portrait := _npc_portrait_tex(String(nd.get("id", "")), guest)
-	if portrait != null:
-		var frame := PanelContainer.new()
-		var fsb := Journal.surface(Color("203938"), G.GOLD, 2)
-		fsb.set_border_width_all(2)
-		fsb.content_margin_left = 6.0
-		fsb.content_margin_top = 6.0
-		fsb.content_margin_right = 6.0
-		fsb.content_margin_bottom = 6.0
-		frame.add_theme_stylebox_override("panel", fsb)
-		frame.position = Vector2(0, 34)
-		frame.custom_minimum_size = Vector2(76, 76)
-		var pic := TextureRect.new()
-		pic.texture = portrait
-		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		pic.custom_minimum_size = Vector2(64, 64)
-		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		frame.add_child(pic)
-		content.add_child(frame)
-		text_x = 84.0
-		text_w = 316.0
-
-	content.add_child(G.Visuals.parchment_subcard(Vector2(text_x, 32), Vector2(text_w, 64)))
-	var line := G.text_label("", G.FS_MD, Color("3a2a14"))
-	line.position = Vector2(text_x + 8.0, 36)
-	line.custom_minimum_size = Vector2(text_w - 16.0, 0)
-	line.size.x = text_w - 16.0
+	var text_w := 412.0
+	var line := G.text_label("", G.FS_MD, KitV4.CREAM)
+	line.position = Vector2(text_x + 6.0, 36)
+	line.custom_minimum_size = Vector2(text_w - 12.0, 0)
+	line.size.x = text_w - 12.0
 	line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(line)
 
-	var hint := G.gold_label("轻点继续", G.FS_XS, false, Color("8a6a34", 0.8), false)
+	var hint := G.gold_label("▼ 轻点继续", G.FS_XS, false, KitV4.GOLD, false)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	hint.position = Vector2(0, 100)
-	hint.custom_minimum_size = Vector2(400, 0)
+	hint.custom_minimum_size = Vector2(412, 0)
 	content.add_child(hint)
-	# 行脚商人仍先说原有的任务/修碑台词；现货从初期可逛，首单由送盐支线解锁。
+	# 选项堆叠在对话框上方右侧（主选项 Primary，离开 Secondary/Ghost）
 	var market: Control = null
 	if not guest and id in ["npc_warden", "npc_port_trader"]:
-		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		market = G.gold_button("市集交易", 122, 36, G.FS_XS)
-		market.position = Vector2(274, 89)
+		market = G.gold_button("市集交易", 156, 42, G.FS_SM)
+		market.position = Vector2(304, panel.position.y - 98.0)
 		market.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_close_panel()
 				_open_first_order_preview("shenyuan_market" if id == "npc_port_trader" else "city_market"))
-		content.add_child(market)
+		layer.add_child(market)
 
-	var leave := G.ghost_button("离开", 64, 30, G.FS_XS)
-	leave.position = Vector2(336, -4)
+	var leave := G.ghost_button("离开", 156, 40, G.FS_SM)
+	leave.position = Vector2(304, panel.position.y - 48.0)
 	leave.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_close_panel())
-	content.add_child(leave)
+	layer.add_child(leave)
 
 	# 点面板任意处换下一句
 	panel.gui_input.connect(func(e: InputEvent):
@@ -1331,7 +1347,7 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 		and String(offered_story.get("target", "")) == id else ""
 	_dlg = {"id": id, "guest": guest, "data": nd, "story_dialogue": offered_dialogue,
 		"turn": 0 if not offered_dialogue.is_empty() else int(_talk_turns.get(id, 0)),
-		"line": line, "paper": panel, "hint": hint, "market": market}
+		"line": line, "paper": panel, "hint": hint, "market": market, "leave": leave, "bust": bust_pic}
 	# 支线接取/交付（P05-B）：先落地再显示第一句——接取与交付各有专属台词，写盘失败内部会回滚。
 	var side_res := {}
 	if not guest:
@@ -1383,10 +1399,28 @@ func _open_return_job(nd: Dictionary, reply := "", selected_qid := "") -> void:
 	var content := View.column(12)
 	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(content)
-	content.add_child(View.text(String(row.title),"title",Color("815326")))
+	var header_row := HBoxContainer.new()
+	header_row.add_theme_constant_override("separation", 10)
+	content.add_child(header_row)
+	var bust_tex := _npc_bust_tex(String(nd.get("id", "")), false)
+	if bust_tex != null:
+		var bust_icon := TextureRect.new()
+		bust_icon.texture = bust_tex
+		bust_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		bust_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		bust_icon.custom_minimum_size = Vector2(64, 64)
+		header_row.add_child(bust_icon)
+	var title_col := View.column(4)
+	title_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header_row.add_child(title_col)
+	var npc_title := String(nd.get("title", ""))
+	var npc_head := String(nd.get("name", "执事"))
+	if not npc_title.is_empty():
+		npc_head = npc_title + " · " + npc_head
+	title_col.add_child(View.text(npc_head + " · " + String(row.title),"title",Color("815326")))
 	var progress := QuestService.side_get(G.act1_state(),qid)
 	var caption := "未接取" if status.is_empty() else ("已完成 · 变化已留在归路上" if status == QuestService.SIDE_DONE else "进度 %d/%d%s" % [int(progress.get("progress",0)),QuestService.side_need(row)," · 可交付" if status==QuestService.SIDE_READY else ""])
-	content.add_child(View.text(caption,"caption",Color("386c61")))
+	title_col.add_child(View.text(caption,"caption",Color("386c61")))
 	var scroll := View.scroll()
 	content.add_child(scroll)
 	var reading := View.column(14)
@@ -2011,7 +2045,7 @@ func _open_rockturtle_panel() -> void:
 		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		halo.add_child(pic)
 
-	var name_l := G.serif_label("岩 龟", G.FS_LG, Color("744c21"))
+	var name_l := G.serif_label("岩龟", G.FS_LG, Color("744c21"))
 	name_l.position = Vector2(0, 148)
 	name_l.custom_minimum_size = Vector2(400, 32)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -2028,7 +2062,7 @@ func _open_rockturtle_panel() -> void:
 	trait_l.custom_minimum_size = Vector2(400, 26)
 	content.add_child(trait_l)
 
-	var claim := G.gold_button("结 缘 · 带它同行", 210, 46, G.FS_SM)
+	var claim := G.gold_button("结缘 · 带它同行", 210, 46, G.FS_SM)
 	claim.position = Vector2(95, 304)
 	claim.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -2279,7 +2313,7 @@ func _open_tide_hatch_panel() -> void:
 					_close_panel()
 					_open_tide_hatch_panel())
 			content.add_child(gift)
-		var hatch := G.gold_button("孵 化 · 消耗 1 枚", 184, 44, G.FS_SM)
+		var hatch := G.gold_button("孵化 · 消耗 1 枚", 184, 44, G.FS_SM)
 		hatch.position = Vector2(12, 280)
 		hatch.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -2291,7 +2325,7 @@ func _open_tide_hatch_panel() -> void:
 				_close_panel()
 				_open_tide_hatch_panel())
 		content.add_child(hatch)
-		var buy := G.gold_button("购 蛋 · 500 铜钱", 184, 44, G.FS_SM)
+		var buy := G.gold_button("购蛋 · 500 铜钱", 184, 44, G.FS_SM)
 		buy.position = Vector2(206, 280)
 		buy.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -2439,17 +2473,25 @@ func _layout_dialogue() -> void:
 	var hint: Label = _dlg.get("hint", null)
 	if not is_instance_valid(line) or not is_instance_valid(paper) or not is_instance_valid(hint):
 		return
-	var body_h := maxf(76.0, line.get_minimum_size().y)
+	var body_h := maxf(88.0, line.get_minimum_size().y)
 	line.size.y = body_h
-	var footer_y := line.position.y + body_h + 14.0
+	var footer_y := line.position.y + body_h + 12.0
 	hint.position.y = footer_y
-	var market: Control = _dlg.get("market", null)
-	if is_instance_valid(market): market.position.y = footer_y - 8.0
-	var panel_h := footer_y + (50.0 if is_instance_valid(market) else 42.0)
-	paper.custom_minimum_size = Vector2(432, panel_h)
+	var panel_h := maxf(188.0, footer_y + 42.0)
+	paper.custom_minimum_size = Vector2(448, panel_h)
 	paper.size = paper.custom_minimum_size
-	var safe:=G.ui_safe_rect(self)
-	paper.position.y = safe.end.y - panel_h - 40.0
+	var safe := G.ui_safe_rect(self)
+	paper.position.x = safe.position.x + (safe.size.x - 448.0) * 0.5
+	paper.position.y = safe.end.y - panel_h - 24.0
+	var bust: Control = _dlg.get("bust", null)
+	if is_instance_valid(bust):
+		bust.position = Vector2(paper.position.x - 4.0, paper.position.y - 210.0)
+	var leave: Control = _dlg.get("leave", null)
+	if is_instance_valid(leave):
+		leave.position = Vector2(paper.position.x + 448.0 - 160.0, paper.position.y - 48.0)
+	var market: Control = _dlg.get("market", null)
+	if is_instance_valid(market):
+		market.position = Vector2(paper.position.x + 448.0 - 160.0, paper.position.y - 96.0)
 	_place_dialogue_toast()
 
 

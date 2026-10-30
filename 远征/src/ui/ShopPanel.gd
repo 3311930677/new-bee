@@ -6,6 +6,7 @@ extends Control
 signal closed
 
 const UI := preload("res://src/ui/TravelChestUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 const PANEL_W := 440.0
@@ -67,13 +68,14 @@ func _build() -> void:
 	_panel.add_child(header)
 
 	var banner_art := TextureRect.new()
-	banner_art.texture = G.Visuals._kit_tex("shop_header_banner.png")
+	var canopy_tex: Texture2D = KitV4.commercial_tex("market_canopy")
+	banner_art.texture = canopy_tex if canopy_tex != null else G.Visuals._kit_tex("shop_header_banner.png")
 	banner_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	banner_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	banner_art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	banner_art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if canopy_tex != null else CanvasItem.TEXTURE_FILTER_NEAREST
 	banner_art.position = Vector2(2, 2)
 	banner_art.size = Vector2(PANEL_W - 16, 50)
-	banner_art.modulate = Color(1, 1, 1, 0.75)
+	banner_art.modulate = Color(1, 1, 1, 0.85)
 	banner_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	header.add_child(banner_art)
 
@@ -82,16 +84,19 @@ func _build() -> void:
 	plaque_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	plaque_bg.stretch_mode = TextureRect.STRETCH_SCALE
 	plaque_bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	plaque_bg.position = Vector2(8, 6)
+	plaque_bg.position = Vector2(56, 6)
 	plaque_bg.size = Vector2(142, 40)
 	plaque_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	header.add_child(plaque_bg)
 
-	var title_l := UI.label("物 资 铺", "title", UI.GOLD)
-	title_l.position = Vector2(18, 12)
+	var title_l := UI.label("物资铺", "title", UI.GOLD)
+	title_l.add_theme_font_override("font", G.spaced_font(3, true, true))
+	title_l.position = Vector2(66, 12)
 	title_l.size = Vector2(122, 28)
 	title_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	header.add_child(title_l)
+
+	G.top_back_button(header, _close_self, Vector2(6, 5))
 
 	# 钱包余额标签
 	var gold_chip := Panel.new()
@@ -127,48 +132,17 @@ func _build() -> void:
 	_rows_box = VBoxContainer.new()
 	_rows_box.name = "GoodsRows"
 	_rows_box.position = Vector2(16, 84)
-	_rows_box.size = Vector2(CONTENT_W, 368)
+	_rows_box.size = Vector2(CONTENT_W, 404)
 	_rows_box.add_theme_constant_override("separation", 8)
 	_panel.add_child(_rows_box)
 
 	# 交易提示气泡
 	_hint = UI.label("", "caption", UI.JADE)
-	_hint.position = Vector2(16, 458)
+	_hint.position = Vector2(16, 496)
 	_hint.size = Vector2(CONTENT_W, 20)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.modulate.a = 0.0
 	_panel.add_child(_hint)
-
-	# 底部返回按钮
-	var back_btn := Button.new()
-	back_btn.text = "返 回"
-	back_btn.size = Vector2(140, 38)
-	back_btn.position = Vector2((PANEL_W - 140) * 0.5, 486)
-	var dark_tex := G.Visuals._kit_tex("button_dark.png")
-	if dark_tex != null:
-		var sb_dark := StyleBoxTexture.new()
-		sb_dark.texture = dark_tex
-		sb_dark.texture_margin_left = 10.0
-		sb_dark.texture_margin_right = 10.0
-		sb_dark.texture_margin_top = 8.0
-		sb_dark.texture_margin_bottom = 8.0
-		back_btn.add_theme_stylebox_override("normal", sb_dark)
-		back_btn.add_theme_stylebox_override("hover", sb_dark)
-		back_btn.add_theme_stylebox_override("pressed", sb_dark)
-	else:
-		var btn_norm := StyleBoxFlat.new()
-		btn_norm.bg_color = Color("231d27", 0.9)
-		btn_norm.border_color = Color("6e5434", 0.8)
-		btn_norm.set_border_width_all(1)
-		btn_norm.set_corner_radius_all(3)
-		back_btn.add_theme_stylebox_override("normal", btn_norm)
-		back_btn.add_theme_stylebox_override("hover", btn_norm)
-		back_btn.add_theme_stylebox_override("pressed", btn_norm)
-	back_btn.add_theme_color_override("font_color", UI.PAPER)
-	back_btn.add_theme_font_override("font", G.font_serif)
-	back_btn.add_theme_font_size_override("font_size", G.FS_SM)
-	back_btn.pressed.connect(_close_self)
-	_panel.add_child(back_btn)
 
 
 func _close_self() -> void:
@@ -284,7 +258,7 @@ func _make_row(_idx: int, row: Dictionary) -> void:
 
 	# 4. 购买按钮 (朱砂金漆九宫格)
 	var buy_btn := Button.new()
-	buy_btn.text = "购 入"
+	buy_btn.text = "购入"
 	buy_btn.size = Vector2(60, 34)
 	buy_btn.position = Vector2(276, 15)
 	var red_tex := G.Visuals._kit_tex("button_red.png")
@@ -308,14 +282,14 @@ func _make_row(_idx: int, row: Dictionary) -> void:
 		buy_btn.add_theme_stylebox_override("hover", buy_style)
 		buy_btn.add_theme_stylebox_override("pressed", buy_style)
 	buy_btn.add_theme_color_override("font_color", UI.PAPER)
-	buy_btn.add_theme_font_override("font", G.font_serif)
+	buy_btn.add_theme_font_override("font", G.spaced_font(2, true, true))
 	buy_btn.add_theme_font_size_override("font_size", G.FS_XS)
 	buy_btn.pressed.connect(func(): _on_buy(iid))
 	card.add_child(buy_btn)
 
 	# 5. 出售按钮 (玄铁铜边九宫格)
 	var sell_btn := Button.new()
-	sell_btn.text = "出 售"
+	sell_btn.text = "出售"
 	sell_btn.size = Vector2(60, 34)
 	sell_btn.position = Vector2(342, 15)
 	var dark_tex := G.Visuals._kit_tex("button_dark.png")
@@ -340,7 +314,7 @@ func _make_row(_idx: int, row: Dictionary) -> void:
 		sell_btn.add_theme_stylebox_override("hover", sell_style)
 		sell_btn.add_theme_stylebox_override("pressed", sell_style)
 	sell_btn.add_theme_color_override("font_color", UI.PAPER if stock > 0 else Color(0.5, 0.5, 0.5))
-	sell_btn.add_theme_font_override("font", G.font_serif)
+	sell_btn.add_theme_font_override("font", G.spaced_font(2, true, true))
 	sell_btn.add_theme_font_size_override("font_size", G.FS_XS)
 	sell_btn.disabled = stock <= 0 or sell_price <= 0
 	sell_btn.modulate.a = 0.5 if stock <= 0 else 1.0

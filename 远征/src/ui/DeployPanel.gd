@@ -64,8 +64,8 @@ var _ascetic_btn: Control = null
 
 # 操作说明：? 弹层与首次进入的引导共用同一份文案
 const TIPS := [
-	"← → 或 A/D：切当前页的选项，也可直接左右拖动卡片",
-	"↑ ↓ 或 W/S：切换「秘境 / 人物 / 宠物」三个页签",
+	"左右滑动或点两侧箭头切换当前选项",
+	"点顶部「1 秘境 / 2 人物 / 3 宠物」切换步骤",
 	"点卡片选定；宠物再点一次可换替补或取消出战",
 	"秘境未解锁时，需先通关前一片大陆的首领",
 	"左下「补给」可加带药剂：金币在点「出征」时一次性结算，返回不扣钱",
@@ -126,7 +126,7 @@ func _theme_card(tid: String, i: int, order: Array) -> Control:
 		rows.append("「%s」" % epi)
 	rows.append("首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片")
 	var card := SlideCardScript.new({
-		"kicker": "秘 境 %02d / %02d" % [i + 1, order.size()],
+		"kicker": "秘境 %02d / %02d" % [i + 1, order.size()],
 		"title": G.world_name(tid),
 		"art_names": ["world_%s_art" % tid, "world_%s" % tid],
 		"art_hint": "world_%s.png" % tid,
@@ -156,7 +156,7 @@ func _fill_roles() -> void:
 func _role_card(r: Dictionary, i: int) -> Control:
 	var rid := String(r.get("id", ""))
 	var card := SlideCardScript.new({
-		"kicker": "人 物 %02d / %02d" % [i + 1, G.roles.size()],
+		"kicker": "人物 %02d / %02d" % [i + 1, G.roles.size()],
 		"title": String(r.get("name", rid)),
 		"subtitle": "%s · %s" % [String(r.get("job", "")), String(r.get("weapon", ""))],
 		"art_names": ["role_%s_art" % rid, "role_%s" % rid],
@@ -191,7 +191,7 @@ func _pet_card(p: Dictionary, i: int, total: int) -> Control:
 	var owned: bool = G.owns_pet(pid)
 	var rarity := String(p.get("rarity", "white"))
 	var card := SlideCardScript.new({
-		"kicker": "灵 宠 %02d / %02d" % [i + 1, total],
+		"kicker": "灵宠 %02d / %02d" % [i + 1, total],
 		"title": String(p.get("name", pid)),
 		"subtitle": "%s · %s" % [RARITY_NAME.get(rarity, "普通"),
 			ROLE_NAME.get(String(p.get("role", "")), "未知")],

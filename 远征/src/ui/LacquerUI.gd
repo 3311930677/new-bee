@@ -1,14 +1,14 @@
 extends RefCounted
-const INK := Color("17151a", 0.78)
-const RAISED := Color("26222a")
-const BRONZE := Color("6e5434")
-const LIT := Color("c29a5b")
-const GOLD := Color("f0b95a")
-const PAPER := Color("f3e8d0")
-const AGED := Color("bfb096")
-const ASH := Color("77705f")
-const RED := Color("cf4a33")
-const JADE := Color("63b784")
+const INK := Color("120e0c", 0.88)
+const RAISED := Color("1a1412")
+const BRONZE := Color("c9a45c")
+const LIT := Color("c9a45c")
+const GOLD := Color("f2c76a")
+const PAPER := Color("f3e3c0")
+const AGED := Color("8f8376")
+const ASH := Color("6e6256")
+const RED := Color("e2402c")
+const JADE := Color("55d8a8")
 const FROST := Color("8db3c7")
 
 static func theme() -> Theme:
@@ -107,6 +107,7 @@ class Action extends Button:
 	var icon_size := 28.0
 	var count_badge: Control
 	var count_label: Label
+	var count_value := -1
 	var motion_icon: Control
 	func _init(words: String = "", glyph: String = "") -> void:
 		caption = Lacquer.label(words, G.FS_XS)
@@ -134,6 +135,7 @@ class Action extends Button:
 		add_child(motion_icon)
 		glyph_label.visible = false
 	func set_count(value: int, at: Vector2 = Vector2(44,-4)) -> void:
+		count_value = value
 		if count_badge == null:
 			count_badge = Lacquer.Surface.new()
 			count_badge.world_skin = world_skin
@@ -141,7 +143,7 @@ class Action extends Button:
 			count_badge.size = Vector2(24,18)
 			count_badge.set("bg",Color("17151a",0.96))
 			add_child(count_badge)
-			count_label = Lacquer.label("",12)
+			count_label = Lacquer.label("",G.FS_XS)
 			count_label.name = "Count"
 			count_label.size = count_badge.size
 			count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -149,12 +151,14 @@ class Action extends Button:
 		count_badge.position = at
 		count_badge.visible = value >= 0
 		count_label.text = str(value) if value < 100 else "99+"
-		count_badge.set("bg",Lacquer.ASH if value == 0 else Color("17151a",0.96))
+		count_badge.set("bg",Color("262226",0.96) if value == 0 else Color("c83e2b",0.96))
+		count_label.add_theme_color_override("font_color", Color("ff6452") if value == 0 else Lacquer.PAPER)
 		count_badge.queue_redraw()
+		queue_redraw()
 		if art != null:
 			if art.material == null:
 				var shader := Shader.new()
-				shader.code = "shader_type canvas_item; uniform float gray=0.0; void fragment(){vec4 c=texture(TEXTURE,UV); float v=dot(c.rgb,vec3(0.299,0.587,0.114)); COLOR=vec4(mix(c.rgb,vec3(v)*0.4,gray),c.a);}"
+				shader.code = "shader_type canvas_item; uniform float gray=0.0; void fragment(){vec4 c=texture(TEXTURE,UV); float v=dot(c.rgb,vec3(0.299,0.587,0.114)); vec3 g=vec3(clamp(v*0.65+0.16,0.14,0.72)); COLOR=vec4(mix(c.rgb,g,gray),c.a);}"
 				var material := ShaderMaterial.new()
 				material.shader = shader
 				art.material = material
@@ -165,7 +169,7 @@ class Action extends Button:
 			art.name = "ActionIcon"
 			art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if world_skin else CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 			art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(art)
 		if texture is AtlasTexture: art.texture=texture
@@ -193,7 +197,7 @@ class Action extends Button:
 			caption.size = Vector2(size.x, maxf(16, size.y * 0.30))
 	func _draw() -> void:
 		var edge := Lacquer.RED if warning else (Lacquer.GOLD if active else Lacquer.BRONZE)
-		var bg := Color("6a2b1f") if primary else Lacquer.INK
+		var bg := Color("8e251d") if primary else Lacquer.RAISED
 		if disabled: edge = Color(edge, 0.5)
 		if is_pressed(): bg = bg.darkened(0.12)
 		if primary: caption.position.y = 1 if is_pressed() else 0
@@ -204,8 +208,12 @@ class Action extends Button:
 				if is_hovered() or has_focus(): trim = trim.lightened(0.25)
 				if disabled: trim = Color("514f45")
 				if disc:
-					WorldSkin.ring(self,size*0.5,size.x*0.5-1,trim,WorldSkin.FACE if active else WorldSkin.INK,is_pressed())
-					draw_line(Vector2(size.x*0.27,size.y-19),Vector2(size.x*0.73,size.y-19),Color(trim,0.4),1)
+					if active:
+						draw_arc(size * 0.5, size.x * 0.5 + 1.5, 0, TAU, 48, Color(WorldSkin.JADE, 0.38), 4.0, true)
+						draw_arc(size * 0.5, size.x * 0.5 + 0.5, 0, TAU, 48, Color("66e6af", 0.92), 2.0, true)
+					var dome_col := Color("bcb5a6") if count_value == 0 else (Color("ebd29a") if active else Color("e0c286"))
+					WorldSkin.ring(self,size*0.5,size.x*0.5-1,trim,WorldSkin.FACE if active else WorldSkin.INK,is_pressed(),true,dome_col,size.y-19.0)
+					draw_line(Vector2(size.x*0.24,size.y-19),Vector2(size.x*0.76,size.y-19),Color(trim.lightened(0.2),0.85),1)
 					if active:
 						WorldSkin.diamond(self,Vector2(size.x-9,9),3,WorldSkin.JADE)
 					if bool(get_meta("partner_available",false)):

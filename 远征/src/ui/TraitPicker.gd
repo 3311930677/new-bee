@@ -79,7 +79,7 @@ func setup(rows: Array) -> void:
 		if String((r as Dictionary).get("type", "")) == "double":
 			has_double = true
 	if has_double:
-		var skip := G.gold_button("放 弃", 160, 42)
+		var skip := G.gold_button("放弃", 160, 42)
 		skip.position = Vector2((VIEW_W - 160.0) * 0.5, CARD_Y + CARD_H + 42.0)
 		skip.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -194,7 +194,8 @@ func _make_card(row: Dictionary) -> Control:
 	strip.size = Vector2(CARD_W - 16, 28)
 	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(strip)
-	var hint_l := G.gold_label("— 点 选 —", G.FS_XS, false, Color("f6e4bc"), false)
+	var hint_l := G.gold_label("— 点选 —", G.FS_XS, false, Color("f6e4bc"), false)
+	hint_l.add_theme_font_override("font", G.spaced_font(2, false, true))
 	hint_l.position = Vector2(8, CARD_H - 32)
 	hint_l.size = Vector2(CARD_W - 16, 20)
 	root.add_child(hint_l)

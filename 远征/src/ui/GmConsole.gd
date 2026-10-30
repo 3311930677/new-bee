@@ -227,7 +227,7 @@ func _build() -> void:
 	_pw.text_submitted.connect(func(_t: String): _try_unlock())
 	content.add_child(_pw)
 
-	_unlock_btn = G.gold_button("解 锁", 120, 40)
+	_unlock_btn = G.gold_button("解锁", 120, 40)
 	_unlock_btn.position = Vector2(286, 8)
 	_unlock_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -295,7 +295,7 @@ func _build() -> void:
 	_build_tab_maps(_tab_pages[2])
 	_switch_tab(0)
 
-	_close_btn = G.gold_button("关  闭  (ESC)", 200, 40, G.FS_SM)
+	_close_btn = G.gold_button("关闭  (ESC)", 200, 40, G.FS_SM)
 	_close_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			close())
@@ -339,7 +339,7 @@ func _build_tab_cheats(parent: Control) -> void:
 
 	box.add_child(_section_header("◆ 角色与资源快捷指令"))
 	_add_grid_pair(box,
-		"满 级 (Lv.60)", func():
+		"满级 (Lv.60)", func():
 			G.gm_max_level()
 			_refresh_active_scene()
 			_flash("主角等级已升至上限 Lv.60"),

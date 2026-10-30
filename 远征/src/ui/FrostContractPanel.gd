@@ -26,7 +26,8 @@ func _build() -> void:
 	G.veil(self, 0.84, true)
 	var paper := Style.panel(Vector2(20,86) + _offset,Vector2(440,618),true,18)
 	add_child(paper)
-	add_child(Style.header_plaque("霜关缺药 · 运单", Vector2(46, 104) + _offset, 388.0))
+	add_child(Style.header_plaque("霜关缺药 · 运单", Vector2(84, 104) + _offset, 350.0))
+	G.top_back_button(self, close, Vector2(34, 101) + _offset, "返回市集")
 	add_child(G.Visuals.parchment_subcard(Vector2(38, 170) + _offset, Vector2(404, 348)))
 	var info := G.frost_herb_order()
 	var status := String(info.get("status", "locked"))
@@ -81,7 +82,7 @@ func _build() -> void:
 	detail.custom_minimum_size = Vector2(376, 290)
 	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(detail)
-	var message := Style.text(_message,G.FS_XS,Style.RUST)
+	var message := Style.text(_message,G.FS_XS,Color("f2c76a"))
 	message.position = Vector2(48, 526) + _offset
 	message.custom_minimum_size = Vector2(382, 48)
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -101,7 +102,6 @@ func _build() -> void:
 				_button("延期 · 付 %d 金" % extension_fee, Vector2(46, 585), 188, "extend")
 			_button("确认退单" if _confirm_abandon else "退单 · 退 %d 金" % refund,
 				Vector2(250, 585), 184, "abandon")
-	_button("返回市集", Vector2(146, 646), 188, "close")
 	G.center_fixed_page.call_deferred(self)
 
 func _button(label: String, pos: Vector2, width: int, action: String) -> void:

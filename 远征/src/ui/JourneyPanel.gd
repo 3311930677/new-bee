@@ -52,12 +52,20 @@ static func _sb_tex(path: String, l: float, t: float, r: float, b: float,
 	sb.content_margin_bottom = b if cb < 0.0 else cb
 	return sb
 
+## 字距变体缓存：同 ArenaPanel._font_spaced，每个标签都会调，不能每次 new。
+static var _spaced_cache := {}
+
 static func _font_spaced(base_font: Font, glyph_space: int) -> Font:
 	if base_font == null or glyph_space == 0:
 		return base_font
+	var key := "%d|%d" % [base_font.get_instance_id(), glyph_space]
+	var cached: FontVariation = _spaced_cache.get(key)
+	if cached != null:
+		return cached
 	var fv := FontVariation.new()
 	fv.base_font = base_font
 	fv.spacing_glyph = glyph_space
+	_spaced_cache[key] = fv
 	return fv
 
 static func _styled_label(txt: String, fnt: Font, sz: int, col: Color,
@@ -100,6 +108,7 @@ func _ready() -> void:
 	var top_wrap := Control.new()
 	top_wrap.custom_minimum_size = Vector2(404, 48)
 	body.add_child(top_wrap)
+	G.top_back_button(top_wrap, close, Vector2(0, 2), "返回")
 
 	var plaque := TextureRect.new()
 	plaque.texture = G.visual_texture("res://assets/ui/kit_20261013/plaque_title.png")
@@ -147,14 +156,14 @@ func _ready() -> void:
 	_tab_travel_btn.custom_minimum_size.y = 40
 	_tab_hunt_btn.custom_minimum_size.y = 40
 
-	# 4. 羊皮签条状态提示横幅 (quest_slip.png)
+	# 4. 玄漆金边状态提示横幅 (btn_row.png + 翡翠绿提示字)
 	_msg_box = PanelContainer.new()
 	_msg_box.custom_minimum_size = Vector2(404, 40)
 	_msg_box.add_theme_stylebox_override("panel",
-		_sb_tex("res://assets/ui/kit_20261013/quest_slip.png", 26, 8, 14, 8, 28, 4, 14, 4))
+		_sb_tex("res://assets/ui/settings_20261014/btn_row.png", 16, 8, 16, 8, 14, 4, 14, 4))
 	body.add_child(_msg_box)
 
-	_message = _styled_label("", G.font_serif, 13, Color("4a2414"), HORIZONTAL_ALIGNMENT_LEFT, 0)
+	_message = _styled_label("", G.font_serif, 13, Color("55d8a8"), HORIZONTAL_ALIGNMENT_LEFT, 2)
 	_message.custom_minimum_size = Vector2(358, 30)
 	_message.clip_text = false
 	_message.text_overrun_behavior = TextServer.OVERRUN_NO_TRIMMING
@@ -172,10 +181,6 @@ func _ready() -> void:
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("separation", 6)
 	scroll.add_child(_list)
-
-	# 6. 底部返回主按钮 (button_dark.png)
-	var close_btn := _button(body, "继 续 探 索", close)
-	close_btn.custom_minimum_size.y = 46
 
 	resized.connect(_resize)
 	preload("res://src/ui/UiSafeArea.gd").watch(self,_resize)
@@ -205,9 +210,9 @@ func _button(parent: Node, words: String, callback: Callable, disabled := false,
 	btn.custom_minimum_size = Vector2(0, 40)
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	btn.mouse_default_cursor_shape = Control.CURSOR_ARROW if disabled else Control.CURSOR_POINTING_HAND
-	var tex_path := "res://assets/ui/introduction_20261015/button_red.png" if primary_tint and not disabled else "res://assets/ui/introduction_20261015/button_dark.png"
-	btn.add_theme_stylebox_override("panel", _sb_tex(tex_path, 22, 12, 22, 12, 8, 4, 8, 4))
-	var lbl := _styled_label(words, _font_spaced(G.font_serif, 1), 15,
+	var tex_path := "res://assets/ui/kit_20261013/button_red.png" if primary_tint and not disabled else "res://assets/ui/kit_20261013/button_dark.png"
+	btn.add_theme_stylebox_override("panel", _sb_tex(tex_path, 12, 8, 12, 8, 8, 4, 8, 4))
+	var lbl := _styled_label(words, _font_spaced(G.font_serif, 2), G.FS_XS,
 		Color("9a8e7c") if disabled else Color("fff0d0"), HORIZONTAL_ALIGNMENT_CENTER, 3)
 	lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	btn.add_child(lbl)
@@ -290,7 +295,7 @@ func _add_card_action(card: Panel, rect: Rect2, caption: String, cb: Callable, d
 	btn.size = rect.size
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	btn.mouse_default_cursor_shape = Control.CURSOR_ARROW if disabled else Control.CURSOR_POINTING_HAND
-	var tex_path := "res://assets/ui/settings_20261014/btn_primary.png" if highlight and not disabled else "res://assets/ui/settings_20261014/tab_normal.png"
+	var tex_path := "res://assets/ui/kit_20261013/button_red.png" if highlight and not disabled else "res://assets/ui/kit_20261013/button_dark.png"
 	btn.add_theme_stylebox_override("panel", _sb_tex(tex_path, 12, 8, 12, 8, 4, 2, 4, 2))
 	var lbl := _styled_label(caption, G.font_serif, 13,
 		Color("8e8476") if disabled else Color("fff2d4"), HORIZONTAL_ALIGNMENT_CENTER, 3)

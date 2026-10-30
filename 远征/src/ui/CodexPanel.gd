@@ -82,7 +82,7 @@ func _card(p: Dictionary, idx: int, total: int) -> Control:
 		lines.append(G.pet_unlock_text(pid))
 
 	return SlideCardScript.new({
-		"kicker": "灵 宠 %02d / %02d" % [idx + 1, total],
+		"kicker": "灵宠 %02d / %02d" % [idx + 1, total],
 		"title": String(p.get("name", pid)) if owned else "？？？",
 		"subtitle": subtitle,
 		"art_names": (["%s_evo" % pid, "%s_art" % pid, pid]

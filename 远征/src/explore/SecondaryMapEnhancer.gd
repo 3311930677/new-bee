@@ -64,6 +64,10 @@ static func setup(map: Node) -> void:
 # 纹理通用解析器（兼容 ReferenceWorldArt、map_proc 及专用素材）
 # ==============================================================================
 static func resolve_texture(id: String) -> Texture2D:
+	if id.begins_with("f0"):
+		var ctex := preload("res://src/ui/KitV4.gd").commercial_tex(id)
+		if ctex != null:
+			return ctex
 	# 1. 优先从 ReferenceWorldArt 获取
 	var tex: Texture2D = RefArt.texture(id)
 	if tex != null:
@@ -269,16 +273,16 @@ class SceneryLayer extends Node2D:
 
 	func _build_stele_cavern_story() -> void:
 		var props := [
-			{"id": "stele", "at": Vector2(170, 420), "scale": 1.1},
-			{"id": "stele", "at": Vector2(790, 450), "scale": 1.05},
-			{"id": "stele", "at": Vector2(180, 760), "scale": 1.15},
-			{"id": "stele", "at": Vector2(780, 780), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(120, 280), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(840, 300), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(80, 620), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(880, 640), "scale": 1.1},
-			{"id": "lantern", "at": Vector2(330, 950), "scale": 0.9},
-			{"id": "lantern", "at": Vector2(630, 950), "scale": 0.9},
+			{"id": "f02a_broken_stele_1", "at": Vector2(170, 420), "scale": 1.05},
+			{"id": "f02a_broken_stele_2", "at": Vector2(790, 450), "scale": 1.05},
+			{"id": "f02a_broken_stele_1", "at": Vector2(180, 760), "scale": 1.1},
+			{"id": "f02a_fallen_tablet", "at": Vector2(780, 780), "scale": 1.05},
+			{"id": "f02b_moss_boulder_1", "at": Vector2(120, 280), "scale": 1.1},
+			{"id": "f02b_moss_boulder_2", "at": Vector2(840, 300), "scale": 1.1},
+			{"id": "f02b_moss_boulder_1", "at": Vector2(80, 620), "scale": 1.05},
+			{"id": "f02b_moss_boulder_2", "at": Vector2(880, 640), "scale": 1.05},
+			{"id": "f02b_stone_lantern", "at": Vector2(330, 950), "scale": 0.9},
+			{"id": "f02b_stone_lantern", "at": Vector2(630, 950), "scale": 0.9},
 			{"id": "stonebox", "at": Vector2(320, 680), "scale": 0.85},
 		]
 		_instantiate_list(props)
@@ -286,14 +290,14 @@ class SceneryLayer extends Node2D:
 	# --- 第二幕 ---
 	func _build_salt_road_story() -> void:
 		var props := [
-			{"id": "rocks", "at": Vector2(140, 420), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(810, 450), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(100, 760), "scale": 1.0},
-			{"id": "rocks", "at": Vector2(850, 790), "scale": 1.0},
-			{"id": "stonebox", "at": Vector2(340, 680), "scale": 0.85},
-			{"id": "signpost", "at": Vector2(620, 980), "scale": 0.9},
-			{"id": "bush", "at": Vector2(180, 740), "scale": 0.85},
-			{"id": "bush", "at": Vector2(760, 780), "scale": 0.85},
+			{"id": "f03a_salt_crystal_1", "at": Vector2(140, 420), "scale": 1.05},
+			{"id": "f03a_salt_crystal_2", "at": Vector2(810, 450), "scale": 1.05},
+			{"id": "f03a_salt_crystal_1", "at": Vector2(100, 760), "scale": 1.0},
+			{"id": "f03a_salt_cart", "at": Vector2(850, 790), "scale": 1.0},
+			{"id": "f03b_salt_bucket", "at": Vector2(340, 680), "scale": 0.9},
+			{"id": "f03b_wood_post_1", "at": Vector2(620, 980), "scale": 0.9},
+			{"id": "f03b_wood_post_2", "at": Vector2(180, 740), "scale": 0.85},
+			{"id": "f03a_salt_crystal_2", "at": Vector2(760, 780), "scale": 0.85},
 		]
 		_instantiate_list(props)
 
@@ -305,29 +309,29 @@ class SceneryLayer extends Node2D:
 			{"id": "barricade", "at": Vector2(750, 720), "scale": 0.9},
 			{"id": "stonebox", "at": Vector2(220, 520), "scale": 0.85},
 			{"id": "stonebox", "at": Vector2(740, 520), "scale": 0.85},
-			{"id": "rocks", "at": Vector2(90, 360), "scale": 1.0},
-			{"id": "rocks", "at": Vector2(870, 360), "scale": 1.0},
+			{"id": "f03b_wood_post_1", "at": Vector2(90, 360), "scale": 1.0},
+			{"id": "f03b_salt_bucket", "at": Vector2(870, 360), "scale": 1.0},
 		]
 		_instantiate_list(props)
 
 	func _build_tideflat_story() -> void:
 		var props := [
-			{"id": "rocks", "at": Vector2(130, 420), "scale": 1.15},
-			{"id": "rocks", "at": Vector2(820, 460), "scale": 1.15},
-			{"id": "rocks", "at": Vector2(90, 740), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(860, 780), "scale": 1.1},
-			{"id": "stonebox", "at": Vector2(330, 710), "scale": 0.85},
-			{"id": "bush", "at": Vector2(170, 720), "scale": 0.85},
-			{"id": "bush", "at": Vector2(780, 750), "scale": 0.85},
+			{"id": "f03a_salt_crystal_1", "at": Vector2(130, 420), "scale": 1.1},
+			{"id": "f03a_salt_crystal_2", "at": Vector2(820, 460), "scale": 1.1},
+			{"id": "f03b_wood_post_1", "at": Vector2(90, 740), "scale": 1.05},
+			{"id": "f03b_wood_post_2", "at": Vector2(860, 780), "scale": 1.05},
+			{"id": "f03b_salt_bucket", "at": Vector2(330, 710), "scale": 0.9},
+			{"id": "f03a_salt_crystal_2", "at": Vector2(170, 720), "scale": 0.85},
+			{"id": "f03a_salt_cart", "at": Vector2(780, 750), "scale": 0.9},
 		]
 		_instantiate_list(props)
 
 	func _build_tidal_gate_story() -> void:
 		var props := [
-			{"id": "stele", "at": Vector2(180, 520), "scale": 1.0},
-			{"id": "stele", "at": Vector2(780, 520), "scale": 1.0},
-			{"id": "rocks", "at": Vector2(110, 380), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(850, 380), "scale": 1.1},
+			{"id": "f03b_wood_post_1", "at": Vector2(180, 520), "scale": 1.0},
+			{"id": "f03b_wood_post_2", "at": Vector2(780, 520), "scale": 1.0},
+			{"id": "f03a_salt_crystal_1", "at": Vector2(110, 380), "scale": 1.05},
+			{"id": "f03a_salt_crystal_2", "at": Vector2(850, 380), "scale": 1.05},
 			{"id": "barricade", "at": Vector2(240, 840), "scale": 0.9},
 			{"id": "barricade", "at": Vector2(720, 840), "scale": 0.9},
 			{"id": "lantern", "at": Vector2(350, 960), "scale": 0.9},
@@ -338,14 +342,14 @@ class SceneryLayer extends Node2D:
 	# --- 第三幕 ---
 	func _build_red_sand_story() -> void:
 		var props := [
-			{"id": "rocks", "at": Vector2(120, 430), "scale": 1.15},
-			{"id": "rocks", "at": Vector2(830, 450), "scale": 1.15},
-			{"id": "rocks", "at": Vector2(80, 760), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(870, 780), "scale": 1.1},
-			{"id": "signpost", "at": Vector2(340, 980), "scale": 0.9},
+			{"id": "f04a_sandstone_1", "at": Vector2(120, 430), "scale": 1.1},
+			{"id": "f04a_sandstone_2", "at": Vector2(830, 450), "scale": 1.1},
+			{"id": "f04a_camel_bones", "at": Vector2(80, 760), "scale": 1.0},
+			{"id": "f04a_sandstone_1", "at": Vector2(870, 780), "scale": 1.05},
+			{"id": "f04b_caravan_post", "at": Vector2(340, 980), "scale": 0.95},
 			{"id": "stonebox", "at": Vector2(620, 700), "scale": 0.85},
-			{"id": "bush", "at": Vector2(160, 750), "scale": 0.8},
-			{"id": "bush", "at": Vector2(790, 770), "scale": 0.8},
+			{"id": "f04b_dry_shrub_1", "at": Vector2(160, 750), "scale": 0.9},
+			{"id": "f04b_dry_shrub_2", "at": Vector2(790, 770), "scale": 0.9},
 		]
 		_instantiate_list(props)
 
@@ -366,26 +370,26 @@ class SceneryLayer extends Node2D:
 
 	func _build_mine_road_story() -> void:
 		var props := [
-			{"id": "rocks", "at": Vector2(110, 380), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(840, 410), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(70, 740), "scale": 1.15},
-			{"id": "rocks", "at": Vector2(870, 760), "scale": 1.15},
+			{"id": "f05a_mine_timber", "at": Vector2(110, 380), "scale": 1.1},
+			{"id": "f05b_ore_crystal_1", "at": Vector2(840, 410), "scale": 1.1},
+			{"id": "f05b_ore_crystal_2", "at": Vector2(70, 740), "scale": 1.05},
+			{"id": "f05a_mine_cart", "at": Vector2(870, 760), "scale": 1.05},
 			{"id": "barricade", "at": Vector2(250, 820), "scale": 0.95},
 			{"id": "barricade", "at": Vector2(710, 820), "scale": 0.95},
 			{"id": "lantern", "at": Vector2(350, 940), "scale": 0.9},
-			{"id": "stonebox", "at": Vector2(320, 680), "scale": 0.85},
+			{"id": "f05b_pickaxe_crate", "at": Vector2(320, 680), "scale": 0.9},
 		]
 		_instantiate_list(props)
 
 	func _build_mine_vault_story() -> void:
 		var props := [
-			{"id": "stele", "at": Vector2(170, 480), "scale": 1.1},
-			{"id": "stele", "at": Vector2(790, 510), "scale": 1.1},
-			{"id": "rocks", "at": Vector2(100, 340), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(850, 360), "scale": 1.2},
+			{"id": "f05a_mine_timber", "at": Vector2(170, 480), "scale": 1.1},
+			{"id": "f05a_mine_timber", "at": Vector2(790, 510), "scale": 1.1},
+			{"id": "f05b_ore_crystal_1", "at": Vector2(100, 340), "scale": 1.1},
+			{"id": "f05b_ore_crystal_2", "at": Vector2(850, 360), "scale": 1.1},
 			{"id": "lantern", "at": Vector2(340, 950), "scale": 0.95},
 			{"id": "lantern", "at": Vector2(620, 950), "scale": 0.95},
-			{"id": "stonebox", "at": Vector2(630, 720), "scale": 0.9},
+			{"id": "f05b_pickaxe_crate", "at": Vector2(630, 720), "scale": 0.9},
 		]
 		_instantiate_list(props)
 
@@ -421,56 +425,56 @@ class SceneryLayer extends Node2D:
 	# --- 第四幕 ---
 	func _build_abyss_ring_story() -> void:
 		var props := [
-			{"id": "stele", "at": Vector2(170, 460), "scale": 1.15},
-			{"id": "stele", "at": Vector2(790, 490), "scale": 1.15},
-			{"id": "stele", "at": Vector2(160, 800), "scale": 1.2},
-			{"id": "stele", "at": Vector2(800, 820), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(90, 330), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(860, 350), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(70, 680), "scale": 1.15},
-			{"id": "rocks", "at": Vector2(880, 700), "scale": 1.15},
-			{"id": "lantern", "at": Vector2(330, 940), "scale": 0.95},
-			{"id": "lantern", "at": Vector2(630, 940), "scale": 0.95},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(170, 460), "scale": 1.1},
+			{"id": "f06a_abyss_pillar_2", "at": Vector2(790, 490), "scale": 1.1},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(160, 800), "scale": 1.15},
+			{"id": "f06a_rune_slab", "at": Vector2(800, 820), "scale": 1.1},
+			{"id": "f06b_obsidian_rock_1", "at": Vector2(90, 330), "scale": 1.1},
+			{"id": "f06b_obsidian_rock_2", "at": Vector2(860, 350), "scale": 1.1},
+			{"id": "f06b_obsidian_rock_1", "at": Vector2(70, 680), "scale": 1.05},
+			{"id": "f06b_obsidian_rock_2", "at": Vector2(880, 700), "scale": 1.05},
+			{"id": "f06b_void_brazier", "at": Vector2(330, 940), "scale": 0.95},
+			{"id": "f06b_void_brazier", "at": Vector2(630, 940), "scale": 0.95},
 		]
 		_instantiate_list(props)
 
 	func _build_stele_entry_story() -> void:
 		var props := [
-			{"id": "stele", "at": Vector2(180, 420), "scale": 1.2},
-			{"id": "stele", "at": Vector2(780, 440), "scale": 1.2},
-			{"id": "stele", "at": Vector2(180, 780), "scale": 1.2},
-			{"id": "stele", "at": Vector2(780, 800), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(100, 260), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(860, 280), "scale": 1.2},
-			{"id": "lantern", "at": Vector2(320, 920), "scale": 0.95},
-			{"id": "lantern", "at": Vector2(640, 920), "scale": 0.95},
-			{"id": "stonebox", "at": Vector2(630, 650), "scale": 0.9},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(180, 420), "scale": 1.15},
+			{"id": "f06a_abyss_pillar_2", "at": Vector2(780, 440), "scale": 1.15},
+			{"id": "f06a_abyss_pillar_2", "at": Vector2(180, 780), "scale": 1.15},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(780, 800), "scale": 1.15},
+			{"id": "f06b_obsidian_rock_1", "at": Vector2(100, 260), "scale": 1.1},
+			{"id": "f06b_obsidian_rock_2", "at": Vector2(860, 280), "scale": 1.1},
+			{"id": "f06b_void_brazier", "at": Vector2(320, 920), "scale": 0.95},
+			{"id": "f06b_void_brazier", "at": Vector2(640, 920), "scale": 0.95},
+			{"id": "f06a_rune_slab", "at": Vector2(630, 650), "scale": 0.95},
 		]
 		_instantiate_list(props)
 
 	func _build_stele_resonance_story() -> void:
 		var props := [
-			{"id": "stele", "at": Vector2(170, 350), "scale": 1.25},
-			{"id": "stele", "at": Vector2(790, 370), "scale": 1.25},
-			{"id": "stele", "at": Vector2(170, 680), "scale": 1.25},
-			{"id": "stele", "at": Vector2(790, 700), "scale": 1.25},
-			{"id": "rocks", "at": Vector2(90, 220), "scale": 1.2},
-			{"id": "rocks", "at": Vector2(870, 240), "scale": 1.2},
-			{"id": "lantern", "at": Vector2(340, 880), "scale": 0.95},
-			{"id": "lantern", "at": Vector2(620, 880), "scale": 0.95},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(170, 350), "scale": 1.15},
+			{"id": "f06a_abyss_pillar_2", "at": Vector2(790, 370), "scale": 1.15},
+			{"id": "f06a_abyss_pillar_2", "at": Vector2(170, 680), "scale": 1.15},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(790, 700), "scale": 1.15},
+			{"id": "f06b_obsidian_rock_1", "at": Vector2(90, 220), "scale": 1.1},
+			{"id": "f06b_obsidian_rock_2", "at": Vector2(870, 240), "scale": 1.1},
+			{"id": "f06b_void_brazier", "at": Vector2(340, 950), "scale": 0.95},
+			{"id": "f06b_void_brazier", "at": Vector2(620, 950), "scale": 0.95},
 		]
 		_instantiate_list(props)
 
 	func _build_stele_core_story() -> void:
 		var props := [
-			{"id": "stele", "at": Vector2(180, 320), "scale": 1.3},
-			{"id": "stele", "at": Vector2(780, 340), "scale": 1.3},
-			{"id": "stele", "at": Vector2(170, 660), "scale": 1.3},
-			{"id": "stele", "at": Vector2(790, 680), "scale": 1.3},
-			{"id": "rocks", "at": Vector2(90, 180), "scale": 1.25},
-			{"id": "rocks", "at": Vector2(870, 200), "scale": 1.25},
-			{"id": "lantern", "at": Vector2(330, 920), "scale": 1.0},
-			{"id": "lantern", "at": Vector2(630, 920), "scale": 1.0},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(180, 320), "scale": 1.2},
+			{"id": "f06a_abyss_pillar_2", "at": Vector2(780, 340), "scale": 1.2},
+			{"id": "f06a_abyss_pillar_2", "at": Vector2(170, 660), "scale": 1.2},
+			{"id": "f06a_abyss_pillar_1", "at": Vector2(790, 680), "scale": 1.2},
+			{"id": "f06b_obsidian_rock_1", "at": Vector2(90, 180), "scale": 1.15},
+			{"id": "f06b_obsidian_rock_2", "at": Vector2(870, 200), "scale": 1.15},
+			{"id": "f06b_void_brazier", "at": Vector2(330, 920), "scale": 1.0},
+			{"id": "f06b_void_brazier", "at": Vector2(630, 920), "scale": 1.0},
 		]
 		_instantiate_list(props)
 

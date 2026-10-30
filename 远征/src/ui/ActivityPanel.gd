@@ -3,6 +3,7 @@ extends Control
 signal closed
 signal action_requested(action_id: String)
 const View := preload("res://src/ui/ShowcaseUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const TouchScroll := preload("res://src/ui/TouchScroll.gd")
 const CONFIG := "res://data/activities.json"
 var events_override: Variant = null
@@ -57,8 +58,16 @@ func _ready() -> void:
 	add_child(_frame)
 	var column := View.column(12)
 	_frame.add_child(column)
-	column.add_child(View.text("行旅活动","title",View.GOLD))
-	column.add_child(View.text("演武磨砺 · 重访山河","caption",View.MUTED))
+	var top_row := HBoxContainer.new()
+	top_row.add_theme_constant_override("separation", 10)
+	column.add_child(top_row)
+	_back = G.top_back_button(top_row, go_back, Vector2.ZERO, "返回营帐")
+	_back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var title_col := View.column(2)
+	title_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top_row.add_child(title_col)
+	title_col.add_child(View.text("行旅活动","title",View.GOLD))
+	title_col.add_child(View.text("演武磨砺 · 重访山河","caption",View.MUTED))
 	var tabs := HBoxContainer.new()
 	tabs.add_theme_constant_override("separation",8)
 	column.add_child(tabs)
@@ -72,9 +81,6 @@ func _ready() -> void:
 		_filters[key] = b
 	_content = View.scroll()
 	column.add_child(_content)
-	_back = View.button("返回营帐")
-	_back.pressed.connect(go_back)
-	column.add_child(_back)
 	_show_list()
 	get_viewport().size_changed.connect(_layout_page)
 	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout_page)
@@ -100,7 +106,8 @@ func _scroll() -> VBoxContainer:
 func _show_list() -> void:
 	_clear_content()
 	_detail_id = ""
-	_back.text = "返回营帐"
+	_back.text = "‹"
+	_back.tooltip_text = "返回营帐"
 	for key in _filters:_filters[key].set_pressed_no_signal(key==_filter)
 	var list := _scroll()
 	var count := 0
@@ -131,15 +138,41 @@ func _event_card(event: Dictionary, now: int) -> Control:
 		image.custom_minimum_size = Vector2(0,104)
 		image.clip_contents = true
 		column.add_child(image)
+		var q_btn := Button.new()
+		q_btn.text = "?"
+		q_btn.custom_minimum_size = Vector2(32, 32)
+		q_btn.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+		q_btn.offset_left = -40; q_btn.offset_top = 8; q_btn.offset_right = -8; q_btn.offset_bottom = 40
+		var q_sb := KitV4.style("btn_round", 0)
+		for st in ["normal", "hover", "pressed"]:
+			q_btn.add_theme_stylebox_override(st, q_sb)
+		q_btn.add_theme_font_override("font", G.font_bold)
+		q_btn.add_theme_font_size_override("font_size", G.FS_SM)
+		q_btn.add_theme_color_override("font_color", KitV4.GOLD)
+		q_btn.pressed.connect(show_event.bind(id))
+		image.add_child(q_btn)
 	var status := event_status(event,now)
-	column.add_child(View.text(("常驻" if _timestamp(event,"starts_at")==0 and _timestamp(event,"ends_at")==0 else "限时")+" · "+status,"tag",View.JADE if status=="进行中" else View.MUTED))
-	column.add_child(View.text(String(event.title),"section",View.GOLD))
+	var head_row := HBoxContainer.new()
+	head_row.add_theme_constant_override("separation", 8)
+	column.add_child(head_row)
+	var t_lbl := View.text(String(event.title),"section",View.GOLD)
+	t_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head_row.add_child(t_lbl)
+	var st_lbl := View.text(("常驻" if _timestamp(event,"starts_at")==0 and _timestamp(event,"ends_at")==0 else "限时")+" · "+status,"tag",View.JADE if status=="进行中" else View.MUTED)
+	st_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	head_row.add_child(st_lbl)
 	column.add_child(View.text(String(event.get("summary","查看活动详情")),"body"))
+	var bot_row := HBoxContainer.new()
+	bot_row.add_theme_constant_override("separation", 8)
+	column.add_child(bot_row)
 	var reward := String(event.get("reward_summary",""))
-	if not reward.is_empty():column.add_child(View.text("玩法收获 · "+reward,"caption",View.JADE))
-	var b := View.button("查看玩法与参与条件",status=="进行中")
+	var r_lbl := View.text("收获 · "+reward if not reward.is_empty() else "参与可得历练奖励","caption",View.JADE)
+	r_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bot_row.add_child(r_lbl)
+	var b := View.button("前往",status=="进行中")
+	b.custom_minimum_size = Vector2(108, 44)
 	b.pressed.connect(show_event.bind(id))
-	column.add_child(b)
+	bot_row.add_child(b)
 	return card
 
 func show_event(id: String) -> void:
@@ -149,7 +182,8 @@ func show_event(id: String) -> void:
 	if event.is_empty():return
 	_clear_content()
 	_detail_id = id
-	_back.text = "返回活动"
+	_back.text = "‹"
+	_back.tooltip_text = "返回活动"
 	var list := _scroll()
 	list.add_child(View.text(String(event.title),"title",View.GOLD))
 	var status := event_status(event,int(Time.get_unix_time_from_system()))

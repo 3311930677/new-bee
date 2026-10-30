@@ -53,8 +53,8 @@ func _build() -> void:
 	stage_card.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	stage_card.stretch_mode = TextureRect.STRETCH_SCALE
 	stage_card.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	stage_card.position = Vector2(32, 452)
-	stage_card.size = Vector2(VIEW_W - 64, 282)
+	stage_card.position = Vector2(32, 434)
+	stage_card.size = Vector2(VIEW_W - 64, 290)
 	stage_card.modulate = Color(1, 1, 1, 0.72)
 	stage_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(stage_card)
@@ -64,7 +64,7 @@ func _build() -> void:
 	plaque.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	plaque.stretch_mode = TextureRect.STRETCH_SCALE
 	plaque.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	plaque.position = Vector2((VIEW_W - 268.0) * 0.5, 482)
+	plaque.position = Vector2((VIEW_W - 268.0) * 0.5, 466)
 	plaque.size = Vector2(268, 48)
 	plaque.modulate = Color(1, 1, 1, 0.85)
 	plaque.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -72,9 +72,10 @@ func _build() -> void:
 
 	# 地名小字 + 首领名（大字）
 	var sub := G.gold_label(
-		"◆ " + G.world_name(theme_id) + (" · 碑 前 对 峙 ◆" if is_intro else " · 碑 灵 低 语 ◆"),
+		"◆ " + G.world_name(theme_id) + (" · 碑前对峙 ◆" if is_intro else " · 碑灵低语 ◆"),
 		G.FS_XS, false, Color("e2c896", 0.92), false)
-	sub.position = Vector2(0, 460)
+	sub.add_theme_font_override("font", G.spaced_font(2, false))
+	sub.position = Vector2(0, 444)
 	sub.custom_minimum_size = Vector2(VIEW_W, 0)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -82,7 +83,7 @@ func _build() -> void:
 
 	var title := G.art_label(G.theme_boss_name(theme_id), G.FS_BIG,
 		Color("f4d89e") if is_intro else Color("e8dcb8"), true)
-	title.position = Vector2(0, 486)
+	title.position = Vector2(0, 470)
 	title.custom_minimum_size = Vector2(VIEW_W, 42)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -90,26 +91,21 @@ func _build() -> void:
 
 	# 台词区：左对齐逐行淡入（居中排长句会参差不齐，左对齐读起来像字幕）
 	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 14)
-	box.position = Vector2(60, 548)
-	box.custom_minimum_size = Vector2(360, 160)
+	box.add_theme_constant_override("separation", 6)
+	box.position = Vector2(64, 524)
+	box.custom_minimum_size = Vector2(352, 176)
+	box.size = Vector2(352, 176)
+	box.clip_contents = true
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(box)
 	for ln in _lines:
-		var l := G.text_label(String(ln), G.FS_MD, Color("f5ead0"))
-		l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
-		l.custom_minimum_size = Vector2(360, 0)
+		var l := G.text_label(String(ln), G.FS_SM, Color("f5ead0"))
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.custom_minimum_size = Vector2(352, 0)
 		l.modulate.a = 0.0
 		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		box.add_child(l)
 		_rows.append(l)
-
-	var hint := G.gold_label("轻触继续 · 右上「跳过」", G.FS_XS, false, Color("cfb98a", 0.78), false)
-	hint.position = Vector2(0, 748)
-	hint.custom_minimum_size = Vector2(VIEW_W, 0)
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(hint)
 
 	# 电影感信箱遮罩 (Cinematic Letterbox Bars)
 	for y in [0.0, VIEW_H - 42.0]:
@@ -120,7 +116,14 @@ func _build() -> void:
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(bar)
 
-	var skip := G.gold_button("跳 过", 96, 34, G.FS_XS)
+	var hint := G.gold_label("轻触继续 · 右上「跳过」", G.FS_XS, false, Color("cfb98a", 0.88), false)
+	hint.position = Vector2(0, VIEW_H - 42.0 - 28.0)
+	hint.custom_minimum_size = Vector2(VIEW_W, 0)
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(hint)
+
+	var skip := G.gold_button("跳过", 96, 34, G.FS_XS)
 	skip.position = Vector2(VIEW_W - 108, 48)
 	skip.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -165,6 +168,10 @@ func _build_silhouette(is_intro: bool) -> void:
 	add_child(pic)
 	# 从暗处缓缓浮现（不闪入）+ 极缓推近（"凝视"感）
 	pic.pivot_offset = Vector2(VIEW_W * 0.5, art_h * 0.5)
+	if instant:
+		pic.modulate.a = 0.92 if is_intro else 0.62
+		pic.scale = Vector2.ONE
+		return
 	pic.scale = Vector2(1.05, 1.05)
 	var tw := create_tween()
 	tw.set_parallel(true)

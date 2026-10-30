@@ -2,6 +2,7 @@ extends Control
 ## Read-only navigation is separate from the two explicit reward/charge actions.
 signal closed
 const Reading := preload("res://src/ui/ReadingSkin.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 var _frame: PanelContainer
 var _heading: Label
 var _status: Label
@@ -30,11 +31,20 @@ func _ready() -> void:
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation",14)
 	_frame.add_child(column)
-	_heading = Reading.label("古碑鉴宝",28,Reading.TEXT)
-	column.add_child(_heading)
-	_status = Reading.label("",18,Color("e5c98e"))
-	column.add_child(_status)
-	var paper := Reading.frame(true)
+	var head_row := HBoxContainer.new()
+	head_row.add_theme_constant_override("separation", 10)
+	column.add_child(head_row)
+	_back = G.top_back_button(head_row, back, Vector2.ZERO, "关闭")
+	_back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var head_col := VBoxContainer.new()
+	head_col.add_theme_constant_override("separation", 2)
+	head_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head_row.add_child(head_col)
+	_heading = Reading.label("古碑鉴宝",G.FS_BIG,Reading.TEXT)
+	head_col.add_child(_heading)
+	_status = Reading.label("",G.FS_MD,Color("e5c98e"))
+	head_col.add_child(_status)
+	var paper := Reading.frame(false)
 	paper.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(paper)
 	_scroll = ScrollContainer.new()
@@ -84,12 +94,19 @@ func navigate(page: String) -> void:
 	_heading.text = {"overview":"古碑鉴宝","lore":"先祖古碑","appraise":"行商鉴宝","history":"鉴宝记录","record":"记录详情","result":"本次结果"}.get(page,"古碑鉴宝")
 	match page:
 		"overview":
-			_line("慧眼识珍 · "+("已达成" if count>=3 else "进度 %d / 3 次"%count),20)
-			_body.add_child(_button("先祖古碑  ›",func():navigate("lore")))
-			_line("阅读当前职业碑文，明确参悟后获得首次共鸣奖励。",20)
-			_body.add_child(_button("行商鉴宝  ›",func():navigate("appraise")))
-			_line("先查看古匣与宝匣，再确认单次鉴定费用。",20)
-			_body.add_child(_button("鉴宝记录  ›",func():navigate("history")))
+			var prog_row := VBoxContainer.new()
+			prog_row.add_theme_constant_override("separation", 6)
+			_body.add_child(prog_row)
+			prog_row.add_child(Reading.label("慧眼识珍 · " + ("已达成" if count >= 3 else "进度 %d / 3 次" % count), G.FS_MD, KitV4.GOLD))
+			var pbar := KitV4.bar(Vector2(160, 12), "exp")
+			pbar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			pbar.set("ratio", clampf(float(count) / 3.0, 0.0, 1.0))
+			prog_row.add_child(pbar)
+			_body.add_child(_button("先祖古碑  ›", func(): navigate("lore"), true))
+			_body.add_child(Reading.label("阅读当前职业碑文，参悟后获得首次共鸣奖励与职业称号。", G.FS_SM, KitV4.CREAM))
+			_body.add_child(_button("行商鉴宝  ›", func(): navigate("appraise"), true))
+			_body.add_child(Reading.label("鉴选蒙尘古匣与鎏金宝匣，获取宝石、材料与传世器物。", G.FS_SM, KitV4.CREAM))
+			_body.add_child(_button("鉴宝记录  ›", func(): navigate("history"), false))
 		"lore":
 			var entry := G.lore_entry()
 			var resonated := bool(_flags().get("lore_resonated_"+String(entry.role_id),false))
@@ -122,9 +139,12 @@ func navigate(page: String) -> void:
 			if _history_index < _history().size(): _line(String(_history()[_history_index]))
 		"result":
 			for line in _result.get("lines",[]): _line(String(line))
-	_back = _button("关闭" if page=="overview" else "确认" if page=="result" else "返回",back)
-	_footer.add_child(_back)
-	if _action!=null:_footer.add_child(_action)
+	_back.tooltip_text = "关闭" if page=="overview" else "确认" if page=="result" else "返回"
+	if _action!=null:
+		_footer.add_child(_action)
+		_footer.visible = true
+	else:
+		_footer.visible = false
 	_scroll.scroll_vertical = 0
 	layout.call_deferred()
 	_focus_back.call_deferred()

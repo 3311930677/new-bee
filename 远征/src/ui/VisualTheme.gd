@@ -2,14 +2,14 @@ extends RefCounted
 ## 每个功能有自己的材质；公共控件只提供布局和交互。
 
 const FAMILIES := {
-	"atlas": {"paper":"e4ebe6", "ink":"283e46", "accent":"75a8ad", "dark":"203842", "light":"deefdf", "icon":"world"},
-	"forge": {"paper":"e3e6e9", "ink":"303a49", "accent":"b2bac7", "dark":"30394b", "light":"f4d6a2", "icon":"hammer"},
-	"garden": {"paper":"e7ebd7", "ink":"344a39", "accent":"88a77b", "dark":"2f5145", "light":"e4eab8", "icon":"growth"},
-	"arcane": {"paper":"e9e3ed", "ink":"4c3954", "accent":"b49cc4", "dark":"433451", "light":"f4d9b6", "icon":"summon"},
-	"arena": {"paper":"eadfd5", "ink":"4b3334", "accent":"c39173", "dark":"573038", "light":"f4d1a0", "icon":"swords"},
-	"market": {"paper":"f0e3c9", "ink":"4c3c2d", "accent":"c5a370", "dark":"5b4435", "light":"f7dfac", "icon":"coin"},
-	"journal": {"paper":"f1ead7", "ink":"413c36", "accent":"b68770", "dark":"423d35", "light":"f3ddad", "icon":"book"},
-	"quiet": {"paper":"eaece8", "ink":"35454c", "accent":"9ba9aa", "dark":"344952", "light":"e9e7d0", "icon":"settings"},
+	"atlas": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"world"},
+	"forge": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"hammer"},
+	"garden": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"growth"},
+	"arcane": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"summon"},
+	"arena": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"swords"},
+	"market": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"coin"},
+	"journal": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"book"},
+	"quiet": {"paper":"e8dcc0", "ink":"35291e", "accent":"c9a45c", "dark":"1a1412", "light":"f3e3c0", "icon":"settings"},
 }
 
 const PAGES := {
@@ -102,7 +102,7 @@ class _PlaqueHeader extends Control:
 		var h := plaque_h
 		var r := Rect2(0, 0, w, h)
 		draw_rect(Rect2(2, 4, w - 2, h - 1), Color("090d0e", 0.42))
-		draw_colored_polygon(G.octagon_path(Vector2(w, h), 0.0, 5.0), Color("1d3635"))
+		draw_colored_polygon(G.octagon_path(Vector2(w, h), 0.0, 5.0), Color("2a201a"))
 		var p_tex := G.Visuals._kit_tex("plaque_header_jade.png")
 		if p_tex != null:
 			G.Visuals.draw_nine(self, p_tex, r, 16.0, Color(1, 1, 1, 0.96))
@@ -164,6 +164,16 @@ static func paper(item: CanvasItem, sz: Vector2) -> void:
 	var iron_tex := _kit_tex("res://assets/ui/kit_20261013/panel_iron.png")
 	var slip_tex := _kit_tex("res://assets/ui/kit_20261013/quest_slip.png")
 	var subcard_tex := _kit_tex("res://assets/ui/kit_20261013/card_frame_parchment.png")
+	var dark_frame := bool(item.get_meta("dark_frame", false))
+	if dark_frame:
+		item.draw_colored_polygon(G.octagon_path(sz, 0, 5 if large else 3), Color("1a1412"))
+		if iron_tex != null:
+			draw_nine(item, iron_tex, bounds.grow(2.0 if large else 0.0), 16.0 if large else 12.0, Color(1, 1, 1, 0.94))
+		item.draw_rect(bounds.grow(-4.0 if large else -2.0), Color("c9a45c", 0.68), false, 1.0)
+		if large:
+			item.draw_rect(bounds.grow(-6.0), Color("8e251d", 0.28), false, 1.0)
+			G.draw_brass_corners(item, sz, 15.0, 5.0)
+		return
 	if large:
 		if iron_tex != null:
 			draw_nine(item, iron_tex, bounds.grow(2.0), 16.0)

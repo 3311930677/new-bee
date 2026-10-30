@@ -27,8 +27,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		closed.emit()
 		get_viewport().set_input_as_handled()
 
-func _button(parent: Control, title: String, at: Vector2, width: float, action: Callable, icon := "") -> void:
-	var button := G.ghost_button(title,width,44,G.FS_SM)
+func _button(parent: Control, title: String, at: Vector2, width: float, action: Callable, icon := "", primary := false) -> void:
+	var button := G.gold_button(title,width,44,G.FS_SM) if primary else G.ghost_button(title,width,44,G.FS_SM)
 	if not icon.is_empty(): G.button_icon(button, icon)
 	button.position = at
 	button.gui_input.connect(func(event: InputEvent):
@@ -36,7 +36,9 @@ func _button(parent: Control, title: String, at: Vector2, width: float, action: 
 	parent.add_child(button)
 
 func _text(parent: Control, words: String, at: Vector2, width: float, height: float, small := false) -> Label:
-	var label := G.text_label("",G.FS_XS if small else G.FS_SM,G.TEXT_DARK)
+	var on_paper := parent.get_parent() != null and String(parent.get_parent().get_meta("visual_kind", "")) == "parchment" and not bool(parent.get_parent().get_meta("dark_frame", false))
+	var col := (Color("6e5640") if small else G.TEXT_DARK) if on_paper else (Color("c9a45c") if small else Color("f3e3c0"))
+	var label := G.text_label("",G.FS_XS if small else G.FS_SM,col)
 	label.position = at
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.size = Vector2(width,height)
@@ -53,7 +55,9 @@ func _build() -> void:
 	var banner := G.banner_box("伙伴", 240, 48)
 	banner.position = Vector2(120, top - 55)
 	add_child(banner)
+	G.top_back_button(self, func(): closed.emit(), Vector2(24, top - 53))
 	var panel := G.parchment_box(432, 618, 16)
+	panel.set_meta("dark_frame", true)
 	panel.position = Vector2(24, top)
 	add_child(panel)
 	var content := Control.new()
@@ -78,11 +82,17 @@ func _build() -> void:
 		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		content.add_child(art)
-		_text(content, String(pet.get("name", _sel)), Vector2(112, 24), 260, 30)
+		var is_active := G.companion_active() == _sel
+		_text(content, String(pet.get("name", _sel)), Vector2(112, 22), 180, 30)
+		var state_badge := G.text_label("◆ 随行中" if is_active else "◇ 待命", G.FS_XS, Color("55d8a8") if is_active else Color("c9a45c"))
+		state_badge.position = Vector2(304, 26)
+		state_badge.size = Vector2(96, 24)
+		state_badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		content.add_child(state_badge)
 		_text(content, "协战 %d / 20" % int(row.get("wins", 0)), Vector2(112, 57), 260, 26, true)
 		_button(content, "上一只", Vector2(0, 104), 116, func(): _cycle(-1), "back")
 		_button(content, "下一只", Vector2(126, 104), 116, func(): _cycle(1), "forward")
-		_button(content, "随行中" if G.companion_active() == _sel else "设为随行", Vector2(252, 104), 148, _select, "paw")
+		_button(content, "随行中" if is_active else "设为随行", Vector2(252, 104), 148, _select, "paw", not is_active)
 		_deck = PageDeckScript.new(400, 302)
 		_deck.position = Vector2(0, 232)
 		_deck.key_mode = "lr"
@@ -95,9 +105,8 @@ func _build() -> void:
 		content.add_child(tabs)
 		_deck.page_changed.connect(func(index: int): _tab = index)
 		_deck.go(_tab, true)
-		var note := _text(content, _message, Vector2(0, 512), 400, 34, true)
-		note.add_theme_color_override("font_color", G.C_GAIN_INK)
-	_button(content, "返回", Vector2(130, 552), 140, func(): closed.emit())
+		var note := _text(content, _message, Vector2(0, 542), 400, 34, true)
+		note.add_theme_color_override("font_color", Color("55d8a8"))
 	_fit.call_deferred()
 
 func _page_root() -> Control:
@@ -112,9 +121,12 @@ func _overview_page(row: Dictionary) -> Control:
 	var traits: Array = row.get("traits", [])
 	for i in 2:
 		var card := G.parchment_box(192, 136, 12)
+		card.set_meta("dark_frame", true)
 		card.position = Vector2(i * 208, 46)
 		page.add_child(card)
 		var inner := Control.new()
+		inner.set_meta("visual_kind", "parchment")
+		inner.set_meta("dark_frame", true)
 		inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.add_child(inner)
 		var tid := String(traits[i]) if i < traits.size() else ""

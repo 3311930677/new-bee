@@ -9,6 +9,7 @@ extends Control
 signal entry_pressed(id: String)
 
 const UI := preload("res://src/ui/TravelChestUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const DIR := "res://assets/ui/home/"
 const KIT := "res://assets/ui/kit_20261013/"
 const UiKitLib := preload("res://src/ui/UiKit.gd")
@@ -53,16 +54,24 @@ const FIRES := [
 ]
 const HERO_FEET := Vector2(240, 540)
 # id、文字、图标（伙伴 = 伙伴图鉴）
-const NAV_LEFT := [["growth", "养成", "hero"], ["party", "伙伴", "party"]]
-const NAV_RIGHT := [["activity", "活动", "banner"], ["settings", "设置", "settings"]]
-# 顶栏右侧小入口：id、文字、像素图标
-const RAIL := [["bag", "背包", "bag"], ["gathering", "小聚", "food"]]
-# 钱包：键、名称、图标
+const NAV_LEFT := [["growth", "养成", "hero", "角色", "nav_role"], ["party", "伙伴", "party", "伙伴", "nav_partner"]]
+const NAV_RIGHT := [["quest", "任务", "quest", "任务", "nav_quest"], ["activity", "活动", "banner", "活动", "nav_event"]]
+# 顶栏右侧小入口：id、文字、像素图标、商业化图标键
+const RAIL := [
+	["mail", "邮件", "expedition", "nav_mail"],
+	["bag", "背包", "bag", "nav_bag"],
+	["gathering", "小聚", "food", "nav_notice"],
+	["settings", "菜单", "settings", "nav_menu"],
+]
+# 钱包：键、名称、图标（视觉上只显示金币/魂晶/荣誉 3 枚，远征币隐藏保留在 _wallet_labels[1] 兼容校验）
 const CURRENCIES := [
 	["gold", "金币", "coin"], ["expedition", "远征币", "expedition"],
 	["soul", "魂晶", "soul"], ["honor", "荣誉", "honor"],
 ]
-const CAP_W := 86.0
+const CAP_W := 73.0
+
+static var _medal_pressed_cache: Texture2D = null
+static var _medal_disabled_cache: Texture2D = null
 
 var host: Control = null
 var content: Control              # 所有可点内容；打开面板时 GameHome 只隐藏它，背景保留
@@ -70,6 +79,7 @@ var _hero: TextureButton          # 出征徽章 = 返回主世界（节点名 R
 var _scene: Control
 var _bg: TextureRect
 var _hero_sprite: AnimatedSprite2D
+var _pet_sprite: Sprite2D
 var _hero_shadow: Node2D
 var _hero_plate: Panel
 var _hero_role_label: Label
@@ -79,13 +89,18 @@ var _shown_role_id := ""
 var _preview_pose_idx := 0
 const PREVIEW_POSES := [&"idle", &"walk_down", &"walk_left", &"walk_right", &"walk_up"]
 const PREVIEW_POSE_NAMES := ["待机", "朝南", "朝西", "朝东", "朝北"]
-const HERO_SCALE := 0.58
+const HERO_SCALE := 0.80
+var _hero_eff_scale := 0.80
 var _top: Control
 var _hud_bottom: Control
 var _toast: Label
 var _name: Label
+var _role_line: Label
+var _power_line: Label
+var _shown_power := -1
 var _level: Label
 var _exp_fill: TextureRect
+var _exp_pct_label: Label
 var _avatar: Button
 var _avatar_pic: TextureRect
 var _quest: Button
@@ -95,6 +110,8 @@ var _quest_dot: Control
 var _plaques := {}                # id -> Button
 var _plaque_dots := {}            # id -> 红点
 var _rail := {}                   # id -> TextureButton
+var _rail_dots := {}              # id -> 红点
+var _nav_dots := {}               # id -> 红点
 var _gathering_unlocked := false
 
 
@@ -143,12 +160,14 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 		var b: Button = _plaques[id]
 		b.position = (Vector2(b.get_meta("center"))*scene_scale + Vector2(scene_x, core_y) - b.size * 0.5).round()
 	if _hero_hit != null:
-		_hero_hit.position = Vector2(HERO_FEET.x*scene_scale+scene_x-44.0, HERO_FEET.y*scene_scale + core_y - 96.0)
+		_hero_hit.position = Vector2(HERO_FEET.x*scene_scale+scene_x-44.0, HERO_FEET.y*scene_scale + core_y - 120.0)
 	_top.position = Vector2(0, safe.position.y)
 	_hud_bottom.position = Vector2(0, safe.end.y - 200.0)
 	_quest.position.y=16.0-minf(extra*.26,78)
 	var short_lift:=maxf(0,800.0-vh)
-	_hero_sprite.position=Vector2(HERO_FEET.x,HERO_FEET.y-61.0*HERO_SCALE-short_lift)
+	_hero_sprite.position=Vector2(HERO_FEET.x,HERO_FEET.y-61.0*_hero_eff_scale-short_lift)
+	if _pet_sprite != null:
+		_pet_sprite.position = Vector2(HERO_FEET.x + 68.0, HERO_FEET.y - 20.0 - short_lift)
 	_hero_shadow.position=HERO_FEET-Vector2(0,short_lift)
 	_hero_plate.position=Vector2(HERO_FEET.x-58,HERO_FEET.y+4-short_lift)
 	_hero_hit.position.y-=short_lift*scene_scale
@@ -163,6 +182,16 @@ func _safe_rect() -> Rect2:
 	return get_viewport_rect()
 
 
+func _calc_power() -> int:
+	var rid := _valid_role_id(G.selected_role)
+	var lv := _level_value()
+	var bonuses: Dictionary = G.growth_bonuses(rid) if G.has_method("growth_bonuses") else {}
+	var hp_add := int(bonuses.get("hp_add", 0))
+	var atk_add := int(bonuses.get("atk_add", 0))
+	var def_add := int(bonuses.get("def_add", 0))
+	return maxi(100, lv * 280 + hp_add * 3 + atk_add * 18 + def_add * 15)
+
+
 # ---------- 数据刷新（GameHome 关闭面板后会调用） ----------
 func refresh() -> void:
 	if _name == null:
@@ -172,13 +201,37 @@ func refresh() -> void:
 	_name.text = full.left(8) + "…" if full.length() > 8 else full
 	_name.tooltip_text = full
 	var level := _level_value()
-	_level.text = str(level)
-	_exp_fill.size.x = floor((144 - 16) * _exp_ratio() / 2.0) * 2.0
+	_level.text = "Lv.%d" % level
+	var ratio := _exp_ratio()
+	var pct := clampi(roundi(ratio * 100.0), 0, 100)
+	_exp_fill.size.x = floor((144 - 16) * ratio / 2.0) * 2.0
+	if _exp_pct_label != null:
+		_exp_pct_label.text = "%d%%" % pct
+	var rid := _valid_role_id(G.selected_role)
+	var role_cfg: Dictionary = G.get_role(rid)
+	var rname := String(role_cfg.get("name", "破军"))
+	var rjob := String(role_cfg.get("job", "战士"))
+	if _role_line != null:
+		_role_line.text = "%s · %s · %d%%" % [rname, rjob, pct]
+		_role_line.tooltip_text = "%s · %s · 经验 %d%%" % [rname, rjob, pct]
+	if _power_line != null:
+		var pwr := _calc_power()
+		if _shown_power >= 0 and _shown_power != pwr and is_inside_tree() and not G.get_meta("ui_review_mode", false):
+			var from_p := _shown_power
+			_shown_power = pwr
+			var tw := create_tween()
+			tw.tween_method(func(v: int):
+				if is_instance_valid(_power_line):
+					_power_line.text = "▲ 战力 %s" % _fmt(v), from_p, pwr, 0.35)
+		else:
+			_shown_power = pwr
+			_power_line.text = "▲ 战力 %s" % _fmt(pwr)
+	_avatar_pic.texture = _home_avatar_texture()
+	_avatar_pic.texture_filter = SMOOTH if (G.avatar_use_custom and G.has_custom_avatar()) else CanvasItem.TEXTURE_FILTER_NEAREST
 	if host != null:
-		_avatar_pic.texture = G.avatar_texture()
 		for entry in host._wallet_labels:
 			var value := int(G.wallet.get(entry.key, 0))
-			entry.label.text = UI.format_number(value)
+			entry.label.text = _fmt(value)
 			entry.button.tooltip_text = "%s：%d" % [entry.name, value]
 		var row: Dictionary = G.story_current()
 		_quest_title.text = "主线 · " + String(row.get("title", "归路")) if not row.is_empty() else "主线"
@@ -186,6 +239,10 @@ func refresh() -> void:
 		_quest_dot.visible = host._quest_claimable()
 		_plaque_dots["gacha"].visible = host._entry_has_badge("召唤")
 		_plaque_dots["exchange"].visible = host._entry_has_badge("兑换")
+		if _nav_dots.has("quest"):
+			_nav_dots["quest"].visible = host._quest_claimable()
+		if _nav_dots.has("party"):
+			_nav_dots["party"].visible = not G.codex_next_ready().is_empty()
 		_gathering_unlocked = G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE or G.gm_unlocked
 	var gather: TextureButton = _rail["gathering"]
 	gather.modulate = Color.WHITE if _gathering_unlocked or host == null else LOCKED_TINT
@@ -237,6 +294,17 @@ func _build_scene() -> void:
 	_scene.add_child(_hero_sprite)
 	if host != null:
 		host._anim = _hero_sprite
+
+	# §4.1-5 随行宠物站在主角身旁广场上，带呼吸帧
+	_pet_sprite = Sprite2D.new()
+	_pet_sprite.name = "CompanionPetSprite"
+	_pet_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_pet_sprite.position = Vector2(HERO_FEET.x + 68.0, HERO_FEET.y - 20.0)
+	_scene.add_child(_pet_sprite)
+	if not G.get_meta("ui_review_mode", false):
+		var ptw := _pet_sprite.create_tween().set_loops()
+		ptw.tween_property(_pet_sprite, "scale:y", 0.94, 0.9).set_trans(Tween.TRANS_SINE)
+		ptw.tween_property(_pet_sprite, "scale:y", 1.04, 0.9).set_trans(Tween.TRANS_SINE)
 
 	_hero_plate = _plate(Vector2(HERO_FEET.x - 58.0, HERO_FEET.y + 4.0), Vector2(116, 22))
 	_hero_plate.name = "HeroRolePlate"
@@ -349,12 +417,24 @@ func _sync_hero_role(force: bool = false) -> void:
 		_preview_pose_idx = 0
 		_hero_sprite.sprite_frames = _role_sprite_frames(rid)
 		_hero_sprite.set_meta("role_id", rid)
+		var ftex: Texture2D = _hero_sprite.sprite_frames.get_frame_texture(&"idle", 0)
+		var base_h := float(ftex.get_height()) if ftex != null else 128.0
+		_hero_eff_scale = maxf(HERO_SCALE, 152.0 / maxf(base_h, 1.0))
+		_hero_sprite.scale = Vector2.ONE * _hero_eff_scale
 	var pose: StringName = PREVIEW_POSES[_preview_pose_idx % PREVIEW_POSES.size()]
 	if not _hero_sprite.sprite_frames.has_animation(pose):
 		pose = &"idle"
 	if _hero_sprite.animation != pose or not _hero_sprite.is_playing():
 		_hero_sprite.animation = pose
 		_hero_sprite.play(pose)
+	if _pet_sprite != null:
+		var pets_arr: Array = G.prog.get("pets", [])
+		var pid := String(pets_arr[0]) if not pets_arr.is_empty() else "pet_rockturtle"
+		var ptex: Texture2D = preload("res://src/ui/ReviewFixUI.gd").pet(pid)
+		if ptex != null:
+			_pet_sprite.texture = ptex
+			var pw := float(ptex.get_width())
+			_pet_sprite.scale = Vector2.ONE * clampf(48.0 / maxf(pw, 1.0), 0.25, 1.0)
 	if host != null:
 		host._anim = _hero_sprite
 	if _hero_role_label != null:
@@ -464,7 +544,7 @@ func _slice(path: String, h: int, v: int, tint: Color) -> StyleBoxTexture:
 func _build_top_bar() -> void:
 	var shade := TextureRect.new()
 	var grad := Gradient.new()
-	grad.set_color(0, Color(0.03, 0.03, 0.08, 0.72))
+	grad.set_color(0, Color(0.03, 0.03, 0.08, 0.78))
 	grad.set_color(1, Color(0.03, 0.03, 0.08, 0.0))
 	var gt := GradientTexture2D.new()
 	gt.gradient = grad
@@ -475,7 +555,7 @@ func _build_top_bar() -> void:
 	shade.texture = gt
 	shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	shade.stretch_mode = TextureRect.STRETCH_SCALE
-	shade.size = Vector2(VIEW_W, 128)
+	shade.size = Vector2(VIEW_W, 132)
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(shade)
 
@@ -484,46 +564,93 @@ func _build_top_bar() -> void:
 	_top.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(_top)
 
-	# 头像：深底 + 当前头像（AvatarPanel 可换）+ 金框 + 等级徽章
+	# §4.1-1 玩家卡（左上，232×74，半透明玄漆 player_card_bg）：点击打开角色总览
+	var pcard := Button.new()
+	pcard.name = "PlayerCardEntry"
+	pcard.focus_mode = Control.FOCUS_NONE
+	pcard.position = Vector2(8, 8)
+	pcard.size = Vector2(232, 74)
+	pcard.tooltip_text = "查看角色总览"
+	var pcard_sb := KitV4.style("player_card_bg", 0)
+	for st in ["normal", "hover", "pressed"]:
+		pcard.add_theme_stylebox_override(st, pcard_sb)
+	pcard.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	pcard.pressed.connect(_on_entry.bind("growth", "角色总览"))
+	_top.add_child(pcard)
+
+	# 头像与翠色经验进度环 + 朱漆等级徽章
 	_avatar = Button.new()
 	_avatar.name = "AvatarEntry"
 	_avatar.flat = true
 	_avatar.focus_mode = Control.FOCUS_NONE
-	_avatar.tooltip_text = "更换头像"
+	_avatar.tooltip_text = "查看角色总览 / 更换头像"
 	_avatar.position = Vector2(8, 8)
-	_avatar.size = Vector2(80, 80)
-	_avatar.pressed.connect(_on_entry.bind("avatar", "头像"))
+	_avatar.size = Vector2(76, 76)
+	_avatar.pressed.connect(_on_entry.bind("growth", "角色总览"))
 	_top.add_child(_avatar)
 	var under := ColorRect.new()
-	under.color = Color("2a2036")
-	under.position = Vector2(12, 12)
-	under.size = Vector2(56, 56)
+	under.color = Color("120e0c")
+	under.position = Vector2(12, 10)
+	under.size = Vector2(52, 52)
 	under.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_avatar.add_child(under)
-	_avatar_pic = _tex(DIR + "avatar_portrait.png", Vector2(12, 12))
+	_avatar_pic = TextureRect.new()
+	_avatar_pic.position = Vector2(12, 10)
 	_avatar_pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_avatar_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	_avatar_pic.size = Vector2(56, 56)
+	_avatar_pic.size = Vector2(52, 52)
 	_avatar_pic.clip_contents = true
+	_avatar_pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_avatar_pic.texture = _home_avatar_texture()
+	_avatar_pic.texture_filter = SMOOTH if (G.avatar_use_custom and G.has_custom_avatar()) else CanvasItem.TEXTURE_FILTER_NEAREST
 	_avatar.add_child(_avatar_pic)
-	_avatar.add_child(_tex(DIR + "avatar_frame.png", Vector2.ZERO))
-	var badge := _tex(DIR + "level_badge.png", Vector2(24, 64))
+	var ring_tex := UiKitLib.tex("avatar_exp_ring")
+	var ring_node := TextureRect.new()
+	ring_node.texture = ring_tex if ring_tex != null else load(DIR + "avatar_frame.png")
+	ring_node.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	ring_node.size = Vector2(76, 76)
+	ring_node.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_avatar.add_child(ring_node)
+	_exp_pct_label = _label("0%", FONT_BOLD, G.FS_XS, KitV4.JADE, 2)
+	_exp_pct_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_exp_pct_label.position = Vector2(36, 0)
+	_exp_pct_label.size = Vector2(40, 16)
+	_exp_pct_label.visible = false
+	_avatar.add_child(_exp_pct_label)
+	var seal_tex := UiKitLib.tex("level_seal")
+	var badge := TextureRect.new()
+	badge.texture = seal_tex if seal_tex != null else load(DIR + "level_badge.png")
+	badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	badge.position = Vector2(12, 54)
+	badge.size = Vector2(52, 22)
+	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_avatar.add_child(badge)
 	_level = _label("", FONT_BOLD, G.FS_XS, CREAM, 3)
 	_level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_level.position = Vector2(0, -2)
-	_level.size = Vector2(32, 22)
+	_level.position = Vector2(0, 1)
+	_level.size = Vector2(52, 20)
 	badge.add_child(_level)
 	if host != null:
 		host._avatar_frame = _avatar
 		host._avatar_pic = _avatar_pic
 
-	# 名字 + 经验条 + 易职按钮
-	_name = _label("", FONT_SERIF, G.FS_SM, CREAM, 4)
-	_name.position = Vector2(96, 50)
-	_name.size = Vector2(142, 24)
+	# 玩家卡右侧三行：名字（衬线 17）、职业（暖灰 13）、战力（亮金 14）
+	_name = _label("", FONT_SERIF, G.FS_MD, CREAM, 3)
+	_name.position = Vector2(88, 12)
+	_name.size = Vector2(146, 22)
 	_name.clip_text = true
 	_top.add_child(_name)
+	_role_line = _label("", FONT_BOLD, G.FS_XS, KitV4.MUTED, 2)
+	_role_line.position = Vector2(88, 35)
+	_role_line.size = Vector2(146, 18)
+	_role_line.clip_text = true
+	_top.add_child(_role_line)
+	_power_line = _label("", FONT_BOLD, G.FS_XS, KitV4.BRIGHT, 3)
+	_power_line.position = Vector2(88, 54)
+	_power_line.size = Vector2(146, 20)
+	_power_line.clip_text = true
+	_top.add_child(_power_line)
+
 	_switch_role_btn = Button.new()
 	_switch_role_btn.name = "RoleSwitchEntry"
 	_switch_role_btn.text = "易职"
@@ -549,13 +676,10 @@ func _build_top_bar() -> void:
 	_switch_role_btn.pressed.connect(_on_entry.bind("reselect_role", "重选职业"))
 	_switch_role_btn.visible = false
 	_top.add_child(_switch_role_btn)
-	var bar := NinePatchRect.new()
-	bar.texture = load(KIT + "bar_frame.png")
-	bar.patch_margin_left = 10
-	bar.patch_margin_right = 10
-	bar.position = Vector2(96, 76)
-	bar.size = Vector2(144, 20)
-	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	# 保留底层经验填充引用兼容
+	var bar := Control.new()
+	bar.visible = false
 	_top.add_child(bar)
 	_exp_fill = TextureRect.new()
 	_exp_fill.texture = load(KIT + "bar_fill_exp.png")
@@ -566,18 +690,42 @@ func _build_top_bar() -> void:
 	_exp_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bar.add_child(_exp_fill)
 
-	# 四币胶囊：点开“行囊与货币”说明
+	# §4.1-4 左侧运营位：每日活跃与限时活动条
+	var act_strip := Button.new()
+	act_strip.name = "LeftOpsStrip"
+	act_strip.focus_mode = Control.FOCUS_NONE
+	act_strip.position = Vector2(8, 86)
+	act_strip.size = Vector2(216, 28)
+	act_strip.tooltip_text = "查看今日活跃与限时活动"
+	var ops_sb := StyleBoxFlat.new()
+	ops_sb.bg_color = Color(0.10, 0.08, 0.07, 0.88)
+	ops_sb.border_color = KitV4.TRIM
+	ops_sb.set_border_width_all(1)
+	ops_sb.set_corner_radius_all(4)
+	for st in ["normal", "hover", "pressed"]:
+		act_strip.add_theme_stylebox_override(st, ops_sb)
+	act_strip.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	act_strip.pressed.connect(_on_entry.bind("activity", "活动"))
+	_top.add_child(act_strip)
+	var ops_lbl := _label("活跃度 80/100 · 活动进行中", FONT_BOLD, G.FS_XS, KitV4.JADE, 2)
+	ops_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ops_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	ops_lbl.size = act_strip.size
+	act_strip.add_child(ops_lbl)
+
+	# §4.1-2 货币胶囊：视觉上只放 3 个（金币、魂晶、荣誉），远征币隐藏保留在 _wallet_labels[1]
 	var row := HBoxContainer.new()
 	row.name = "CurrencyRow"
-	row.add_theme_constant_override("separation", 4)
+	row.add_theme_constant_override("separation", 3)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.position = Vector2(VIEW_W - 12.0 - 4 * CAP_W - 3 * 4.0, 6)
-	row.size = Vector2(4 * CAP_W + 12, 44)
+	var vis_w := 3.0 * CAP_W + 2.0 * 3.0
+	row.position = Vector2(468.0 - vis_w, 8)
+	row.size = Vector2(vis_w, 44)
 	_top.add_child(row)
 	if host != null:
 		host._wallet_row = row
+	var plus_tex := UiKitLib.tex("plus_badge")
 	for c in CURRENCIES:
-		# 热区 44 高（触控下限），胶囊图仍按原尺寸 36 高画在中间
 		var cap := Button.new()
 		cap.name = "Currency_" + c[0]
 		cap.focus_mode = Control.FOCUS_NONE
@@ -586,6 +734,8 @@ func _build_top_bar() -> void:
 			cap.add_theme_stylebox_override(state, StyleBoxEmpty.new())
 		cap.pressed.connect(func():
 			if host != null: G.show_currency_popup(host,String(c[0])))
+		if c[0] == "expedition":
+			cap.visible = false
 		row.add_child(cap)
 		var skin := NinePatchRect.new()
 		skin.texture = load(KIT + "currency_capsule.png")
@@ -593,23 +743,36 @@ func _build_top_bar() -> void:
 		skin.patch_margin_left = int(cap_sl[0])
 		skin.patch_margin_right = int(cap_sl[2])
 		skin.position = Vector2(0, 4)
-		skin.size = Vector2(CAP_W, 36)
+		skin.size = Vector2(CAP_W, 34)
 		skin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cap.add_child(skin)
 		cap.mouse_entered.connect(func(): skin.modulate = Color(1.15, 1.1, 1.05))
 		cap.mouse_exited.connect(func(): skin.modulate = Color.WHITE)
-		skin.add_child(_tex(PIX + "%s.png" % c[2], Vector2(1, 2)))
+		var c_icon := _tex(PIX + "%s.png" % c[2], Vector2(1, 4))
+		c_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		c_icon.size = Vector2(24, 24)
+		skin.add_child(c_icon)
 		var num := _label(_fmt(int(_wallet().get(c[0], 0))), FONT_BOLD, G.FS_XS, CREAM, 3)
 		num.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		num.position = Vector2(30, 6)
-		num.size = Vector2(CAP_W - 38, 22)
+		num.position = Vector2(20, 6)
+		num.size = Vector2(CAP_W - 24, 22)
 		num.clip_text = true
+		num.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		skin.add_child(num)
+		if plus_tex != null:
+			var plus_ic := TextureRect.new()
+			plus_ic.texture = plus_tex
+			plus_ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			plus_ic.size = Vector2(12, 12)
+			plus_ic.position = Vector2(CAP_W - 14, 11)
+			plus_ic.visible = false # 小胶囊优先完整显示数值，不拿装饰符号挤字宽。
+			plus_ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			skin.add_child(plus_ic)
 		if host != null:
 			host._wallet_labels.append({"label": num, "key": c[0], "name": c[1], "button": cap})
 
-	# 小入口：背包、小聚（未解锁时压灰）
-	var rx := VIEW_W - 8.0 - RAIL.size() * 56.0 - (RAIL.size() - 1) * 4.0
+	# §4.1-2,3 右上第二行小入口与菜单（邮件、背包、小聚、菜单 ≡），每个带红点
+	var rx := 244.0
 	for r in RAIL:
 		var rid := String(r[0])
 		var rtitle := String(r[1])
@@ -623,7 +786,18 @@ func _build_top_bar() -> void:
 		btn.pressed.connect(_on_entry.bind(rid, rtitle))
 		_top.add_child(btn)
 		btn.add_child(_disc(Vector2(10, 10), 36, HOLE_DARK))
-		btn.add_child(_tex(PIX + "%s.png" % r[2], Vector2(12, 12)))
+		var comm_ic := KitV4.commercial_tex(String(r[3])) if r.size() > 3 else null
+		if comm_ic != null and rid in ["mail", "settings"]:
+			var tr := TextureRect.new()
+			tr.texture = comm_ic
+			tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			tr.position = Vector2(12, 12)
+			tr.size = Vector2(32, 32)
+			tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			btn.add_child(tr)
+		else:
+			btn.add_child(_tex(PIX + "%s.png" % r[2], Vector2(12, 12)))
 		var plate := _plate(Vector2(8, 42), Vector2(40, 22))
 		btn.add_child(plate)
 		var t := _label(rtitle, FONT_SERIF, G.FS_XS, CREAM, 3)
@@ -632,6 +806,10 @@ func _build_top_bar() -> void:
 		t.position = Vector2(0, -1)
 		t.size = plate.size
 		plate.add_child(t)
+		var rdot := _red_dot(Vector2(42, 2))
+		rdot.visible = false
+		btn.add_child(rdot)
+		_rail_dots[rid] = rdot
 		if rid == "gathering":
 			var unlock_tag := Label.new()
 			unlock_tag.name = "GatheringUnlockTag"
@@ -639,7 +817,7 @@ func _build_top_bar() -> void:
 			unlock_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			btn.add_child(unlock_tag)
 		_rail[rid] = btn
-		rx += 60.0
+		rx += 58.0
 
 
 # ---------- 底部：任务条 + 导航 + 出征 ----------
@@ -650,43 +828,67 @@ func _build_bottom() -> void:
 	_hud_bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(_hud_bottom)
 
-	# 主线任务条：压暗羊皮纸，不抢出征按钮
+	# §4.1-6 主线任务条：玄漆半透明（不再用浅色羊皮纸），左侧朱漆“主”字圆章，中间两行，右侧朱漆“前往”
 	_quest = Button.new()
 	_quest.name = "QuestSummary"
 	_quest.focus_mode = Control.FOCUS_NONE
-	var qs := _kit_slice("quest_slip", Color(0.8, 0.74, 0.66))
-	qs.content_margin_left = 0
-	qs.content_margin_right = 0
+	var qs := KitV4.style("quest_tracker_bg", 0)
 	_quest.add_theme_stylebox_override("normal", qs)
-	var qh := qs.duplicate()
-	qh.modulate_color = Color(0.9, 0.84, 0.75)
-	_quest.add_theme_stylebox_override("hover", qh)
+	_quest.add_theme_stylebox_override("hover", qs)
 	_quest.add_theme_stylebox_override("pressed", qs)
 	_quest.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-	_quest.position = Vector2(84, 16)
-	_quest.size = Vector2(312, 56)
+	_quest.position = Vector2(72, 16)
+	_quest.size = Vector2(336, 56)
 	_quest.pressed.connect(_on_entry.bind("quest", "主线任务"))
 	_hud_bottom.add_child(_quest)
-	_quest.add_child(_tex(DIR + "icons/quest_32.png", Vector2(14, 12)))
-	_quest_title = _label("主线 · 夜叩边城", FONT_SERIF, G.FS_XS, INK, 0)
-	_quest_title.position = Vector2(52, 6)
-	_quest_title.size = Vector2(226, 22)
+	var seal := Panel.new()
+	var seal_sb := StyleBoxFlat.new()
+	seal_sb.bg_color = KitV4.LACQUER_TOP
+	seal_sb.border_color = KitV4.BRIGHT
+	seal_sb.set_border_width_all(1)
+	seal_sb.set_corner_radius_all(15)
+	seal.add_theme_stylebox_override("panel", seal_sb)
+	seal.position = Vector2(12, 13)
+	seal.size = Vector2(30, 30)
+	seal.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_quest.add_child(seal)
+	var seal_l := _label("主", FONT_SERIF, G.FS_SM, CREAM, 2)
+	seal_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	seal_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	seal_l.size = seal.size
+	seal.add_child(seal_l)
+	_quest_title = _label("主线 · 夜叩边城", FONT_SERIF, G.FS_XS, KitV4.BRIGHT, 3)
+	_quest_title.position = Vector2(48, 6)
+	_quest_title.size = Vector2(224, 22)
 	_quest_title.clip_text = true
 	_quest.add_child(_quest_title)
-	_quest_goal = _label("与城门守将交谈  1/3", FONT_BOLD, G.FS_XS, INK_MUTED, 0)
-	_quest_goal.position = Vector2(52, 27)
-	_quest_goal.size = Vector2(226, 22)
+	_quest_goal = _label("与城门守将交谈  1/3", FONT_BOLD, G.FS_XS, CREAM, 2)
+	_quest_goal.position = Vector2(48, 28)
+	_quest_goal.size = Vector2(224, 22)
 	_quest_goal.clip_text = true
 	_quest_goal.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_quest.add_child(_quest_goal)
-	var arrow := _label("›", FONT_BOLD, 26, INK, 0)
-	arrow.position = Vector2(282, 6)
-	_quest.add_child(arrow)
-	_quest_dot = _red_dot(Vector2(300, -2))
+	var go_chip := Panel.new()
+	var go_sb := StyleBoxFlat.new()
+	go_sb.bg_color = KitV4.LACQUER_TOP
+	go_sb.border_color = KitV4.TRIM
+	go_sb.set_border_width_all(1)
+	go_sb.set_corner_radius_all(4)
+	go_chip.add_theme_stylebox_override("panel", go_sb)
+	go_chip.position = Vector2(276, 15)
+	go_chip.size = Vector2(48, 26)
+	go_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_quest.add_child(go_chip)
+	var go_lbl := _label("前往", FONT_SERIF, G.FS_XS, CREAM, 2)
+	go_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	go_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	go_lbl.size = go_chip.size
+	go_chip.add_child(go_lbl)
+	_quest_dot = _red_dot(Vector2(320, -2))
 	_quest_dot.visible = false
 	_quest.add_child(_quest_dot)
 
-	# 导航底座与四个页签
+	# 导航底座与四个页签（角色 / 伙伴 / 出征 / 任务 / 活动）
 	var base := TextureRect.new()
 	base.texture = load(KIT + "nav_base.png")
 	base.position = Vector2(0, 112)
@@ -728,11 +930,15 @@ func _build_bottom() -> void:
 	# 出征徽章：压在底座上沿；点击返回主世界（原“继续旅程”）
 	_hero = TextureButton.new()
 	_hero.name = "ReturnToWorld"
-	# v3 出征圆章（112×112）：按下、禁用两态由同一张圆章压暗、去色得到，外轮廓完全一致。
+	# v3 出征圆章（112×112）：按下、禁用两态静态缓存避免重复像素循环
 	var medal: Texture2D = load(KIT + "sortie_medal.png")
+	if _medal_pressed_cache == null:
+		_medal_pressed_cache = _medal_variant(medal, false)
+	if _medal_disabled_cache == null:
+		_medal_disabled_cache = _medal_variant(medal, true)
 	_hero.texture_normal = medal
-	_hero.texture_pressed = _medal_variant(medal, false)
-	_hero.texture_disabled = _medal_variant(medal, true)
+	_hero.texture_pressed = _medal_pressed_cache
+	_hero.texture_disabled = _medal_disabled_cache
 	_hero.focus_mode = Control.FOCUS_NONE
 	_hero.position = Vector2(184, 81)   # 中心 (240, 137)，与旧徽章一致
 	# 双剑用手绘插画（原来是 32px 像素图标放大两倍，边缘发糊、颜色发灰）。
@@ -806,18 +1012,23 @@ func _nav_button(def: Array, pos: Vector2) -> TextureButton:
 	btn.texture_pressed = load(KIT + "nav_socket_selected.png")
 	btn.focus_mode = Control.FOCUS_NONE
 	btn.position = pos
-	btn.pressed.connect(_on_entry.bind(def[0], def[1]))
+	var display_title := String(def[3]) if def.size() > 3 else String(def[1])
+	btn.pressed.connect(_on_entry.bind(def[0], display_title))
 	# 内孔垫深色圆底，图标居中在孔里；文字放在下方的小牌子上，压住下沿金属环但不碰图标
 	btn.add_child(_disc(Vector2(20, 20), 40, HOLE_DARK))
 	btn.add_child(_tex(DIR + "icons/%s_32.png" % def[2], Vector2(24, 20)))
 	var plate := _plate(Vector2(18, 54), Vector2(44, 22))
 	btn.add_child(plate)
-	var t := _label(def[1], FONT_SERIF, G.FS_XS, CREAM, 3)
+	var t := _label(display_title, FONT_SERIF, G.FS_XS, CREAM, 3)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	t.position = Vector2(0, -1)
 	t.size = plate.size
 	plate.add_child(t)
+	var ndot := _red_dot(Vector2(56, 8))
+	ndot.visible = false
+	btn.add_child(ndot)
+	_nav_dots[String(def[0])] = ndot
 	return btn
 
 
@@ -842,6 +1053,9 @@ func _on_entry(id: String, title: String) -> void:
 		"avatar": host._open_avatar_panel()
 		"wallet": G.show_currency_popup(host,"gold")
 		"bag": host._open_bag()
+		"mail":
+			if host.has_method("open_gm_feature"):
+				host.open_gm_feature("mail")
 		"gathering":
 			if _gathering_unlocked:
 				host._open_gathering()
@@ -885,9 +1099,10 @@ func _tex(path: String, pos: Vector2) -> TextureRect:
 		# 高清插画素材：按 1/HD 显示，线性过滤（先关掉按贴图撑大的最小尺寸，再赋贴图）
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.texture_filter = SMOOTH
-	t.texture = load(path)
+	if ResourceLoader.exists(path):
+		t.texture = load(path)
 	t.position = pos
-	if path.begins_with(DIR):
+	if path.begins_with(DIR) and t.texture != null:
 		t.size = t.texture.get_size() / HD
 	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return t
@@ -952,8 +1167,23 @@ func _plate(pos: Vector2, sz: Vector2) -> Panel:
 	return p
 
 
+func _home_avatar_texture() -> Texture2D:
+	if G.avatar_use_custom and G.has_custom_avatar():
+		var custom := G.custom_avatar_texture()
+		if custom != null:
+			return custom
+	var rid := _valid_role_id(G.selected_role)
+	var comm_av := KitV4.commercial_tex("%s_avatar" % rid)
+	if comm_av != null:
+		return comm_av
+	var role_tex := _load_png_tex(G.role_icon_path(rid))
+	if role_tex != null:
+		return role_tex
+	return load(DIR + "avatar_portrait.png") as Texture2D
+
+
 func _fmt(n: int) -> String:
-	return UI.format_number(n)
+	return KitV4.fmt_compact(n)
 
 
 func _wallet() -> Dictionary:

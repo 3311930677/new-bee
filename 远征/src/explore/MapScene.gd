@@ -1037,6 +1037,12 @@ func _build_world_exits() -> void:
 		marker.set_meta("caption_below",bool(row.get("caption_below",false)))
 		marker.set_meta("sunny_sample",SunnyArt.active(_main_map_id))
 		marker.position = _world_exit_sign_position(row)
+		var spawn_pt := _cfg_point(_main_cfg.get("spawn", []), Vector2(480.0, 1080.0))
+		if marker.position.distance_to(spawn_pt) < 132.0:
+			if absf(marker.position.x - spawn_pt.x) < 64.0:
+				marker.visual_offset = Vector2(-96.0, 0.0)
+			elif absf(marker.position.y - spawn_pt.y) < 64.0:
+				marker.visual_offset = Vector2(0.0, -72.0)
 		marker.caption = String(row.get("label", destination))
 		if destination == story_hop:
 			marker.quest_hint = "story"
@@ -1074,6 +1080,13 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player.collision_layer = 1
 	_player.collision_mask = 2
 	_world.add_child(_player)
+	if _mode == "main_world":
+		var glyph := _SpawnGlyph.new()
+		glyph.name = "SpawnGlyph"
+		glyph.position = spawn + Vector2(0, 18.0)
+		glyph.origin = spawn
+		glyph.player_ref = _player
+		_world.add_child(glyph)
 
 	_player_anim = AnimatedSprite2D.new()
 	_player_anim.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
@@ -1750,8 +1763,8 @@ func _refresh_hud() -> void:
 		_main_level_l.add_theme_font_size_override("font_size", G.FS_SM if lv >= 100 else G.FS_MD)
 		HudStyle.progress(_main_hp_fill, float(hp) / float(maxi(m, 1)))
 		HudStyle.progress(_main_exp_fill, exp_ratio)
-		_main_hp_fill.color = Lacquer.RED if float(hp) / float(maxi(m, 1)) <= 0.3 else Lacquer.JADE
-		_main_hp_l.add_theme_color_override("font_color", Lacquer.RED if float(hp) / maxi(m, 1) <= 0.3 else Lacquer.PAPER)
+		_main_hp_fill.color = Color("cf4a33") if float(hp) / float(maxi(m, 1)) <= 0.3 else Lacquer.JADE
+		_main_hp_l.add_theme_color_override("font_color", Color("cf4a33") if float(hp) / maxi(m, 1) <= 0.3 else Lacquer.PAPER)
 		_main_hp_l.text = "%d/%d" % [hp, m]
 		_main_hp_l.tooltip_text = "生命 %d / %d" % [hp, m]
 		_main_exp_l.text = "%d%%" % roundi(exp_ratio * 100.0)
@@ -2648,7 +2661,7 @@ func _show_trait_remove() -> void:
 		row.gui_input.connect(_on_remove_row.bind(String(tid)))
 		list.add_child(row)
 
-	var keep := G.gold_button("保 留 全 部", 200, 44)
+	var keep := G.gold_button("保留全部", 200, 44)
 	keep.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_close_remover("你带着全部祝福离开了篝火"))
@@ -2764,14 +2777,14 @@ func _ask_exit() -> void:
 	tip.custom_minimum_size = Vector2(308, 0)
 	content.add_child(tip)
 
-	var stay := G.gold_button("继 续 探 索", 140, 42)
+	var stay := G.gold_button("继续探索", 140, 42)
 	stay.position = Vector2(0, 100)
 	stay.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_cancel_exit())
 	content.add_child(stay)
 
-	var leave := G.gold_button("撤 离", 140, 42)
+	var leave := G.gold_button("撤离", 140, 42)
 	leave.position = Vector2(168, 100)
 	leave.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -3143,7 +3156,7 @@ func _open_altar(s: _Spot) -> void:
 
 	var view_h := get_viewport_rect().size.y
 	var top_y := roundf((view_h - 296.0) * 0.5)
-	var banner := G.banner_box("碑 灵 祭 坛", 260, 48)
+	var banner := G.banner_box("碑灵祭坛", 260, 48)
 	banner.position = Vector2((VIEW_W - 260.0) * 0.5, top_y)
 	layer.add_child(banner)
 
@@ -3161,13 +3174,13 @@ func _open_altar(s: _Spot) -> void:
 	tip.custom_minimum_size = Vector2(308, 0)
 	content.add_child(tip)
 
-	var pay := G.gold_button("献 金 %d" % cost, 140, 42, G.FS_SM)
+	var pay := G.gold_button("献金 %d" % cost, 140, 42, G.FS_SM)
 	pay.position = Vector2(0, 96)
 	pay.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_altar_pay(s, cost))
 	content.add_child(pay)
-	var leave := G.gold_button("离 开", 140, 42, G.FS_SM)
+	var leave := G.gold_button("离开", 140, 42, G.FS_SM)
 	leave.position = Vector2(168, 96)
 	leave.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -4016,7 +4029,7 @@ func _open_road_mail_choice(e: _QuestEntity) -> void:
 			"pass_supply": "付 18 金，请驿亭引路"}
 	_puzzle_panel = WorldPuzzlePanelScript.new()
 	_hud.add_child(_puzzle_panel)
-	_puzzle_panel.open_puzzle({"name": "邮 路 · 风 口",
+	_puzzle_panel.open_puzzle({"name": "邮路 · 风口",
 		"clue": "路标缺了一角。可以先查看附近风蚀石的旧刻痕，自己辨路；也可付 18 金请驿亭引路。两种办法都能把信送到。",
 		"choices": choices})
 	_puzzle_panel.choice_selected.connect(func(choice: String):
@@ -4037,7 +4050,7 @@ func _open_road_mail_hazard(e: _QuestEntity) -> void:
 		return
 	_puzzle_panel = WorldPuzzlePanelScript.new()
 	_hud.add_child(_puzzle_panel)
-	_puzzle_panel.open_puzzle({"name": "邮 路 · 受 伤 信 使",
+	_puzzle_panel.open_puzzle({"name": "邮路 · 受伤信使",
 		"clue": "背风驿亭边有位信使扭伤了脚。付 12 金请驿亭包扎，可以按时送信；免费扶他慢行到港口，本趟报酬会少 20 金。",
 		"choices": {"hazard_help": "付 12 金包扎 · 报酬不减",
 			"hazard_escort": "扶他慢行 · 少 20 金"}})
@@ -4983,10 +4996,18 @@ class _SteleRoomGate extends StaticBody2D:
 		collider.shape = rect
 		add_child(collider)
 		var label := G.gold_label(caption, G.FS_XS, true, Color("f0dfbd"), true)
-		label.position = Vector2(-192, -54)
-		label.size = Vector2(384, 24)
+		var w := clampf(G.font_bold.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 18.0, 88.0, 320.0)
+		label.position = Vector2(-w * 0.5, -54)
+		label.size = Vector2(w, 24)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("120f10", 0.90)
+		sb.border_color = Color("c29a5b", 0.78)
+		sb.set_border_width_all(1)
+		sb.set_corner_radius_all(3)
+		label.add_theme_stylebox_override("normal", sb)
 		add_child(label)
 		queue_redraw()
 
@@ -5006,10 +5027,18 @@ class _TidalRoomGate extends StaticBody2D:
 		collision_layer = 2
 		collision_mask = 0
 		_label = G.gold_label(caption, G.FS_XS, true, Color("e7f5ee"), true)
-		_label.position = Vector2(-200, -57)
-		_label.size = Vector2(400, 24)
+		var w := clampf(G.font_bold.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 18.0, 88.0, 320.0)
+		_label.position = Vector2(-w * 0.5, -57)
+		_label.size = Vector2(w, 24)
 		_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("120f10", 0.90)
+		sb.border_color = Color("c29a5b", 0.78)
+		sb.set_border_width_all(1)
+		sb.set_corner_radius_all(3)
+		_label.add_theme_stylebox_override("normal", sb)
 		add_child(_label)
 		_rebuild()
 
@@ -5100,10 +5129,42 @@ class _Portal extends Node2D:
 
 
 ## 道路出口：无烧字素材，目的地文字由引擎渲染。
+class _SpawnGlyph extends Node2D:
+	var player_ref: Node2D = null
+	var origin := Vector2.ZERO
+	var _t := 0.0
+	var _frames: Array[Texture2D] = []
+	func _ready() -> void:
+		z_index = -6
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		var K := preload("res://src/ui/KitV4.gd")
+		for k in ["spawn_glyph_1", "spawn_glyph_2", "spawn_glyph_3"]:
+			var tex := K.commercial_tex(k)
+			if tex != null: _frames.append(tex)
+	func _process(delta: float) -> void:
+		_t += delta
+		if is_instance_valid(player_ref):
+			var dist := player_ref.position.distance_to(origin)
+			if dist > 48.0:
+				modulate.a = move_toward(modulate.a, 0.0, delta * 2.2)
+				if modulate.a <= 0.01:
+					queue_free()
+					return
+		queue_redraw()
+	func _draw() -> void:
+		if _frames.is_empty(): return
+		var idx := int(_t * 4.0) % _frames.size()
+		var tex := _frames[idx]
+		var pulse := 0.52 + 0.16 * sin(_t * 3.2)
+		var sz := Vector2(68, 36)
+		draw_texture_rect(tex, Rect2(-sz * 0.5, sz), false, Color(1, 1, 1, pulse))
+
+
 class _WorldExit extends Node2D:
 	var caption := ""
 	var gate_style := "normal"  # 碑窟北口：修碑前灰石，修碑后暖金
 	var quest_hint := ""        # story / side：指引当前主线或支线最优出口方向
+	var visual_offset := Vector2.ZERO
 	var _caption_label: Label
 	var _t := 0.0
 
@@ -5114,15 +5175,22 @@ class _WorldExit extends Node2D:
 			(Color("d7d5cd") if gate_style == "sealed" else Color("fff1c4"))
 		var label := G.gold_label(caption, G.FS_XS, true, caption_color, true)
 		_caption_label = label
-		label.position = Vector2(32,-54)
+		label.position = visual_offset + Vector2(32,-54)
 		label.add_theme_font_override("font",G.font_bold)
 		label.add_theme_font_size_override("font_size",G.FS_XS)
-		label.size = Vector2(clampf(G.font_bold.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,G.FS_XS).x+10,60,144),24)
-		if bool(get_meta("caption_below",false)):label.position=Vector2(-label.size.x*.5,16)
+		label.size = Vector2(clampf(G.font_bold.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,G.FS_XS).x+14,64,148),24)
+		if bool(get_meta("caption_below",false)):label.position=visual_offset+Vector2(-label.size.x*.5,16)
 		label.clip_text=true
 		label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("120f10", 0.90)
+		sb.border_color = Color("c29a5b", 0.78)
+		sb.set_border_width_all(1)
+		sb.set_corner_radius_all(3)
+		label.add_theme_stylebox_override("normal", sb)
 		add_child(label)
 		queue_redraw()
 
@@ -5133,10 +5201,11 @@ class _WorldExit extends Node2D:
 		if _caption_label == null: return
 		var xf:=get_global_transform_with_canvas()
 		var scale_x:=absf(xf.x.x)
+		var v_origin_x := xf.origin.x + visual_offset.x * scale_x
 		if bool(get_meta("caption_below",false)):
-			_caption_label.position.x=-_caption_label.size.x*.5
+			_caption_label.position.x=visual_offset.x-_caption_label.size.x*.5
 		else:
-			_caption_label.position.x=32 if xf.origin.x+(32+_caption_label.size.x)*scale_x<get_viewport_rect().size.x-4 else -32-_caption_label.size.x
+			_caption_label.position.x=visual_offset.x + (32 if v_origin_x+(32+_caption_label.size.x)*scale_x<get_viewport_rect().size.x-4 else -32-_caption_label.size.x)
 		var screen_at := get_global_transform_with_canvas() * _caption_label.position
 		var viewport_size := get_viewport_rect().size
 		var label_rect := Rect2(screen_at, _caption_label.size)
@@ -5148,16 +5217,22 @@ class _WorldExit extends Node2D:
 
 	func _draw() -> void:
 		if bool(get_meta("reference_complete",false)):
+			draw_set_transform(visual_offset, 0, Vector2.ONE)
 			draw_texture_rect(ReferenceWorldArt.texture("signpost"),Rect2(-30.5,-64,61,64),false)
+			draw_set_transform(Vector2.ZERO)
 		elif bool(get_meta("sunny_sample",false)):
-			draw_set_transform(Vector2(2,1),0,Vector2(1,.3));draw_circle(Vector2.ZERO,23,Color("483b2e",.4));draw_set_transform(Vector2.ZERO)
+			draw_set_transform(visual_offset + Vector2(2,1),0,Vector2(1,.3));draw_circle(Vector2.ZERO,23,Color("483b2e",.4));draw_set_transform(visual_offset, 0, Vector2.ONE)
 			draw_texture_rect(MapScene.SunnyArt.texture("signpost"),Rect2(-46,-94,92,96),false)
-		else:MapScene.WorldPropArt.signpost(self,gate_style)
+			draw_set_transform(Vector2.ZERO)
+		else:
+			draw_set_transform(visual_offset, 0, Vector2.ONE)
+			MapScene.WorldPropArt.signpost(self,gate_style)
+			draw_set_transform(Vector2.ZERO)
 		if not quest_hint.is_empty():
 			var bob := sin(_t * 2.8) * 3.5
 			var tip_y := -104.0 if bool(get_meta("sunny_sample",false)) else -76.0
 			var col := Color("ffd46b") if quest_hint == "story" else Color("7bc8ff")
-			MapScene.WorldPropArt.marker(self, Vector2(0, tip_y + bob), col)
+			MapScene.WorldPropArt.marker(self, visual_offset + Vector2(0, tip_y + bob), col)
 
 
 class _MapMonster extends CharacterBody2D:
@@ -5692,11 +5767,20 @@ class _QuestEntity extends Node2D:
 		_uses_ground_art = art == "frost_brazier" and map_ref != null and map_ref._main_map_id == "frost_post"
 		var label := G.gold_label(caption, G.FS_XS, true,
 			Color("ffe2a0") if kind in ["cache", "trade", "story", "road_mail", "puzzle_choice", "shipping_aid", "frost_herb_route", "first_order_bridge", "journey_return"] else Color("cfe3ff"), true)
-		label.position = Vector2(-84, -124 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -70)
+		var w := clampf(G.font_bold.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 16.0, 64.0, 184.0)
+		label.position = Vector2(-w * 0.5, -124 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -70)
 		if _uses_ground_art: label.position.y = -98
-		label.size = Vector2(168, 20)
+		label.size = Vector2(w, 22)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if not caption.is_empty():
+			var qsb := StyleBoxFlat.new()
+			qsb.bg_color = Color("120f10", 0.88)
+			qsb.border_color = Color("c29a5b", 0.72)
+			qsb.set_border_width_all(1)
+			qsb.set_corner_radius_all(3)
+			label.add_theme_stylebox_override("normal", qsb)
 		_caption_label=label
 		if kind=="feedback":label.visible=false
 		add_child(label)
@@ -6447,6 +6531,7 @@ func _layout_round_tasks() -> void:
 
 func _tick_round_interaction() -> void:
 	if _round_interact == null or _player == null: return
+	var was_visible := _round_interact.visible
 	_round_interact.visible = false
 	_round_target = null
 	if _modal_open() or G.ui_blocked: return
@@ -6469,6 +6554,11 @@ func _tick_round_interaction() -> void:
 		best = _interactable.position.distance_to(_player.position)
 	if _round_target == null: return
 	_round_interact.visible = true
+	if not was_visible:
+		_round_interact.pivot_offset = _round_interact.size * 0.5
+		_round_interact.scale = Vector2(0.82, 0.82)
+		var tw := create_tween()
+		tw.tween_property(_round_interact, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	var radius := 52.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R
 	_round_interact.disabled = best >= radius
 	_round_interact.get_node("Caption").text = "靠近" if best >= radius else ("交谈" if (not _round_target is _QuestEntity and not _round_target is _Interactable) else "垂钓" if _round_target is _QuestEntity and _round_target.kind=="fishing" else "交互")
@@ -6486,7 +6576,7 @@ func _round_interact_pressed() -> void:
 func _name_tag_exclusions() -> Array[Rect2]:
 	var areas: Array[Rect2]=[]
 	for child in _hud.get_children():
-		if child is Control and child.visible and child.name!="TopScrim" and child.size.x>0 and child.size.y>0:
+		if child is Control and child.visible and child.name not in ["TopScrim", "AmbientVignette", "WeatherVFX", "DirectionalSunbeams", "ForegroundCanopy"] and child.size.x>0 and child.size.y>0:
 			areas.append(child.get_global_rect().grow(4))
 	return areas
 

@@ -14,6 +14,7 @@ const VIEW_W := 480.0
 const RARITY_ORDER := ["white", "blue", "purple", "gold"]
 # 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
 const GScript := preload("res://src/autoload/G.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const Finesse := preload("res://src/ui/UIFinesse.gd")
 const Craft := preload("res://src/ui/CraftUI.gd")
 const RARITY_NAME := GScript.RARITY_NAME
@@ -136,7 +137,19 @@ func _rules_lines() -> Array:
 
 func _build() -> void:
 	G.veil(self,.97)
-	Craft.heading(self,"灵宠召唤","以魂晶结缘 · 寻找并肩而行的伙伴")
+	var bg_tex := KitV4.commercial_tex("summon_hall_bg")
+	if bg_tex != null:
+		var hall_bg := TextureRect.new()
+		hall_bg.name = "SummonHallBg"
+		hall_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		hall_bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		hall_bg.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		hall_bg.texture = bg_tex
+		hall_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		hall_bg.modulate = Color(1, 1, 1, 0.72)
+		hall_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(hall_bg)
+	Craft.heading(self,"灵宠召唤","以魂晶结缘 · 寻找并肩而行的伙伴",54.0)
 	var info := G.info_button("召唤规则",_rules_lines(),44.0)
 	info.position = Vector2(412,24)
 	add_child(info)
@@ -150,26 +163,16 @@ func _build() -> void:
 	var soul_icon := _tex_rect("cur_soul",20,20,G.C_RARE)
 	soul_icon.position = Vector2(22,8)
 	balance.add_child(soul_icon)
-	_soul_l = Craft.label("",Vector2(50,5),Vector2(148,26),16,Craft.WHITE,true)
+	_soul_l = Craft.label("",Vector2(50,5),Vector2(148,26),G.FS_CAPTION,Craft.WHITE,true)
 	balance.add_child(_soul_l)
 	var ticket_icon := _tex_rect("itm_ticket_ten",20,20,G.C_RARE)
 	ticket_icon.position = Vector2(238,8)
 	balance.add_child(ticket_icon)
-	_ticket_l = Craft.label("",Vector2(266,5),Vector2(148,26),16,Craft.WHITE,true)
+	_ticket_l = Craft.label("",Vector2(266,5),Vector2(148,26),G.FS_CAPTION,Craft.WHITE,true)
 	balance.add_child(_ticket_l)
 
 	var head := Craft.panel(Vector2(0,44),Vector2(432,166),.94)
 	content.add_child(head)
-	var head_banner := TextureRect.new()
-	head_banner.texture = G.Visuals._kit_tex("gacha_header_banner.png")
-	head_banner.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	head_banner.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	head_banner.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	head_banner.position = Vector2(4, 4)
-	head_banner.size = Vector2(424, 158)
-	head_banner.modulate = Color(1, 1, 1, 0.45)
-	head_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	head.add_child(head_banner)
 	var feat := _featured_pet()
 	var rarity := String(feat.get("rarity","white"))
 	var hue: Color = RARITY_HUE.get(rarity,Craft.GOLD)
@@ -181,8 +184,22 @@ func _build() -> void:
 	halo.position = Vector2(207,-17)
 	halo.size = Vector2(204,204)
 	head.add_child(halo)
-	var pic := _tex_rect(String(feat.get("id","")),128,128,hue)
-	pic.position = Vector2(245,14)
+	var pillar_tex := KitV4.commercial_tex("vfx_summon_pillar")
+	if pillar_tex != null:
+		var pillar := TextureRect.new()
+		pillar.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pillar.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pillar.texture = pillar_tex
+		pillar.position = Vector2(215, 2)
+		pillar.size = Vector2(188, 160)
+		pillar.modulate = Color(1, 1, 1, 0.65)
+		var p_mat := CanvasItemMaterial.new()
+		p_mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+		pillar.material = p_mat
+		pillar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		head.add_child(pillar)
+	var pic := _tex_rect(String(feat.get("id","")),148,148,hue)
+	pic.position = Vector2(235,6)
 	head.add_child(pic)
 	if not bool(G.get_meta("ui_review_mode",false)):
 		var drift := pic.create_tween().set_loops()
@@ -193,9 +210,20 @@ func _build() -> void:
 	content.add_child(pity)
 	_pity_l = Craft.label("",Vector2(14,7),Vector2(186,24),G.FS_XS,Craft.WHITE)
 	pity.add_child(_pity_l)
-	_pity_sub = Craft.label("",Vector2(216,7),Vector2(200,24),G.FS_XS,Craft.MUTED)
+	_pity_sub = Craft.label("",Vector2(180,7),Vector2(184,24),G.FS_XS,Craft.MUTED)
 	_pity_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	pity.add_child(_pity_sub)
+	var ring_tex := KitV4.kit_tex("pity_ring")
+	if ring_tex != null:
+		var ring_tr := TextureRect.new()
+		ring_tr.name = "PityRingIcon"
+		ring_tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ring_tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		ring_tr.texture = ring_tex
+		ring_tr.position = Vector2(372, 7)
+		ring_tr.size = Vector2(52, 52)
+		ring_tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		pity.add_child(ring_tr)
 	var track := Panel.new()
 	track.position = Vector2(14,40)
 	track.size = Vector2(172,10)
@@ -225,12 +253,12 @@ func _build() -> void:
 	pity.add_child(_pity_gem)
 
 	var pool := _pool()
-	var b1 := _btn2("单次结缘","%d 魂石" % int(pool.get("cost_soul_single",80)),204,64,true)
+	var b1 := _btn2("召唤一次","%d 魂晶" % int(pool.get("cost_soul_single",80)),204,64,true)
 	b1.position = Vector2(0,296)
 	b1.gui_input.connect(func(e: InputEvent):
 		if _is_activate(e): _do_single())
 	content.add_child(b1)
-	var b2 := _btn2("十连召唤","%d 魂石 / 1 券" % int(pool.get("cost_soul_ten",720)),216,64,false)
+	var b2 := _btn2("召唤十次","%d 魂晶 · 必出紫" % int(pool.get("cost_soul_ten",720)),216,64,false)
 	b2.position = Vector2(216,296)
 	b2.set_meta("action_material","gilded")
 	b2.gui_input.connect(func(e: InputEvent):
@@ -257,9 +285,7 @@ func _build() -> void:
 		var card := _pool_card(pets[i] as Dictionary)
 		card.position = Vector2((i%4)*110,478+floori(float(i)/4)*76)
 		content.add_child(card)
-	var back := Craft.action("返回",Vector2(24,748),Vector2(432,44))
-	back.activated.connect(_close)
-	add_child(back)
+	G.top_back_button(self, _close, Vector2(24, 24))
 
 func _is_activate(event: InputEvent) -> bool:
 	return (event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT) or event.is_action_pressed("ui_accept")
@@ -305,6 +331,7 @@ func _pool_card(p: Dictionary) -> Panel:
 func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> PanelContainer:
 	var btn := (G.ghost_button(title, w, h) if ghost else G.gold_button(title, w, h)) as PanelContainer
 	if not ghost: btn.set_meta("action_material","gilded")
+	btn.add_theme_stylebox_override("panel", KitV4.style("btn_secondary_normal" if ghost else "btn_primary_normal", 8))
 	btn.focus_mode = Control.FOCUS_ALL
 	btn.focus_entered.connect(func(): btn.call("_set_hover",1.0))
 	btn.focus_exited.connect(func(): btn.call("_set_hover",0.0))
@@ -313,16 +340,14 @@ func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> Pa
 	var title_l := btn.get_child(0) as Label
 	title_l.add_theme_font_override("font",G.font_art)
 	title_l.add_theme_font_size_override("font_size",G.FS_BIG)
-	title_l.add_theme_color_override("font_color",G.TEXT_DARK)
+	title_l.add_theme_color_override("font_color",Color("f3e3c0"))
 	btn.remove_child(title_l)
 	var box := VBoxContainer.new()
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
 	box.add_theme_constant_override("separation", 0)
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	box.add_child(title_l)
-	# 副标（价格/说明）压在主按钮的金底上：用比主标略浅但明显深于底色的棕，
-	# 保证"主标深棕加粗 / 副标深棕常规"两级都在金底上读得清（§17 数字与价格必须高可读）
-	var sub_l := G.gold_label(sub, G.FS_XS, false, G.TEXT_DARK, false)
+	var sub_l := G.gold_label(sub, G.FS_XS, false, Color("e2c48c"), false)
 	box.add_child(sub_l)
 	btn.add_child(box)
 	return btn
@@ -360,7 +385,7 @@ func _inset_band(sz: Vector2, at: Vector2) -> Panel:
 	p.custom_minimum_size = sz
 	p.size = sz
 	p.position = at
-	p.set_surface(Color("d3bd92"), Color("b99a5e"))
+	p.set_surface(Color("221a16"), Color("c9a45c"))
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return p
 
@@ -407,15 +432,15 @@ func _refresh_free() -> void:
 	_free_available = G.gacha_free_available()
 	var band := _free_btn as G.InsetBand
 	if _free_available:
-		band.set_surface(Color("e6cd93"), Color("b8892e"))
+		band.set_surface(Color("2a201a"), Color("f2c76a"))
 		_free_l.text = "今日免费 · 灵宠结缘（每日 1 次）"
-		_free_l.add_theme_color_override("font_color", Color("7a4a0e"))
+		_free_l.add_theme_color_override("font_color", Color("f2c76a"))
 		_free_btn.modulate = Color.WHITE
 	else:
-		band.set_surface(Color("cfc6b0"), Color("a49878"))
+		band.set_surface(Color("1a1412"), Color("6e5a3a"))
 		band.glow = 0.0
 		_free_l.text = "今日免费已领 · 明日再来"
-		_free_l.add_theme_color_override("font_color", Color("8a8a8a"))
+		_free_l.add_theme_color_override("font_color", Color("8f8376"))
 		_free_btn.modulate = Color(1, 1, 1, 0.72)
 
 

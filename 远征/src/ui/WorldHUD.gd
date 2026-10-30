@@ -103,7 +103,7 @@ static func currency() -> Dictionary:
 	root.add_child(icon)
 	var value := label("", 13, UI.GOLD, true)
 	value.position = Vector2(28, 8)
-	value.size = Vector2(68, 28)
+	value.size = Vector2(72, 28)
 	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	root.add_child(value)
 	return {"root":root, "value":value}
@@ -165,8 +165,10 @@ static func update_task(l: Label, words: String) -> void:
 	chip.queue_redraw()
 
 static func format_currency(amount: int) -> String:
-	if amount >= 100000000: return "%d.%02d亿" % [amount / 100000000, (amount % 100000000) / 1000000]
-	if amount >= 1000000: return "%d.%d万" % [amount / 10000, (amount % 10000) / 1000]
+	var v := absi(amount)
+	var sign_prefix := "-" if amount < 0 else ""
+	if v >= 100000000: return "%s%d.%02d亿" % [sign_prefix, v / 100000000, (v % 100000000) / 1000000]
+	if v >= 1000000: return "%s%d.%02d万" % [sign_prefix, v / 10000, (v % 10000) / 100]
 	return str(amount)
 
 static func update_currency(value: Label, amount: int) -> void:

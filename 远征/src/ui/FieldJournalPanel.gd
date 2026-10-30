@@ -4,19 +4,22 @@ signal closed
 
 var _list: VBoxContainer
 var _volume := 0
+var _tabs: Array[Control] = []
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	G.veil(self, 0.8)
 	var top := 60.0
 	var panel := G.parchment_box(440, 680, 16)
+	panel.set_meta("dark_frame", true)
 	panel.position = Vector2(20, top)
 	add_child(panel)
 	var content := Control.new()
 	panel.add_child(content)
-	var plaque := G.Visuals.header_plaque("行旅图志", 388.0, 38.0)
-	plaque.position = Vector2(10, -4)
+	var plaque := G.Visuals.header_plaque("行旅图志", 350.0, 38.0)
+	plaque.position = Vector2(48, -4)
 	content.add_child(plaque)
+	G.top_back_button(content, func(): closed.emit(), Vector2(-4, -7))
 	var names := ["地理", "怪物", "伙伴", "人物手记"]
 	for i in names.size():
 		var tab := G.gold_button(String(names[i]), 96, 44, G.FS_SM)
@@ -26,21 +29,17 @@ func _ready() -> void:
 				_volume = i
 				_refresh())
 		content.add_child(tab)
-	content.add_child(G.Visuals.parchment_subcard(Vector2(-2, 106), Vector2(412, 466)))
+		_tabs.append(tab)
+	content.add_child(G.Visuals.parchment_subcard(Vector2(-2, 106), Vector2(412, 526)))
 	var scroll := ScrollContainer.new()
 	scroll.position = Vector2(8, 114)
-	scroll.size = Vector2(392, 450)
+	scroll.size = Vector2(392, 510)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	content.add_child(scroll)
 	_list = VBoxContainer.new()
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("separation", 16)
 	scroll.add_child(_list)
-	var back := G.ghost_button("返回", 160, 44)
-	back.position = Vector2(124, 588)
-	back.gui_input.connect(func(event: InputEvent):
-		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT: closed.emit())
-	content.add_child(back)
 	_refresh()
 	G.center_fixed_page.call_deferred(self)
 
@@ -52,6 +51,9 @@ func _paragraph(text: String, heading := false) -> void:
 	_list.add_child(label)
 
 func _refresh() -> void:
+	for i in _tabs.size():
+		_tabs[i].set_meta("tab_selected", i == _volume)
+		_tabs[i].queue_redraw()
 	for child in _list.get_children():
 		_list.remove_child(child)
 		child.queue_free()

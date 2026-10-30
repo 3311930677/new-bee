@@ -31,6 +31,7 @@ var _detail_scroll: ScrollContainer
 var _detail_body: VBoxContainer
 var _actions: Control
 var _tray: Control
+var _tray_paper: Panel
 var _toast: Control
 var _modal: Control
 var _tab_buttons: Dictionary = {}
@@ -117,8 +118,10 @@ func _build() -> void:
 	_scroll.name="ItemScroll"
 	_scroll.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_list.add_child(_scroll)
-	_tray=Art.plate("paper")
+	_tray=Art.plate("card")
 	_panel_root.add_child(_tray)
+	_tray_paper=Art.plate("paper")
+	_panel_root.add_child(_tray_paper)
 	_detail=Control.new()
 	_detail.name="SelectedItemDetail"
 	_panel_root.add_child(_detail)
@@ -170,8 +173,8 @@ func _resize_frame(safe_override: Rect2=Rect2()) -> void:
 	Page.place(_gold,Vector2(gold_x+6,84),Vector2(gold_w-12,36))
 	Page.place(_tabs,Vector2(20,126),Vector2(w-40,60))
 	var compact:=(_tab=="equip" and G.inv_find(_sel_uid).is_empty()) or (_tab=="pending" and _sel_uid==0) or (_tab in ["mat","gem"] and _sel_supply.is_empty())
-	var tray_h:=184.0 if compact else minf(340,safe.size.y*.42)
-	tray_h=minf(tray_h,maxf(156,safe.size.y-376))
+	var tray_h:=104.0 if compact else minf(340,safe.size.y*.42)
+	tray_h=minf(tray_h,maxf(104.0 if compact else 156.0,safe.size.y-376))
 	var tray_top:=safe.size.y-tray_h-16
 	Page.place(_list_plate,Vector2(12,196),Vector2(w-24,maxf(96,tray_top-204)))
 	Page.place(_list,Vector2(24,208),Vector2(w-48,maxf(72,tray_top-228)))
@@ -182,7 +185,10 @@ func _resize_frame(safe_override: Rect2=Rect2()) -> void:
 			var cell_w:=floorf((_list.size.x-8*(grid.columns-1))/grid.columns)
 			cell.custom_minimum_size = Vector2(cell_w,cell_w)
 			cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	Page.place(_tray,Vector2(16,tray_top),Vector2(w-32,tray_h))
+	Page.place(_tray,Vector2(12,tray_top),Vector2(w-24,tray_h))
+	if _tray_paper!=null:
+		_tray_paper.visible = not compact
+		Page.place(_tray_paper,Vector2(22,tray_top+8),Vector2(w-44,tray_h-16))
 	Page.place(_detail,Vector2(38,tray_top+20),Vector2(w-76,tray_h-40))
 	Page.place(_detail_scroll,Vector2(0,0),Vector2(_detail.size.x,maxf(48,_detail.size.y-(72 if not _action_buttons.is_empty() else 0))))
 	Page.place(_actions,Vector2(0,maxf(0,_detail.size.y-64)),Vector2(_detail.size.x,64))
@@ -228,7 +234,9 @@ func _refresh() -> void:
 		"mat":_build_supplies(false)
 		"gem":_build_supplies(true)
 		"pending":_build_pending_tab()
-	Art.paper_ink(_detail_body)
+	var has_sel := not ((_tab=="equip" and G.inv_find(_sel_uid).is_empty()) or (_tab=="pending" and _sel_uid==0) or (_tab in ["mat","gem"] and _sel_supply.is_empty()))
+	if has_sel:
+		Art.paper_ink(_detail_body)
 	_resize_frame()
 	_wire_focus()
 	_scroll.set_deferred("scroll_vertical",offset)
@@ -263,8 +271,8 @@ func _build_equip_tab() -> void:
 		cell.rarity_rank=int(inst.get("rarity",1))
 		cell.locked=bool(inst.get("locked",false))
 		cell.heading.text=String(tpl.get("name","装备"))
-		cell.show_name=true
-		cell.image_px=54
+		cell.show_name=false
+		cell.image_px=58
 		cell.flag.text="锁" if inst.get("locked",false) else ""
 		cell.amount.text="+%d" % int(inst.get("lv",0))
 		cell.selected=uid==_sel_uid
@@ -378,11 +386,27 @@ func _build_detail() -> void:
 	if differences==0:comparison.add_child(UI.label("与在身持平","caption",UI.AGED))
 	_detail_body.add_child(Page.line("需求 Lv.%d"%level+(" · "+source if not source.is_empty() else ""),"caption",UI.RED if int(G.prog.get("level",1))<level else UI.AGED))
 	if not String(tpl.get("special_desc","")).is_empty():_detail_body.add_child(Page.line(tpl.special_desc,"caption",UI.AGED))
-	var sockets:=HBoxContainer.new()
-	sockets.add_child(UI.label("宝石孔","caption",UI.AGED))
-	for i in G.equip_gem_sockets():sockets.add_child(_socket_box(uid,inst.get("gems",[]),i))
-	sockets.add_child(UI.label("可镶嵌 %d"%G.equip_gem_sockets(),"tag",UI.AGED))
-	_detail_body.add_child(sockets)
+	var gems: Array = inst.get("gems", [])
+	var empty_sockets := maxi(0, G.equip_gem_sockets() - gems.size())
+	if G.equip_gem_sockets() > 0:
+		var socket_section := VBoxContainer.new()
+		socket_section.add_theme_constant_override("separation", 2)
+		var socket_summary := HBoxContainer.new()
+		socket_summary.add_child(UI.label("宝石孔","caption",UI.AGED))
+		var socket_hint := UI.label("空余 %d · 可在养成中镶嵌" % empty_sockets if empty_sockets > 0 else "已镶满 · 点宝石可拆除","caption",UI.AGED)
+		socket_hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		socket_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		socket_summary.add_child(socket_hint)
+		socket_section.add_child(socket_summary)
+		var sockets:=HBoxContainer.new()
+		sockets.add_theme_constant_override("separation", 8)
+		for i in G.equip_gem_sockets():
+			var socket := _socket_box(uid,gems,i)
+			socket.hint_label.hide()
+			socket.custom_minimum_size.y = 44
+			sockets.add_child(socket)
+		socket_section.add_child(sockets)
+		_detail_body.add_child(socket_section)
 	var affixes:PackedStringArray=[]
 	for a in inst.get("affixes",[]):affixes.append(Page.affix_label(a)+("［锁］" if a.get("locked",false) else ""))
 	if not affixes.is_empty():_detail_body.add_child(Page.line("词条："+" · ".join(affixes),"caption",UI.AGED))
@@ -435,8 +459,9 @@ func _build_supplies(gems: bool) -> void:
 		b.heading.text=G.gem_label(id).replace("宝石","").replace(" ","") if gems else G.item_name(id)
 		b.name="Supply_"+id
 		b.tooltip_text=G.item_name(id)+" ×%d" % G.item_count(id)
-		b.show_name=true
-		b.image_px=54
+		b.show_name=false
+		b.image_px=58
+		b.rarity_rank=3 if gems else 2
 		b.amount.text="×%d" % G.item_count(id)
 		b.selected=id==_sel_supply
 		b.set_meta("supply_id",id)

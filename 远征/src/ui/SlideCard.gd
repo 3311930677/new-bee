@@ -107,6 +107,7 @@ func _build() -> void:
 	col.add_child(_head)
 
 	_kicker = G.gold_label(String(cfg.get("kicker", "")), G.FS_XS, false, G.TEXT_MUTED, false)
+	_kicker.add_theme_font_override("font", G.spaced_font(1, false, true))
 	_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_kicker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_kicker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
