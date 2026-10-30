@@ -2,6 +2,7 @@ extends Control
 const UI:=preload("res://src/ui/TravelChestUI.gd")
 const Page:=preload("res://src/ui/ChestPageUI.gd")
 const Flow:=preload("res://src/ui/FlowChestUI.gd")
+const KitV4:=preload("res://src/ui/KitV4.gd")
 var host:Control
 var shell:Control
 var _art:TextureRect
@@ -97,7 +98,8 @@ func refresh() -> void:
 			_description.text="「%s」\n%s"%[G.theme_lore(_choice).get("epigraph",""),"首领已讨伐" if G.is_world_cleared(_choice) else "首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片"]
 			labels="秘境"
 		1:
-			_art.texture=G.res_tex("role_"+_choice)
+			var r_portrait: Texture2D = KitV4.commercial_tex("%s_portrait" % _choice)
+			_art.texture = r_portrait if r_portrait != null else G.res_tex("role_"+_choice)
 			if _art.texture==null:_art.texture=G.res_tex("role_"+_choice+"_art")
 			_art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			_art.modulate=Color.WHITE
@@ -119,7 +121,10 @@ func refresh() -> void:
 	_index.text="%s %02d / %02d"%[labels,_model.current+1,_model.page_count]
 	var cards:=HBoxContainer.new();cards.add_theme_constant_override("separation",8);shell.body.add_child(cards)
 	var role:=G.get_role(host._role)
-	cards.add_child(SetupCard.new("人物",String(role.get("name","")),"Lv%d · %s"%[int(G.prog.get("level",1)),role.get("job","")],G.res_tex("role_"+host._role),func():host._goto_step(1)))
+	var card_role_tex: Texture2D = KitV4.commercial_tex("%s_portrait" % host._role)
+	if card_role_tex == null:
+		card_role_tex = G.res_tex("role_"+host._role)
+	cards.add_child(SetupCard.new("人物",String(role.get("name","")),"Lv%d · %s"%[int(G.prog.get("level",1)),role.get("job","")],card_role_tex,func():host._goto_step(1)))
 	var pet:=TableCache.get_pet(host._active_pet)
 	var bench:=String(TableCache.get_pet(host._bench_pet).get("name",""))
 	cards.add_child(SetupCard.new("伙伴",String(pet.get("name","未选择")),"替补 · "+bench if not bench.is_empty() else "选择同行伙伴",preload("res://src/ui/ReviewFixUI.gd").pet(host._active_pet),func():host._goto_step(2)))
@@ -132,6 +137,8 @@ func refresh() -> void:
 	host._supply_btn.disabled=host._extra_potions>=G.run_potions_max()-G.run_potions_base() or host._supply_total()+G.run_supply_price(host._extra_potions)>int(G.wallet.get("gold",0));host._supply_btn.custom_minimum_size.x=44;host._supply_btn.size_flags_horizontal=Control.SIZE_SHRINK_END;supply.add_child(host._supply_btn)
 	host._supply_btn.tooltip_text="金币不足" if host._supply_total()+G.run_supply_price(host._extra_potions)>int(G.wallet.get("gold",0)) else "加带一瓶 · %d 金"%G.run_supply_price(host._extra_potions)
 	host._ascetic_btn=Flow.Switch.new("苦行 · 敌人 ×%.2f / 收益 ×%.2f"%[float(G.ascetic_cfg().get("enemy_mult",1)),float(G.ascetic_cfg().get("reward_mult",1))],host._ascetic)
+	if host._ascetic:
+		host._ascetic_btn.modulate = Color(1.08, 0.86, 0.80, 1.0)
 	host._ascetic_btn.pressed.connect(func():host._toggle_ascetic();refresh())
 	shell.body.add_child(host._ascetic_btn)
 	host._hint=Flow.text("补给在出征时结算；返回不扣金币。","caption",UI.AGED)

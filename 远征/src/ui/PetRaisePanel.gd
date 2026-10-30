@@ -96,7 +96,7 @@ func _pet_card(pid: String, idx: int) -> Control:
 	for i in 5:
 		stars += "★" if i < star else "☆"
 	return SlideCardScript.new({
-		"kicker": "灵 宠 %02d / %02d" % [idx + 1, _owned.size()],
+		"kicker": "灵宠 %02d / %02d" % [idx + 1, _owned.size()],
 		"title": "%s  Lv%d" % [String(pd.get("name", pid)), lv],
 		"subtitle": "%s · %s · 突破%d/5" % [String(G.RARITY_NAME.get(String(pd.get("rarity","white")),"普通")), stars, brk],
 		"art_names": ["%s_art" % pid, pid],
@@ -167,7 +167,7 @@ func _build_detail() -> void:
 	_detail.add_child(stat_l)
 
 	# 三操作：喂养 / 突破 / 重随资质
-	var feed_btn := _op_btn("喂 养", "宠物粮 ×%d（%d 经验/份）" % [G.item_count("pet_food"), 100])
+	var feed_btn := _op_btn("喂养", "宠物粮 ×%d（%d 经验/份）" % [G.item_count("pet_food"), 100])
 	feed_btn.position = Vector2(40, 76)
 	feed_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -176,7 +176,7 @@ func _build_detail() -> void:
 
 	var cost := G.pet_break_cost(_sel)
 	var brk_text := "已至五层" if cost.is_empty() else "突破晶×%d + 魂石 %d" % [int(cost["crystal"]), int(cost["soul"])]
-	var brk_btn := _op_btn("突 破", "%s（持有 ×%d）" % [brk_text, G.item_count("break_crystal")])
+	var brk_btn := _op_btn("突破", "%s（持有 ×%d）" % [brk_text, G.item_count("break_crystal")])
 	brk_btn.position = Vector2(40, 138)
 	brk_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:

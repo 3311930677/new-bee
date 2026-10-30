@@ -4,6 +4,7 @@ extends Control
 signal closed
 
 const BattleScenePacked := "res://src/battle/BattleScene.tscn"
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 const CONTENT_W := 408.0
@@ -39,7 +40,9 @@ class _ArenaDuelStage extends Control:
 	var _foe_asp: AnimatedSprite2D
 
 	func _ready() -> void:
-		_bg_tex = G.visual_texture("res://assets/ui/arena_v2/arena_duel_stage.png")
+		_bg_tex = KitV4.commercial_tex("arena_versus_bg")
+		if _bg_tex == null:
+			_bg_tex = G.visual_texture("res://assets/ui/arena_v2/arena_duel_stage.png")
 		_hero_asp = AnimatedSprite2D.new()
 		_hero_asp.position = Vector2(88, 74)
 		_hero_asp.scale = Vector2(0.55, 0.55)
@@ -114,12 +117,21 @@ static func _sb_tex(path: String, l: float, t: float, r: float, b: float,
 	return sb
 
 
+## 字距变体缓存：FontVariation 每 new 一个就多一份 TextServer shaping 缓存，
+## 而 _styled_label 每个标签都会调它（同 G.spaced_font 的注释）。
+static var _spaced_cache := {}
+
 static func _font_spaced(base_font: Font, glyph_space: int) -> Font:
 	if base_font == null or glyph_space == 0:
 		return base_font
+	var key := "%d|%d" % [base_font.get_instance_id(), glyph_space]
+	var cached: FontVariation = _spaced_cache.get(key)
+	if cached != null:
+		return cached
 	var fv := FontVariation.new()
 	fv.base_font = base_font
 	fv.spacing_glyph = glyph_space
+	_spaced_cache[key] = fv
 	return fv
 
 
@@ -149,8 +161,8 @@ static func _plate_button(caption: String, rect: Rect2, is_red: bool, fs: int, o
 	btn.custom_minimum_size = rect.size
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	var tex_path := "res://assets/ui/introduction_20261015/button_red.png" if is_red else "res://assets/ui/introduction_20261015/button_dark.png"
-	btn.add_theme_stylebox_override("panel", _sb_tex(tex_path, 24, 14, 24, 14, 8, 4, 8, 4))
+	var tex_path := "res://assets/ui/kit_20261013/hero_normal.png" if is_red else "res://assets/ui/kit_20261013/btn_normal.png"
+	btn.add_theme_stylebox_override("panel", _sb_tex(tex_path, 16, 12, 16, 12, 8, 4, 8, 4))
 	var lbl := _styled_label(caption, _font_spaced(G.font_serif, 2), fs,
 		Color("fff2d4") if is_red else Color("eee0c4"), HORIZONTAL_ALIGNMENT_CENTER, 3)
 	lbl.position = Vector2(4, 0)
@@ -248,6 +260,9 @@ func _build() -> void:
 	content.add_child(bottom_art)
 
 	# 顶部乌木鎏金匾额 (plaque_title.png) + 毛笔行书大题名 (G.font_art)
+	G.top_back_button(content, func():
+		Audio.sfx("ui_close")
+		closed.emit(), Vector2(2, 0), "返回主城")
 	var plaque := TextureRect.new()
 	plaque.texture = _tex("res://assets/ui/kit_20261013/plaque_title.png")
 	plaque.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -293,12 +308,12 @@ func _build() -> void:
 	_duel_stage.add_child(_foe_tip)
 
 	_hero_tag_l = _styled_label("", G.font_serif, 13, Color("f6e8cc"), HORIZONTAL_ALIGNMENT_CENTER, 3)
-	_hero_tag_l.position = Vector2(10, 108)
+	_hero_tag_l.position = Vector2(10, 102)
 	_hero_tag_l.size = Vector2(176, 22)
 	_duel_stage.add_child(_hero_tag_l)
 
 	_foe_l = _styled_label("", G.font_serif, 13, Color("ffd896"), HORIZONTAL_ALIGNMENT_CENTER, 3)
-	_foe_l.position = Vector2(218, 108)
+	_foe_l.position = Vector2(218, 102)
 	_foe_l.size = Vector2(176, 22)
 	_duel_stage.add_child(_foe_l)
 
@@ -391,40 +406,40 @@ func _build() -> void:
 	_rank_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rank_card.add_child(_rank_bar)
 
-	# ── 区块三：羊皮签条（赛季荣誉 / 历史战绩，采用 kit_20261013/quest_slip.png）
+	# ── 区块三：玄漆鎏金战功条（赛季荣誉 / 历史战绩，去掉黄羊皮签条）
 	var slip_l := Panel.new()
 	slip_l.position = Vector2(2, 298)
 	slip_l.size = Vector2(198, 42)
 	slip_l.add_theme_stylebox_override("panel",
-		_sb_tex("res://assets/ui/kit_20261013/quest_slip.png", 26, 8, 14, 8))
+		_sb_tex("res://assets/ui/settings_20261014/btn_row.png", 16, 10, 16, 10))
 	content.add_child(slip_l)
 
-	_season_l = _styled_label("", G.font_serif, 13, Color("4a2414"), HORIZONTAL_ALIGNMENT_LEFT, 0)
-	_season_l.position = Vector2(26, 4)
-	_season_l.size = Vector2(164, 34)
+	_season_l = _styled_label("", G.font_serif, 13, Color("f3e3c0"), HORIZONTAL_ALIGNMENT_CENTER, 2)
+	_season_l.position = Vector2(10, 4)
+	_season_l.size = Vector2(178, 34)
 	slip_l.add_child(_season_l)
 
 	var slip_r := Panel.new()
 	slip_r.position = Vector2(208, 298)
 	slip_r.size = Vector2(198, 42)
 	slip_r.add_theme_stylebox_override("panel",
-		_sb_tex("res://assets/ui/kit_20261013/quest_slip.png", 26, 8, 14, 8))
+		_sb_tex("res://assets/ui/settings_20261014/btn_row.png", 16, 10, 16, 10))
 	content.add_child(slip_r)
 
-	_rec_l = _styled_label("", G.font_serif, 13, Color("4a2414"), HORIZONTAL_ALIGNMENT_LEFT, 0)
-	_rec_l.position = Vector2(26, 4)
-	_rec_l.size = Vector2(164, 34)
+	_rec_l = _styled_label("", G.font_serif, 13, Color("ffd478"), HORIZONTAL_ALIGNMENT_CENTER, 2)
+	_rec_l.position = Vector2(10, 4)
+	_rec_l.size = Vector2(178, 34)
 	slip_r.add_child(_rec_l)
 
 	# ── 区块四：主次分明切磋按钮行（乌金次按钮 + 朱红鎏金主按钮）
-	var reroll := _plate_button("换 对 手", Rect2(2, 348, 136, 50), false, 16, func():
+	var reroll := _plate_button("换对手", Rect2(2, 348, 136, 50), false, G.FS_SM, func():
 		HapticFeedback.light()
 		Audio.sfx("ui_page")
 		_foe_lv = clampi(_foe_lv + (1 if randf() < 0.5 else -1), 1, 99)
 		_refresh())
 	content.add_child(reroll)
 
-	_go_btn = _plate_button("开 始 切 磋", Rect2(148, 346, 258, 54), true, 20, func():
+	_go_btn = _plate_button("开始切磋", Rect2(148, 346, 258, 54), true, G.FS_READING, func():
 		HapticFeedback.medium()
 		_start_battle())
 	content.add_child(_go_btn)
@@ -467,14 +482,9 @@ func _build() -> void:
 	curio_btn.name = "OpenCurioButton"
 	content.add_child(curio_btn)
 
-	var back := _plate_button("返 回 主 城", Rect2(114, 526, 180, 46), false, 16, func():
-		Audio.sfx("ui_close")
-		closed.emit())
-	content.add_child(back)
-
 	var subtitle := _styled_label("擂台试锋 · 不损装备，不耗资源", G.font_reg, 13,
 		Color("d0c0a4"), HORIZONTAL_ALIGNMENT_CENTER, 3)
-	subtitle.position = Vector2(0, 584)
+	subtitle.position = Vector2(0, 528)
 	subtitle.size = Vector2(CONTENT_W, 22)
 	content.add_child(subtitle)
 

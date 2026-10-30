@@ -2,13 +2,13 @@ extends RefCounted
 ## Shared semantic type and controls for showcase, activity and life-skill pages.
 const TouchScroll := preload("res://src/ui/TouchScroll.gd")
 const Art := preload("res://src/ui/InventoryQuestSkin.gd")
-const INK := Color("12151c")
-const CARD := Color("1b2028")
-const TEXT := Color("f3e9d2")
-const MUTED := Color("bdb29b")
-const GOLD := Color("e6bd77")
-const JADE := Color("83c9ac")
-const RED := Color("f29c87")
+const INK := Color("120e0c")
+const CARD := Color("1a1412")
+const TEXT := Color("f3e3c0")
+const MUTED := Color("8f8376")
+const GOLD := Color("f2c76a")
+const JADE := Color("55d8a8")
+const RED := Color("e2402c")
 const SIZES := {"title":28,"section":22,"object":20,"body":18,"caption":15,"tag":14,"price":24}
 
 static func text(words: String, role := "body", color := TEXT) -> Label:
@@ -49,9 +49,11 @@ static func button(words: String, primary := false) -> Button:
 	b.add_theme_font_override("font",G.font_bold if primary else G.font_reg)
 	b.add_theme_font_size_override("font_size",G.FS_MD)
 	for state in ["normal","hover","pressed","focus","disabled"]:
-		var box:=Art.box("primary" if primary or state=="pressed" else "secondary",10)
+		var box_kind := "primary" if primary else ("tab_active" if state=="pressed" else "secondary")
+		var box:=Art.box(box_kind,10)
 		if box is StyleBoxTexture:
-			box.modulate_color=Color(1.12,1.1,1.04) if state=="hover" else Color(.72,.72,.72) if state=="pressed" else Color(.45,.45,.45) if state=="disabled" else Color.WHITE
+			box = box.duplicate()
+			box.modulate_color=Color(1.12,1.1,1.04) if state=="hover" else Color(.86,.86,.86) if (state=="pressed" and primary) else Color(.45,.45,.45) if state=="disabled" else Color.WHITE
 		if state=="focus":
 			var focus:=StyleBoxFlat.new()
 			focus.bg_color=Color.TRANSPARENT
@@ -59,7 +61,7 @@ static func button(words: String, primary := false) -> Button:
 			focus.set_border_width_all(2)
 			b.add_theme_stylebox_override(state,focus)
 		else:b.add_theme_stylebox_override(state,box)
-	for state in ["font_color","font_hover_color","font_pressed_color","font_focus_color"]:b.add_theme_color_override(state,TEXT)
+	for state in ["font_color","font_hover_color","font_pressed_color","font_focus_color"]:b.add_theme_color_override(state,GOLD if (state=="font_pressed_color" and not primary) else TEXT)
 	b.add_theme_color_override("font_disabled_color",MUTED.darkened(.2))
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	return b
@@ -77,7 +79,7 @@ static func picture(texture: Texture2D, px: float) -> TextureRect:
 static func hero(title: String, note: String, texture: Texture2D) -> Control:
 	var card := frame(16)
 	card.custom_minimum_size.y = 124
-	card.add_theme_stylebox_override("panel",surface(Color("243d3c"),GOLD,16))
+	card.add_theme_stylebox_override("panel",surface(Color("221a16"),GOLD,16))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation",8)
 	card.add_child(row)

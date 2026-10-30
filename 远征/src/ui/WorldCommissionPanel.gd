@@ -17,7 +17,8 @@ func _ready() -> void:
 	add_child(paper)
 	var content := Control.new()
 	paper.add_child(content)
-	content.add_child(Style.header_plaque("三城世界事务", Vector2(10, -2), 388.0))
+	content.add_child(Style.header_plaque("三城世界事务", Vector2(48, -2), 350.0))
+	G.top_back_button(content, func(): closed.emit(), Vector2(-4, -5), "返回历练委托")
 	for i in 3:
 		var tab := G.gold_button(WorldCommission.NAMES[i],130,42,G.FS_SM)
 		Style.apply_button(tab,"secondary")
@@ -29,33 +30,28 @@ func _ready() -> void:
 				_refresh())
 		content.add_child(tab)
 		_tabs.append(tab)
-	_line = Style.text("未接候选每日更换 · 已接目标跨日保留",G.FS_XS,Style.MUTED)
+	_line = Style.text("未接候选每日更换 · 已接目标跨日保留",G.FS_XS,Style.BRASS)
 	_line.position=Vector2(4,102)
 	_line.custom_minimum_size=Vector2(400,52)
 	_line.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(_line)
 	var scroll := ScrollContainer.new()
 	scroll.position=Vector2(0,158)
-	scroll.size=Vector2(408,432)
+	scroll.size=Vector2(408,484)
 	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
 	content.add_child(scroll)
 	_list=VBoxContainer.new()
 	_list.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("separation",12)
 	scroll.add_child(_list)
-	var back := G.ghost_button("返回历练委托",200,44)
-	Style.apply_button(back,"quiet")
-	back.position=Vector2(104,605)
-	back.gui_input.connect(func(e:InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: closed.emit())
-	content.add_child(back)
 	var mid := String(G.prog.get("main_world",{}).get("map_id","lorin_wilds"))
 	if mid=="shenyuan_port": _region="shenyuan"
 	if mid=="frost_post": _region="frost"
 	_refresh()
 
 func _text(parent:Node, text:String, big:=false)->void:
-	var label:=Style.text(text,18 if big else 15,Style.JADE if big else Style.INK)
+	var ink := (Color("f2c76a") if big else Style.LIGHT) if parent == _list else (Style.JADE if big else Style.INK)
+	var label:=Style.text(text,18 if big else 15,ink)
 	label.custom_minimum_size.x=348
 	label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	parent.add_child(label)

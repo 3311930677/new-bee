@@ -1,0 +1,866 @@
+{
+  "zs_portrait": {
+    "file": "res://assets/commercial_20261028/portraits/zs_portrait.png"
+  },
+  "zs_avatar": {
+    "file": "res://assets/commercial_20261028/portraits/zs_avatar.png"
+  },
+  "ck_portrait": {
+    "file": "res://assets/commercial_20261028/portraits/ck_portrait.png"
+  },
+  "ck_avatar": {
+    "file": "res://assets/commercial_20261028/portraits/ck_avatar.png"
+  },
+  "fs_portrait": {
+    "file": "res://assets/commercial_20261028/portraits/fs_portrait.png"
+  },
+  "fs_avatar": {
+    "file": "res://assets/commercial_20261028/portraits/fs_avatar.png"
+  },
+  "fz_portrait": {
+    "file": "res://assets/commercial_20261028/portraits/fz_portrait.png"
+  },
+  "fz_avatar": {
+    "file": "res://assets/commercial_20261028/portraits/fz_avatar.png"
+  },
+  "npc_steward_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_steward_bust.png"
+  },
+  "npc_guard_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_guard_bust.png"
+  },
+  "npc_scribe_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_scribe_bust.png"
+  },
+  "npc_keeper_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_keeper_bust.png"
+  },
+  "npc_smith_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_smith_bust.png"
+  },
+  "npc_mentor_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_mentor_bust.png"
+  },
+  "npc_stablemaster_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_stablemaster_bust.png"
+  },
+  "npc_warden_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_warden_bust.png"
+  },
+  "npc_child_bust": {
+    "file": "res://assets/commercial_20261028/portraits/npc_child_bust.png"
+  },
+  "emblem_zs": {
+    "file": "res://assets/commercial_20261028/icons/emblem_zs.png"
+  },
+  "emblem_ck": {
+    "file": "res://assets/commercial_20261028/icons/emblem_ck.png"
+  },
+  "emblem_fs": {
+    "file": "res://assets/commercial_20261028/icons/emblem_fs.png"
+  },
+  "emblem_fz": {
+    "file": "res://assets/commercial_20261028/icons/emblem_fz.png"
+  },
+  "nav_menu": {
+    "file": "res://assets/commercial_20261028/icons/nav_menu.png"
+  },
+  "nav_bag": {
+    "file": "res://assets/commercial_20261028/icons/nav_bag.png"
+  },
+  "tab_equip": {
+    "file": "res://assets/commercial_20261028/icons/tab_equip.png"
+  },
+  "tab_talent": {
+    "file": "res://assets/commercial_20261028/icons/tab_talent.png"
+  },
+  "tab_skill": {
+    "file": "res://assets/commercial_20261028/icons/tab_skill.png"
+  },
+  "tab_pet": {
+    "file": "res://assets/commercial_20261028/icons/tab_pet.png"
+  },
+  "tab_mount": {
+    "file": "res://assets/commercial_20261028/icons/tab_mount.png"
+  },
+  "tab_title": {
+    "file": "res://assets/commercial_20261028/icons/tab_title.png"
+  },
+  "d01a_1": {
+    "file": "res://assets/commercial_20261028/icons/nav_menu.png"
+  },
+  "d01a_2": {
+    "file": "res://assets/commercial_20261028/icons/nav_bag.png"
+  },
+  "d01a_3": {
+    "file": "res://assets/commercial_20261028/icons/tab_equip.png"
+  },
+  "d01a_4": {
+    "file": "res://assets/commercial_20261028/icons/tab_talent.png"
+  },
+  "d01a_5": {
+    "file": "res://assets/commercial_20261028/icons/tab_skill.png"
+  },
+  "d01a_6": {
+    "file": "res://assets/commercial_20261028/icons/tab_pet.png"
+  },
+  "d01a_7": {
+    "file": "res://assets/commercial_20261028/icons/tab_mount.png"
+  },
+  "d01a_8": {
+    "file": "res://assets/commercial_20261028/icons/tab_title.png"
+  },
+  "entry_event": {
+    "file": "res://assets/commercial_20261028/icons/entry_event.png"
+  },
+  "entry_daily": {
+    "file": "res://assets/commercial_20261028/icons/entry_daily.png"
+  },
+  "entry_redeem": {
+    "file": "res://assets/commercial_20261028/icons/entry_redeem.png"
+  },
+  "entry_journal": {
+    "file": "res://assets/commercial_20261028/icons/entry_journal.png"
+  },
+  "entry_journey": {
+    "file": "res://assets/commercial_20261028/icons/entry_journey.png"
+  },
+  "entry_fishing": {
+    "file": "res://assets/commercial_20261028/icons/entry_fishing.png"
+  },
+  "entry_ranking": {
+    "file": "res://assets/commercial_20261028/icons/entry_ranking.png"
+  },
+  "entry_summon": {
+    "file": "res://assets/commercial_20261028/icons/entry_summon.png"
+  },
+  "d01b_1": {
+    "file": "res://assets/commercial_20261028/icons/entry_event.png"
+  },
+  "d01b_2": {
+    "file": "res://assets/commercial_20261028/icons/entry_daily.png"
+  },
+  "d01b_3": {
+    "file": "res://assets/commercial_20261028/icons/entry_redeem.png"
+  },
+  "d01b_4": {
+    "file": "res://assets/commercial_20261028/icons/entry_journal.png"
+  },
+  "d01b_5": {
+    "file": "res://assets/commercial_20261028/icons/entry_journey.png"
+  },
+  "d01b_6": {
+    "file": "res://assets/commercial_20261028/icons/entry_fishing.png"
+  },
+  "d01b_7": {
+    "file": "res://assets/commercial_20261028/icons/entry_ranking.png"
+  },
+  "d01b_8": {
+    "file": "res://assets/commercial_20261028/icons/entry_summon.png"
+  },
+  "talent_berserk_1": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_1.png"
+  },
+  "talent_berserk_2": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_2.png"
+  },
+  "talent_berserk_3": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_3.png"
+  },
+  "talent_berserk_4": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_4.png"
+  },
+  "talent_berserk_5": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_5.png"
+  },
+  "talent_berserk_6": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_6.png"
+  },
+  "talent_berserk_7": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_7.png"
+  },
+  "talent_berserk_8": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_8.png"
+  },
+  "talent_berserk_9": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_9.png"
+  },
+  "talent_berserk_10": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_10.png"
+  },
+  "talent_guard_1": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_1.png"
+  },
+  "talent_guard_2": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_2.png"
+  },
+  "talent_guard_3": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_3.png"
+  },
+  "talent_guard_4": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_4.png"
+  },
+  "talent_guard_5": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_5.png"
+  },
+  "talent_guard_6": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_6.png"
+  },
+  "talent_guard_7": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_7.png"
+  },
+  "talent_guard_8": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_8.png"
+  },
+  "talent_guard_9": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_9.png"
+  },
+  "talent_guard_10": {
+    "file": "res://assets/commercial_20261028/icons/talent_guard_10.png"
+  },
+  "talent_command_1": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_1.png"
+  },
+  "talent_command_2": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_2.png"
+  },
+  "talent_command_3": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_3.png"
+  },
+  "talent_command_4": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_4.png"
+  },
+  "talent_command_5": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_5.png"
+  },
+  "talent_command_6": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_6.png"
+  },
+  "talent_command_7": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_7.png"
+  },
+  "talent_command_8": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_8.png"
+  },
+  "talent_command_9": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_9.png"
+  },
+  "talent_command_10": {
+    "file": "res://assets/commercial_20261028/icons/talent_command_10.png"
+  },
+  "d02a_1": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_1.png"
+  },
+  "d02a_2": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_2.png"
+  },
+  "d02a_3": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_3.png"
+  },
+  "d02a_4": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_4.png"
+  },
+  "d02a_5": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_5.png"
+  },
+  "d02a_6": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_6.png"
+  },
+  "d02a_7": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_7.png"
+  },
+  "d02a_8": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_8.png"
+  },
+  "d02a_9": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_9.png"
+  },
+  "d02a_10": {
+    "file": "res://assets/commercial_20261028/icons/talent_berserk_10.png"
+  },
+  "title_badge_1": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_1.png"
+  },
+  "title_badge_2": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_2.png"
+  },
+  "title_badge_3": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_3.png"
+  },
+  "title_badge_4": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_4.png"
+  },
+  "title_badge_5": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_5.png"
+  },
+  "title_badge_6": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_6.png"
+  },
+  "title_badge_7": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_7.png"
+  },
+  "title_badge_8": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_8.png"
+  },
+  "title_badge_9": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_9.png"
+  },
+  "title_badge_10": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_10.png"
+  },
+  "title_badge_11": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_11.png"
+  },
+  "title_badge_12": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_12.png"
+  },
+  "title_badge_13": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_13.png"
+  },
+  "title_badge_14": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_14.png"
+  },
+  "title_badge_15": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_15.png"
+  },
+  "title_badge_16": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_16.png"
+  },
+  "title_badge_17": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_17.png"
+  },
+  "title_badge_18": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_18.png"
+  },
+  "title_badge_19": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_19.png"
+  },
+  "title_badge_20": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_20.png"
+  },
+  "title_badge_21": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_21.png"
+  },
+  "title_badge_22": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_22.png"
+  },
+  "title_badge_23": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_23.png"
+  },
+  "title_badge_24": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_24.png"
+  },
+  "title_badge_25": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_25.png"
+  },
+  "d04a_1": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_1.png"
+  },
+  "d04a_2": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_2.png"
+  },
+  "d04a_3": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_3.png"
+  },
+  "d04a_4": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_4.png"
+  },
+  "d04a_5": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_5.png"
+  },
+  "d04a_6": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_6.png"
+  },
+  "d04a_7": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_7.png"
+  },
+  "d04a_8": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_8.png"
+  },
+  "d04a_9": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_9.png"
+  },
+  "d04a_10": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_10.png"
+  },
+  "d04a_11": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_11.png"
+  },
+  "d04a_12": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_12.png"
+  },
+  "d04a_13": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_13.png"
+  },
+  "d04a_14": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_14.png"
+  },
+  "d04a_15": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_15.png"
+  },
+  "d04a_16": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_16.png"
+  },
+  "d04a_17": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_17.png"
+  },
+  "d04a_18": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_18.png"
+  },
+  "d04a_19": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_19.png"
+  },
+  "d04a_20": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_20.png"
+  },
+  "d04a_21": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_21.png"
+  },
+  "d04a_22": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_22.png"
+  },
+  "d04a_23": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_23.png"
+  },
+  "d04a_24": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_24.png"
+  },
+  "d04a_25": {
+    "file": "res://assets/commercial_20261028/icons/title_badge_25.png"
+  },
+  "hud_ride": {
+    "file": "res://assets/commercial_20261028/icons/hud_ride.png"
+  },
+  "hud_dismount": {
+    "file": "res://assets/commercial_20261028/icons/hud_dismount.png"
+  },
+  "hud_sprint": {
+    "file": "res://assets/commercial_20261028/icons/hud_sprint.png"
+  },
+  "hud_potion": {
+    "file": "res://assets/commercial_20261028/icons/hud_potion.png"
+  },
+  "hud_interact": {
+    "file": "res://assets/commercial_20261028/icons/hud_interact.png"
+  },
+  "hud_camp": {
+    "file": "res://assets/commercial_20261028/icons/hud_camp.png"
+  },
+  "hud_retreat": {
+    "file": "res://assets/commercial_20261028/icons/hud_retreat.png"
+  },
+  "hud_map": {
+    "file": "res://assets/commercial_20261028/icons/hud_map.png"
+  },
+  "d05_1": {
+    "file": "res://assets/commercial_20261028/icons/hud_ride.png"
+  },
+  "d05_2": {
+    "file": "res://assets/commercial_20261028/icons/hud_dismount.png"
+  },
+  "d05_3": {
+    "file": "res://assets/commercial_20261028/icons/hud_sprint.png"
+  },
+  "d05_4": {
+    "file": "res://assets/commercial_20261028/icons/hud_potion.png"
+  },
+  "d05_5": {
+    "file": "res://assets/commercial_20261028/icons/hud_interact.png"
+  },
+  "d05_6": {
+    "file": "res://assets/commercial_20261028/icons/hud_camp.png"
+  },
+  "d05_7": {
+    "file": "res://assets/commercial_20261028/icons/hud_retreat.png"
+  },
+  "d05_8": {
+    "file": "res://assets/commercial_20261028/icons/hud_map.png"
+  },
+  "slot_sil_weapon": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_weapon.png"
+  },
+  "slot_sil_armor": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_armor.png"
+  },
+  "slot_sil_accessory": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_accessory.png"
+  },
+  "d07_1": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_weapon.png"
+  },
+  "d07_2": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_armor.png"
+  },
+  "d07_3": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_accessory.png"
+  },
+  "slot_sil_greatsword": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_weapon.png"
+  },
+  "slot_sil_spear": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_weapon.png"
+  },
+  "slot_sil_staff": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_weapon.png"
+  },
+  "slot_sil_mace": {
+    "file": "res://assets/commercial_20261028/icons/slot_sil_weapon.png"
+  },
+  "fishing_float_1": {
+    "file": "res://assets/commercial_20261028/icons/fishing_float_1.png"
+  },
+  "fishing_float": {
+    "file": "res://assets/commercial_20261028/icons/fishing_float.png"
+  },
+  "fishing_float_3": {
+    "file": "res://assets/commercial_20261028/icons/fishing_float_3.png"
+  },
+  "fishing_float_4": {
+    "file": "res://assets/commercial_20261028/icons/fishing_float_4.png"
+  },
+  "fishing_shadow": {
+    "file": "res://assets/commercial_20261028/icons/fishing_shadow.png"
+  },
+  "fishing_shadow_2": {
+    "file": "res://assets/commercial_20261028/icons/fishing_shadow_2.png"
+  },
+  "fishing_shadow_3": {
+    "file": "res://assets/commercial_20261028/icons/fishing_shadow_3.png"
+  },
+  "fishing_king_shadow": {
+    "file": "res://assets/commercial_20261028/icons/fishing_king_shadow.png"
+  },
+  "summon_hall_bg": {
+    "file": "res://assets/commercial_20261028/scenes/summon_hall_bg.png"
+  },
+  "role_stage_bg": {
+    "file": "res://assets/commercial_20261028/scenes/role_stage_bg.png"
+  },
+  "fishing_bg_salt": {
+    "file": "res://assets/commercial_20261028/scenes/fishing_bg_salt.png"
+  },
+  "fishing_bg_harbor": {
+    "file": "res://assets/commercial_20261028/scenes/fishing_bg_harbor.png"
+  },
+  "fishing_bg_tide": {
+    "file": "res://assets/commercial_20261028/scenes/fishing_bg_tide.png"
+  },
+  "fishing_bg_frost": {
+    "file": "res://assets/commercial_20261028/scenes/fishing_bg_frost.png"
+  },
+  "arena_versus_bg": {
+    "file": "res://assets/commercial_20261028/scenes/arena_versus_bg.png"
+  },
+  "market_canopy": {
+    "file": "res://assets/commercial_20261028/scenes/market_canopy.png"
+  },
+  "talent_starfield_bg": {
+    "file": "res://assets/commercial_20261028/scenes/talent_starfield_bg.png"
+  },
+  "victory_header": {
+    "file": "res://assets/commercial_20261028/scenes/victory_header.png"
+  },
+  "defeat_header": {
+    "file": "res://assets/commercial_20261028/scenes/defeat_header.png"
+  },
+  "settlement_chest_closed": {
+    "file": "res://assets/commercial_20261028/scenes/settlement_chest_closed.png"
+  },
+  "settlement_chest_open": {
+    "file": "res://assets/commercial_20261028/scenes/settlement_chest_open.png"
+  },
+  "spawn_glyph_1": {
+    "file": "res://assets/commercial_20261028/map/spawn_glyph_1.png"
+  },
+  "spawn_glyph_2": {
+    "file": "res://assets/commercial_20261028/map/spawn_glyph_2.png"
+  },
+  "spawn_glyph_3": {
+    "file": "res://assets/commercial_20261028/map/spawn_glyph_3.png"
+  },
+  "f02a_1": {
+    "file": "res://assets/commercial_20261028/map/f02a_1.png"
+  },
+  "f02a_2": {
+    "file": "res://assets/commercial_20261028/map/f02a_2.png"
+  },
+  "f02a_3": {
+    "file": "res://assets/commercial_20261028/map/f02a_3.png"
+  },
+  "f02a_4": {
+    "file": "res://assets/commercial_20261028/map/f02a_4.png"
+  },
+  "f02a_5": {
+    "file": "res://assets/commercial_20261028/map/f02a_5.png"
+  },
+  "f02a_6": {
+    "file": "res://assets/commercial_20261028/map/f02a_6.png"
+  },
+  "f02b_1": {
+    "file": "res://assets/commercial_20261028/map/f02b_1.png"
+  },
+  "f02b_2": {
+    "file": "res://assets/commercial_20261028/map/f02b_2.png"
+  },
+  "f02b_3": {
+    "file": "res://assets/commercial_20261028/map/f02b_3.png"
+  },
+  "f02b_4": {
+    "file": "res://assets/commercial_20261028/map/f02b_4.png"
+  },
+  "f02b_5": {
+    "file": "res://assets/commercial_20261028/map/f02b_5.png"
+  },
+  "f02b_6": {
+    "file": "res://assets/commercial_20261028/map/f02b_6.png"
+  },
+  "f02b_7": {
+    "file": "res://assets/commercial_20261028/map/f02b_7.png"
+  },
+  "f02b_8": {
+    "file": "res://assets/commercial_20261028/map/f02b_8.png"
+  },
+  "f02b_9": {
+    "file": "res://assets/commercial_20261028/map/f02b_9.png"
+  },
+  "f02b_10": {
+    "file": "res://assets/commercial_20261028/map/f02b_10.png"
+  },
+  "f03a_1": {
+    "file": "res://assets/commercial_20261028/map/f03a_1.png"
+  },
+  "f03a_2": {
+    "file": "res://assets/commercial_20261028/map/f03a_2.png"
+  },
+  "f03a_3": {
+    "file": "res://assets/commercial_20261028/map/f03a_3.png"
+  },
+  "f03a_4": {
+    "file": "res://assets/commercial_20261028/map/f03a_4.png"
+  },
+  "f03a_5": {
+    "file": "res://assets/commercial_20261028/map/f03a_5.png"
+  },
+  "f03a_6": {
+    "file": "res://assets/commercial_20261028/map/f03a_6.png"
+  },
+  "f03b_1": {
+    "file": "res://assets/commercial_20261028/map/f03b_1.png"
+  },
+  "f03b_2": {
+    "file": "res://assets/commercial_20261028/map/f03b_2.png"
+  },
+  "f03b_3": {
+    "file": "res://assets/commercial_20261028/map/f03b_3.png"
+  },
+  "f03b_4": {
+    "file": "res://assets/commercial_20261028/map/f03b_4.png"
+  },
+  "f03b_5": {
+    "file": "res://assets/commercial_20261028/map/f03b_5.png"
+  },
+  "f03b_6": {
+    "file": "res://assets/commercial_20261028/map/f03b_6.png"
+  },
+  "f03b_7": {
+    "file": "res://assets/commercial_20261028/map/f03b_7.png"
+  },
+  "f03b_8": {
+    "file": "res://assets/commercial_20261028/map/f03b_8.png"
+  },
+  "f03b_9": {
+    "file": "res://assets/commercial_20261028/map/f03b_9.png"
+  },
+  "f03b_10": {
+    "file": "res://assets/commercial_20261028/map/f03b_10.png"
+  },
+  "f04a_1": {
+    "file": "res://assets/commercial_20261028/map/f04a_1.png"
+  },
+  "f04a_2": {
+    "file": "res://assets/commercial_20261028/map/f04a_2.png"
+  },
+  "f04a_3": {
+    "file": "res://assets/commercial_20261028/map/f04a_3.png"
+  },
+  "f04a_4": {
+    "file": "res://assets/commercial_20261028/map/f04a_4.png"
+  },
+  "f04a_5": {
+    "file": "res://assets/commercial_20261028/map/f04a_5.png"
+  },
+  "f04a_6": {
+    "file": "res://assets/commercial_20261028/map/f04a_6.png"
+  },
+  "f04b_1": {
+    "file": "res://assets/commercial_20261028/map/f04b_1.png"
+  },
+  "f04b_2": {
+    "file": "res://assets/commercial_20261028/map/f04b_2.png"
+  },
+  "f04b_3": {
+    "file": "res://assets/commercial_20261028/map/f04b_3.png"
+  },
+  "f04b_4": {
+    "file": "res://assets/commercial_20261028/map/f04b_4.png"
+  },
+  "f04b_5": {
+    "file": "res://assets/commercial_20261028/map/f04b_5.png"
+  },
+  "f04b_6": {
+    "file": "res://assets/commercial_20261028/map/f04b_6.png"
+  },
+  "f04b_7": {
+    "file": "res://assets/commercial_20261028/map/f04b_7.png"
+  },
+  "f04b_8": {
+    "file": "res://assets/commercial_20261028/map/f04b_8.png"
+  },
+  "f04b_9": {
+    "file": "res://assets/commercial_20261028/map/f04b_9.png"
+  },
+  "f05a_1": {
+    "file": "res://assets/commercial_20261028/map/f05a_1.png"
+  },
+  "f05a_2": {
+    "file": "res://assets/commercial_20261028/map/f05a_2.png"
+  },
+  "f05a_3": {
+    "file": "res://assets/commercial_20261028/map/f05a_3.png"
+  },
+  "f05a_4": {
+    "file": "res://assets/commercial_20261028/map/f05a_4.png"
+  },
+  "f05a_5": {
+    "file": "res://assets/commercial_20261028/map/f05a_5.png"
+  },
+  "f05a_6": {
+    "file": "res://assets/commercial_20261028/map/f05a_6.png"
+  },
+  "f05b_1": {
+    "file": "res://assets/commercial_20261028/map/f05b_1.png"
+  },
+  "f05b_2": {
+    "file": "res://assets/commercial_20261028/map/f05b_2.png"
+  },
+  "f05b_3": {
+    "file": "res://assets/commercial_20261028/map/f05b_3.png"
+  },
+  "f05b_4": {
+    "file": "res://assets/commercial_20261028/map/f05b_4.png"
+  },
+  "f05b_5": {
+    "file": "res://assets/commercial_20261028/map/f05b_5.png"
+  },
+  "f05b_6": {
+    "file": "res://assets/commercial_20261028/map/f05b_6.png"
+  },
+  "f05b_7": {
+    "file": "res://assets/commercial_20261028/map/f05b_7.png"
+  },
+  "f05b_8": {
+    "file": "res://assets/commercial_20261028/map/f05b_8.png"
+  },
+  "f05b_9": {
+    "file": "res://assets/commercial_20261028/map/f05b_9.png"
+  },
+  "f05b_10": {
+    "file": "res://assets/commercial_20261028/map/f05b_10.png"
+  },
+  "f05b_11": {
+    "file": "res://assets/commercial_20261028/map/f05b_11.png"
+  },
+  "f05b_12": {
+    "file": "res://assets/commercial_20261028/map/f05b_12.png"
+  },
+  "f06a_1": {
+    "file": "res://assets/commercial_20261028/map/f06a_1.png"
+  },
+  "f06a_2": {
+    "file": "res://assets/commercial_20261028/map/f06a_2.png"
+  },
+  "f06a_3": {
+    "file": "res://assets/commercial_20261028/map/f06a_3.png"
+  },
+  "f06a_4": {
+    "file": "res://assets/commercial_20261028/map/f06a_4.png"
+  },
+  "f06a_5": {
+    "file": "res://assets/commercial_20261028/map/f06a_5.png"
+  },
+  "f06a_6": {
+    "file": "res://assets/commercial_20261028/map/f06a_6.png"
+  },
+  "f06b_1": {
+    "file": "res://assets/commercial_20261028/map/f06b_1.png"
+  },
+  "f06b_2": {
+    "file": "res://assets/commercial_20261028/map/f06b_2.png"
+  },
+  "f06b_3": {
+    "file": "res://assets/commercial_20261028/map/f06b_3.png"
+  },
+  "f06b_4": {
+    "file": "res://assets/commercial_20261028/map/f06b_4.png"
+  },
+  "f06b_5": {
+    "file": "res://assets/commercial_20261028/map/f06b_5.png"
+  },
+  "f06b_6": {
+    "file": "res://assets/commercial_20261028/map/f06b_6.png"
+  },
+  "f06b_7": {
+    "file": "res://assets/commercial_20261028/map/f06b_7.png"
+  },
+  "f06b_8": {
+    "file": "res://assets/commercial_20261028/map/f06b_8.png"
+  },
+  "f06b_9": {
+    "file": "res://assets/commercial_20261028/map/f06b_9.png"
+  },
+  "f06b_10": {
+    "file": "res://assets/commercial_20261028/map/f06b_10.png"
+  },
+  "f06b_11": {
+    "file": "res://assets/commercial_20261028/map/f06b_11.png"
+  },
+  "f06b_12": {
+    "file": "res://assets/commercial_20261028/map/f06b_12.png"
+  },
+  "f07_base_h": {
+    "file": "res://assets/commercial_20261028/map/f07_base_h.png"
+  },
+  "f07_glow_h": {
+    "file": "res://assets/commercial_20261028/map/f07_glow_h.png"
+  },
+  "f07_base_v": {
+    "file": "res://assets/commercial_20261028/map/f07_base_v.png"
+  },
+  "f07_glow_v": {
+    "file": "res://assets/commercial_20261028/map/f07_glow_v.png"
+  },
+  "f07_base_corner": {
+    "file": "res://assets/commercial_20261028/map/f07_base_corner.png"
+  },
+  "f07_glow_corner": {
+    "file": "res://assets/commercial_20261028/map/f07_glow_corner.png"
+  },
+  "f07_base_t": {
+    "file": "res://assets/commercial_20261028/map/f07_base_t.png"
+  },
+  "f07_glow_t": {
+    "file": "res://assets/commercial_20261028/map/f07_glow_t.png"
+  },
+  "vfx_victory_rays": {
+    "file": "res://assets/commercial_20261028/vfx/vfx_victory_rays.png"
+  },
+  "vfx_levelup_pillar": {
+    "file": "res://assets/commercial_20261028/vfx/vfx_levelup_pillar.png"
+  },
+  "vfx_crit_burst": {
+    "file": "res://assets/commercial_20261028/vfx/vfx_crit_burst.png"
+  },
+  "vfx_summon_pillar": {
+    "file": "res://assets/commercial_20261028/vfx/vfx_summon_pillar.png"
+  }
+}

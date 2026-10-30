@@ -38,8 +38,8 @@ func _ready() -> void:
 	var captions := VBoxContainer.new()
 	captions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(captions)
-	_title = Reading.label("",28,Reading.TEXT)
-	_balance = Reading.label("",24,Color("ecd197"))
+	_title = Reading.label("",G.FS_BIG,Reading.TEXT)
+	_balance = Reading.label("",G.FS_LG,Color("ecd197"))
 	_balance.name = "ExactBalance"
 	captions.add_child(_title)
 	captions.add_child(_balance)
@@ -52,12 +52,12 @@ func _ready() -> void:
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	paper.add_child(_scroll)
 	_body = VBoxContainer.new()
-	_body.add_theme_constant_override("separation",12)
+	_body.add_theme_constant_override("separation",8)
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll.add_child(_body)
 	_body.minimum_size_changed.connect(func(): layout.call_deferred())
 	var close := Reading.button("返回",true)
-	close.custom_minimum_size.y = 64
+	close.custom_minimum_size.y = 56
 	close.name = "CloseCurrency"
 	close.pressed.connect(func(): Audio.sfx("ui_close"); closed.emit())
 	column.add_child(close)
@@ -81,13 +81,31 @@ func select_currency(id: String, sound := true) -> void:
 	_title.text = String(record.get("name",id))
 	_balance.text = "持有 %d" % int(G.wallet.get(id,0))
 	_icon.texture = G.res_tex(String(record.get("icon","cur_gold")))
-	_body.add_child(Reading.label(String(record.get("scope","")),20,Color("73634e")))
+	_body.add_child(Reading.label(String(record.get("scope","")),G.FS_SM,Color("73634e")))
 	for field in [["如何获得","source"],["可以用于","use"]]:
-		_body.add_child(Reading.label(field[0],23))
+		_body.add_child(Reading.label(field[0],G.FS_READING))
 		var content := String(record.get(field[1],""))
-		for line in content.replace("，","、").replace("；","、").split("、",false):
-			_body.add_child(Reading.label("• "+line,22))
+		for line in content.replace("；","，").split("，",false):
+			var row_lbl := Reading.label("• "+line,G.FS_MD)
+			row_lbl.custom_minimum_size.y = 32
+			var go_btn := Button.new()
+			go_btn.text = "前往 ›"
+			go_btn.flat = true
+			go_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			go_btn.add_theme_font_override("font", G.font_serif)
+			go_btn.add_theme_font_size_override("font_size", G.FS_XS)
+			go_btn.add_theme_color_override("font_color", Color("7a4e1d"))
+			go_btn.add_theme_color_override("font_hover_color", Color("b86e22"))
+			go_btn.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
+			go_btn.offset_left = -56.0
+			go_btn.offset_right = -2.0
+			go_btn.offset_top = -13.0
+			go_btn.offset_bottom = 13.0
+			go_btn.pressed.connect(func(): Audio.sfx("ui_click"); closed.emit())
+			row_lbl.add_child(go_btn)
+			_body.add_child(row_lbl)
 	_scroll.scroll_vertical = 0
+	layout()
 	if sound: Audio.sfx("ui_page")
 
 func layout() -> void:
@@ -96,8 +114,15 @@ func layout() -> void:
 	# A single-currency card grows with its text and caps at the safe reading area.
 	var width := minf(420,safe.size.x-32)
 	_body.custom_minimum_size.x = maxf(120,width-88)
-	var wanted := _body.get_combined_minimum_size().y + 238.0
-	var extent := Vector2(width,clampf(wanted,320.0,minf(650.0,safe.size.y-32)))
+	var body_h := 0.0
+	for i in _body.get_child_count():
+		var ch := _body.get_child(i) as Control
+		if ch != null:
+			body_h += maxf(26.0, ch.get_combined_minimum_size().y)
+			if i > 0:
+				body_h += 8.0
+	var wanted := maxf(_body.get_combined_minimum_size().y, body_h) + 272.0
+	var extent := Vector2(width,clampf(wanted,420.0,minf(716.0,safe.size.y-28)))
 	_frame.position = (safe.get_center()-extent*.5).round()
 	_frame.size = extent
 

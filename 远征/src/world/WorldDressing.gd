@@ -3,27 +3,76 @@ extends RefCounted
 const Layout := preload("res://src/explore/FlatGroundLayout.gd")
 const Art := preload("res://src/explore/IllustratedScenery.gd")
 const Presentation := preload("res://src/world/WorldPresentation.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const PROC := "res://image/map_proc/"
 const ROCK := "res://image/main_world/broken_slope_props/"
 const REF := "res://assets/world/reference_complete_20261011/ready/"
 
-static func palette(cfg: Dictionary) -> Array:
-	if cfg.get("name","")==TableCache.main_world_map("shenyuan_port").get("name",""):
+static func palette(cfg: Dictionary, map_id: String = "") -> Array:
+	if cfg.get("name","")==TableCache.main_world_map("shenyuan_port").get("name","") or map_id == "shenyuan_port":
 		return [[REF+"stonebox.png",Vector2(54,40)],[REF+"lantern.png",Vector2(40,74)],[REF+"nighttable.png",Vector2(96,46)]]
+	if map_id in ["broken_slope", "stele_cavern"]:
+		return [
+			["f02a_broken_stele_1", Vector2(68, 98)],
+			["f02a_broken_stele_2", Vector2(64, 92)],
+			["f02a_fallen_tablet", Vector2(84, 58)],
+			["f02b_moss_boulder_1", Vector2(96, 64)],
+			["f02b_moss_boulder_2", Vector2(86, 56)],
+			["f02b_stone_lantern", Vector2(52, 82)],
+		]
+	if map_id in ["old_salt_road", "tideflat", "tidal_gate"]:
+		return [
+			["f03a_salt_crystal_1", Vector2(82, 68)],
+			["f03a_salt_crystal_2", Vector2(72, 60)],
+			["f03a_salt_cart", Vector2(96, 74)],
+			["f03b_wood_post_1", Vector2(48, 78)],
+			["f03b_wood_post_2", Vector2(52, 74)],
+			["f03b_salt_bucket", Vector2(50, 54)],
+		]
+	if map_id == "red_sand_route":
+		return [
+			["f04a_sandstone_1", Vector2(112, 86)],
+			["f04a_sandstone_2", Vector2(92, 72)],
+			["f04a_camel_bones", Vector2(88, 60)],
+			["f04b_dry_shrub_1", Vector2(68, 60)],
+			["f04b_dry_shrub_2", Vector2(64, 56)],
+			["f04b_caravan_post", Vector2(56, 92)],
+		]
+	if map_id in ["rift_mine_road", "rift_mine_vault"]:
+		return [
+			["f05b_ore_crystal_1", Vector2(80, 74)],
+			["f05b_ore_crystal_2", Vector2(72, 66)],
+			["f05a_mine_timber", Vector2(88, 92)],
+			["f05a_mine_cart", Vector2(84, 70)],
+			["f05b_pickaxe_crate", Vector2(68, 60)],
+		]
+	if map_id in ["abyss_ring", "stele_entry", "stele_resonance", "stele_core"]:
+		return [
+			["f06b_obsidian_rock_1", Vector2(92, 64)],
+			["f06b_obsidian_rock_2", Vector2(82, 54)],
+			["f06a_abyss_pillar_1", Vector2(60, 102)],
+			["f06a_abyss_pillar_2", Vector2(60, 98)],
+			["f06a_rune_slab", Vector2(74, 68)],
+			["f06b_void_brazier", Vector2(58, 84)],
+		]
 	match String(cfg.get("theme","forest")):
 		"desert":
-			return [[PROC+"045_deco_desert_sandstone.png",Vector2(148,118)],
-				[PROC+"044_deco_desert_cactus.png",Vector2(82,148)],
-				[PROC+"045_deco_desert_sandstone.png",Vector2(88,64)],
+			return [["f04a_sandstone_1",Vector2(112,86)],
+				["f04b_dry_shrub_1",Vector2(68,60)],
+				["f04a_sandstone_2",Vector2(88,64)],
 				[PROC+"046_deco_desert_drywell.png",Vector2(104,104)]]
 		"snow","glacier":
 			return [[PROC+"035_deco_snow_pine.png",Vector2(146,172)],
 				[PROC+"037_deco_snow_snowdrift.png",Vector2(110,68)],
 				[PROC+"036_deco_snow_icecrystal.png",Vector2(66,80)]]
-		"tomb","abyss":
-			return [[ROCK+"boulder_a.png",Vector2(118,68)],
-				[ROCK+"boulder_b.png",Vector2(96,55)],
-				[ROCK+"stele_mid_b.png",Vector2(56,94)]]
+		"tomb":
+			return [["f05b_ore_crystal_1",Vector2(80,74)],
+				["f05b_ore_crystal_2",Vector2(72,66)],
+				["f02a_broken_stele_1",Vector2(64,94)]]
+		"abyss":
+			return [["f06b_obsidian_rock_1",Vector2(92,64)],
+				["f06b_obsidian_rock_2",Vector2(82,54)],
+				["f06a_abyss_pillar_1",Vector2(60,100)]]
 		_:
 			return [[REF+"bush.png",Vector2(55,64)],[REF+"fern.png",Vector2(44,52)],
 				[REF+"rocks.png",Vector2(90,58)]]
@@ -38,7 +87,7 @@ static func setup(map: Node) -> void:
 	map._world.add_child(layer)
 	var rng:=RandomNumberGenerator.new()
 	rng.seed=hash("dressing_20261026_"+String(map._main_map_id))
-	var sources:=palette(cfg)
+	var sources:=palette(cfg, String(map._main_map_id))
 	var routes:=Layout.sample_routes(cfg.get("flat_routes",[]))
 	var count:=0
 	var compact:=String(map._main_map_id) in ["shenyuan_port","tidal_gate","stele_cavern","rift_mine_vault"]
@@ -80,7 +129,8 @@ static func setup(map: Node) -> void:
 			for offset in [Vector2.ZERO,Vector2(0,48),Vector2(0,-48),Vector2(-48,0),Vector2(48,0)]:
 				if clear(map,candidate.at+offset,size,routes,occupied):at=candidate.at+offset;break
 		if not clear(map,at,size,routes,occupied):continue
-		var texture:=G.visual_texture(String(source[0]))
+		var key_or_path := String(source[0])
+		var texture: Texture2D = KitV4.commercial_tex(key_or_path) if key_or_path.begins_with("f0") else G.visual_texture(key_or_path)
 		if texture==null:continue
 		var prop:=Art.Prop.new()
 		prop.name="Dressing_%02d"%count

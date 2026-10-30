@@ -2,10 +2,10 @@ extends RefCounted
 ## Pixel fantasy display components. Input remains in Field.Action.
 const Field := preload("res://src/ui/FieldUI.gd")
 const BACKGROUND := "res://image/background/art_v2/camp_bluehour.png"
-const WHITE := Color("f5ead4")
-const GOLD := Color("dfbf82")
-const MUTED := Color("a9bec0")
-const DARK := Color("152630")
+const WHITE := Color("f3e3c0")
+const GOLD := Color("f2c76a")
+const MUTED := Color("8f8376")
+const DARK := Color("1a1412")
 const ROLE_COLORS := {"zs":Color("eeab74"),"ck":Color("8ed3ac"),"fs":Color("8ed8f2"),"fz":Color("d7b7f4")}
 
 static func label(words: String,at: Vector2,extent: Vector2,px := 16,color := WHITE,bold := false,title := false) -> Label:
@@ -58,20 +58,23 @@ static func scene(parent: Control,dim := .04) -> void:
 	parent.add_child(atmosphere)
 	parent.resized.connect(func(): atmosphere.size = G._veil_viewport_size(parent); atmosphere.queue_redraw())
 
-static func heading(parent: Control,words: String,note: String) -> void:
+static func heading(parent: Control,words: String,note: String,left_inset := 0.0) -> void:
 	var plaque := TextureRect.new()
 	plaque.texture = G.Visuals._kit_tex("plaque_title.png")
 	plaque.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	plaque.stretch_mode = TextureRect.STRETCH_SCALE
 	plaque.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	plaque.position = Vector2(20, 20)
-	plaque.size = Vector2(228, 48)
-	plaque.modulate = Color(1, 1, 1, 0.45)
+	plaque.position = Vector2(24 + left_inset, 18)
+	plaque.size = Vector2(236, 48)
+	plaque.modulate = Color(1, 1, 1, 0.88)
 	plaque.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(plaque)
-	parent.add_child(label(words,Vector2(28,22),Vector2(320,46),G.FS_BIG,WHITE,true,true))
+	var title_l := label(words,Vector2(24 + left_inset,19),Vector2(236,46),G.FS_BIG,WHITE,true,true)
+	title_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	parent.add_child(title_l)
 	parent.add_child(label(note,Vector2(28,70),Vector2(350,24),G.FS_XS,MUTED))
-	Field.line(parent,Vector2(28,108),424,Color(GOLD,.45))
+	Field.line(parent,Vector2(24,96),432,Color(GOLD,.45))
 
 class MaterialPanel extends Control:
 	var opacity := .92
@@ -81,31 +84,31 @@ class MaterialPanel extends Control:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		var outline := G.octagon_path(size,0,5)
 		draw_set_transform(Vector2(0,4))
-		draw_colored_polygon(outline,Color("07121a",.48))
+		draw_colored_polygon(outline,Color("080605",.58))
 		draw_set_transform(Vector2.ZERO)
-		draw_colored_polygon(outline,Color("152832",opacity))
+		draw_colored_polygon(outline,Color("1a1412",opacity))
 		var tex := G.Visuals._kit_tex("panel_iron.png" if (size.x >= 180 and size.y >= 90) else "btn_row.png")
-		G.Visuals.nine_slice(self, tex, Rect2(Vector2.ZERO, size), 12.0, 10.0, Color(1, 1, 1, minf(0.82, opacity * 0.78)))
-		draw_line(Vector2(5,0),Vector2(size.x-5,0),Color("d2b27a",.68))
-		draw_line(Vector2(5,size.y-1),Vector2(size.x-5,size.y-1),Color("5e7779",.42))
+		G.Visuals.nine_slice(self, tex, Rect2(Vector2.ZERO, size), 12.0, 10.0, Color(1, 1, 1, minf(0.88, opacity * 0.84)))
+		draw_line(Vector2(5,0),Vector2(size.x-5,0),Color("c9a45c",.72))
+		draw_line(Vector2(5,size.y-1),Vector2(size.x-5,size.y-1),Color("c9a45c",.42))
 		var rim := G.octagon_path(size, 1.5, 4.0)
 		rim.append(rim[0])
-		draw_polyline(rim, Color("d2b27a", 0.35), 1.0)
+		draw_polyline(rim, Color("c9a45c", 0.42), 1.0)
 		for x in [4.0,size.x-6]:
-			draw_rect(Rect2(x,4,2,2),Color("f3dca2",.85))
-			draw_rect(Rect2(x,size.y-6,2,2),Color("d2b27a",.72))
+			draw_rect(Rect2(x,4,2,2),Color("f2c76a",.85))
+			draw_rect(Rect2(x,size.y-6,2,2),Color("c9a45c",.72))
 
 class Atmosphere extends Control:
 	func _draw() -> void:
 		# Color and edge shading preserve every background pixel; there is no blur.
-		draw_rect(Rect2(Vector2.ZERO,size),Color("102536",.10))
+		draw_rect(Rect2(Vector2.ZERO,size),Color("120e0c",.15))
 		for i in 32:
 			var fraction := float(i)/32
-			draw_rect(Rect2(0,i*4,size.x,4),Color("081520",.52*(1-fraction)))
+			draw_rect(Rect2(0,i*4,size.x,4),Color("0a0806",.52*(1-fraction)))
 			var y := size.y-256+i*8
-			draw_rect(Rect2(0,y,size.x,8),Color("07141d",fraction*.85))
-			draw_rect(Rect2(i*3,132,3,size.y-280),Color("0b1b27",.30*(1-fraction)))
-			draw_rect(Rect2(size.x-i*3-3,132,3,size.y-280),Color("0b1b27",.30*(1-fraction)))
+			draw_rect(Rect2(0,y,size.x,8),Color("0a0806",fraction*.85))
+			draw_rect(Rect2(i*3,132,3,size.y-280),Color("120e0c",.30*(1-fraction)))
+			draw_rect(Rect2(size.x-i*3-3,132,3,size.y-280),Color("120e0c",.30*(1-fraction)))
 
 class Stage extends Control:
 	var hue := Color("e4b777")

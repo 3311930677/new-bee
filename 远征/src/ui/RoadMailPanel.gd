@@ -24,13 +24,15 @@ func _build() -> void:
 	_offset = Vector2.ZERO
 	G.veil(self, 0.76, true)
 	var paper := G.parchment_box(432, 620, 18.0)
+	paper.set_meta("dark_frame", true)
 	paper.position = Vector2(24, 90) + _offset
 	add_child(paper)
-	var plaque := G.Visuals.header_plaque("归 路 邮 驿", 384.0, 38.0)
-	plaque.position = Vector2(48, 108) + _offset
+	var plaque := G.Visuals.header_plaque("归路邮驿", 346.0, 38.0)
+	plaque.position = Vector2(86, 108) + _offset
 	add_child(plaque)
 	var state := G.road_mail_state()
 	var archive: Array = state.get("archive", [])
+	G.top_back_button(self, func(): _act("board" if _archive_index >= 0 else "close"), Vector2(36, 105) + _offset, "返回邮驿" if _archive_index >= 0 else "返回")
 	if _archive_index >= 0 and not archive.is_empty():
 		_build_archive(archive)
 	else:
@@ -60,7 +62,6 @@ func _build_board(state: Dictionary, archive_count: int) -> void:
 			Vector2(66, 438), Vector2(348, 54), Color("725b3d"))
 	if archive_count > 0:
 		_button("翻看路簿 · %d 封" % archive_count, 561, "archive")
-	_button("返回", 615, "close")
 
 func _build_archive(archive: Array) -> void:
 	_archive_index = clampi(_archive_index, 0, archive.size() - 1)
@@ -85,7 +86,6 @@ func _build_archive(archive: Array) -> void:
 		_button("更早一封", 526, "older", 152, 80)
 	if _archive_index > 0:
 		_button("更新一封", 526, "newer", 152, 248)
-	_button("返回邮驿", 594, "board")
 
 func _add_text(value: String, pos: Vector2, size: Vector2, ink: Color) -> void:
 	var label := G.text_label(value, G.FS_SM, ink)
@@ -95,7 +95,8 @@ func _add_text(value: String, pos: Vector2, size: Vector2, ink: Color) -> void:
 	add_child(label)
 
 func _button(label: String, y: float, action: String, width := 320, x := 80) -> void:
-	var button := G.gold_button(label, width, 46, G.FS_SM)
+	var is_primary := action in ["accept_quick", "claim"]
+	var button := G.gold_button(label, width, 46, G.FS_SM) if is_primary else G.ghost_button(label, width, 46, G.FS_SM)
 	button.position = Vector2(x, y) + _offset
 	button.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:

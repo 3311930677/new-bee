@@ -4,12 +4,12 @@ extends RefCounted
 const Avatars := preload("res://src/ui/AvatarCatalog.gd")
 const Icons := preload("res://src/ui/UIIcons.gd")
 const ART_FONT := preload("res://assets/fonts/MaShanZheng-Regular.ttf")
-const INK := Color("453d2c")
-const MUTED := Color("8b7a57")
-const GREEN := Color("234746")
-const PAPER := Color("eee1bf")
-const EDGE := Color("b39a67")
-const GOLD := Color("e2c48c")
+const INK := Color("35291e")
+const MUTED := Color("8f8376")
+const GREEN := Color("1a1412")
+const PAPER := Color("e8dcc0")
+const EDGE := Color("c9a45c")
+const GOLD := Color("f2c76a")
 const Illustrated := preload("res://src/ui/IllustratedUI.gd")
 
 static func surface(fill: Color, edge := Color.TRANSPARENT, radius := 3) -> StyleBoxFlat:
@@ -68,41 +68,54 @@ class LedgerFrame extends PanelContainer:
 		draw_rect(Rect2(4, 8, sz.x - 8, sz.y - 4), Color(0.0, 0.0, 0.0, 0.58))
 
 		# 2. 外框：暗铁镶边 + 九宫格玄铁包角
-		draw_rect(Rect2(0, 0, sz.x, sz.y), Color("12161e"))
-		draw_rect(Rect2(2, 2, sz.x - 4, sz.y - 4), Color("1a222e"))
+		draw_rect(Rect2(0, 0, sz.x, sz.y), Color("120e0c"))
+		draw_rect(Rect2(2, 2, sz.x - 4, sz.y - 4), Color("1a1412"))
 		var iron_tex := G.Visuals._kit_tex("panel_iron.png")
-		G.Visuals.nine_slice(self, iron_tex, Rect2(Vector2.ZERO, sz), 16.0, 16.0, Color(1, 1, 1, 0.88))
+		G.Visuals.nine_slice(self, iron_tex, Rect2(Vector2.ZERO, sz), 16.0, 16.0, Color(1, 1, 1, 0.94))
 
 		# 3. 内侧高光
 		draw_line(Vector2(2, 2), Vector2(sz.x - 3, 2), Color(1.0, 1.0, 1.0, 0.10), 1.0)
 		draw_line(Vector2(2, 2), Vector2(2, sz.y - 3), Color(1.0, 1.0, 1.0, 0.06), 1.0)
 
-		# 4. 内部温润羊皮纸 + 九宫格宣纸肌理
 		var inset := 8.0
 		var paper_w := sz.x - inset * 2
 		var paper_h := sz.y - inset * 2
 		var paper_rect := Rect2(inset, inset, paper_w, paper_h)
-		draw_rect(paper_rect, Color("f0e6cf"))
-		if header_height <= 24.0:
-			var slip_tex := G.Visuals._kit_tex("quest_slip.png")
-			G.Visuals.nine_slice(self, slip_tex, paper_rect, 14.0, 12.0, Color(1, 1, 1, 0.55))
+		if bool(get_meta("dark_frame", false)):
+			draw_rect(paper_rect, Color("1a1412", 0.96))
+			if header_height > 24.0 and paper_h > header_height + 40.0:
+				var top_rect := Rect2(inset + 2, inset + 2, paper_w - 4, minf(header_height, 140.0))
+				draw_rect(top_rect, Color("2a201a", 0.96))
+				var banner_tex := G.Visuals._kit_tex("plaque_header_jade.png")
+				if banner_tex != null:
+					G.Visuals.nine_slice(self, banner_tex, top_rect, 12.0, 10.0, Color(1, 1, 1, 0.52))
+				draw_rect(top_rect.grow(-2.0), Color("c9a45c", 0.55), false, 1.0)
+				draw_line(Vector2(inset + 4, top_rect.end.y), Vector2(inset + paper_w - 4, top_rect.end.y), Color("f2c76a", 0.85), 2.0)
+				G.Visuals.diamond(self, Vector2(sz.x * 0.5, top_rect.end.y), 4.0, Color("c84b31", 0.95))
+			draw_rect(Rect2(inset + 4, inset + 4, paper_w - 8, paper_h - 8), Color("c9a45c", 0.58), false, 1.0)
+		else:
+			# 4. 内部温润羊皮纸 + 九宫格宣纸肌理
+			draw_rect(paper_rect, Color("f0e6cf"))
+			if header_height <= 24.0:
+				var slip_tex := G.Visuals._kit_tex("quest_slip.png")
+				G.Visuals.nine_slice(self, slip_tex, paper_rect, 14.0, 12.0, Color(1, 1, 1, 0.55))
 
-		# 顶部玄玉金镶眉栏装饰
-		if header_height > 24.0 and paper_h > header_height + 40.0:
-			var top_rect := Rect2(inset + 2, inset + 2, paper_w - 4, minf(header_height, 140.0))
-			draw_rect(top_rect, Color("1d3635", 0.96))
-			var banner_tex := G.Visuals._kit_tex("plaque_header_jade.png")
-			if banner_tex != null:
-				G.Visuals.nine_slice(self, banner_tex, top_rect, 12.0, 10.0, Color(1, 1, 1, 0.52))
-			draw_rect(top_rect.grow(-2.0), Color("c8a050", 0.55), false, 1.0)
-			draw_line(Vector2(inset + 4, top_rect.end.y), Vector2(inset + paper_w - 4, top_rect.end.y), Color("d9b26a", 0.85), 2.0)
-			G.Visuals.diamond(self, Vector2(sz.x * 0.5, top_rect.end.y), 4.0, Color("c84b31", 0.95))
+			# 顶部玄玉金镶眉栏装饰
+			if header_height > 24.0 and paper_h > header_height + 40.0:
+				var top_rect := Rect2(inset + 2, inset + 2, paper_w - 4, minf(header_height, 140.0))
+				draw_rect(top_rect, Color("2a201a", 0.96))
+				var banner_tex := G.Visuals._kit_tex("plaque_header_jade.png")
+				if banner_tex != null:
+					G.Visuals.nine_slice(self, banner_tex, top_rect, 12.0, 10.0, Color(1, 1, 1, 0.52))
+				draw_rect(top_rect.grow(-2.0), Color("c8a050", 0.55), false, 1.0)
+				draw_line(Vector2(inset + 4, top_rect.end.y), Vector2(inset + paper_w - 4, top_rect.end.y), Color("d9b26a", 0.85), 2.0)
+				G.Visuals.diamond(self, Vector2(sz.x * 0.5, top_rect.end.y), 4.0, Color("c84b31", 0.95))
 
-		# 纸张边缘微暗做旧与朱砂双线内框
-		draw_line(Vector2(inset, inset), Vector2(inset, inset + paper_h), Color("d8c6a0"), 1.0)
-		draw_line(Vector2(inset + paper_w - 1, inset), Vector2(inset + paper_w - 1, inset + paper_h), Color("d8c6a0"), 1.0)
-		draw_rect(Rect2(inset + 4, inset + 4, paper_w - 8, paper_h - 8), Color("b89658", 0.58), false, 1.0)
-		draw_rect(Rect2(inset + 7, inset + 7, paper_w - 14, paper_h - 14), Color("983e2b", 0.24), false, 1.0)
+			# 纸张边缘微暗做旧与朱砂双线内框
+			draw_line(Vector2(inset, inset), Vector2(inset, inset + paper_h), Color("d8c6a0"), 1.0)
+			draw_line(Vector2(inset + paper_w - 1, inset), Vector2(inset + paper_w - 1, inset + paper_h), Color("d8c6a0"), 1.0)
+			draw_rect(Rect2(inset + 4, inset + 4, paper_w - 8, paper_h - 8), Color("b89658", 0.58), false, 1.0)
+			draw_rect(Rect2(inset + 7, inset + 7, paper_w - 14, paper_h - 14), Color("983e2b", 0.24), false, 1.0)
 
 		# 右下角淡朱砂印章底纹
 		if sz.x >= 260.0 and sz.y >= 220.0:
@@ -132,17 +145,17 @@ class EmbellishedButton extends Button:
 	var _shine_motion: Tween
 	var _caption: Label
 	func _ready() -> void:
-		var colors: Dictionary = G.Visuals.palette(self)
 		var primary := String(get_meta("journal_kind", "primary")) == "primary"
 		for state in ["normal", "hover", "pressed", "disabled"]:
 			var style := get_theme_stylebox(state).duplicate() as StyleBoxFlat
-			var fill: Color = colors.dark if primary else colors.paper
-			if state == "hover": fill = fill.lightened(0.08) if primary else fill.darkened(0.03)
+			var fill := Color("8e251d") if primary else Color("1a1412")
+			if state == "hover": fill = fill.lightened(0.08)
 			if state == "pressed": fill = fill.darkened(0.08)
+			if state == "disabled": fill = Color("181412")
 			style.bg_color = fill
-			style.border_color = colors.accent
+			style.border_color = Color("f2c76a") if primary else Color("c9a45c")
 			style.set_border_width_all(2)
-			style.shadow_color = Color("101d18", .32)
+			style.shadow_color = Color("080605", .42)
 			style.shadow_size = 3
 			style.shadow_offset = Vector2(0, 2)
 			add_theme_stylebox_override(state, style)
@@ -157,7 +170,7 @@ class EmbellishedButton extends Button:
 		_caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_caption.add_theme_font_override("font", get_theme_font("font"))
 		_caption.add_theme_font_size_override("font_size", get_theme_font_size("font_size"))
-		_caption.add_theme_color_override("font_color", colors.light if primary else colors.ink)
+		_caption.add_theme_color_override("font_color", Color("f3e3c0"))
 		add_child(_caption)
 		if icon != null and icon.resource_path.ends_with(".png"):
 			for state in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
@@ -172,26 +185,27 @@ class EmbellishedButton extends Button:
 
 	func _draw() -> void:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		var colors: Dictionary = G.Visuals.palette(self)
 		var primary := String(get_meta("journal_kind", "primary")) == "primary"
+		var accent := Color("f2c76a") if primary else Color("c9a45c")
+		var light := Color("f3e3c0")
 		if _caption != null:
 			_caption.text = text
-			_caption.add_theme_color_override("font_color", Color("8b7a57") if disabled else (colors.light if primary else colors.ink))
-		var btn_tex := G.Visuals._kit_tex("button_dark.png" if primary else "card_frame_parchment.png")
-		G.Visuals.nine_slice(self, btn_tex, Rect2(Vector2.ZERO, size), 10.0, 8.0, Color(1, 1, 1, 0.42 if primary else 0.72))
-		draw_line(Vector2(12, 4), Vector2(size.x - 12, 4), Color(colors.accent, 0.55), 1)
-		draw_line(Vector2(12, size.y - 4), Vector2(size.x - 12, size.y - 4), Color(colors.accent, 0.75), 1)
+			_caption.add_theme_color_override("font_color", Color("8f8376") if disabled else light)
+		var btn_tex := G.Visuals._kit_tex("button_red.png" if primary else "button_dark.png")
+		G.Visuals.nine_slice(self, btn_tex, Rect2(Vector2.ZERO, size), 10.0, 8.0, Color(1, 1, 1, 0.78 if primary else 0.68))
+		draw_line(Vector2(12, 4), Vector2(size.x - 12, 4), Color(accent, 0.55), 1)
+		draw_line(Vector2(12, size.y - 4), Vector2(size.x - 12, size.y - 4), Color(accent, 0.75), 1)
 		for x in [6.0, size.x - 8]:
-			for y in [6.0, size.y - 8]: draw_rect(Rect2(x, y, 2, 2), Color(colors.light, .72))
+			for y in [6.0, size.y - 8]: draw_rect(Rect2(x, y, 2, 2), Color(light, .72))
 		for y in [14.0, size.y - 14]:
-			draw_line(Vector2(6, y), Vector2(16, y), Color(colors.accent, .24), 1)
-			draw_line(Vector2(size.x - 16, y), Vector2(size.x - 6, y), Color(colors.accent, .24), 1)
+			draw_line(Vector2(6, y), Vector2(16, y), Color(accent, .24), 1)
+			draw_line(Vector2(size.x - 16, y), Vector2(size.x - 6, y), Color(accent, .24), 1)
 		if primary and size.x >= 120:
 			for side_x in [10.0, size.x - 10.0]:
-				G.Visuals.diamond(self, Vector2(side_x, size.y * 0.5), 2.5, Color(colors.light, 0.78))
+				G.Visuals.diamond(self, Vector2(side_x, size.y * 0.5), 2.5, Color(light, 0.78))
 		if _shine > 0 and _shine < 1:
 			var x := lerpf(12, size.x - 32, _shine)
-			draw_line(Vector2(x, 4), Vector2(x + 20, 4), Color(colors.light, sin(_shine * PI)), 1)
+			draw_line(Vector2(x, 4), Vector2(x + 20, 4), Color(light, sin(_shine * PI)), 1)
 
 class AvatarMedallion extends Panel:
 	var slot_style: StyleBoxFlat
@@ -242,13 +256,13 @@ static func button(text: String, width: float, height := 46.0,
 	node.add_theme_font_size_override("font_size", G.FS_LG if kind == "primary" else G.FS_SM)
 	var primary := kind == "primary"
 	var quiet := kind == "quiet" or kind == "dark_quiet"
-	var text_color := GOLD if primary or kind == "dark_quiet" else GREEN
-	var normal := surface(GREEN if primary else (Color.TRANSPARENT if quiet else Color("eae7da")),
-		Color("b89960") if primary else (Color.TRANSPARENT if quiet else EDGE))
-	var hover := surface(Color("365d56") if primary else Color("dedfce", 0.40),
-		Color("b89960") if primary else Color.TRANSPARENT)
-	var pressed := surface(Color("173b38") if primary else Color("d4d8c5", 0.55))
-	var focus := surface(Color.TRANSPARENT, Color("a39162") if kind == "dark_quiet" else GREEN)
+	var text_color := GOLD if primary or kind == "dark_quiet" else Color("f3e3c0")
+	var normal := surface(Color("8e251d") if primary else (Color.TRANSPARENT if quiet else Color("1a1412")),
+		Color("f2c76a") if primary else (Color.TRANSPARENT if quiet else EDGE))
+	var hover := surface(Color("a32d24") if primary else Color("2a201a", 0.90),
+		Color("f2c76a") if primary else EDGE)
+	var pressed := surface(Color("6e1a12") if primary else Color("120e0c", 0.95))
+	var focus := surface(Color.TRANSPARENT, GOLD)
 	focus.set_border_width_all(2)
 	for state in ["normal", "hover", "pressed", "disabled"]:
 		node.add_theme_stylebox_override(state, hover if state == "hover" else (

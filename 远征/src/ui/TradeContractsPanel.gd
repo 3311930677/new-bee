@@ -14,32 +14,25 @@ func open_contracts(site:String) -> void:
 	G.veil(self,.86)
 	var paper := Style.panel(Vector2(20,56),Vector2(440,688))
 	add_child(paper)
-	add_child(Style.header_plaque("三城保价与延期合约", Vector2(46, 72), 388.0))
-	message=Style.text("同时最多两张未结单；只看游戏日，离线不会过期。",G.FS_XS,Style.MUTED)
+	add_child(Style.header_plaque("三城保价与延期合约", Vector2(84, 72), 350.0))
+	G.top_back_button(self, func(): closed.emit(); queue_free(), Vector2(34, 69), "返回市集")
+	message=Style.text("同时最多两张未结单；只看游戏日，离线不会过期。",G.FS_XS,Style.BRASS)
 	message.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	message.size=Vector2(392,60)
 	message.position=Vector2(44,128)
 	add_child(message)
 	var scroll:=ScrollContainer.new()
 	scroll.position=Vector2(40,192)
-	scroll.size=Vector2(400,466)
+	scroll.size=Vector2(400,520)
 	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
 	add_child(scroll)
 	list=VBoxContainer.new()
 	list.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	list.add_theme_constant_override("separation",14)
 	scroll.add_child(list)
-	var back:=G.ghost_button("返回市集",220,44)
-	Style.apply_button(back,"quiet")
-	back.position=Vector2(130,683)
-	back.gui_input.connect(func(e:InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:
-			closed.emit()
-			queue_free())
-	add_child(back)
 	refresh()
 func text(parent:Node,line:String,big:=false) -> void:
-	var label:=Style.text(line,18 if big else 15,Style.JADE if big else Style.INK)
+	var label:=Style.text(line,18 if big else 15,Color("f2c76a") if big else Style.INK)
 	label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	label.custom_minimum_size.x=348
 	parent.add_child(label)

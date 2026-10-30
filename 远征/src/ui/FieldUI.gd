@@ -137,48 +137,35 @@ class Action extends Control:
 		if not skin.is_empty():
 			_draw_crafted()
 			return
-		var fill := G.FIELD_RED if primary else (G.FIELD_PAPER_LIGHT if light else G.FIELD_DARK)
-		if selected: fill = accent.darkened(.72) if not light else G.FIELD_PAPER_LIGHT
+		var fill := Color("8e251d") if primary else (G.FIELD_PAPER_LIGHT if light else Color("1a1412"))
+		if selected: fill = Color("2a201a") if not light else G.FIELD_PAPER_LIGHT
 		if _hover: fill = fill.lightened(.05)
-		if disabled: fill = fill.lerp(G.FIELD_MUTED,.28)
+		if disabled: fill = fill.lerp(Color("4a423a"),.28)
 		var dy := 1 if _down else 0
 		if not quiet or _hover or selected:
 			draw_rect(Rect2(0, dy, size.x, size.y - dy), fill)
 			if size.x >= 44 and size.y >= 26:
 				var tex := G.Visuals._kit_tex("button_red.png" if primary else ("btn_row.png" if light else "button_dark.png"))
-				G.Visuals.nine_slice(self, tex, Rect2(0, dy, size.x, size.y - dy), 10.0, 8.0, Color(1, 1, 1, 0.36))
-			draw_line(Vector2(0, size.y-1), Vector2(size.x,size.y-1), Color(accent,.45),1)
+				G.Visuals.nine_slice(self, tex, Rect2(0, dy, size.x, size.y - dy), 10.0, 8.0, Color(1, 1, 1, 0.72 if primary else 0.62))
+			draw_line(Vector2(0, size.y-1), Vector2(size.x,size.y-1), Color("c9a45c",.65),1)
 			if primary:
-				draw_line(Vector2(0,dy),Vector2(size.x,dy), G.FIELD_COPPER,1)
-				draw_rect(Rect2(0,dy,3,size.y-dy),G.FIELD_COPPER)
-		if selected: draw_rect(Rect2(12,size.y-3,size.x-24,3),accent)
-		if has_focus(): draw_rect(Rect2(2,2,size.x-4,size.y-4),accent,false,1)
+				draw_line(Vector2(0,dy),Vector2(size.x,dy), Color("f2c76a"),1)
+				draw_rect(Rect2(0,dy,3,size.y-dy),Color("c9a45c"))
+		if selected: draw_rect(Rect2(12,size.y-3,size.x-24,3),Color("f2c76a"))
+		if has_focus(): draw_rect(Rect2(2,2,size.x-4,size.y-4),Color("f2c76a"),false,1)
 		for child in get_children():
 			if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
 		if caption != null: caption.position.y = float(caption.get_meta("fixed_y",0)) + dy
 
 	func _draw_crafted() -> void:
-		if skin == "primary":
-			var banner_tex: Texture2D = preload("res://image/ui/pixel_20261008/master_expedition_banner.png")
-			var state_idx := 2 if _down else (1 if (_hover or has_focus()) else 0)
-			var src_y := float(state_idx * 88)
-			texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-			draw_texture_rect_region(banner_tex, Rect2(Vector2.ZERO, size), Rect2(0, src_y, 416, 88))
-			if caption != null: caption.position.y = float(caption.get_meta("fixed_y",12)) + (2 if _down else 0)
-			for child in get_children():
-				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
-			return
 		if skin.begins_with("ledger_"):
 			var style := preload("res://src/ui/LedgerStyle.gd")
-			var fill: Color = style.JADE if skin == "ledger_primary" else style.LIGHT
-			if skin == "ledger_rules": fill = style.BLUE
-			elif skin == "ledger_quiet": fill = style.WOOD
-			elif skin == "ledger_tab" and selected: fill = style.JADE
-			if disabled: fill = fill.lerp(Color("969988"), .5)
+			var fill := Color("8e251d") if skin == "ledger_primary" else (Color("2a201a") if (skin in ["ledger_tab", "ledger_secondary"] and selected) else Color("1a1412"))
+			if disabled: fill = Color("181412")
 			elif _hover or has_focus(): fill = fill.lightened(.07)
-			style.paint(self, size, fill, style.BRASS, skin in ["ledger_secondary", "ledger_tab"] and not selected)
-			if selected and skin == "ledger_tab": draw_rect(Rect2(16, size.y - 6, size.x - 32, 2), Color("e2cd91"))
-			if has_focus(): draw_rect(Rect2(5, 5, size.x - 10, size.y - 10), Color("f5dc9e"), false, 1)
+			style.paint(self, size, fill, Color("f2c76a") if selected else style.BRASS, false)
+			if selected and skin == "ledger_tab": draw_rect(Rect2(16, size.y - 6, size.x - 32, 2), Color("f2c76a"))
+			if has_focus(): draw_rect(Rect2(5, 5, size.x - 10, size.y - 10), Color("f2c76a"), false, 1)
 			if caption != null: caption.position.y = float(caption.get_meta("fixed_y", 0)) + (1 if _down else 0)
 			for child in get_children():
 				if child is CanvasItem: child.modulate.a = .5 if disabled else 1.0
@@ -187,37 +174,37 @@ class Action extends Control:
 		var extent := size
 		if skin == "tool":
 			var center := size * .5 + Vector2(0,dy)
-			draw_circle(center, minf(size.x,size.y) * .47, Color("172b37",.72))
+			draw_circle(center, minf(size.x,size.y) * .47, Color("1a1412",.88))
 			if _hover or has_focus():
-				draw_arc(center, minf(size.x,size.y) * .47, -PI * .85, PI * .60, 48, Color("e4c58e",.85),1,true)
+				draw_arc(center, minf(size.x,size.y) * .47, -PI * .85, PI * .60, 48, Color("f2c76a",.85),1,true)
 				if has_focus(): draw_circle(center, minf(size.x,size.y) * .48, Color("f7e6b6"),false,1,true)
 			for child in get_children():
 				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
 			return
 		if skin == "badge": extent.y = minf(size.y,58)
-		var edge := Color("9c8052")
-		var fill := Color("223a42",.94)
+		var edge := Color("c9a45c")
+		var fill := Color("1a1412",.96)
 		if skin == "primary":
-			edge = Color("f0d49c")
-			fill = Color("bc914e")
+			edge = Color("f2c76a")
+			fill = Color("8e251d")
 		elif skin == "tab" and selected:
-			fill = accent.darkened(.60)
-			edge = accent.lightened(.20)
+			fill = Color("2a201a")
+			edge = Color("f2c76a")
 		elif skin == "nav":
-			fill = Color("1a2c35",.35)
-			edge = Color("9c8052",.35)
+			fill = Color("1a1412",.55)
+			edge = Color("c9a45c",.45)
 		elif skin == "scroll":
-			fill = Color("d8cfb4")
-			edge = Color("a79872")
+			fill = Color("e8dcc0")
+			edge = Color("c9a45c")
 		elif skin == "ribbon":
-			fill = Color("102833")
-			edge = Color("c29a52")
+			fill = Color("1a1412")
+			edge = Color("c9a45c")
 		if disabled:
-			fill = Color("34434a")
-			edge = Color("677374")
+			fill = Color("181412")
+			edge = Color("5a5046")
 		elif _hover or has_focus():
-			fill = fill.lightened(.10)
-			edge = edge.lightened(.20)
+			fill = fill.lightened(.08)
+			edge = edge.lightened(.15)
 		var cut := 8.0 if skin in ["primary","badge"] else 4.0
 		var bounds := Rect2(Vector2(0,dy),extent-Vector2(0,dy))
 		if skin == "badge":
@@ -230,13 +217,13 @@ class Action extends Control:
 				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
 			return
 		if skin != "nav" or _hover or selected:
-			draw_colored_polygon(_bevel(Rect2(bounds.position+Vector2(0,4),bounds.size),cut),Color("080f16",.70))
+			draw_colored_polygon(_bevel(Rect2(bounds.position+Vector2(0,4),bounds.size),cut),Color("080605",.70))
 			draw_colored_polygon(_bevel(bounds,cut),edge.darkened(.28))
 			var inner := bounds.grow(-2)
 			draw_colored_polygon(_bevel(inner,maxf(2,cut-2)),fill)
 			if bounds.size.x >= 44 and bounds.size.y >= 26:
-				var btn_tex := G.Visuals._kit_tex("quest_slip.png" if skin == "scroll" else "button_dark.png")
-				G.Visuals.nine_slice(self, btn_tex, inner, 10.0, 8.0, Color(1, 1, 1, 0.42))
+				var btn_tex := G.Visuals._kit_tex("button_red.png" if skin == "primary" else ("quest_slip.png" if skin == "scroll" else "button_dark.png"))
+				G.Visuals.nine_slice(self, btn_tex, inner, 10.0, 8.0, Color(1, 1, 1, 0.72 if skin == "primary" else 0.62))
 			draw_colored_polygon(_bevel(Rect2(inner.position,Vector2(inner.size.x,inner.size.y*.46)),maxf(2,cut-2)),fill.lightened(.07))
 			draw_line(Vector2(cut,dy+2),Vector2(extent.x-cut,dy+2),edge,1)
 			draw_line(Vector2(cut,extent.y-3),Vector2(extent.x-cut,extent.y-3),fill.darkened(.45),2)

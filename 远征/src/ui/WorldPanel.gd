@@ -36,7 +36,7 @@ func _build() -> void:
 	G.veil(self, 0.72)
 
 	# 浮层自身 rect 要等一帧才结算，锚点定位会算到 0，坐标一律写死
-	var banner := G.banner_box("世 界 图 志", 300, 50)
+	var banner := G.banner_box("世界图志", 300, 50)
 	banner.position = Vector2(90, 36)
 	add_child(banner)
 
@@ -71,7 +71,7 @@ func _build() -> void:
 	# 打开就停在「当前推进到的那片」，省得每次从头翻
 	_deck.go(clampi(unlocked_n - 1, 0, maxi(0, order.size() - 1)), true)
 
-	var back := G.gold_button("返 回", 120, 38)
+	var back := G.gold_button("返回", 120, 38)
 	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 480)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -118,7 +118,7 @@ func _slide(tid: String, idx: int, order: Array) -> Control:
 		lines.insert(0, "「%s」" % epi)
 
 	return SlideCardScript.new({
-		"kicker": "回 境 %02d / %02d" % [idx + 1, order.size()],
+		"kicker": "回境 %02d / %02d" % [idx + 1, order.size()],
 		"title": G.world_name(tid),
 		"art_names": ["world_%s_art" % tid, "world_%s" % tid],
 		"art_hint": "world_%s.png" % tid,

@@ -54,7 +54,7 @@ static func _disc(c: CanvasItem, center: Vector2, radius: float, col: Color) -> 
 		var x := floorf(sqrt(maxf(0,r*r-float(y*y))))
 		c.draw_rect(Rect2(center.x-x,center.y+y,x*2+1,1),col)
 
-static func ring(c: CanvasItem, center: Vector2, radius: float, trim := BRONZE, face := INK, pressed := false, ornaments := true) -> void:
+static func ring(c: CanvasItem, center: Vector2, radius: float, trim := BRONZE, face := INK, pressed := false, ornaments := true, upper_gold := Color(0, 0, 0, 0), split_y := 9999.0) -> void:
 	var p := center.floor()
 	_disc(c,p+Vector2(0,2),radius,DARK)
 	_disc(c,p,radius,DARK)
@@ -63,6 +63,18 @@ static func ring(c: CanvasItem, center: Vector2, radius: float, trim := BRONZE, 
 	_disc(c,p,radius-3,trim)
 	_disc(c,p,radius-4,DARK)
 	_disc(c,p,radius-5,face.darkened(0.16) if pressed else face)
+	if upper_gold.a > 0.0:
+		var inner_r := floorf(radius - 5.0)
+		var rim_col := upper_gold.lightened(0.24)
+		var fill_col := upper_gold.darkened(0.10) if pressed else upper_gold
+		for y in range(-int(inner_r), int(inner_r) + 1):
+			if p.y + y >= split_y:
+				continue
+			var x := floorf(sqrt(maxf(0.0, inner_r * inner_r - float(y * y))))
+			c.draw_rect(Rect2(p.x - x, p.y + y, x * 2.0 + 1.0, 1.0), rim_col)
+			var ix := floorf(sqrt(maxf(0.0, pow(maxf(0.0, inner_r - 2.0), 2.0) - float(y * y))))
+			if y >= -int(inner_r) + 2 and ix > 0.0:
+				c.draw_rect(Rect2(p.x - ix, p.y + y, ix * 2.0 + 1.0, 1.0), fill_col)
 	# Light catches the upper bevel, a darker lower rim gives the disc weight.
 	for y in range(-int(radius)+3,-int(radius*0.55)):
 		var x := floorf(sqrt(maxf(0,pow(radius-2,2)-float(y*y))))
@@ -72,10 +84,11 @@ static func ring(c: CanvasItem, center: Vector2, radius: float, trim := BRONZE, 
 			diamond(c,p+direction*(radius-2),3,DARK)
 			diamond(c,p+direction*(radius-2),2,GOLD)
 	# Small diagonal lacquer hatching stays away from the outer rim.
-	for row in range(-int(radius)+10,int(radius)-9,6):
-		var sx := floorf(sqrt(maxf(0,pow(radius-8,2)-float(row*row))))
-		if sx > 3:
-			c.draw_line(p+Vector2(-sx,row),p+Vector2(-sx+6,row+2),Color("789080",0.07),1,false)
+	if upper_gold.a <= 0.0:
+		for row in range(-int(radius)+10,int(radius)-9,6):
+			var sx := floorf(sqrt(maxf(0,pow(radius-8,2)-float(row*row))))
+			if sx > 3:
+				c.draw_line(p+Vector2(-sx,row),p+Vector2(-sx+6,row+2),Color("789080",0.07),1,false)
 
 static func medallion(c: CanvasItem, rect: Rect2) -> void:
 	var p := rect.position

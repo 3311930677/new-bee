@@ -182,19 +182,19 @@ func _title_card(t: Dictionary) -> Control:
 	var btn: Control
 	if is_active:
 		# 已佩戴：深绿底白字——与"可操作的金钮"拉开反差，一眼看出当前生效的是哪个
-		btn = _state_button("卸 下", true)
+		btn = _state_button("卸下", true)
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				G.title_set_active("")
 				_refresh(true))
 	elif owned:
-		btn = G.gold_button("佩 戴", G.BTN_S.x - 24, 34, G.FS_SM)
+		btn = G.gold_button("佩戴", G.BTN_S.x - 24, 34, G.FS_SM)
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				G.title_set_active(tid)
 				_refresh(true))
 	elif met:
-		btn = G.gold_button("领 取", G.BTN_S.x - 24, 34, G.FS_SM)
+		btn = G.gold_button("领取", G.BTN_S.x - 24, 34, G.FS_SM)
 		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("f1dab1"))
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:

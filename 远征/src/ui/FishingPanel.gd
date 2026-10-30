@@ -2,6 +2,17 @@ class_name FishingPanel
 extends Control
 signal closed
 const View := preload("res://src/ui/ShowcaseUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
+const SPOT_BGS := {
+	"fish_salt_spring": "fishing_bg_salt",
+	"fish_port_pier": "fishing_bg_harbor",
+	"fish_tide_pool": "fishing_bg_tide",
+	"fish_frost_pool": "fishing_bg_frost",
+	"old_salt_road": "fishing_bg_salt",
+	"shenyuan_port": "fishing_bg_harbor",
+	"tideflat": "fishing_bg_tide",
+	"frost_post": "fishing_bg_frost",
+}
 var spot_id := ""
 var _cast: Dictionary = {}
 var _casting := false
@@ -25,8 +36,12 @@ func open_spot(id: String) -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	set_meta("safe_layout_exempt",true)
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	var spot := G.fishing_spot(id)
+	var map_id := String(spot.get("map", ""))
+	var bg_key := String(SPOT_BGS.get(id, SPOT_BGS.get(map_id, "fishing_bg_salt")))
+	var bg_tex: Texture2D = KitV4.commercial_tex(bg_key)
 	var background := TextureRect.new()
-	background.texture = load("res://assets/ui/experience_20261026/fishing_scene.png")
+	background.texture = bg_tex if bg_tex != null else load("res://assets/ui/experience_20261026/fishing_scene.png")
 	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -41,25 +56,26 @@ func open_spot(id: String) -> void:
 	_page = View.column(12)
 	add_child(_page)
 	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 10)
 	_page.add_child(top)
+	var back := G.top_back_button(top, close)
+	back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var title := View.column(4)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(title)
 	title.add_child(View.text("水边垂钓","title",View.GOLD))
-	title.add_child(View.text(String(G.fishing_spot(id).get("name","钓点")),"object"))
-	var back := View.button("返回")
-	back.custom_minimum_size.x = 80
-	back.pressed.connect(close)
-	top.add_child(back)
+	title.add_child(View.text(String(spot.get("name","钓点")),"object"))
 	_water = FishingWater.new()
-	_water.snow=String(G.fishing_spot(id).get("map",""))=="frost_post"
-	if _water.snow:background.modulate=Color(.80,.91,1.0)
+	_water.snow = map_id == "frost_post"
+	_water.king_possible = G.fishing_king_available(id)
+	if _water.snow and bg_tex == null:
+		background.modulate = Color(.80,.91,1.0)
 	_water.custom_minimum_size.y = 70
 	_water.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_water.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_page.add_child(_water)
 	var frame := View.frame(14)
-	frame.add_theme_stylebox_override("panel",View.surface(Color("102b32",.94),View.GOLD,14))
+	frame.add_theme_stylebox_override("panel",View.surface(Color("1a1412",.94),View.GOLD,14))
 	_page.add_child(frame)
 	var body := View.column(10)
 	frame.add_child(body)
@@ -70,8 +86,8 @@ func open_spot(id: String) -> void:
 	row.add_child(_result_icon)
 	_info = View.text("","caption",View.JADE)
 	row.add_child(_info)
-	var spot := G.fishing_spot(id)
-	_stage_label=View.text("准备抛竿 · "+String(spot.get("fish_name","水中游鱼")),"object",View.GOLD)
+	var king_tag := " · ★有鱼王水情" if G.fishing_king_available(id) else ""
+	_stage_label=View.text("准备抛竿 · "+String(spot.get("fish_name","水中游鱼")) + king_tag,"object",View.GOLD)
 	body.add_child(_stage_label)
 	_gauge = Control.new()
 	_gauge.custom_minimum_size.y = 32
@@ -135,7 +151,9 @@ func _update_gauge() -> void:
 
 func _refresh_info() -> void:
 	var iid := String(G.fishing_spot(spot_id).get("item", ""))
-	_info.text = "第 %d 日余 %d 竿 · %s %d 条 · 图鉴 %d/%d" % [int(G.economy_state()["day"]), G.fishing_remaining(spot_id),
+	var rem := clampi(G.fishing_remaining(spot_id), 0, 3)
+	var dots := "●".repeat(rem) + "○".repeat(3 - rem)
+	_info.text = "第 %d 日余 %d 竿 (%s) · %s %d 条 · 图鉴 %d/%d" % [int(G.economy_state()["day"]), rem, dots,
 		G.item_name(iid), G.item_count(iid), (G.fishing_state()["discoveries"] as Array).size(),(TableCache.fishing_config().get("spots",[]) as Array).size()]
 
 
@@ -167,7 +185,7 @@ func _act() -> void:
 		_update_gauge()
 		_water.casting = true
 		_result_icon.hide()
-		_action_button.text = "收 竿"
+		_action_button.text = "收竿"
 		_message.text = "浮标进入绿色区间时收竿。" if not bool(res.get("resumed",false)) else "接回未完成的一竿，不再消耗次数。看准绿色区间收竿。"
 		_refresh_info()
 		return
@@ -224,9 +242,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		close()
 
 class FishingWater extends Control:
+	const KitV4 := preload("res://src/ui/KitV4.gd")
 	var casting := false
 	var snow := false
+	var king_possible := false
 	var clock := 0.0
+	var _float_tex: Texture2D = null
+	var _shadow_tex: Texture2D = null
+	var _king_tex: Texture2D = null
+	func _ready() -> void:
+		_float_tex = KitV4.commercial_tex("fishing_float")
+		_shadow_tex = KitV4.commercial_tex("fishing_shadow")
+		_king_tex = KitV4.commercial_tex("fishing_king_shadow")
 	func _process(delta: float) -> void:
 		clock+=delta
 		queue_redraw()
@@ -237,13 +264,24 @@ class FishingWater extends Control:
 				var y := fmod(i*31.0+clock*12,maxf(1,size.y))
 				draw_circle(Vector2(x,y),1.2,Color(1,1,1,.45))
 		var center := size*Vector2(.57,.58)+Vector2(0,sin(clock*2)*2)
+		# 水下鱼影（常规鱼影 + 鱼王鱼影 alpha=0.55）
+		var shadow_pos := center + Vector2(-42.0 + sin(clock * 0.9) * 18.0, 14.0 + cos(clock * 1.1) * 4.0)
+		if _shadow_tex != null:
+			draw_texture_rect(_shadow_tex, Rect2(shadow_pos - Vector2(28, 14), Vector2(56, 28)), false, Color(1, 1, 1, 0.55))
+		if king_possible and _king_tex != null:
+			var k_pos := center + Vector2(36.0 + cos(clock * 0.7) * 20.0, -8.0 + sin(clock * 0.8) * 5.0)
+			draw_texture_rect(_king_tex, Rect2(k_pos - Vector2(40, 20), Vector2(80, 40)), false, Color(1, 1, 1, 0.55))
 		for i in 3:
 			var radius := 12+fmod(clock*8+i*14,42)
 			draw_set_transform(center,0,Vector2(1,.35))
 			draw_arc(Vector2.ZERO,radius,0,TAU,40,Color(.68,.86,.82,.32*(1-radius/60)),1,true)
 		draw_set_transform(Vector2.ZERO)
 		if casting:
-			draw_line(Vector2(size.x*.12,size.y*.95),center,Color("c2c4a1",.65),1,true)
+			draw_line(Vector2(size.x*.12,size.y*.95),center - Vector2(0, 14),Color("c2c4a1",.72),1.5,true)
+		if _float_tex != null:
+			var f_alpha := 1.0 if casting else 0.85
+			draw_texture_rect(_float_tex, Rect2(center - Vector2(18, 28), Vector2(36, 36)), false, Color(1, 1, 1, f_alpha))
+		elif casting:
 			draw_circle(center,4,Color("d7a64e"))
 			draw_line(center-Vector2(0,13),center+Vector2(0,4),Color("fff0c4"),2,true)
 			draw_line(center-Vector2(0,11),center-Vector2(0,4),Color("ba4d3f"),3,true)

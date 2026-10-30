@@ -1,16 +1,16 @@
 extends RefCounted
 ## B1 shared visual system. Factories do not change game rules or global popup behavior.
 const ROOT := "res://assets/ui/travel_chest_b1/"
-const NIGHT := Color("17141a")
-const FACE := Color("221e26")
-const SELECTED := Color("2f2832")
-const BRONZE := Color("6e5434")
-const COPPER := Color("c29a5b")
-const PAPER := Color("f3e8d0")
-const AGED := Color("bfb096")
-const GOLD := Color("f0b95a")
-const RED := Color("cf4a33")
-const JADE := Color("63b784")
+const NIGHT := Color("120e0c")
+const FACE := Color("1a1412")
+const SELECTED := Color("2a201a")
+const BRONZE := Color("8a6d38")
+const COPPER := Color("c9a45c")
+const PAPER := Color("f3e3c0")
+const AGED := Color("8f8376")
+const GOLD := Color("f2c76a")
+const RED := Color("e2402c")
+const JADE := Color("55d8a8")
 const BLUE := Color("8db3c7")
 const ASH := Color("77705f")
 const SLIP := Color("e8dcc0")
@@ -37,6 +37,12 @@ static func disabled_shader() -> Shader:
 static func theme() -> Theme:
 	if _theme != null: return _theme
 	_theme = Theme.new()
+	for kit_id in ["hero_normal", "hero_pressed", "hero_disabled", "btn_normal", "btn_pressed", "btn_disabled", "tab_active", "tab_idle", "back_diamond", "panel_iron", "card_paper", "nav_base", "top_bar", "bottom_bar", "drawer_sheet", "slot_rare", "slot_legend", "slot_common", "slot_empty", "slot_selected", "btn_row", "plaque_title", "bar_frame", "bar_fill_exp", "bar_fill_hp", "currency_capsule", "sortie_medal", "quest_slip", "button_red", "button_dark", "card_frame_parchment", "building_tag", "rail_socket", "rail_socket_selected", "nav_socket", "nav_socket_selected", "plaque_small"]:
+		preload("res://src/ui/UiKit.gd").style(kit_id)
+		G.Visuals._kit_tex(kit_id + ".png")
+	for role_idle in ["res://image/role/zs/pojun_idle.png", "res://image/role/ck/chuanyang_idle.png", "res://image/role/fs/shuangyu_idle.png", "res://image/role/fz/chenxing_idle.png", "res://assets/ui/home/home_bg_tall.png", "res://assets/ui/home/fire_s.png", "res://assets/ui/home/fire_xs.png", "res://assets/ui/home/avatar_frame.png", "res://assets/ui/home/level_badge.png", "res://assets/ui/illustrated_icons_20261007/swords.png"]:
+		if ResourceLoader.exists(role_idle):
+			G.visual_texture(role_idle)
 	_theme.default_font = G.font_reg
 	_theme.default_font_size = G.FS_XS
 	for role in FONT_SIZES:
@@ -126,7 +132,9 @@ static func nine(canvas: CanvasItem, tex: Texture2D, dimensions: Vector2, hero: 
 static func action(words: String, skin: String = "secondary", icon: String = "") -> Button:
 	return ChestButton.new(words,skin,icon)
 
-static func format_number(amount: int) -> String:
+static func format_number(amount: int, compact: bool = true) -> String:
+	if not compact:
+		return str(amount)
 	return preload("res://src/ui/WorldHUD.gd").format_currency(amount)
 
 static func toast(parent: Node, words: String, kind: String = "info") -> Control:
@@ -247,25 +255,40 @@ class ChestButton extends Button:
 			if is_pressed() or disabled: draw_rect(Rect2(Vector2.ZERO,size),Color(0,0,0,.22 if is_pressed() else .38))
 		elif primary:
 			var state := "disabled" if disabled else ("pressed" if is_pressed() else "normal")
-			var tex := UI.texture(skin+"_"+state)
-			if tex != null: UI.nine(self,tex,size,skin=="hero")
-			else: UI.surface(self,Rect2(Vector2.ZERO,size),Color("6a2b1f"),UI.COPPER,4)
+			var kit_sb := preload("res://src/ui/UiKit.gd").style("hero_" + state, 0)
+			if kit_sb != null:
+				draw_style_box(kit_sb, Rect2(Vector2.ZERO, size))
+			else:
+				UI.surface(self, Rect2(Vector2.ZERO, size), Color("6e1a12") if is_pressed() else Color("9e2b25"), UI.COPPER, 4)
 		elif skin == "tab":
-			draw_line(Vector2(8,size.y-1),Vector2(size.x-8,size.y-1),UI.BRONZE,1)
-			if selected:
-				draw_rect(Rect2(Vector2.ZERO,size),Color("2f2832",.68))
-				G.Visuals.nine_slice(self, G.Visuals._kit_tex("button_dark.png"), Rect2(Vector2.ZERO, size), 8.0, 6.0, Color(1, 1, 1, 0.35))
+			var tab_sb := preload("res://src/ui/UiKit.gd").style("tab_active" if selected else "tab_idle", 0)
+			if tab_sb != null:
+				draw_style_box(tab_sb, Rect2(Vector2.ZERO, size))
+			else:
+				draw_line(Vector2(8,size.y-1),Vector2(size.x-8,size.y-1),UI.BRONZE,1)
+				if selected:
+					draw_rect(Rect2(Vector2.ZERO,size),Color("2a201a",.82))
+					G.Visuals.nine_slice(self, G.Visuals._kit_tex("button_dark.png"), Rect2(Vector2.ZERO, size), 8.0, 6.0, Color(1, 1, 1, 0.35))
 		elif skin not in ["quiet","back","nav","currency"]:
-			UI.surface(self,Rect2(Vector2.ZERO,size),UI.NIGHT if skin=="rail" else bg,UI.COPPER if (is_hovered() or selected) else UI.BRONZE)
+			var sec_state := "disabled" if disabled else ("pressed" if is_pressed() else "normal")
+			var sec_sb := preload("res://src/ui/UiKit.gd").style("btn_" + sec_state, 0) if skin == "secondary" else null
+			if sec_sb != null:
+				draw_style_box(sec_sb, Rect2(Vector2.ZERO, size))
+			else:
+				UI.surface(self,Rect2(Vector2.ZERO,size),UI.NIGHT if skin=="rail" else bg,UI.COPPER if (is_hovered() or selected) else UI.BRONZE)
 		elif is_pressed(): UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE)
 		if skin == "tab" and selected and plate == null:
 			draw_rect(Rect2(8,size.y-2,size.x-16,2),UI.COPPER)
 			G.Visuals.diamond(self, Vector2(size.x * 0.5, size.y - 2.0), 2.5, UI.GOLD)
 		if skin == "back":
 			caption.visible = false
-			UI.surface(self,Rect2(Vector2.ZERO,size),Color("17141a",0.84),UI.COPPER if (is_hovered() or has_focus()) else UI.BRONZE,4.0)
-			var p := size*.5
-			draw_polyline(PackedVector2Array([p+Vector2(4,-7),p+Vector2(-4,0),p+Vector2(4,7)]),UI.PAPER,2.0,true)
+			var back_sb := preload("res://src/ui/UiKit.gd").style("back_diamond", 0)
+			if back_sb != null:
+				draw_style_box(back_sb, Rect2(Vector2.ZERO, size))
+			else:
+				UI.surface(self,Rect2(Vector2.ZERO,size),Color("120e0c",0.92),UI.COPPER if (is_hovered() or has_focus()) else UI.BRONZE,4.0)
+				var p := size*.5
+				draw_polyline(PackedVector2Array([p+Vector2(4,-7),p+Vector2(-4,0),p+Vector2(4,7)]),UI.PAPER,2.0,true)
 		if skin == "currency": draw_line(Vector2(4,size.y-1),Vector2(size.x-4,size.y-1),Color("3a2c1c"),1)
 		if not icon_id.is_empty():
 			var icon := UI.texture(icon_id)
@@ -293,7 +316,7 @@ class Tray extends Control:
 		resized.connect(queue_redraw)
 	func _draw() -> void:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		draw_rect(Rect2(Vector2.ZERO,size),Color("17141a",0.96))
+		draw_rect(Rect2(Vector2.ZERO,size),Color("120e0c",0.96))
 		if size.x >= 80 and size.y >= 60:
 			var iron_tex := G.Visuals._kit_tex("panel_iron.png")
 			G.Visuals.nine_slice(self, iron_tex, Rect2(Vector2.ZERO, size), 16.0, 16.0, Color(1, 1, 1, 0.58))
@@ -350,8 +373,8 @@ class QuestSlip extends ChestButton:
 		goal.position = Vector2(16,28)
 		goal.size = Vector2(size.x-36,36)
 	func _draw() -> void:
-		var bg_color := Color("26202c", 0.94) if is_pressed() else (Color("201b25", 0.92) if is_hovered() else Color("19151e", 0.90))
-		var border_color := UI.GOLD if is_hovered() else (UI.JADE if claimable else Color("8a683e"))
+		var bg_color := Color("2a201a", 0.94) if is_pressed() else (Color("221a16", 0.92) if is_hovered() else Color("1a1412", 0.90))
+		var border_color := UI.GOLD if is_hovered() else (UI.JADE if claimable else Color("c9a45c"))
 		UI.surface(self, Rect2(Vector2.ZERO, size), bg_color, border_color, 2.0)
 		# 左侧立柱铜纹与状态彩条
 		draw_rect(Rect2(0, 3, 4, size.y - 6), UI.JADE if claimable else Color("c29a5b"))

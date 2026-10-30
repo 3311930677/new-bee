@@ -1,11 +1,46 @@
 extends RefCounted
 ## Authored independent sprites: feet, draw order, and solid footprints agree.
+const KitV4 := preload("res://src/ui/KitV4.gd")
+
+static func _regional_override(map_id: String, path: String, idx: int) -> Texture2D:
+	if map_id in ["abyss_ring", "stele_entry", "stele_resonance", "stele_core"]:
+		if path.ends_with("stele_mid_a.png"):
+			return KitV4.commercial_tex("f06a_abyss_pillar_1")
+		if path.ends_with("stele_mid_b.png"):
+			return KitV4.commercial_tex("f06a_abyss_pillar_2")
+	elif map_id in ["rift_mine_road", "rift_mine_vault"]:
+		if path.ends_with("boulder_a.png"):
+			return KitV4.commercial_tex("f05b_ore_crystal_1")
+		if path.ends_with("boulder_b.png"):
+			return KitV4.commercial_tex("f05a_mine_timber")
+		if path.ends_with("rock_m_0.png"):
+			return KitV4.commercial_tex("f05b_ore_crystal_2" if idx % 2 == 1 else "f05b_ore_crystal_1")
+	elif map_id == "stele_cavern":
+		if path.ends_with("stele_mid_a.png"):
+			return KitV4.commercial_tex("f02a_broken_stele_2" if idx % 2 == 1 else "f02a_broken_stele_1")
+	elif map_id == "old_salt_road":
+		if path.ends_with("044_deco_desert_cactus.png"):
+			return KitV4.commercial_tex("f03a_salt_crystal_1")
+		if path.ends_with("045_deco_desert_sandstone.png"):
+			return KitV4.commercial_tex("f03a_salt_crystal_2" if idx % 2 == 1 else "f03a_salt_crystal_1")
+	elif map_id == "red_sand_route":
+		if path.ends_with("044_deco_desert_cactus.png"):
+			return KitV4.commercial_tex("f04b_dry_shrub_1" if idx % 2 == 0 else "f04b_dry_shrub_2")
+		if path.ends_with("045_deco_desert_sandstone.png"):
+			return KitV4.commercial_tex("f04a_sandstone_2" if idx % 2 == 1 else "f04a_sandstone_1")
+	return null
+
 static func setup(map: Node) -> void:
 	var cfg: Dictionary = map.get("_main_cfg")
+	var map_id := String(map.get("_main_map_id"))
 	var world: Node2D = map.get("_world")
+	var idx := 0
 	for row: Dictionary in cfg.get("illustrated_scenery", []):
 		var path := String(row.get("texture", ""))
-		var art: Texture2D = G.visual_texture(path)
+		var art: Texture2D = _regional_override(map_id, path, idx)
+		if art == null:
+			art = G.visual_texture(path)
+		idx += 1
 		if art == null:
 			push_error("Illustrated scenery missing: " + path)
 			continue

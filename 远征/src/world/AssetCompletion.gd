@@ -73,26 +73,53 @@ static func prop(c: CanvasItem, key: String, foot: Vector2, height: float, tint 
 	var size := Vector2(height * tex.get_width() / float(tex.get_height()), height)
 	c.draw_texture_rect(tex, Rect2((foot - Vector2(size.x * .5, size.y)).round(), size.round()), false, tint)
 
-static func channel(c: CanvasItem, points: Array, active: bool) -> void:
-	var tex := texture("rune_channel")
-	if tex == null: return
+static func channel(c: CanvasItem, points: Array, active: bool, voice_color := Color("c9ece5")) -> void:
+	var K := preload("res://src/ui/KitV4.gd")
+	var base_tex := K.commercial_tex("f07_base_h")
+	var glow_tex := K.commercial_tex("f07_glow_h")
+	if base_tex == null:
+		base_tex = texture("rune_channel")
+	if base_tex == null: return
 	c.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var tint := Color("c9ece5") if active else Color("737a80")
-	# Repeat a short material module, clipping the final one. No stretched long lines.
+	var pulse := 0.82 + 0.18 * sin(float(Time.get_ticks_msec()) * 0.00314)
+	var base_tint := Color("98a8ba") if active else Color("6c7888")
+	var glow_tint := Color(voice_color.r, voice_color.g, voice_color.b, pulse if active else 0.72)
+	var draw_w := 44.0
+	var draw_h := 24.0
+	var src_w := float(base_tex.get_width())
+	var src_h := float(base_tex.get_height())
 	for i in range(points.size() - 1):
 		var a: Vector2 = points[i]
 		var b: Vector2 = points[i + 1]
 		var distance := a.distance_to(b)
-		var height := 12.0
-		var module := 36.0
 		c.draw_set_transform(a, (b-a).angle())
 		var x := 0.0
 		while x < distance:
-			var length := minf(module, distance-x)
-			c.draw_texture_rect_region(tex, Rect2(x, -height*.5, length, height),
-				Rect2(0, 0, tex.get_width()*length/module, tex.get_height()), tint)
-			x += module
+			var length := minf(draw_w, distance-x)
+			var src_len := src_w * (length / draw_w)
+			c.draw_texture_rect_region(base_tex, Rect2(x, -draw_h*.5, length, draw_h),
+				Rect2(0, 0, src_len, src_h), base_tint)
+			if glow_tex != null:
+				var gw := float(glow_tex.get_width())
+				var gh := float(glow_tex.get_height())
+				c.draw_texture_rect_region(glow_tex, Rect2(x, -draw_h*.5, length, draw_h),
+					Rect2(0, 0, gw * (length / draw_w), gh), glow_tint)
+			x += draw_w
+		c.draw_line(Vector2(2, 0), Vector2(maxf(2, distance - 2), 0), Color(voice_color.r, voice_color.g, voice_color.b, (0.78 * pulse) if active else 0.42), 3.0)
 		c.draw_set_transform(Vector2.ZERO)
+
+static func channel_junction(c: CanvasItem, at: Vector2, active: bool, voice_color := Color("c9ece5"), kind := "t") -> void:
+	var K := preload("res://src/ui/KitV4.gd")
+	var base_tex := K.commercial_tex("f07_base_" + kind)
+	var glow_tex := K.commercial_tex("f07_glow_" + kind)
+	if base_tex == null: return
+	c.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var pulse := 0.82 + 0.18 * sin(float(Time.get_ticks_msec()) * 0.00314)
+	var sz := Vector2(28, 28)
+	c.draw_texture_rect(base_tex, Rect2((at - sz * 0.5).round(), sz), false, Color("98a8ba") if active else Color("6c7888"))
+	if glow_tex != null:
+		c.draw_texture_rect(glow_tex, Rect2((at - sz * 0.5).round(), sz), false, Color(voice_color.r, voice_color.g, voice_color.b, pulse if active else 0.75))
+	c.draw_circle(at, 3.5, Color(voice_color.r, voice_color.g, voice_color.b, (0.85 * pulse) if active else 0.52))
 
 static func salt_key(eid: String) -> String:
 	return String(SALT_PROPS.get(eid, "salt_trace"))

@@ -1,7 +1,9 @@
 extends Control
 ## Extension template for the four growth systems absent from the design screenshots.
 const UI := preload("res://src/ui/TravelChestUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const Page := preload("res://src/ui/ChestPageUI.gd")
+const Fix := preload("res://src/ui/ReviewFixUI.gd")
 var host: Control
 var system := ""
 var selection := ""
@@ -87,7 +89,11 @@ func _ready() -> void:
 		d.closed.connect(d.queue_free)
 		add_child(d))
 	add_child(_help)
-	if system=="talent":host._info_l=_info
+	if system=="talent":
+		host._info_l=_info
+		var astro_tex := KitV4.commercial_tex("bg_talent_astrolabe")
+		if astro_tex != null and _stage.get("background") != null:
+			_stage.background.texture = astro_tex
 	if system=="title":host._scroll=_scroll
 	if system=="pet":G.tip_once.call_deferred("pet_raise","灵宠养成 · 怎么玩",host.PET_TIPS,host)
 	get_viewport().size_changed.connect(layout)
@@ -178,19 +184,27 @@ func _talent() -> void:
 	if selection.is_empty() and not branches.is_empty():selection=String(branches[0].nodes[0].id)
 	var selected:=G.talent_node(selection)
 	var branch_id:=String(selected.get("branch",""))
-	# Some tables keep branch only on the containing tree.
 	for branch in branches:
 		for node in branch.nodes:
 			if String(node.id)==selection:branch_id=String(branch.id)
+	var active_nodes:Array=[]
 	for branch in branches:
 		var id:=String(branch.id)
 		_tab(String(branch.name),id,branch_id,func():selection=String(branch.nodes[0].id);refresh())
-		if id!=branch_id:continue
-		for node in branch.nodes:
-			var n:=int((G.prog.get("talents",{}) as Dictionary).get(String(node.id),0))
-			_row(String(node.name),"第%d阶 · %d / %d" % [int(node.get("tier",1)),n,int(node.get("max",1))],String(node.id),String(node.id)==selection,G.talent_can_add(String(node.id)))
-	var t_row := Page.GrowthRow.new("", selection)
-	_art.texture = t_row.image.texture if t_row.image != null and t_row.image.texture != null else Page.texture("skill")
+		if id==branch_id:
+			active_nodes=branch.nodes
+	# §4.6-2 10 阶星盘路径树（带连线 + 4 态节点框 A-10 + 30 个专属图标 D-01..D-03）
+	if not active_nodes.is_empty():
+		var path_tree := TalentPathStrip.new(active_nodes, selection, func(nid: String): selection = nid; refresh())
+		_rows.add_child(path_tree)
+	for node in active_nodes:
+		var n:=int((G.prog.get("talents",{}) as Dictionary).get(String(node.id),0))
+		_row(String(node.name),"第%d阶 · %d / %d" % [int(node.get("tier",1)),n,int(node.get("max",1))],String(node.id),String(node.id)==selection,G.talent_can_add(String(node.id)))
+	var t_tex := Page.talent_icon_tex(selection)
+	if t_tex == null:
+		var t_row := Page.GrowthRow.new("", selection)
+		t_tex = t_row.image.texture if t_row.image != null and t_row.image.texture != null else Page.texture("skill")
+	_art.texture = t_tex
 	_art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_name.text=String(selected.get("name","天赋修习"))
 	_status.text="剩余天赋点 %d / %d" % [G.talent_points_left(),G.talent_points_total()]
@@ -201,6 +215,31 @@ func _pet() -> void:
 	var pets:=G.owned_pets()
 	if not pets.has(selection):selection=String(pets[0]) if not pets.is_empty() else ""
 	host._sel=selection
+	# §4.8 横向卡片轮播条（88×96）
+	if not pets.is_empty():
+		var hscroll := ScrollContainer.new()
+		hscroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		hscroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		hscroll.custom_minimum_size.y = 92
+		var hbox := HBoxContainer.new()
+		hbox.add_theme_constant_override("separation", 8)
+		hscroll.add_child(hbox)
+		for pet in pets:
+			var pid := String(pet)
+			var pcfg := TableCache.get_pet(pid)
+			var pst := G.pet_stat(pid)
+			var cell := Page.ItemCell.new()
+			cell.custom_minimum_size = Vector2(84, 86)
+			cell.image_px = 48.0
+			cell.item_image.texture = Fix.pet(pid)
+			cell.heading.text = String(pcfg.get("name", pid))
+			cell.show_name = true
+			cell.amount.text = "Lv.%d" % int(pst.get("lv", 1))
+			cell.selected = pid == selection
+			cell.rarity_rank = 3
+			cell.pressed.connect(func(): selection = pid; refresh())
+			hbox.add_child(cell)
+		_rows.add_child(hscroll)
 	for pet in pets:
 		var id:=String(pet)
 		_row(String(TableCache.get_pet(id).get("name",id)),"Lv.%d · 突破 %d/5 · 羁绊 %d/5" % [int(G.pet_stat(id).get("lv",1)),int(G.pet_stat(id).get("brk",0)),G.pet_bond_level(id)],id,id==selection)
@@ -209,7 +248,7 @@ func _pet() -> void:
 		_tab(item[1],id,operation,func():operation=id;refresh())
 	var cfg:=TableCache.get_pet(selection)
 	var state:=G.pet_stat(selection) if not selection.is_empty() else {}
-	_art.texture=preload("res://src/ui/ReviewFixUI.gd").pet(selection+"_hd") if not selection.is_empty() else Page.texture("pet")
+	_art.texture=Fix.pet(selection+"_hd") if not selection.is_empty() else Page.texture("pet")
 	_name.text=String(cfg.get("name","尚未收集灵宠"))
 	_status.text="Lv.%d · 资质 %d 星 · 突破 %d/5 · 羁绊 %d/5" % [int(state.get("lv",1)),int(state.get("star",3)),int(state.get("brk",0)),G.pet_bond_level(selection)]
 	var enabled:=not selection.is_empty()
@@ -219,14 +258,14 @@ func _pet() -> void:
 			enabled=enabled and G.item_count("pet_food")>0 and int(state.get("lv",1))<int(G.prog.get("level",1))
 		"break":
 			var cost:=G.pet_break_cost(selection)
-			_details.text="已至五层" if cost.is_empty() else "突破晶 %d / %d · 魂石 %d / %d\n每层全属性 +8%%" % [int(cost.crystal),G.item_count("break_crystal"),int(cost.soul),int(G.wallet.get("soul",0))]
+			_details.text="已至五层" if cost.is_empty() else "突破晶 %d / %d · 魂石 %d / %d\n每层全属性 +8%% ▲" % [int(cost.crystal),G.item_count("break_crystal"),int(cost.soul),int(G.wallet.get("soul",0))]
 			enabled=enabled and not cost.is_empty() and G.item_count("break_crystal")>=int(cost.get("crystal",0)) and int(G.wallet.get("soul",0))>=int(cost.get("soul",0))
 		"star":
 			_details.text="资质果 1 / %d（需要 / 持有）\n重新随机 1～5 星，可能降低资质" % G.item_count("aptitude_fruit")
 			enabled=enabled and G.item_count("aptitude_fruit")>0
 		"bond":
 			var bcost:=G.pet_bond_cost(selection)
-			_details.text="已达五阶灵犀共鸣（灵宠属性+15% · 主角生命+75/攻击+10）" if bcost.is_empty() else "宠粮 %d/%d · 金币 %d（每阶属性+3%% · 主角生命+15/攻击+2）" % [int(bcost.get("pet_food",1)),G.item_count("pet_food"),int(bcost.get("gold",80))]
+			_details.text="已达五阶灵犀共鸣（灵宠属性+15% · 主角生命+75/攻击+10）" if bcost.is_empty() else "宠粮 %d/%d · 金币 %d（每阶属性+3%% · 主角生命+15/攻击+2 ▲）" % [int(bcost.get("pet_food",1)),G.item_count("pet_food"),int(bcost.get("gold",80))]
 			enabled=enabled and not bcost.is_empty() and G.item_count("pet_food")>=int(bcost.get("pet_food",1)) and int(G.wallet.get("gold",0))>=int(bcost.get("gold",80))
 	if not selection.is_empty():
 		var stats:PackedStringArray=[]
@@ -244,6 +283,31 @@ func _mount() -> void:
 	_secondary.disabled=false
 	var mounts:=G.mounts_cfg()
 	if selection.is_empty():selection=G.mount_active() if not G.mount_active().is_empty() else String(mounts[0].id)
+	# §4.8 横向坐骑卡片轮播条
+	if not mounts.is_empty():
+		var hscroll := ScrollContainer.new()
+		hscroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		hscroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		hscroll.custom_minimum_size.y = 92
+		var hbox := HBoxContainer.new()
+		hbox.add_theme_constant_override("separation", 8)
+		hscroll.add_child(hbox)
+		for m in mounts:
+			var mid := String(m.id)
+			var mtier := G.mount_tier(mid)
+			var cell := Page.ItemCell.new()
+			cell.custom_minimum_size = Vector2(84, 86)
+			cell.image_px = 48.0
+			cell.item_image.texture = G.res_tex(String(m.get("icon2" if mtier >= 2 else "icon", "")))
+			cell.item_image.modulate = Color.WHITE if mtier > 0 else Color(0.55, 0.55, 0.55)
+			cell.heading.text = String(m.get("name", mid))
+			cell.show_name = true
+			cell.amount.text = "未拥有" if mtier == 0 else ("%d阶" % mtier)
+			cell.selected = mid == selection
+			cell.rarity_rank = 4 if mtier >= 2 else (3 if mtier == 1 else 1)
+			cell.pressed.connect(func(): selection = mid; refresh())
+			hbox.add_child(cell)
+		_rows.add_child(hscroll)
 	for m in mounts:
 		var id:=String(m.id)
 		_row(String(m.name),"未拥有" if G.mount_tier(id)==0 else "%d阶%s" % [G.mount_tier(id)," · 当前同行" if G.mount_active()==id else ""],id,id==selection)
@@ -272,11 +336,101 @@ func _honor() -> void:
 			_row(String(cfg.name),"佩戴中" if G.title_active()==id else "已拥有" if G.title_owned(id) else "可领取" if G.title_cond_met(cfg) else String(cfg.get("desc","未达成")),id,id==selection,G.title_cond_met(cfg) and not G.title_owned(id))
 	if selection.is_empty() and not all.is_empty():selection=String(all[0].id)
 	var cfg:=G.title_cfg(selection)
-	_art.texture=Page.texture("title")
+	# §4.8 D-04 25 枚独立称号徽章图标
+	_art.texture=Page.title_badge_tex(selection)
 	_name.text=String(cfg.get("name","称号"))
 	_status.text="当前佩戴 · "+String(G.title_cfg(G.title_active()).get("name","尚未佩戴"))
 	_details.text=String(cfg.get("desc",""))+"\n"+host._bonus_text(cfg.get("bonus",{}))+" "+wallet_cost(cfg.get("cost",{}))
 	_set_main("卸下称号" if G.title_active()==selection else "佩戴称号" if G.title_owned(selection) else "领取称号",G.title_owned(selection) or G.title_cond_met(cfg) or (not (cfg.get("cost",{}) as Dictionary).is_empty() and G.has_cost(cfg.cost)))
+
+class TalentPathStrip extends Control:
+	const KitV4 = preload("res://src/ui/KitV4.gd")
+	const Page = preload("res://src/ui/ChestPageUI.gd")
+	const UI = preload("res://src/ui/TravelChestUI.gd")
+	var _nodes: Array = []
+	var _sel: String = ""
+	var _on_pick: Callable
+	var _centers: Array[Vector2] = []
+
+	func _init(nodes: Array, sel: String, on_pick: Callable) -> void:
+		_nodes = nodes
+		_sel = sel
+		_on_pick = on_pick
+		custom_minimum_size = Vector2(0, 140)
+		size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	func _ready() -> void:
+		resized.connect(_rebuild)
+		_rebuild()
+
+	func _rebuild() -> void:
+		Page.clear(self)
+		_centers.clear()
+		var w := maxf(340.0, size.x)
+		var pad_x := 34.0
+		var step_x := (w - pad_x * 2.0) / 4.0
+		for i in _nodes.size():
+			var nd: Dictionary = _nodes[i]
+			var nid := String(nd.get("id", ""))
+			var tier := int(nd.get("tier", i + 1))
+			var cur := int((G.prog.get("talents", {}) as Dictionary).get(nid, 0))
+			var mx := int(nd.get("max", 1))
+			var can_add := G.talent_can_add(nid)
+			var row_idx := 0 if i < 5 else 1
+			var col_idx := i if i < 5 else (9 - i)
+			var c := Vector2(pad_x + float(col_idx) * step_x, 34.0 if row_idx == 0 else 102.0)
+			_centers.append(c)
+			var nsz := Vector2(54, 54) if tier == 10 else Vector2(46, 46)
+			var btn := Button.new()
+			btn.position = c - nsz * 0.5
+			btn.size = nsz
+			btn.focus_mode = Control.FOCUS_NONE
+			for st in ["normal", "hover", "pressed", "focus", "disabled"]:
+				btn.add_theme_stylebox_override(st, StyleBoxEmpty.new())
+			var fkey := "talent_node_ult" if tier == 10 else ("talent_node_max" if cur >= mx else ("talent_node_avail" if (can_add or cur > 0) else "talent_node_locked"))
+			var ftex := KitV4.commercial_tex(fkey)
+			if ftex != null:
+				var ftr := TextureRect.new()
+				ftr.texture = ftex
+				ftr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				ftr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				ftr.size = nsz
+				ftr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				btn.add_child(ftr)
+			var itex := Page.talent_icon_tex(nid)
+			if itex != null:
+				var itr := TextureRect.new()
+				itr.texture = itex
+				itr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				itr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				itr.position = Vector2(8, 8)
+				itr.size = nsz - Vector2(16, 16)
+				itr.modulate = Color.WHITE if (cur > 0 or can_add) else Color(0.5, 0.5, 0.5, 0.85)
+				itr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				btn.add_child(itr)
+			var lv_lbl := UI.label("%d/%d" % [cur, mx], "tag", KitV4.BRIGHT if cur >= mx else (KitV4.CREAM if cur > 0 else KitV4.MUTED))
+			lv_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			lv_lbl.add_theme_font_size_override("font_size", G.FS_DENSE)
+			lv_lbl.position = Vector2(-4, nsz.y - 12)
+			lv_lbl.size = Vector2(nsz.x + 8, 18)
+			lv_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			btn.add_child(lv_lbl)
+			btn.pressed.connect(func(): _on_pick.call(nid))
+			add_child(btn)
+		queue_redraw()
+
+	func _draw() -> void:
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.05, 0.04, 0.07, 0.72), true)
+		draw_rect(Rect2(Vector2.ZERO, size), Color(KitV4.TRIM, 0.55), false, 1.0)
+		for i in range(_centers.size() - 1):
+			var n0: Dictionary = _nodes[i]
+			var cur0 := int((G.prog.get("talents", {}) as Dictionary).get(String(n0.get("id", "")), 0))
+			var col := KitV4.BRIGHT if cur0 > 0 else Color("584836", 0.65)
+			draw_line(_centers[i], _centers[i + 1], col, 3.0 if cur0 > 0 else 2.0, true)
+		for i in _centers.size():
+			var nd: Dictionary = _nodes[i]
+			if String(nd.get("id", "")) == _sel:
+				draw_arc(_centers[i], 26.0, 0.0, TAU, 28, KitV4.BRIGHT, 2.0, true)
 
 func wallet_cost(cost: Dictionary) -> String:
 	var parts:PackedStringArray=[]

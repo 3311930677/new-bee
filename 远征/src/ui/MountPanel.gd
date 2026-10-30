@@ -88,7 +88,7 @@ func _mount_card(m: Dictionary) -> Control:
 	var btn: Control
 	if tier <= 0 or tier < tiers.size():
 		var cost: Dictionary = tinfo.get("cost", {})
-		btn = G.gold_button("购 买" if tier <= 0 else "升 阶", 84, 30, G.FS_SM)
+		btn = G.gold_button("购买" if tier <= 0 else "升阶", 84, 30, G.FS_SM)
 		# 价格独立行：FS_XS + 限宽换行裁切。原来 12px 一行横排、资源间空格相连，
 		# 五位数金币带第二项资源时直接顶出卡右缘
 		var cost_l := G.text_label(_cost_text(cost), G.FS_XS, G.TEXT_MUTED)
@@ -103,7 +103,7 @@ func _mount_card(m: Dictionary) -> Control:
 	elif is_active:
 		btn = G.ghost_button("骑乘中", 84, 30, G.FS_SM)
 	else:
-		btn = G.gold_button("骑 乘", 84, 30, G.FS_SM)
+		btn = G.gold_button("骑乘", 84, 30, G.FS_SM)
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				if G.mount_set_active(mid):

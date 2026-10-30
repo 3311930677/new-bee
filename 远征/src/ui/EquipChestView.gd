@@ -1,6 +1,7 @@
 extends Control
 ## Visual implementation of the equipment workshop. EquipPanel owns mutations.
 const UI := preload("res://src/ui/TravelChestUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const Fix:=preload("res://src/ui/ReviewFixUI.gd")
 const Page := preload("res://src/ui/ChestPageUI.gd")
 var host: Control
@@ -69,22 +70,27 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 	_heading.clip_text=true
 	Page.place(_heading,Vector2(x+64,y+8),Vector2(safe.size.x-136,40))
 	Page.place(_bag,Vector2(safe.end.x-64,y+6),Vector2(56,44))
-	Page.place(_slots,Vector2(x+12,y+64),Vector2(safe.size.x-24,80))
-	var cell_width := floorf((_slots.size.x-32)/6)
-	var slot_i:=0
+	Page.place(_slots,Vector2(x+12,y+56),Vector2(safe.size.x-24,104))
+	var cell_w := 84.0
+	var cell_h := 80.0
+	var gap_w := 24.0
+	var total_3w := cell_w * 3.0 + gap_w * 2.0
+	var start_x := maxf(0.0, (_slots.size.x - total_3w) * 0.5)
+	var slot_i := 0
 	for child in _slots.get_children():
+		if not child.visible:
+			continue
 		if child is Button:
-			child.custom_minimum_size.x=cell_width
-			child.custom_minimum_size.y=70
-			Page.place(child,Vector2(slot_i*(cell_width+4)+(12 if slot_i>=4 else 0),0),Vector2(cell_width,70))
-			slot_i+=1
+			child.custom_minimum_size = Vector2(cell_w, cell_h)
+			Page.place(child, Vector2(start_x + slot_i * (cell_w + gap_w), 0), Vector2(cell_w, cell_h))
+			slot_i += 1
 		else:
-			Page.place(child,Vector2((slot_i-1)*(cell_width+4)+(12 if slot_i>4 else 0),72),Vector2(cell_width,22))
-	Page.place(_focus,Vector2(x+20,y+160+(tray_top-y-300)*.5),Vector2(safe.size.x-40,108))
+			Page.place(child, Vector2(start_x + (slot_i - 1) * (cell_w + gap_w), cell_h + 2), Vector2(cell_w, 22))
+	Page.place(_focus,Vector2(x+20,y+164+(tray_top-y-300)*.5),Vector2(safe.size.x-40,108))
 	for child in _focus.get_children():
 		if child is Label:
 			child.clip_text=true
-			child.size.x=maxf(40,_focus.size.x-child.position.x-8)
+			child.size.x=maxf(40,_focus.size.x-child.position.x-12)
 	Page.place(_tray,Vector2(x,tray_top),Vector2(safe.size.x,safe.end.y-tray_top))
 	Page.place(_tabs,Vector2(x+12,tray_top+8),Vector2(safe.size.x-24,44))
 	Page.place(_scroll,Vector2(x+20,tray_top+64),Vector2(safe.size.x-40,maxf(100,safe.end.y-tray_top-176)))
@@ -100,65 +106,83 @@ func refresh() -> void:
 	var old_scroll := _scroll.scroll_vertical
 	for node in [_slots,_focus,_tabs,_body,_actions]: Page.clear(node)
 	host._slot_lv.clear()
+	var active_slots := [G.equip_weapon_slot(), "armor", "accessory"]
+	if not (host._sel in active_slots):
+		host._sel = G.equip_weapon_slot() if not G.equip_weapon_slot().is_empty() else "armor"
 	var slot_defs: Array = G.equip_cfg().get("slots",[])
 	for i in slot_defs.size():
 		var cfg: Dictionary = slot_defs[i]
 		var id := String(cfg.id)
+		var is_active := id in active_slots
+		var est := G.equip_state(id)
 		var cell := Page.ItemCell.new()
-		cell.custom_minimum_size = Vector2(70,80)
-		cell.size = Vector2(70,80)
-		cell.position = Vector2(i*74 if i<4 else 308+(i-4)*74,0)
-		cell.item_image.texture=Fix.item(String(G.equip_state(id).get("tpl","tpl_"+id+"_basic")))
+		cell.custom_minimum_size = Vector2(84,80)
+		cell.size = Vector2(84,80)
+		if not est.is_empty():
+			cell.item_image.texture = Fix.item(String(est.get("tpl","tpl_"+id+"_basic")))
+			cell.item_image.modulate = Color.WHITE
+			cell.rarity_rank = int(est.get("rarity", 1))
+		else:
+			var sil_key := "slot_silhouette_weapon" if id == G.equip_weapon_slot() else ("slot_silhouette_" + id)
+			var sil_tex := KitV4.commercial_tex(sil_key)
+			cell.item_image.texture = sil_tex if sil_tex != null else Fix.item("tpl_"+id+"_basic")
+			cell.item_image.modulate = Color(1, 1, 1, 0.5)
+			cell.rarity_rank = 1
 		cell.image_px=52
 		cell.heading.text = String(cfg.get("name",""))
 		cell.show_name=false
-		cell.amount.text = "+%d" % int(G.equip_state(id).get("lv",0)) if not G.equip_state(id).is_empty() else "空"
+		cell.amount.text = "+%d" % int(est.get("lv",0))
 		cell.selected = id==host._sel
 		cell.rarity = UI.COPPER if id==G.equip_weapon_slot() else UI.ASH
 		cell.set_meta("sid",id)
 		cell.tooltip_text = String(cfg.get("name",""))+(" · 本职业武器" if id==G.equip_weapon_slot() else "")
+		cell.visible = is_active
 		cell.pressed.connect(func(): host._sel=id; refresh())
 		_slots.add_child(cell)
 		var label:=UI.label(String(cfg.get("name","")),"tag",UI.AGED)
-		label.position=Vector2(cell.position.x,72)
-		label.size=Vector2(70,22)
+		label.size=Vector2(84,22)
 		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		label.visible = is_active
 		_slots.add_child(label)
 		host._slot_lv[id]=cell.amount
 	var state := G.equip_state(host._sel)
 	var worn := not state.is_empty()
 	var tpl := G.equip_tpl(String(state.get("tpl",""))) if worn else G.equip_slot_cfg(host._sel)
+	# §4.5-2 选中装备使用羊皮纸详情卡（paper_card）+ 深墨字
 	var card := Panel.new()
 	card.name = "FocusCard"
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var cs := StyleBoxFlat.new()
-	cs.bg_color = Color("141118", 0.76)
-	cs.border_color = Color("5a4632", 0.80)
-	cs.set_border_width_all(1)
-	cs.set_corner_radius_all(4)
-	card.add_theme_stylebox_override("panel", cs)
+	card.add_theme_stylebox_override("panel", KitV4.style("paper_card", 12))
 	_focus.add_child(card)
 	var frame := Page.ItemCell.new()
-	frame.size=Vector2(96,96)
-	frame.custom_minimum_size=Vector2(96,96)
-	frame.position = Vector2(6,6)
-	frame.image_px=68
+	frame.size=Vector2(88,88)
+	frame.custom_minimum_size=Vector2(88,88)
+	frame.position = Vector2(10,10)
+	frame.image_px=64
 	frame.rarity_rank=int(state.get("rarity",1))
 	frame.rarity=G.equip_rarity_color(frame.rarity_rank)
-	frame.item_image.texture = Fix.item(String(state.get("tpl","")))
+	if worn:
+		frame.item_image.texture = Fix.item(String(state.get("tpl","")))
+	else:
+		var focus_sil: String = "slot_silhouette_weapon" if host._sel == G.equip_weapon_slot() else ("slot_silhouette_" + String(host._sel))
+		frame.item_image.texture = KitV4.commercial_tex(focus_sil)
+		frame.item_image.modulate = Color(1, 1, 1, 0.5)
 	frame.disabled = true
 	frame.focus_mode = Control.FOCUS_NONE
 	_focus.add_child(frame)
-	var name_l := UI.label(String(tpl.get("name","空槽位")),"object")
-	name_l.position = Vector2(114,8)
+	var name_l := UI.label(String(tpl.get("name","空槽位")),"object",KitV4.INK)
+	name_l.add_theme_constant_override("outline_size", 0)
+	name_l.position = Vector2(110,8)
 	name_l.size = Vector2(300,30)
 	_focus.add_child(name_l)
-	var status := Page.line("%s · 强化 +%d" % [G.equip_rarity_name(int(state.get("rarity",1))),int(state.get("lv",0))] if worn else "从背包装备后可养成","caption",UI.AGED)
-	Page.place(status,Vector2(114,38),Vector2(300,24))
+	var status := Page.line("%s · 强化 +%d" % [G.equip_rarity_name(int(state.get("rarity",1))),int(state.get("lv",0))] if worn else "从背包装备后可养成","caption",KitV4.INK_SUB)
+	status.add_theme_constant_override("outline_size", 0)
+	Page.place(status,Vector2(110,38),Vector2(300,24))
 	_focus.add_child(status)
-	var stats := Page.line(host._bonus_summary(G.equip_slot_bonus(host._sel)) if worn else "当前槽位尚未装备","body")
-	Page.place(stats,Vector2(114,64),Vector2(300,40))
+	var stats := Page.line(host._bonus_summary(G.equip_slot_bonus(host._sel)) if worn else "当前槽位尚未装备","body",KitV4.INK)
+	stats.add_theme_constant_override("outline_size", 0)
+	Page.place(stats,Vector2(110,64),Vector2(300,40))
 	_focus.add_child(stats)
 	for item in [["enhance","强化"],["gem","宝石"],["refine","精炼"]]:
 		var id: String = item[0]
@@ -210,7 +234,7 @@ func _enhance(state:Dictionary,worn:bool) -> void:
 	var differences:PackedStringArray=[]
 	for pair in [["atk","攻击"],["hp","生命"],["def","防御"]]:
 		var gain:=int(after.get(pair[0],0))-int(before.get(pair[0],0))
-		if gain>0:differences.append("%s +%d"%[pair[1],gain])
+		if gain>0:differences.append("%s +%d ▲"%[pair[1],gain])
 	var delta:=" · ".join(differences)
 	var invest:=Fix.Investment.new("+%d → +%d"%[lv,next.lv] if worn else "选一件装备开始整备",delta,"成功率 %.1f%% · 失败不掉级"%(G.equip_enhance_rate(host._sel)*100),rules)
 	_body.add_child(invest)
@@ -222,9 +246,18 @@ func _enhance(state:Dictionary,worn:bool) -> void:
 	var action:=_primary("确认强化",worn and enough and not maxed,host._on_enhance,"enhance")
 	action.set_meta("cost_summary","先从背包装备" if not worn else "已达到强化上限" if maxed else Fix.shortage([{"name":"金币","need":int(cost.gold),"have":int(G.wallet.get("gold",0))},{"name":G.item_name(String(cost.item)),"need":int(cost.item_n),"have":G.item_count(String(cost.item))}]) if not enough else "金币 %d · 强化石 %d"%[int(cost.gold),int(cost.item_n)])
 	action.subtitle.text=String(action.get_meta("cost_summary"))
-	_body.add_child(Page.line("强化积累 %d/%d"%[int(state.get("enhance_failures",0)),G.equip_enhance_failure_limit(host._sel)],"caption",UI.AGED))
-	var sockets:=HBoxContainer.new();_body.add_child(sockets)
-	sockets.add_child(UI.label("宝石","caption",UI.AGED))
+	# §4.5-5 保底积累可视化进度条
+	var pity_cur := int(state.get("enhance_failures", 0))
+	var pity_max := maxi(1, G.equip_enhance_failure_limit(host._sel))
+	var pity_gauge := Fix.Gauge.new("强化积累 %d/%d" % [pity_cur, pity_max], KitV4.BRIGHT)
+	pity_gauge.custom_minimum_size.y = 26
+	pity_gauge.update(pity_cur, pity_max)
+	_body.add_child(pity_gauge)
+	# §4.5-6 六边形宝石镶嵌孔
+	var sockets:=HBoxContainer.new()
+	sockets.add_theme_constant_override("separation", 12)
+	_body.add_child(sockets)
+	sockets.add_child(UI.label("宝石孔位","caption",UI.AGED))
 	for i in G.equip_gem_sockets():sockets.add_child(host._socket_box(int(state.get("uid",0)),state.get("gems",[]),i))
 	_body.add_child(Page.line("词条："+" · ".join((state.get("affixes",[]) as Array).map(func(a):return Page.affix_label(a))) if not (state.get("affixes",[]) as Array).is_empty() else "词条尚未精炼 · 切换精炼页签整备","caption",UI.AGED))
 

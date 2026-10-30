@@ -52,7 +52,7 @@ func _button(parent: Control, words: String, at: Vector2, extent: Vector2,
 	btn.accent = JADE
 	btn.caption.add_theme_font_size_override("font_size", G.FS_SM)
 	btn.caption.add_theme_font_override("font", G.font_serif)
-	btn.caption.add_theme_color_override("font_color", Style.LIGHT if primary or btn.skin in ["ledger_rules", "ledger_quiet"] else JADE)
+	btn.caption.add_theme_color_override("font_color", Style.LIGHT)
 	Craft.clean_label(btn.caption)
 	btn.activated.connect(callback)
 	parent.add_child(btn)
@@ -98,10 +98,11 @@ func _rebuild() -> void:
 	_body.add_child(layout)
 	var cfg := TableCache.economy_config()
 	var site := EconomyService.site(cfg,site_id)
-	var title := _text(layout,"商路",Vector2(26,20),Vector2(350,42),32,Color("f1dfb6"),true)
-	title.add_theme_font_override("font",G.font_art)
-	_text(layout,String(site.get("name","交易点")),Vector2(28,64),Vector2(370,24),17,Color("d6c199"))
-	_button(layout,"？",Vector2(410,30),Vector2(42,42),func(): _help = not _help; _rebuild())
+	G.top_back_button(layout, close, Vector2(20, 22))
+	var title := _text(layout,"商路 · %s" % String(site.get("name","交易点")),Vector2(76,16),Vector2(320,36),G.FS_LG,Color("f1dfb6"),true)
+	title.add_theme_font_override("font",G.font_serif)
+	_text(layout,"行旅货殖 · 驿路互通",Vector2(76,54),Vector2(320,24),G.FS_XS,Color("d6c199"))
+	_button(layout,"？",Vector2(410,22),Vector2(44,44),func(): _help = not _help; _rebuild())
 	var paper := Style.panel(Vector2(20,96),Vector2(440,644))
 	paper.name = "LedgerPaper"
 	layout.add_child(paper)
@@ -147,15 +148,14 @@ func _rebuild() -> void:
 	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	notice.add_theme_font_override("font",G.font_serif)
 	notice.add_theme_font_size_override("font_size",G.FS_XS)
-	notice.add_theme_color_override("font_color",RUST)
+	notice.add_theme_color_override("font_color",Color("f2c76a"))
 	Craft.clean_label(notice)
 	stack.add_child(notice)
-	_button(layout,"返回",Vector2(160,748),Vector2(160,40),close)
 	preload("res://src/ui/UiSafeArea.gd").fit_page(_body,G.ui_safe_rect(self))
 
 func _build_market(parent: Control, cfg: Dictionary) -> void:
 	for column in [["货品",8,136],["买入",156,64],["卖出",230,64],["库存 / 收购",300,108]]:
-		_text(parent,column[0],Vector2(column[1],0),Vector2(column[2],24),14,MUTED)
+		_text(parent,column[0],Vector2(column[1],0),Vector2(column[2],24),14,Style.BRASS)
 	var goods: Array = cfg.get("goods",[])
 	for i in goods.size():
 		var good: Dictionary = goods[i]
@@ -165,10 +165,10 @@ func _build_market(parent: Control, cfg: Dictionary) -> void:
 		row.selected = gid == selected_good
 		row.caption.hide()
 		_icon(row,String(good.get("icon","")),Vector2(10,7))
-		_text(row,String(good.get("name","货品")),Vector2(56,0),Vector2(86,50),18,JADE if row.selected else INK,true)
-		_text(row,str(int(quote.get("buy_gold",0))),Vector2(156,0),Vector2(64,50),20,INK)
-		_text(row,str(int(quote.get("sell_gold",0))),Vector2(230,0),Vector2(64,50),20,INK)
-		_text(row,"%d / %d" % [int(quote.get("stock_left",0)),int(quote.get("demand_left",0))],Vector2(312,0),Vector2(96,50),17,MUTED)
+		_text(row,String(good.get("name","货品")),Vector2(56,0),Vector2(86,50),18,Color("f2c76a") if row.selected else Style.LIGHT,true)
+		_text(row,str(int(quote.get("buy_gold",0))),Vector2(156,0),Vector2(64,50),20,Style.LIGHT)
+		_text(row,str(int(quote.get("sell_gold",0))),Vector2(230,0),Vector2(64,50),20,Style.LIGHT)
+		_text(row,"%d / %d" % [int(quote.get("stock_left",0)),int(quote.get("demand_left",0))],Vector2(312,0),Vector2(96,50),17,Style.BRASS)
 	var quote := G.economy_quote(site_id,selected_good)
 	var detail := _card(parent,Vector2(0,252),Vector2(408,180))
 	_text(detail,"%s · 持有 %d" % [G.item_name(selected_good),int(quote.get("held",0))],Vector2(14,8),Vector2(250,28),17,JADE,true)
@@ -257,16 +257,16 @@ func _build_orders(parent: Control) -> void:
 	if site_id in ["city_market","shenyuan_market","frost_market"]:
 		_button(parent,"三城合约  ›",Vector2(0,416),Vector2(408,36),_open_trade_contracts)
 	elif status == "active":
-		_text(parent,"在断碑营地交货",Vector2(0,412),Vector2(408,26),14,MUTED)
+		_text(parent,"在断碑营地交货",Vector2(0,412),Vector2(408,26),14,Style.BRASS)
 	elif status == "available":
-		_text(parent,"先到昭元市集接单，再运往断碑营地",Vector2(4,416),Vector2(400,28),14,MUTED)
+		_text(parent,"先到昭元市集接单，再运往断碑营地",Vector2(4,416),Vector2(400,28),14,Style.BRASS)
 
 func _build_inn(parent: Control, cfg: Dictionary, state: Dictionary) -> void:
 	var rest := _card(parent,Vector2(0,8),Vector2(408,152))
 	_text(rest,"驿站歇脚",Vector2(18,12),Vector2(280,32),23,INK,true)
 	_text(rest,"休息一夜，迎来新行情",Vector2(18,54),Vector2(370,28),16,MUTED)
 	_button(rest,"歇脚换日 · %d 金" % int(cfg.get("rest_gold",22)),Vector2(18,96),Vector2(372,44),_rest,true)
-	_text(parent,"今日差事",Vector2(0,178),Vector2(408,30),20,JADE,true)
+	_text(parent,"今日差事",Vector2(0,178),Vector2(408,30),20,Color("f2c76a"),true)
 	var y := 222.0
 	for value in cfg.get("jobs",[]):
 		var job: Dictionary = value
@@ -283,7 +283,7 @@ func _build_inn(parent: Control, cfg: Dictionary, state: Dictionary) -> void:
 		y += 100
 
 func _build_help(parent: Control, cfg: Dictionary) -> void:
-	_text(parent,["货市规则","运单规则","驿站规则"][_page],Vector2(0,8),Vector2(408,36),23,JADE,true)
+	_text(parent,["货市规则","运单规则","驿站规则"][_page],Vector2(0,8),Vector2(408,36),23,Color("f2c76a"),true)
 	var paragraphs: Array = []
 	match _page:
 		0:
@@ -292,9 +292,10 @@ func _build_help(parent: Control, cfg: Dictionary) -> void:
 			if int(quote.get("event_pct",0)) != 0: paragraphs.append("路况：%s（%+d%%）。" % [String(quote.get("event_name","")),int(quote.get("event_pct",0))])
 		1: paragraphs = ["先在始发地接单，再备齐实物，到目的地交货。", "净报酬在接单时锁定，购货费用另付。截止日按游戏日计算。", "断碑坡：盐 ×2、铁料 ×1。桥绳加固可抵减本批运费。", "霜关药单：药草 ×3、谷物 ×1。保证金、路线、延期与退单规则见药单条款。"]
 		2: paragraphs = ["歇脚花费 %d 金，推进一个游戏日。" % int(cfg.get("rest_gold",22)), "换日会刷新行情、库存与收购额度，也会推进运单期限。", "每份差事每个游戏日一次；领取后另需现实 %d 分钟休整，歇脚换日不会缩短休整。" % (int(cfg.get("work_cooldown_seconds",3600))/60)]
+	_card(parent, Vector2(0, 50), Vector2(408, 332))
 	var scroll := ScrollContainer.new()
-	scroll.position = Vector2(0,58)
-	scroll.size = Vector2(408,318)
+	scroll.position = Vector2(10,58)
+	scroll.size = Vector2(388,316)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	parent.add_child(scroll)
 	var list := VBoxContainer.new()

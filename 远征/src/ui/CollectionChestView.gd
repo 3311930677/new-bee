@@ -1,5 +1,6 @@
 extends Control
 const UI:=preload("res://src/ui/TravelChestUI.gd")
+const KitV4:=preload("res://src/ui/KitV4.gd")
 const Page:=preload("res://src/ui/ChestPageUI.gd")
 const Flow:=preload("res://src/ui/FlowChestUI.gd")
 const Fix:=preload("res://src/ui/ReviewFixUI.gd")
@@ -68,7 +69,20 @@ func _ready() -> void:
 	if system=="skill":
 		for i in host._sids.size():
 			var index:int=i
-			shell.tab(String(TableCache.get_skill(String(host._sids[i])).get("name","")),func():host._deck.go(index))
+			var sid_i:=String(host._sids[i])
+			var tb:Control=shell.tab(String(TableCache.get_skill(sid_i).get("name","")),func():host._deck.go(index))
+			tb.custom_minimum_size.y=52
+			var stex:Texture2D=Fix.texture(sid_i)
+			if stex!=null:
+				var str_ic:=TextureRect.new()
+				str_ic.texture=stex
+				str_ic.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
+				str_ic.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				str_ic.position=Vector2(4,4)
+				str_ic.size=Vector2(24,24)
+				str_ic.mouse_filter=Control.MOUSE_FILTER_IGNORE
+				tb.add_child(str_ic)
+				tb.caption.position.y=12
 	get_viewport().size_changed.connect(layout)
 	layout()
 func refresh() -> void:
@@ -190,11 +204,39 @@ func _skill() -> void:
 	shell.stage.add_child(_art)
 	_index.text="招式预览"
 	_progress.text="远征币 %d"%int(G.wallet.get("expedition",0))
-	shell.body.add_child(Flow.text(String(sd.get("name",sid)),"object"))
+	# §4.7-3 宣纸卷轴卡：技能名 + 三枚标签徽章 + 效果描述
+	var scroll_card:=PanelContainer.new()
+	var sc_box:=KitV4.style("paper_card",12)
+	sc_box.set_content_margin_all(12)
+	scroll_card.add_theme_stylebox_override("panel",sc_box)
+	var sc_vbox:=VBoxContainer.new()
+	sc_vbox.add_theme_constant_override("separation",6)
+	scroll_card.add_child(sc_vbox)
+	var s_title:=Flow.text(String(sd.get("name",sid)),"object",KitV4.INK)
+	s_title.add_theme_constant_override("outline_size",0)
+	sc_vbox.add_child(s_title)
 	var range_words:Dictionary={"enemy_single":"单体","enemy_front_all":"前排全体","enemy_all":"敌方全体","enemy_back_single":"后排单体","enemy_random":"随机单体","ally_single":"友方单体","ally_all":"友方全体","self":"自身"}
-	shell.body.add_child(Flow.text("冷却 %s 秒 · 耗能 %d · %s"%[str(sd.get("cd",0)),int(sd.get("cost",0)),range_words.get(String(sd.get("target","")),"单体")],"caption",UI.AGED))
+	var badge_row:=HBoxContainer.new()
+	badge_row.add_theme_constant_override("separation",6)
+	for btxt in ["冷却 %s 秒"%str(sd.get("cd",0)),"耗能 %d"%int(sd.get("cost",0)),String(range_words.get(String(sd.get("target","")),"单体"))]:
+		var b_pan:=PanelContainer.new()
+		var b_sb:=StyleBoxFlat.new()
+		b_sb.bg_color=Color(0.23,0.16,0.10,0.14)
+		b_sb.border_color=Color(0.42,0.30,0.18,0.55)
+		b_sb.set_border_width_all(1)
+		b_sb.set_corner_radius_all(4)
+		b_sb.content_margin_left=6;b_sb.content_margin_right=6;b_sb.content_margin_top=2;b_sb.content_margin_bottom=2
+		b_pan.add_theme_stylebox_override("panel",b_sb)
+		var b_lbl:=UI.label(btxt,"caption",KitV4.INK_SUB)
+		b_lbl.add_theme_constant_override("outline_size",0)
+		b_pan.add_child(b_lbl)
+		badge_row.add_child(b_pan)
+	sc_vbox.add_child(badge_row)
 	var description:=String(sd.get("desc","")).replace("MaxHP","最大生命").replace("ATK","攻击").replace("DEF","防御").replace("HP","生命")
-	shell.body.add_child(Flow.text(description))
+	var desc_lbl:=Flow.text(description,"body",KitV4.INK)
+	desc_lbl.add_theme_constant_override("outline_size",0)
+	sc_vbox.add_child(desc_lbl)
+	shell.body.add_child(scroll_card)
 	var level:=Fix.Gauge.new("研习等级",UI.BLUE);level.custom_minimum_size.y=30;level.update(lv,mx);shell.body.add_child(level)
 	var k:=float(sd.get("k",0))
 	var increment:=float(TableCache.skillbook_config().get("k_per_level",.05))
@@ -203,8 +245,8 @@ func _skill() -> void:
 	var kind:=String(effect.get("type","")) if effect is Dictionary else ""
 	var effect_name:="伤害系数" if k>0 else "治疗量" if kind in ["heal","invincible_heal"] else "护盾量" if kind=="shield" else "攻击增益"
 	var factor:=k if k>0 else 1.0
-	var result:="效果固定 · 纯功能招式无需研习" if not studyable else "%s ×%.2f"%[effect_name,factor*(1+increment*(lv-1))] if lv>=mx else "%s ×%.2f → ×%.2f"%[effect_name,factor*(1+increment*(lv-1)),factor*(1+increment*lv)]
-	var invest:=Fix.Investment.new(result,"效果 +%.2f"%(factor*increment) if studyable and lv<mx else "")
+	var result:="效果固定 · 纯功能招式无需研习" if not studyable else "当前 Lv.%d：%s ×%.2f"%[lv,effect_name,factor*(1+increment*(lv-1))] if lv>=mx else "Lv.%d：%s ×%.2f → Lv.%d：×%.2f"%[lv,effect_name,factor*(1+increment*(lv-1)),lv+1,factor*(1+increment*lv)]
+	var invest:=Fix.Investment.new(result,"+%.2f ▲"%(factor*increment) if studyable and lv<mx else "")
 	shell.body.add_child(invest)
 	var cost:=G.skill_upgrade_cost(sid)
 	invest.costs.add_child(Fix.CostChip.new("远征币",cost,int(G.wallet.get("expedition",0)),G.res_tex("cur_expedition")))

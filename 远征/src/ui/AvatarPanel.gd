@@ -34,22 +34,19 @@ func _ready() -> void:
 func _build() -> void:
 	G.veil(self, 0.66, true)
 	_paper = UI.paper(388, 548)
+	_paper.set_meta("dark_frame", true)
 	add_child(_paper)
 	_content = Control.new()
 	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_paper.add_child(_content)
+	var close := G.top_back_button(_content, _close, Vector2(0, 2), "关闭")
+	close.name = "CloseButton"
 	var eyebrow := UI.label("◆ 昭元行旅录 · 命途印记", G.FS_XS, Color("d8c59a"), true)
-	eyebrow.position = Vector2(8, 0)
+	eyebrow.position = Vector2(54, 0)
 	_content.add_child(eyebrow)
 	var title := UI.art_label("旅人小像", G.FS_BIG, Color("f4dfb5"))
-	title.position = Vector2(8, 22)
+	title.position = Vector2(54, 22)
 	_content.add_child(title)
-	var close := UI.button("×", 44, 44, "secondary")
-	close.name = "CloseButton"
-	close.position = Vector2(290, -2)
-	close.tooltip_text = "关闭"
-	close.pressed.connect(_close)
-	_content.add_child(close)
 	var frame := Panel.new()
 	frame.position = Vector2(112, 88)
 	frame.size = Vector2(116, 116)
@@ -63,7 +60,7 @@ func _build() -> void:
 		sb_slot.texture_margin_bottom = 12.0
 		frame.add_theme_stylebox_override("panel", sb_slot)
 	else:
-		var portrait_style := UI.surface(Color("29423d"), Color("b79d68"), 2)
+		var portrait_style := UI.surface(Color("221a16"), Color("c9a45c"), 2)
 		portrait_style.set_border_width_all(3)
 		frame.add_theme_stylebox_override("panel", portrait_style)
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -75,12 +72,12 @@ func _build() -> void:
 	_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	frame.add_child(_preview)
-	_state_l = UI.label("", G.FS_XS, Color("5a4c36"), true)
+	_state_l = UI.label("", G.FS_XS, Color("f2c76a"), true)
 	_state_l.position = Vector2(12, 212)
 	_state_l.size.x = 316
 	_state_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_state_l)
-	var instructions := UI.label("上传你喜欢的图片作为旅人小像。\n可随时更换，不使用职业或宠物头像。", G.FS_XS, Color("685840"), true)
+	var instructions := UI.label("上传你喜欢的图片作为旅人小像。\n可随时更换，不使用职业或宠物头像。", G.FS_XS, Color("f3e3c0"), true)
 	instructions.position = Vector2(12, 248)
 	instructions.size = Vector2(316, 56)
 	instructions.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -178,11 +175,11 @@ func _refresh() -> void:
 func _toast(msg: String) -> void:
 	if is_instance_valid(_toast_l):
 		_toast_l.queue_free()
-	_toast_l = UI.label(msg, 14, Color("9d5139"))
+	_toast_l = UI.label(msg, G.FS_XS, Color("f2c76a"))
 	_toast_l.position.y = _tip.position.y
 	_toast_l.size.x = 316
 	_toast_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_toast_l.add_theme_stylebox_override("normal", UI.surface(UI.PAPER))
+	_toast_l.add_theme_stylebox_override("normal", UI.surface(Color("221a16")))
 	_content.add_child(_toast_l)
 	var toast := _toast_l
 	var tween := create_tween()

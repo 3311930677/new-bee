@@ -14,8 +14,10 @@ static func warm() -> void:
 	if _visual_cache.is_empty():
 		_visual_cache=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/map_layout.json"))
 	TableCache.main_world_config()
-	for m in ["town","maple","stele","cavern","salt","port","marsh","sluice","sand","frost","mine","pass"]:
+	TableCache.side_quests_config()
+	for m in ["town","maple","stele","cavern","salt","port","marsh","sluice","sand","frost","mine","pass","fury","equip","pet","skill","mount","title"]:
 		Flow.texture(m)
+		UI.texture(m)
 const Journey:=preload("res://src/world/JourneyService.gd")
 var _shell:Control
 var _map:Control
@@ -48,7 +50,7 @@ func _ready() -> void:
 	_shell=Flow.Shell.new("地区行路图",260)
 	_shell.closed=func():closed.emit()
 	add_child(_shell)
-	_details_button=preload("res://src/ui/ShowcaseUI.gd").button("地理详图与玩法地点",true)
+	_details_button=preload("res://src/ui/ShowcaseUI.gd").button("地理详图与玩法地点",false)
 	_details_button.name="OpenWorldPoints"
 	_details_button.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	_details_button.pressed.connect(func():open_points(_selected))
@@ -215,13 +217,16 @@ func select(id:String,animate:bool=true) -> void:
 	var badges:Array=_nodes[id].quest_badges if _nodes.has(id) else []
 	var badge_suffix:="" if badges.is_empty() else "  ["+" · ".join(PackedStringArray(badges))+"]"
 	title_box.add_child(Flow.text(String(row.get("name",id))+badge_suffix,"object"))
-	var visited_tag:=" · 已探索" if (_nodes.has(id) and _nodes[id].visited) else " · 未踏足"
-	title_box.add_child(Flow.text("Lv%d–%d · %s%s"%[row.get("level",[1,12])[0],row.get("level",[1,12])[1],"当前位置" if id==_current else "路线可达" if _reachable.has(id) else "条件受限" if _nodes[id].condition else "锁定",visited_tag],"caption",UI.AGED))
+	var visited_tag:=" · 探索度 100%" if (_nodes.has(id) and _nodes[id].visited) else " · 探索度 0%"
+	var lv_min: int = int(row.get("level",[1,12])[0])
+	var lv_max: int = int(row.get("level",[1,12])[1])
+	var rec_pow: int = maxi(120, lv_min * 85)
+	title_box.add_child(Flow.text("Lv%d–%d · 推荐战力 %d · %s%s"%[lv_min,lv_max,rec_pow,"当前位置" if id==_current else "路线可达" if _reachable.has(id) else "条件受限" if _nodes[id].condition else "锁定",visited_tag],"caption",UI.AGED))
 	var j_status:=Journey.status(G,id)
 	if id!=_current:
 		var can_travel:=bool(j_status.get("ok",false))
 		var btn_text:="乘驿车前往" if can_travel else "暂不可乘车"
-		_travel_button=Flow.button(btn_text,func():_on_travel_pressed(id))
+		_travel_button=Flow.button(btn_text,func():_on_travel_pressed(id),can_travel)
 		_travel_button.name="TravelToRegionButton"
 		_travel_button.custom_minimum_size=Vector2(132,42)
 		_travel_button.disabled=not can_travel

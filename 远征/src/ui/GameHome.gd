@@ -129,7 +129,7 @@ func _prompt_save_locked() -> void:
 	var go_import := func():
 		_open_settings(_click_ev())
 	G.show_choice_popup(home, "存档未能读入", lines, [
-		{"text": "继 续", "cb": func():
+		{"text": "继续", "cb": func():
 			G.save_locked = false
 			G.save_lock_reason = ""},
 		{"text": "导入旧档", "cb": go_import},
@@ -411,7 +411,9 @@ func _open_avatar_panel() -> void:
 	Audio.sfx("ui_open")
 	_avatar_panel = AvatarPanelScript.new()
 	_avatar_panel.changed.connect(func():
-		if _avatar_pic != null:
+		if _chest_view != null:
+			_chest_view.refresh()
+		elif _avatar_pic != null:
 			_avatar_pic.texture = G.avatar_texture())
 	_avatar_panel.closed.connect(func():
 		Audio.sfx("ui_close")

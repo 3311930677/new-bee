@@ -84,6 +84,9 @@ var font_bold: FontFile
 var font_serif: FontFile
 var font_art: FontFile
 var font_display: FontFile
+# FontVariation 复用表：见 spaced_font / spaced_art_font 的注释，不要每处都 new。
+var _spaced_font_cache := {}
+var _art_font_cache := {}
 
 # Shared type sizes for dense phone cards, reading forms and page headings.
 const FS_DENSE := 13
@@ -3939,6 +3942,8 @@ func ensure_starter_equip(force := false) -> void:
 			em.erase(k)
 		inv["instances"] = []
 		inv["pending"] = []
+		if prog.has("companions") and not CompanionService.validate(prog["companions"], prog.get("pets", [])):
+			prog["companions"] = {"active": "", "pets": {}}
 	elif any_uid or not (inv["instances"] as Array).is_empty() \
 			or not (inv["pending"] as Array).is_empty():
 		return   # 已有装备或已有实例：是玩家自己的状态，不擅自补发
@@ -6547,12 +6552,33 @@ func toast_label(text: String) -> Label:
 
 ## 带字间距的字体（标题用；serif=true 时基于宋体）
 func spaced_font(glyph_spacing: int, bold := true, serif := false) -> FontVariation:
+	# 必须缓存：FontVariation 每 new 一个就是一份新的字体变体，TextServer 会为它单独
+	# 建 shaping 缓存。按钮工厂每个按钮调一次，一页几十个按钮 → 主界面进场从 30ms
+	# 涨到 270ms（2026-10-30 实测）。同一个 base + spacing 复用同一份即可。
+	var key := "%d|%s|%s" % [glyph_spacing, bold, serif]
+	var cached: FontVariation = _spaced_font_cache.get(key)
+	if cached != null:
+		return cached
 	var fv := FontVariation.new()
 	if serif:
 		fv.base_font = font_serif
 	else:
 		fv.base_font = font_bold if bold else font_reg
 	fv.spacing_glyph = glyph_spacing
+	_spaced_font_cache[key] = fv
+	return fv
+
+
+## 艺术字体（标题/主按钮）的字距变体，同样必须缓存，理由见 spaced_font。
+func spaced_art_font(glyph_spacing: int) -> FontVariation:
+	var key := str(glyph_spacing)
+	var cached: FontVariation = _art_font_cache.get(key)
+	if cached != null:
+		return cached
+	var fv := FontVariation.new()
+	fv.base_font = font_art
+	fv.spacing_glyph = glyph_spacing
+	_art_font_cache[key] = fv
 	return fv
 
 
@@ -6638,10 +6664,10 @@ func page_tabs(deck: Control, labels: Array, icons: Array, width: float) -> Cont
 			# PixelButton 自绘皮：换肤走 set_surface，选中页签另加底部旧金线
 			if tab is PixelButton:
 				(tab as PixelButton).set_surface(
-					Color("2a4648") if selected else Color("e4dcc8"),
-					Color("647a72") if selected else Color("b9ad93"))
+					Color("2a201a") if selected else Color("1a1412"),
+					Color("f2c76a") if selected else Color("7a6142"))
 				tab.set_meta("tab_selected", selected)
-			var tint := TEXT_LIGHT if selected else TEXT_MUTED
+			var tint := GOLD_BRIGHT if selected else Color("8f8376")
 			(tab.get_child(0) as Label).add_theme_color_override("font_color", tint)
 			var icon_holder := tab.get_node("NavigationIcon")
 			var tab_icon := icon_holder.get_child(0) as CanvasItem
@@ -6718,7 +6744,7 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> Control
 	root.custom_minimum_size = Vector2(w, h)
 	root.size = root.custom_minimum_size
 	var l := serif_label(_banner_text(text), mini(font_size+12, int(h*0.82)), Color("f4dfb5"))
-	l.add_theme_font_override("font", font_art)
+	l.add_theme_font_override("font", spaced_art_font(3))
 	l.add_theme_color_override("font_shadow_color", Color("141008", 0.9))
 	l.add_theme_constant_override("shadow_offset_y", 1)
 	root.setup(l, Color("203938"))
@@ -6956,40 +6982,34 @@ class PixelButton extends PanelContainer:
 			return
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		var c := G.Visuals.palette(self)
-		var fill := surface_bg
-		var edge := surface_edge
-		var primary := bool(get_meta("primary_action", false))
+		var has_tab := has_meta("tab_selected")
 		var tab_sel := bool(get_meta("tab_selected", false))
+		var primary := bool(get_meta("primary_action", false)) and not has_tab
 		var gilded := String(get_meta("action_material", "")) == "gilded"
-		if primary:
-			fill = c.dark
-			edge = c.accent
-		elif tab_sel:
-			fill = c.dark
-			edge = c.accent
-		elif surface_bg == Color("eae7da") or surface_bg == Color("e4dcc8"):
-			fill = Color("ddd0b1")
-			edge = Color("967848")
-		if gilded:
-			fill = Color("c4a56b")
-			edge = Color("eddbad")
-		fill = fill.lightened(_hover_line * 0.035).darkened(0.045 if _pressed else 0.0)
-		G.draw_hard_shadow(self, sz, _cut, 1.0 if _pressed else 3.0, Color("170f07", 0.34))
+		var fill := Color("1a1412")
+		var edge := Color("c9a45c")
+		if has_tab:
+			fill = Color("2a201a") if tab_sel else Color("1a1412")
+			edge = Color("f2c76a") if tab_sel else Color("7a6142")
+		elif primary or gilded:
+			fill = Color("8e251d")
+			edge = Color("f2c76a")
+		fill = fill.lightened(_hover_line * 0.04).darkened(0.05 if _pressed else 0.0)
+		G.draw_hard_shadow(self, sz, _cut, 1.0 if _pressed else 3.0, Color("080605", 0.45))
 		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), fill)
-		# 叠加精细像素九宫格底纹：主按钮/金色按钮用朱砂金边或暗铜纹，纸面次按钮用温润茶宣嵌铜框
-		if sz.x >= 44.0 and sz.y >= 26.0:
-			var btn_tex: Texture2D = null
-			var modulate_col := Color(1, 1, 1, 0.34)
-			if gilded or (primary and fill.r > fill.g * 1.15):
-				btn_tex = G.Visuals._kit_tex("button_red.png")
-				modulate_col = Color(1, 1, 1, 0.52)
-			elif primary or tab_sel or fill.get_luminance() < 0.35:
-				btn_tex = G.Visuals._kit_tex("button_dark.png")
-				modulate_col = Color(1, 1, 1, 0.48)
-			else:
-				btn_tex = G.Visuals._kit_tex("card_frame_parchment.png")
-				modulate_col = Color(1, 1, 1, 0.72)
+		# 叠加精细像素九宫格底纹：主按钮统一朱漆描金 button_red.png，次按钮/页签统一玄漆描金 button_dark.png
+		if sz.x >= 40.0 and sz.y >= 26.0:
+			var btn_tex := G.Visuals._kit_tex("button_red.png" if (primary or gilded) else "button_dark.png")
+			var modulate_col := Color(1, 1, 1, 0.78 if (primary or gilded) else 0.72)
 			G.Visuals.nine_slice(self, btn_tex, Rect2(Vector2.ZERO, sz), 10.0, 8.0, modulate_col)
+		for child in get_children():
+			if child is Label:
+				var lbl := child as Label
+				var cur_col := lbl.get_theme_color("font_color")
+				if has_tab:
+					lbl.add_theme_color_override("font_color", Color("f2c76a") if tab_sel else Color("8f8376"))
+				elif cur_col.get_luminance() < 0.38:
+					lbl.add_theme_color_override("font_color", Color("f2c76a") if (primary or gilded) else Color("f3e3c0"))
 		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
 			fill.lightened(0.20), 1.0)
 		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
@@ -7010,10 +7030,10 @@ class PixelButton extends PanelContainer:
 		# 页签选中态：底边旧金粗线（与内容区相连的视觉暗示）
 		if tab_sel:
 			draw_line(Vector2(_cut + 2, sz.y - 2.0), Vector2(sz.x - _cut - 2, sz.y - 2.0),
-				Color("e4c77a"), 2.0)
+				Color("f2c76a"), 2.0)
 			G.Visuals.diamond(self, Vector2(sz.x * 0.5, sz.y - 2.5), 2.5, Color("f6e3b4"))
 		elif primary and sz.x >= 90 and sz.y >= 38:
-			draw_line(Vector2(10, sz.y - 4), Vector2(sz.x - 10, sz.y - 4), Color(c.accent, 0.42), 1)
+			draw_line(Vector2(10, sz.y - 4), Vector2(sz.x - 10, sz.y - 4), Color(edge, 0.42), 1)
 		if _hover_line > 0 and sz.x > 40:
 			var reach := (sz.x - 20) * _hover_line * 0.5
 			draw_line(Vector2(sz.x * 0.5 - reach, sz.y - 3), Vector2(sz.x * 0.5 + reach, sz.y - 3), Color(c.light, _hover_line * 0.85), 1)
@@ -7202,7 +7222,7 @@ func _bind_press_feedback(root: Control) -> void:
 				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.10))
 
 
-## 主操作：青铜底、浅金字与菱形端饰。保留旧工厂名和交互接口。
+## 主操作：朱漆底、浅金字与菱形端饰。保留旧工厂名和交互接口。
 func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Control:
 	var root := PixelButton.new()
 	if w > 0.0:
@@ -7210,10 +7230,13 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	else:
 		root.custom_minimum_size = Vector2(0, h)
 	var secondary := _button_text(text) in ["返回","关闭","取消","离开","返回城内","跳过","继续探索","暂不修复"]
-	root.set_surface(Color("eae7da") if secondary else GOLD_BTN, GOLD_BTN_EDGE)
+	root.set_surface(Color("1a1412") if secondary else Color("8e251d"), Color("c9a45c") if secondary else Color("f2c76a"))
 	root.set_content_margin(16.0)
-	var label := gold_label(_button_text(text), font_size, false, TEXT_DARK if secondary else GOLD_BRIGHT, false)
-	label.add_theme_font_override("font", font_art if font_size >= 24 else font_serif)
+	var label := gold_label(_button_text(text), font_size, false, Color("f3e3c0") if secondary else GOLD_BRIGHT, false)
+	if font_size >= 24:
+		label.add_theme_font_override("font", spaced_art_font(2))
+	else:
+		label.add_theme_font_override("font", spaced_font(2, true, true))
 	root.add_child(label)
 	root.set_meta("primary_action", not secondary)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -7223,30 +7246,70 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	return root
 
 
-## 次操作：浅纸底、青铜字；深色场景使用暗底浅字。
+## 次操作：玄漆暗底、鎏金描边与米白浅字。
 ## 与 gold_button 同尺寸档位、同交互反馈，只换皮——页面里不再出现第二套按钮设计。
 func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM,
-		text_color := Color("234746")) -> Control:
+		text_color := Color("f3e3c0")) -> Control:
 	var root := PixelButton.new()
 	if w > 0.0:
 		root.custom_minimum_size = Vector2(w, h)
 	else:
 		root.custom_minimum_size = Vector2(0, h)
-	# 幽灵钮的深棕字在羊皮纸上好看，压在整屏暗底（如召唤结果层）上就看不见了：
-	# 传浅色字时自动换成"暗底 + 金描边"，别再出现"按钮在、字没了"。
-	var on_dark := text_color.get_luminance() > 0.5
-	if on_dark:
-		root.set_surface(Color("203437", 0.95), Color(GOLD.r, GOLD.g, GOLD.b, 0.60))
-	else:
-		root.set_surface(Color("eae7da"), Color("b39a67"))
+	var actual_text_col := Color("f3e3c0") if text_color.get_luminance() < 0.38 else text_color
+	root.set_surface(Color("1a1412", 0.96), Color("c9a45c", 0.85))
 	root.set_content_margin(14.0)
-	var label := gold_label(_button_text(text), font_size, false, text_color, false)
-	label.add_theme_font_override("font", font_serif)
+	var label := gold_label(_button_text(text), font_size, false, actual_text_col, false)
+	label.add_theme_font_override("font", spaced_font(2, true, true))
 	root.add_child(label)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_bind_press_feedback(root)
 	return root
+
+
+## 统一左上角菱形返回键（44×44 触控热区，兼容 VerifyNav 与 VerifyPerf）
+func top_back_button(parent: Control, on_back: Callable, at := Vector2(12, 10), tooltip := "返回") -> Button:
+	var b := Button.new()
+	b.name = "HeaderBackButton"
+	b.text = "‹"
+	b.tooltip_text = tooltip
+	b.custom_minimum_size = Vector2(44, 44)
+	b.size = Vector2(44, 44)
+	b.position = at
+	b.focus_mode = Control.FOCUS_ALL
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	b.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	b.add_theme_font_override("font", font_bold)
+	b.add_theme_font_size_override("font_size", FS_SECTION)
+	for st in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+		b.add_theme_color_override(st, GOLD_BRIGHT)
+	var kit_sb: StyleBox = preload("res://src/ui/UiKit.gd").style("back_diamond", 0)
+	if kit_sb == null:
+		var flat := StyleBoxFlat.new()
+		flat.bg_color = Color("1a1412", 0.95)
+		flat.border_color = Color("c9a45c")
+		flat.set_border_width_all(2)
+		kit_sb = flat
+	for st in ["normal", "hover", "pressed", "disabled"]:
+		b.add_theme_stylebox_override(st, kit_sb)
+	var focus_sb := StyleBoxFlat.new()
+	focus_sb.bg_color = Color.TRANSPARENT
+	focus_sb.border_color = Color("f2c76a")
+	focus_sb.set_border_width_all(2)
+	b.add_theme_stylebox_override("focus", focus_sb)
+	var fire := func():
+		var f := Engine.get_process_frames()
+		if int(b.get_meta("_back_frame", -1)) == f:
+			return
+		b.set_meta("_back_frame", f)
+		_sfx("ui_close")
+		on_back.call()
+	b.pressed.connect(fire)
+	b.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			fire.call())
+	parent.add_child(b)
+	return b
 
 
 ## 红点（§28）：只提示"有可做的事"，不做"有新内容"的假提示；同一入口最多一枚

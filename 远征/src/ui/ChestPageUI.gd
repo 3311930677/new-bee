@@ -1,14 +1,57 @@
 extends RefCounted
 ## Shared B2 page furniture. The owning panel retains every game operation.
 const UI := preload("res://src/ui/TravelChestUI.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 const ROOT := "res://assets/ui/travel_chest_b2/"
 static var _textures: Dictionary = {}
 static var _regions: Dictionary = {}
 
+static func title_badge_tex(tid: String) -> Texture2D:
+	var all_titles: Array = G.titles_cfg()
+	var idx := 0
+	for i in all_titles.size():
+		if String((all_titles[i] as Dictionary).get("id", "")) == tid:
+			idx = i
+			break
+	var badge_num := clampi(idx + 1, 1, 25)
+	var tex := KitV4.commercial_tex("title_badge_%d" % badge_num)
+	if tex != null:
+		return tex
+	return preload("res://src/ui/ReviewFixUI.gd").texture("crown")
+
+static func talent_icon_tex(nid: String) -> Texture2D:
+	if nid.begins_with("fury_"):
+		var tier := clampi(int(nid.substr(5)), 1, 10)
+		var t1 := KitV4.commercial_tex("talent_berserk_%d" % tier)
+		if t1 != null: return t1
+	elif nid.begins_with("guard_"):
+		var tier := clampi(int(nid.substr(6)), 1, 10)
+		var t2 := KitV4.commercial_tex("talent_guard_%d" % tier)
+		if t2 != null: return t2
+	elif nid.begins_with("spirit_"):
+		var tier := clampi(int(nid.substr(7)), 1, 10)
+		var t3 := KitV4.commercial_tex("talent_command_%d" % tier)
+		if t3 != null: return t3
+	elif nid == "fury":
+		var tf := KitV4.commercial_tex("talent_berserk_1")
+		if tf != null: return tf
+	elif nid == "guard":
+		var tg := KitV4.commercial_tex("talent_guard_1")
+		if tg != null: return tg
+	elif nid == "spirit":
+		var ts := KitV4.commercial_tex("talent_command_1")
+		if ts != null: return ts
+	return null
+
 static func texture(id: String) -> Texture2D:
 	if _textures.has(id): return _textures[id]
 	if _regions.is_empty(): _regions = JSON.parse_string(FileAccess.get_file_as_string(ROOT+"regions.json"))
-	if not _regions.has(id): return null
+	if not _regions.has(id):
+		var ctex := KitV4.commercial_tex(id)
+		if ctex != null:
+			_textures[id] = ctex
+			return ctex
+		return null
 	var data: Dictionary = _regions[id]
 	var atlas := AtlasTexture.new()
 	atlas.atlas = load(ROOT+String(data.file))
@@ -106,7 +149,7 @@ class Stage extends Control:
 		sky.material = mat
 		add_child(sky)
 		shade = ColorRect.new()
-		shade.color = Color("17141a",.42)
+		shade.color = Color("120e0c",.48)
 		shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(shade)
 		resized.connect(layout)
@@ -126,6 +169,7 @@ class Stage extends Control:
 class ItemCell extends Button:
 	const UI = preload("res://src/ui/TravelChestUI.gd")
 	const Page = preload("res://src/ui/ChestPageUI.gd")
+	const KitV4 = preload("res://src/ui/KitV4.gd")
 	var selected := false
 	var rarity := Color("77705f")
 	var item_image: TextureRect
@@ -160,20 +204,29 @@ class ItemCell extends Button:
 	func _draw() -> void:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		if disabled and item_image.texture == null:
-			UI.surface(self, Rect2(Vector2.ZERO, size), Color("120f15", 0.65), Color("382e22", 0.45), 2.0)
+			var empty_tex := KitV4.commercial_tex("slot_empty")
+			if empty_tex != null:
+				G.Visuals.nine_slice(self, empty_tex, Rect2(Vector2.ZERO, size), 10.0, 10.0)
+			else:
+				UI.surface(self, Rect2(Vector2.ZERO, size), Color("0c0908", 0.72), Color("382e22", 0.45), 2.0)
 			var c := size * 0.5
-			draw_line(Vector2(c.x - 4, c.y), Vector2(c.x + 4, c.y), Color("382e22", 0.5), 1.0)
-			draw_line(Vector2(c.x, c.y - 4), Vector2(c.x, c.y + 4), Color("382e22", 0.5), 1.0)
+			draw_line(Vector2(c.x - 4, c.y), Vector2(c.x + 4, c.y), Color("584836", 0.65), 1.0)
+			draw_line(Vector2(c.x, c.y - 4), Vector2(c.x, c.y + 4), Color("584836", 0.65), 1.0)
 			return
-		UI.surface(self,Rect2(Vector2.ZERO,size),UI.SELECTED if selected else Color("17141a",.92),UI.GOLD if selected or has_focus() else UI.BRONZE)
-		var slot_tex := G.Visuals._kit_tex("slot_legend.png" if (rarity_rank >= 4 or selected) else "slot_rare.png")
-		G.Visuals.nine_slice(self, slot_tex, Rect2(Vector2.ZERO, size), 10.0, 10.0, Color(1, 1, 1, 0.55 if (rarity_rank >= 4 or selected) else 0.36))
-		if rarity_rank>1:
-			for radius in [34,28,20]:draw_circle(size*.5,radius,Color(rarity,.05))
-			draw_colored_polygon(PackedVector2Array([Vector2(2,2),Vector2(14,2),Vector2(2,14)]),rarity)
-			if rarity_rank==5:draw_rect(Rect2(5,5,2,2),UI.PAPER)
-		if selected:draw_rect(Rect2(1,1,size.x-2,size.y-2),UI.GOLD,false,2)
-		if fresh:draw_circle(Vector2(size.x-7,7),3,UI.GOLD)
+		var slot_key := KitV4.slot_key(rarity_rank)
+		var slot_tex := KitV4.commercial_tex(slot_key)
+		if slot_tex != null:
+			G.Visuals.nine_slice(self, slot_tex, Rect2(Vector2.ZERO, size), 10.0, 10.0)
+		else:
+			UI.surface(self,Rect2(Vector2.ZERO,size),UI.SELECTED if selected else Color("120e0c",.94),UI.GOLD if selected or has_focus() else UI.BRONZE)
+		if selected:
+			var sel_tex := KitV4.commercial_tex("slot_selected")
+			if sel_tex != null:
+				G.Visuals.nine_slice(self, sel_tex, Rect2(Vector2.ZERO, size), 10.0, 10.0)
+			else:
+				draw_rect(Rect2(1,1,size.x-2,size.y-2),UI.GOLD,false,2)
+		if fresh:
+			draw_circle(Vector2(size.x-7,7),3,UI.GOLD)
 		var px:=minf(image_px,minf(size.x,size.y)-16)
 		item_image.size=Vector2(px,px)
 		item_image.custom_minimum_size=Vector2(px,px)
@@ -183,11 +236,10 @@ class ItemCell extends Button:
 		heading.position = Vector2(4,size.y-30)
 		heading.size = Vector2(size.x-8,22)
 		amount.position = Vector2(4,4)
-		amount.size = Vector2(size.x-12,22)
-		flag.position = Vector2(6,0)
+		amount.size = Vector2(size.x-10,22)
+		flag.position = Vector2(5,size.y-24)
 		flag.size = Vector2(30,22)
 		flag.text="装" if worn else ""
-		flag.position=Vector2(5,size.y-24)
 		if locked:
 			var p:=Vector2(size.x-17,size.y-15)
 			draw_rect(Rect2(p,Vector2(10,8)),UI.AGED)
@@ -195,21 +247,46 @@ class ItemCell extends Button:
 
 class GemSocket extends Button:
 	const UI=preload("res://src/ui/TravelChestUI.gd")
+	const KitV4=preload("res://src/ui/KitV4.gd")
 	var item_image:TextureRect
+	var hint_label:Label
 	func _init(tex:Texture2D=null) -> void:
-		custom_minimum_size=Vector2(44,44)
-		item_image=preload("res://src/ui/ChestPageUI.gd").picture(tex,Vector2(24,24))
-		item_image.position=Vector2(10,10);add_child(item_image)
+		custom_minimum_size=Vector2(56,56)
+		item_image=preload("res://src/ui/ChestPageUI.gd").picture(tex,Vector2(28,28))
+		item_image.position=Vector2(14,8)
+		add_child(item_image)
+		hint_label=UI.label("点击镶嵌" if tex==null else "已镶嵌","tag",KitV4.MUTED if tex==null else KitV4.BRIGHT)
+		hint_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		hint_label.add_theme_font_size_override("font_size",G.FS_XS)
+		hint_label.position=Vector2(0,36)
+		hint_label.size=Vector2(56,18)
+		hint_label.mouse_filter=Control.MOUSE_FILTER_IGNORE
+		add_child(hint_label)
 	func _ready() -> void:
 		for s in ["normal","hover","pressed","focus","disabled"]:add_theme_stylebox_override(s,StyleBoxEmpty.new())
 		for e in [resized,focus_entered,focus_exited,mouse_entered,mouse_exited]:e.connect(queue_redraw)
 	func _draw() -> void:
-		draw_circle(size*.5,14,UI.NIGHT)
-		draw_arc(size*.5,14,0,TAU,40,UI.COPPER if has_focus() else UI.BRONZE,2,true)
+		var c:=Vector2(size.x*.5, 22.0)
+		var r:=16.0
+		var pts:=PackedVector2Array()
+		for k in 6:
+			var ang:=deg_to_rad(60.0*float(k)-30.0)
+			pts.append(c+Vector2(cos(ang),sin(ang))*r)
+		draw_colored_polygon(pts, KitV4.INSET)
+		var pts_closed:=pts.duplicate()
+		pts_closed.append(pts[0])
+		draw_polyline(pts_closed, KitV4.BRIGHT if (has_focus() or is_hovered() or item_image.texture!=null) else KitV4.TRIM, 2.0, true)
+		if item_image!=null:
+			item_image.position=c-Vector2(14,14)
+		if hint_label!=null:
+			hint_label.text="已镶嵌" if (item_image!=null and item_image.texture!=null) else "点击镶嵌"
+			hint_label.position=Vector2(0,size.y-18)
+			hint_label.size=Vector2(size.x,18)
 
 class GrowthRow extends Button:
 	const UI = preload("res://src/ui/TravelChestUI.gd")
 	const Page = preload("res://src/ui/ChestPageUI.gd")
+	const KitV4 = preload("res://src/ui/KitV4.gd")
 	var image: TextureRect
 	var heading: Label
 	var status: Label
@@ -227,23 +304,30 @@ class GrowthRow extends Button:
 			if s_id.begins_with("pet_"):
 				tex = preload("res://src/ui/ReviewFixUI.gd").pet(s_id)
 			elif s_id in ["fury", "guard", "spirit"] or s_id.begins_with("fury_") or s_id.begins_with("guard_") or s_id.begins_with("spirit_"):
-				var talent_map := {
-					"fury": "zs_pozhen", "fury_1": "zs_lieshan", "fury_2": "zs_pozhen", "fury_3": "zs_zhanhou",
-					"fury_4": "zs_huifeng", "fury_5": "zs_duanzui", "fury_6": "fs_yanmie", "fury_7": "ck_duopo",
-					"fury_8": "ck_qingxie", "fury_9": "zs_zhanhou", "fury_10": "zs_pozhen",
-					"guard": "fs_midun", "guard_1": "fs_midun", "guard_2": "fz_shengyu", "guard_3": "fz_zhudao",
-					"guard_4": "fz_jinghua", "guard_5": "fs_midun", "guard_6": "fz_zhudao", "guard_7": "fs_midun",
-					"guard_8": "fz_poxiao", "guard_9": "fz_shengyu", "guard_10": "fz_poxiao",
-					"spirit": "ck_dunying", "spirit_1": "ck_dunying", "spirit_2": "ck_guanjia", "spirit_3": "ck_lianzhu",
-					"spirit_4": "ck_dunying", "spirit_5": "fz_puzhao", "spirit_6": "fs_tianyun", "spirit_7": "ck_qingxie",
-					"spirit_8": "fs_shuanghuan", "spirit_9": "fs_shuangren", "spirit_10": "fs_tianyun"
-				}
-				var k: String = String(talent_map.get(s_id, "zs_pozhen"))
-				tex = preload("res://src/ui/ReviewFixUI.gd").texture(k)
+				tex = Page.talent_icon_tex(s_id)
+				if tex == null:
+					var talent_map := {
+						"fury": "zs_pozhen", "fury_1": "zs_lieshan", "fury_2": "zs_pozhen", "fury_3": "zs_zhanhou",
+						"fury_4": "zs_huifeng", "fury_5": "zs_duanzui", "fury_6": "fs_yanmie", "fury_7": "ck_duopo",
+						"fury_8": "ck_qingxie", "fury_9": "zs_zhanhou", "fury_10": "zs_pozhen",
+						"guard": "fs_midun", "guard_1": "fs_midun", "guard_2": "fz_shengyu", "guard_3": "fz_zhudao",
+						"guard_4": "fz_jinghua", "guard_5": "fs_midun", "guard_6": "fz_zhudao", "guard_7": "fs_midun",
+						"guard_8": "fz_poxiao", "guard_9": "fz_shengyu", "guard_10": "fz_poxiao",
+						"spirit": "ck_dunying", "spirit_1": "ck_dunying", "spirit_2": "ck_guanjia", "spirit_3": "ck_lianzhu",
+						"spirit_4": "ck_dunying", "spirit_5": "fz_puzhao", "spirit_6": "fs_tianyun", "spirit_7": "ck_qingxie",
+						"spirit_8": "fs_shuanghuan", "spirit_9": "fs_shuangren", "spirit_10": "fs_tianyun"
+					}
+					var k: String = String(talent_map.get(s_id, "zs_pozhen"))
+					tex = preload("res://src/ui/ReviewFixUI.gd").texture(k)
 			elif s_id in ["horse", "bear", "griffin", "nightmare", "sandlizard", "woolyrhino"]:
 				tex = G.res_tex("mount_" + s_id)
-			elif s_id.begins_with("title_") or s_id in ["title", "titles"]:
-				tex = preload("res://src/ui/ReviewFixUI.gd").texture("crown")
+			elif s_id.begins_with("t_") or s_id.begins_with("title_"):
+				tex = Page.title_badge_tex(s_id)
+			elif s_id in ["equip", "talent", "skill", "pet", "mount", "title", "titles"]:
+				var tab_key := "tab_title" if s_id == "titles" else ("tab_" + s_id)
+				tex = KitV4.commercial_tex(tab_key)
+				if tex == null and s_id in ["title", "titles"]:
+					tex = Page.title_badge_tex("t_rookie")
 			if tex == null and not s_id.is_empty():
 				tex = Page.texture(s_id)
 		image = Page.picture(tex if tex != null else Page.texture("talent"), Vector2(40, 40))
@@ -274,14 +358,15 @@ class GrowthRow extends Button:
 		if actionable:
 			draw_rect(Rect2(0, 5, 3.0, size.y - 10), UI.GOLD)
 
-		# 图标与边框（使用 slot_rare 九宫格镶边）
 		var icon_box := Rect2(Vector2(10, 4), Vector2(44, 44))
-		draw_rect(icon_box, Color("110e15"))
-		G.Visuals.nine_slice(self, G.Visuals._kit_tex("slot_rare.png"), icon_box, 6.0, 6.0, Color(1, 1, 1, 0.55))
-		draw_rect(icon_box, Color("6e5434" if actionable else "3e3228"), false, 1.0)
+		var slot_tex := KitV4.commercial_tex("slot_selected" if actionable else "slot_rare")
+		if slot_tex != null:
+			G.Visuals.nine_slice(self, slot_tex, icon_box, 8.0, 8.0)
+		else:
+			draw_rect(icon_box, Color("0c0908"))
+			draw_rect(icon_box, Color("c9a45c" if actionable else "4a3d33"), false, 1.0)
 		image.position = Vector2(12, 6)
 
-		# 标题与副标题位置：保证宽度充分，杜绝折行或文字遮挡
 		var badge_w := minf(96.0,maxf(66,size.x*.22))
 		var text_w := maxf(40.0, size.x-64.0-(badge_w+36.0 if not next_action.text.is_empty() else 24.0))
 		heading.clip_text=true
@@ -295,7 +380,6 @@ class GrowthRow extends Button:
 		status.position = Vector2(64, 26)
 		status.size = Vector2(text_w, 22)
 
-		# 右侧徽章按钮
 		var badge_h := 26.0
 		var badge_x := size.x - badge_w - 28.0
 		var badge_y := (size.y - badge_h) * 0.5
@@ -303,10 +387,10 @@ class GrowthRow extends Button:
 
 		if not next_action.text.is_empty():
 			var act_text := next_action.text
-			if act_text.contains("已选"):
+			if act_text.contains("已选") or act_text.contains("佩戴中"):
 				UI.surface(self, badge_rect, Color("282015"), Color("c29a5b"))
 				next_action.add_theme_color_override("font_color", Color("ebd197"))
-			elif act_text.contains("可强化"):
+			elif act_text.contains("可强化") or act_text.contains("可领取"):
 				UI.surface(self, badge_rect, Color("2e1c10"), Color("e28b38"))
 				next_action.add_theme_color_override("font_color", Color("f7b565"))
 			elif act_text.contains("分配天赋"):
@@ -316,13 +400,12 @@ class GrowthRow extends Button:
 				UI.surface(self, badge_rect, UI.NIGHT, UI.BRONZE)
 				next_action.add_theme_color_override("font_color", UI.GOLD)
 			else:
-				UI.surface(self, badge_rect, Color("16121b", 0.6), Color("3d3340"))
-				next_action.add_theme_color_override("font_color", Color("8a7f76"))
+				UI.surface(self, badge_rect, Color("120e0c", 0.7), Color("4a3d33"))
+				next_action.add_theme_color_override("font_color", Color("8f8376"))
 
 			next_action.position = Vector2(badge_x, badge_y - 1.0)
 			next_action.size = Vector2(badge_w, badge_h)
 
-		# 右侧微型箭头
 		draw_polyline(PackedVector2Array([
 			Vector2(size.x - 18, size.y * 0.5 - 5),
 			Vector2(size.x - 13, size.y * 0.5),

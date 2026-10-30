@@ -195,7 +195,7 @@ class Switch extends Button:
 		for event in [resized,focus_entered,focus_exited,mouse_entered,mouse_exited]:event.connect(queue_redraw)
 	func _draw() -> void:
 		if plate!=null:draw_style_box(plate,Rect2(Vector2.ZERO,size))
-		else:UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.COPPER if has_focus() else Color("3a3037"))
+		else:UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.COPPER if has_focus() else Color("4a3d33"))
 		heading.position=Vector2(inset,0)
 		heading.size=Vector2(size.x-inset-144,size.y)
 		value.text=words_on if on else words_off
@@ -226,4 +226,4 @@ class Card extends MarginContainer:
 	var plate: StyleBox  # 换皮用，为空时画法不变
 	func _draw() -> void:
 		if plate!=null:draw_style_box(plate,Rect2(Vector2.ZERO,size))
-		else:UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,Color("3a3037"))
+		else:UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,Color("4a3d33"))

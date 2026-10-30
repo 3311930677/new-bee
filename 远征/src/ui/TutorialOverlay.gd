@@ -9,6 +9,7 @@ signal reward_claimed(reward_text: String)
 const UI := preload("res://src/ui/TravelChestUI.gd")
 const Flow := preload("res://src/ui/FlowChestUI.gd")
 const Tut := preload("res://src/world/TutorialService.gd")
+const KitV4 := preload("res://src/ui/KitV4.gd")
 
 var scene_context := "home"
 var action_router: Callable = Callable()
@@ -63,14 +64,7 @@ func _build() -> void:
 	_card = Panel.new()
 	_card.name = "TutorialCard"
 	_card.mouse_filter = Control.MOUSE_FILTER_STOP
-	var box := StyleBoxFlat.new()
-	box.bg_color = Color(0.07, 0.05, 0.04, 0.96)
-	box.border_color = Color("e2b860")
-	box.set_border_width_all(2)
-	box.set_corner_radius_all(8)
-	box.shadow_color = Color(0, 0, 0, 0.65)
-	box.shadow_size = 10
-	_card.add_theme_stylebox_override("panel", box)
+	_card.add_theme_stylebox_override("panel", KitV4.style("panel_outer", 10))
 	add_child(_card)
 
 	_vbox = VBoxContainer.new()
@@ -80,6 +74,18 @@ func _build() -> void:
 	var top_row := HBoxContainer.new()
 	top_row.add_theme_constant_override("separation", 6)
 	_vbox.add_child(top_row)
+
+	var mentor_tex: Texture2D = KitV4.commercial_tex("npc_mentor_bust")
+	if mentor_tex != null:
+		var mentor_ico := TextureRect.new()
+		mentor_ico.name = "MentorAvatar"
+		mentor_ico.texture = mentor_tex
+		mentor_ico.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		mentor_ico.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		mentor_ico.custom_minimum_size = Vector2(38, 38)
+		mentor_ico.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		mentor_ico.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		top_row.add_child(mentor_ico)
 
 	_speaker_l = Label.new()
 	_speaker_l.add_theme_font_override("font", G.font_serif)

@@ -1,9 +1,10 @@
 extends RefCounted
 ## Material and spacing shared by readable detail dialogs, with distinct families.
-const BRASS := Color("bda073")
-const INK := Color("382d24")
-const PAPER := Color("f1e6d0")
-const TEXT := Color("efe3c9")
+const KitV4 := preload("res://src/ui/KitV4.gd")
+const BRASS := Color("d9b86c")
+const INK := Color("3b2a1a")
+const PAPER := Color("eadbc0")
+const TEXT := Color("f5edd8")
 
 static func label(words: String, px := 20, ink := INK) -> Label:
 	var text := Label.new()
@@ -17,32 +18,27 @@ static func label(words: String, px := 20, ink := INK) -> Label:
 	text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return text
 
-static func frame(paper := false, family := "journal") -> PanelContainer:
+static func frame(paper := false, _family := "journal") -> PanelContainer:
 	var root := PanelContainer.new()
-	var box := StyleBoxTexture.new()
-	box.texture = load("res://assets/ui/kit_20261013/card_frame_parchment.png" if paper else "res://assets/ui/kit_20261013/panel_iron.png")
+	var box := KitV4.style("paper_card" if paper else "card_bg", 14)
 	for side in [SIDE_LEFT,SIDE_TOP,SIDE_RIGHT,SIDE_BOTTOM]:
-		box.set_texture_margin(side, 18)
 		box.set_content_margin(side, 22)
-	box.modulate_color = Color("f8eed6") if paper else Color("c1d8cd") if family == "market" else Color("d6d5e0") if family == "quiet" else Color.WHITE
 	root.add_theme_stylebox_override("panel", box)
 	return root
 
 static func button(words: String, primary := false) -> Button:
-	var button := Button.new()
-	button.text = words
-	button.custom_minimum_size = Vector2(56,60)
-	button.add_theme_font_override("font",G.font_serif)
-	button.add_theme_font_size_override("font_size",G.FS_SECTION)
-	for pair in [["normal",Color.WHITE],["hover",Color(1.12,1.1,1.04)],["pressed",Color(.8,.84,.8)],["disabled",Color(.5,.5,.5)],["focus",Color("f8d58b")]]:
-		var box := StyleBoxTexture.new()
-		box.texture = load("res://assets/ui/introduction_20261015/button_red.png" if primary else "res://assets/ui/introduction_20261015/button_dark.png")
-		box.modulate_color = pair[1]
-		for side in [SIDE_LEFT,SIDE_TOP,SIDE_RIGHT,SIDE_BOTTOM]: box.set_texture_margin(side,16)
-		box.set_content_margin(SIDE_LEFT,12)
-		box.set_content_margin(SIDE_RIGHT,12)
-		button.add_theme_stylebox_override(pair[0],box)
-	button.add_theme_color_override("font_color",TEXT)
-	button.add_theme_color_override("font_hover_color",Color.WHITE)
-	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	return button
+	var btn := Button.new()
+	btn.text = words
+	btn.custom_minimum_size = Vector2(56,60)
+	btn.add_theme_font_override("font",G.font_serif)
+	btn.add_theme_font_size_override("font_size",G.FS_SECTION)
+	var base := "btn_primary" if primary else "btn_secondary"
+	btn.add_theme_stylebox_override("normal", KitV4.style(base + "_normal", 14))
+	btn.add_theme_stylebox_override("hover", KitV4.style(base + "_normal", 14))
+	btn.add_theme_stylebox_override("pressed", KitV4.style(base + "_pressed", 14))
+	btn.add_theme_stylebox_override("disabled", KitV4.style("btn_disabled", 14))
+	btn.add_theme_stylebox_override("focus", KitV4.style(base + "_normal", 14))
+	btn.add_theme_color_override("font_color",TEXT)
+	btn.add_theme_color_override("font_hover_color",Color.WHITE)
+	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	return btn

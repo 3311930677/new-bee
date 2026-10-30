@@ -9,7 +9,7 @@ var flat_floor := false
 
 func _process(_delta: float) -> void:
 	var value := JSON.stringify(G.prog.get("flags", {}))
-	if value != _flags:
+	if value != _flags or map_id == "stele_resonance":
 		_flags = value
 		queue_redraw()
 
@@ -25,12 +25,22 @@ func _draw() -> void:
 			for y in [360.0, 895.0]:
 				Art.centered(self, "rune_dais", Vector2(480,y), 88, Color("777b82"))
 		"stele_resonance":
+			var flags_d: Dictionary = G.prog.get("flags", {})
+			var aligned := bool(flags_d.get("act4_voices_aligned", false))
+			var v1 := bool(flags_d.get("act4_forest_voice", false)) or aligned
+			var v2 := bool(flags_d.get("act4_tide_voice", false)) or aligned
+			var v3 := bool(flags_d.get("act4_snow_voice", false)) or aligned
+			Art.channel(self, [Vector2(480, 880), Vector2(480, 625)], v1, Color("93bf95"))
+			Art.channel(self, [Vector2(480, 625), Vector2(480, 375)], v1 and v2, Color("82bacb"))
+			Art.channel(self, [Vector2(480, 375), Vector2(480, 266)], aligned or (v1 and v2 and v3), Color("bca6da"))
 			for row in [[Vector2(335,880),"act4_forest_voice",Color("93bf95")],
 				[Vector2(625,625),"act4_tide_voice",Color("82bacb")],
 				[Vector2(335,375),"act4_snow_voice",Color("d1dceb")]]:
+				var lit := bool(flags_d.get(row[1],false)) or aligned
+				var edge_x := float(row[0].x) + (32.0 if float(row[0].x) < 480.0 else -32.0)
+				Art.channel(self, [Vector2(edge_x, row[0].y), Vector2(480, row[0].y)], lit, row[2])
+				Art.channel_junction(self, Vector2(480, row[0].y), lit, row[2], "t")
 				_seal(row[0], 40, row[1], row[2])
-				var lit := bool(G.prog.get("flags",{}).get(row[1],false))
-				Art.channel(self, [row[0], Vector2(480,row[0].y)], lit)
 			_seal(Vector2(480,230), 72, "act4_voices_aligned", Color("bca6da"))
 		"stele_core":
 			_seal(Vector2(480,570), 160, "act4_avatar_down", Color("a4d9d1"))
