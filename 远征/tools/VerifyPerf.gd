@@ -8,9 +8,26 @@
 extends Node
 
 const BUDGET_HOME_MS := 200      # 主界面（脚本已预热）
-const BUDGET_CITY_MS := 320      # 旧独立城务场景；开局开放 7 座建筑，主世界另有同屏地图预算
-const BUDGET_PANEL_MS := 100     # 单个浮层（大卡面板已虚拟化：卡用到才建）
+# 320 → 700（2026-10-29）。依据：用 git worktree 检出 0566a808（拉取前的旧提交）、全量 --import
+# 后连跑 3 次，CityScene 进场 625/604/616ms；HEAD 78600ff6 实测落在 561~781ms
+# （冷启动首跑出现过 1147ms 的离群值）。旧代码同样远超 320，说明 320 在这台机器上从未达标
+# （10-02 的历史日志是 210~250ms，那台机器更快）。
+# 700 下连跑 10 次实测 9 绿 1 红（中位约 620ms，离群值 720ms 超 20ms）。这个场景**无法**用
+# 「多次取最小」压噪声（见 _enter 注释），所以尾部仍会偶发超出；要连 720 也绿需 750 左右，
+# 要连冷启动 1147ms 也绿需 1200。宁可偶发红也不要预算形同虚设，故维持 700。
+const BUDGET_CITY_MS := 700      # 旧独立城务场景；开局开放 7 座建筑，主世界另有同屏地图预算
+# 100 → 130（2026-10-29）。首开是「真的第一次」，只能单次测量、吃满机器噪声，实测 10 轮
+# 落在 57~126ms（「设置」「图鉴」最高）。旧值 100 余量不足 2%，会随机判红；130 给约 10% 余量。
+# 注意别再往上抬：首开持续贴近 130 才是真实退化信号。
+const BUDGET_PANEL_MS := 130     # 单个浮层（大卡面板已虚拟化：卡用到才建）
+# 70 → 90 → 回退 70（2026-10-29）。曾因「设置」第二次开出现 76/102ms 判红而临时放宽到 90，
+# 但那属机器争用噪声；改成「重开取三次最小」后不需要放宽，故回退原值（实测 10 轮全绿）。
 const BUDGET_REOPEN_MS := 70     # 同一浮层第二次打开（纯结构成本）
+
+# 计时采样次数。机器争用只会让耗时变长（噪声是单向的），取最小才接近真实成本；
+# 系统性退化会让最小值一起抬高，仍会被拦住。
+# ⚠️ 只适用于「可重复测量」的地方：浮层重开。场景进场不行——见 _enter 注释。
+const MEASURE_TRIALS := 3
 
 var _fails := 0
 
@@ -102,6 +119,9 @@ func _demo() -> void:
 
 
 func _enter(path: String, budget: int, tag: String) -> Control:
+	# 这里**不能**「多次取最小」：load() 走 ResourceLoader 缓存，第二次起是缓存命中，
+	# 取最小只会测到缓存路径（实测 CityScene 首次 600ms 级、第三次 16ms），守卫意义就没了。
+	# 场景进场的噪声只能靠预算余量吸收，或由外部跑多进程取最小。
 	var t := Time.get_ticks_msec()
 	var n: Control = load(path).instantiate()
 	add_child(n)
@@ -145,27 +165,40 @@ func _run() -> void:
 	}
 	for k in opens:
 		var name := String(opens[k][1])
-		var first := -1
-		for round_i in 2:
-			var t := Time.get_ticks_msec()
-			(opens[k][0] as Callable).call()
+		var opener: Callable = opens[k][0]
+		# 首次打开只量一次：它必须是真的「第一次」（首次构建全部控件）。
+		# 重复测会退化成「重开」的结构成本，等于把要守的东西测没了。
+		var t := Time.get_ticks_msec()
+		opener.call()
+		await get_tree().process_frame
+		await get_tree().process_frame
+		var first_ms := Time.get_ticks_msec() - t
+		print("PERF 开浮层 %-6s 第1次    %5d ms（预算 %d）" % [name, first_ms, BUDGET_PANEL_MS])
+		_check(first_ms <= BUDGET_PANEL_MS, "浮层「%s」第 1 次打开 %d ms 超预算 %d ms" % [name, first_ms, BUDGET_PANEL_MS])
+		var panel: Control = home.get(k)
+		if panel != null:
+			_assert_clickable(panel, "返回", "浮层「%s」的返回按钮" % name)
+			if name == "世界":
+				_check(panel is RegionMapPanel,
+					"世界入口应打开连通地区图，而非历练世界卡")
+			panel.closed.emit()
+		await get_tree().process_frame
+		await get_tree().process_frame
+		# 二次打开是同一个结构操作、可以重复，取 MEASURE_TRIALS 次最小滤掉噪声。
+		var best := 1 << 30
+		for trial in MEASURE_TRIALS:
+			var t2 := Time.get_ticks_msec()
+			opener.call()
 			await get_tree().process_frame
 			await get_tree().process_frame
-			var ms := Time.get_ticks_msec() - t
-			var budget := BUDGET_PANEL_MS if round_i == 0 else BUDGET_REOPEN_MS
-			print("PERF 开浮层 %-6s 第%d次    %5d ms（预算 %d）" % [name, round_i + 1, ms, budget])
-			_check(ms <= budget, "浮层「%s」第 %d 次打开 %d ms 超预算 %d ms" % [name, round_i + 1, ms, budget])
-			if round_i == 0:
-				first = ms
-			var panel: Control = home.get(k)
-			if panel != null:
-				_assert_clickable(panel, "返回", "浮层「%s」的返回按钮" % name)
-				if name == "世界":
-					_check(panel is RegionMapPanel,
-						"世界入口应打开连通地区图，而非历练世界卡")
-				panel.closed.emit()
+			best = mini(best, Time.get_ticks_msec() - t2)
+			var again: Control = home.get(k)
+			if again != null:
+				again.closed.emit()
 			await get_tree().process_frame
 			await get_tree().process_frame
+		print("PERF 开浮层 %-6s 第2次    %5d ms（预算 %d，%d 次取最小）" % [name, best, BUDGET_REOPEN_MS, MEASURE_TRIALS])
+		_check(best <= BUDGET_REOPEN_MS, "浮层「%s」第 2 次打开 %d ms 超预算 %d ms" % [name, best, BUDGET_REOPEN_MS])
 	home.queue_free()
 	await get_tree().process_frame
 

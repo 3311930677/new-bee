@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>远征 V4 商业化画面重构 · 改前改后对照</title>
+<style>
+:root{
+  --bg:#100e0b; --panel:#1a1611; --panel2:#221c15; --line:#3a3025;
+  --gold:#d8ab52; --gold-dim:#8a6f36; --text:#f0e7d7; --muted:#a2937c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:"Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--gold)}
+.wrap{max-width:1400px;margin:0 auto;padding:0 24px 80px}
+
+header.top{padding:44px 0 22px;border-bottom:1px solid var(--line)}
+h1{margin:0 0 10px;font-size:30px;font-weight:700;letter-spacing:.04em}
+h1 .sub{color:var(--gold);font-weight:500}
+.lede{margin:0;color:var(--muted);font-size:14px;line-height:1.8;max-width:900px}
+.lede b{color:var(--text);font-weight:600}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;margin:24px 0 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px}
+.stat .n{font-size:22px;font-weight:700;color:var(--gold);letter-spacing:.02em}
+.stat .l{font-size:12px;color:var(--muted);margin-top:4px}
+
+.bar{position:sticky;top:0;z-index:30;background:rgba(16,14,11,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 0;margin-top:26px}
+.tab{appearance:none;border:1px solid var(--line);background:transparent;color:var(--muted);
+  font:inherit;font-size:13px;padding:7px 14px;border-radius:999px;cursor:pointer;
+  transition:.16s;white-space:nowrap}
+.tab:hover{border-color:var(--gold-dim);color:var(--text)}
+.tab.on{background:var(--gold);border-color:var(--gold);color:#1a1206;font-weight:700}
+.tab .c{opacity:.62;margin-left:5px;font-size:11px}
+.search{margin-left:auto;background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:8px 16px;color:var(--text);font:inherit;font-size:13px;
+  width:210px;outline:none}
+.search:focus{border-color:var(--gold-dim)}
+
+.phase{margin-top:38px;scroll-margin-top:76px}
+.phase h2{margin:0 0 4px;font-size:19px;font-weight:700}
+.phase h2 .tag{display:inline-block;background:var(--gold);color:#1a1206;
+  font-size:11px;font-weight:800;padding:3px 8px;border-radius:5px;
+  vertical-align:2px;margin-right:10px;letter-spacing:.08em}
+.phase .desc{margin:0 0 18px;color:var(--muted);font-size:13px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;cursor:zoom-in;transition:.18s;position:relative}
+.card:hover{border-color:var(--gold-dim);transform:translateY(-2px);
+  box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.card .shot{display:block;width:100%;background:#0a0908}
+.card .meta{padding:11px 14px 13px}
+.card .meta .t{font-size:14px;font-weight:600;line-height:1.45}
+.card .meta .n{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.55}
+.card .zoom{position:absolute;top:10px;right:10px;background:rgba(16,14,11,.82);
+  border:1px solid var(--line);color:var(--gold);font-size:11px;padding:3px 8px;
+  border-radius:6px;opacity:0;transition:.16s}
+.card:hover .zoom{opacity:1}
+.empty{padding:60px 0;text-align:center;color:var(--muted);font-size:14px;display:none}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;display:none;background:rgba(6,5,4,.95);
+  backdrop-filter:blur(6px)}
+.lb.on{display:flex;flex-direction:column}
+.lb .head{display:flex;align-items:center;gap:14px;padding:14px 22px;
+  border-bottom:1px solid var(--line);flex:0 0 auto}
+.lb .head .t{font-size:15px;font-weight:600}
+.lb .head .n{font-size:12px;color:var(--muted)}
+.lb .head .x{margin-left:auto;appearance:none;background:transparent;color:var(--text);
+  border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;
+  padding:6px 14px;cursor:pointer}
+.lb .head .x:hover{border-color:var(--gold);color:var(--gold)}
+.lb .body{flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+  padding:14px 64px;min-height:0}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;
+  border:1px solid var(--line);border-radius:8px;background:#0a0908}
+.lb .nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:76px;
+  background:rgba(26,22,17,.9);border:1px solid var(--line);color:var(--gold);
+  font-size:20px;cursor:pointer;border-radius:8px;display:flex;
+  align-items:center;justify-content:center}
+.lb .nav:hover{background:var(--panel2);border-color:var(--gold)}
+.lb .prev{left:12px}.lb .next{right:12px}
+.lb .foot{flex:0 0 auto;padding:10px 22px 16px;text-align:center;
+  color:var(--muted);font-size:12px}
+@media(max-width:640px){
+  .wrap{padding:0 14px 60px}
+  h1{font-size:22px}
+  .grid{grid-template-columns:1fr}
+  .search{margin-left:0;width:100%}
+  .lb .body{padding:10px 8px}
+  .lb .nav{width:34px;height:56px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>远征 · V4 商业化画面重构 <span class="sub">改前 / 改后对照</span></h1>
+  <p class="lede">左侧为 <b>2026-10-28 基线实拍</b>，右侧为 <b>重构后实拍</b>，同一场景、同一分辨率（480×800）、同一脚本流程。
+  点击任意一张可放大逐处比对，放大后可用 <b>← →</b> 翻页、<b>Esc</b> 关闭。</p>
+  <div class="stats"><div class="stat"><div class="n">76</div><div class="l">张改前 / 改后对比</div></div><div class="stat"><div class="n">141</div><div class="l">步全流程截图审计</div></div><div class="stat"><div class="n">132</div><div class="l">张多分辨率截图 · 0 越界</div></div><div class="stat"><div class="n">199</div><div class="l">项视觉打磨断言 · 0 失败</div></div><div class="stat"><div class="n">78/78</div><div class="l">回归用例全绿</div></div></div>
+</header>
+
+<div class="bar">
+  <button class="tab on" data-p="ALL">全部<span class="c">76</span></button>
+  <button class="tab" data-p="P0">P0<span class="c">17</span></button><button class="tab" data-p="P1">P1<span class="c">6</span></button><button class="tab" data-p="P2">P2<span class="c">9</span></button><button class="tab" data-p="P3">P3<span class="c">26</span></button><button class="tab" data-p="P4">P4<span class="c">18</span></button>
+  <input class="search" id="q" type="search" placeholder="搜索页面名，如「背包」">
+</div>
+
+<main id="list"></main>
+<div class="empty" id="empty">没有匹配的页面</div>
+</div>
+
+<div class="lb" id="lb">
+  <div class="head">
+    <div>
+      <div class="t" id="lbT"></div>
+      <div class="n" id="lbN"></div>
+    </div>
+    <button class="x" id="lbX">关闭 Esc</button>
+  </div>
+  <div class="body"><img id="lbI" alt=""></div>
+  <button class="nav prev" id="lbP">‹</button>
+  <button class="nav next" id="lbNx">›</button>
+  <div class="foot" id="lbF"></div>
+</div>
+
+<script>
+const DATA = [{"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D1 · 剧情幕（第一幕）", "note": "正文框不再溢出、底部提示从黑边下移出来", "slug": "p0_cmp_D1_storybeat_intro", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D1 · 剧情幕（第二幕）", "note": "同上，第二幕同规格复核", "slug": "p0_cmp_D1_storybeat_outro", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D2 · 登录页", "note": "从表单回退版恢复成参考稿的插画版", "slug": "p0_cmp_D2_login", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D3 · 誓约面板", "note": "三张誓约卡按文字高度动态排版，描述不再压边框", "slug": "p0_cmp_D3_oath", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D4 · 唤灵阁", "note": "标题在牌匾内居中，移除重叠的半透明横幅", "slug": "p0_cmp_D4_gacha", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D6 + D15 · 主城顶栏与头像", "note": "货币胶囊加宽并缩写大数；左上头像不再显示罗盘", "slug": "p0_cmp_D6_D15_home", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D7 · 地图 HUD 动作键", "note": "图标加亮金衬底，对比度 > 6.5:1，0 态不再黑成一团", "slug": "p0_cmp_D7_map_hud", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D9 · 出征说明", "note": "PC 键盘提示改为触屏手势文案", "slug": "p0_cmp_D9_deploy", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D11 · 商店（字距）", "note": "手工空格改成 FontVariation 真字距", "slug": "p0_cmp_D11_shop", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D11 · 竞技场（字距）", "note": "同上", "slug": "p0_cmp_D11_arena", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D11 · 远征（字距）", "note": "同上", "slug": "p0_cmp_D11_journey", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D13 · 货币详情（金币）", "note": "正文按标点断行，底部「可以用于」不再被裁", "slug": "p0_cmp_D13_currency_gold", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D13 · 货币详情（远征）", "note": "同上", "slug": "p0_cmp_D13_currency_expedition", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D13 · 货币详情（魂）", "note": "同上", "slug": "p0_cmp_D13_currency_soul", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D13 · 货币详情（荣誉）", "note": "同上", "slug": "p0_cmp_D13_currency_honor", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D14 · 碑林回响·共鸣导槽", "note": "1:1 平铺 + 提亮，不再是两条黑条", "slug": "p0_cmp_D14_stele_resonance", "w": 1008, "h": 900}, {"p": "P0", "t": "P0 · 阻塞级缺陷清零（12 项）", "label": "D17 · 称号「朔风听刃」", "note": "描述职业由「刺客」改正为「枪骑」", "slug": "p0_cmp_D17_title_lore_ck", "w": 1008, "h": 900}, {"p": "P1", "t": "P1 · 视觉底座与组件层", "label": "加载页", "note": "统一玄漆鎏金底与进度条", "slug": "p1_cmp_s01_loading", "w": 972, "h": 844}, {"p": "P1", "t": "P1 · 视觉底座与组件层", "label": "标题页", "note": "标题牌匾与按钮统一", "slug": "p1_cmp_s02_title", "w": 972, "h": 844}, {"p": "P1", "t": "P1 · 视觉底座与组件层", "label": "登录页", "note": "按钮与输入框统一描金", "slug": "p1_cmp_s03_login", "w": 972, "h": 844}, {"p": "P1", "t": "P1 · 视觉底座与组件层", "label": "创角页", "note": "职业卡与信息区统一", "slug": "p1_cmp_s04_createrole", "w": 972, "h": 844}, {"p": "P1", "t": "P1 · 视觉底座与组件层", "label": "主城营地", "note": "顶栏 / 底部导航 / 面板统一", "slug": "p1_cmp_s05_home", "w": 972, "h": 844}, {"p": "P1", "t": "P1 · 视觉底座与组件层", "label": "货币详情", "note": "卡片排版与字号阶梯统一", "slug": "p1_cmp_s08_currency_gold", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "背包", "note": "网格与详情区重排", "slug": "p2_cmp_s07_bag", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "邮件", "note": "列表与正文统一", "slug": "p2_cmp_s07_mail", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "任务", "note": "章节 / 条目层级重做", "slug": "p2_cmp_s07_quests", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "世界舆图", "note": "节点与连线重绘", "slug": "p2_cmp_s07_worlds", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "探索地图 · 断坡", "note": "HUD 与场景构件", "slug": "p2_cmp_s09_map_broken_slope", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "探索地图 · 洛林荒野", "note": "HUD 与场景构件", "slug": "p2_cmp_s09_map_lorin_wilds", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "战斗开场", "note": "单位站位与指令区", "slug": "p2_cmp_s10_battle_start", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "结算 · 失败", "note": "结算卡与图标", "slug": "p2_cmp_s13_settlement_lose", "w": 972, "h": 844}, {"p": "P2", "t": "P2 · 核心主循环 10 屏", "label": "结算 · 胜利", "note": "结算卡与图标", "slug": "p2_cmp_s13_settlement_win", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "角色养成", "note": "主面板重排", "slug": "p3_cmp_s07_growth", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "装备", "note": "槽位与属性对比", "slug": "p3_cmp_s07_growth_equip", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "技能", "note": "技能树节点", "slug": "p3_cmp_s07_growth_skill", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "天赋", "note": "天赋盘", "slug": "p3_cmp_s07_growth_talent", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "宠物", "note": "宠物卡", "slug": "p3_cmp_s07_growth_pet", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "坐骑", "note": "坐骑卡", "slug": "p3_cmp_s07_growth_mount", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "称号", "note": "称号列表", "slug": "p3_cmp_s07_growth_title", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "商店", "note": "货架与购买区", "slug": "p3_cmp_s07_shop", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "唤灵阁", "note": "召唤区与结果", "slug": "p3_cmp_s07_gacha", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "竞技场", "note": "对手列表与排名", "slug": "p3_cmp_s07_arena", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "悬赏契约", "note": "契约卡", "slug": "p3_cmp_s07_contract", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "珍宝图鉴", "note": "图鉴格", "slug": "p3_cmp_s07_curio", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "手札秘闻", "note": "条目与正文", "slug": "p3_cmp_s07_journal", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "伙伴小聚", "note": "伙伴卡", "slug": "p3_cmp_s07_companion", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "采集", "note": "采集点与产出", "slug": "p3_cmp_s07_gathering", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "远征", "note": "路线与队伍", "slug": "p3_cmp_s07_journey", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "誓约", "note": "誓约卡", "slug": "p3_cmp_s07_oath", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "出征", "note": "步骤与阵容", "slug": "p3_cmp_s07_deploy", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "活动中心", "note": "活动入口", "slug": "p3_cmp_s07_activities", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "射艺", "note": "靶场界面", "slug": "p3_cmp_s07_archery", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "交易所", "note": "挂单列表", "slug": "p3_cmp_s07_exchange", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "钓鱼 · 盐湖", "note": "钓场界面", "slug": "p3_cmp_s07_fishing_salt", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "遗物寻踪", "note": "线索与进度", "slug": "p3_cmp_s07_relic_hunt", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "贸易城", "note": "商路与货价", "slug": "p3_cmp_s07_trade_city", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "头像", "note": "头像框与选择", "slug": "p3_cmp_s07_avatar", "w": 972, "h": 844}, {"p": "P3", "t": "P3 · 二级养成 / 玩法 / 社交", "label": "设置", "note": "分组与开关", "slug": "p3_cmp_s07_settings", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "洛林荒野", "note": "", "slug": "p4_cmp_s09_map_lorin_wilds", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "枫道", "note": "", "slug": "p4_cmp_s09_map_maple_road", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "断坡", "note": "", "slug": "p4_cmp_s09_map_broken_slope", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "旧盐道", "note": "", "slug": "p4_cmp_s09_map_old_salt_road", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "红沙道", "note": "", "slug": "p4_cmp_s09_map_red_sand_route", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "裂矿道", "note": "", "slug": "p4_cmp_s09_map_rift_mine_road", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "裂矿窟", "note": "", "slug": "p4_cmp_s09_map_rift_mine_vault", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "深源港", "note": "", "slug": "p4_cmp_s09_map_shenyuan_port", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "潮门", "note": "", "slug": "p4_cmp_s09_map_tidal_gate", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "潮滩", "note": "", "slug": "p4_cmp_s09_map_tideflat", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "霜关", "note": "", "slug": "p4_cmp_s09_map_frost_pass", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "霜桥", "note": "", "slug": "p4_cmp_s09_map_frost_boardwalk", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "霜驿", "note": "", "slug": "p4_cmp_s09_map_frost_post", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "碑林入口", "note": "", "slug": "p4_cmp_s09_map_stele_entry", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "碑窟", "note": "", "slug": "p4_cmp_s09_map_stele_cavern", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "碑心", "note": "", "slug": "p4_cmp_s09_map_stele_core", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "碑林回响", "note": "三声部导光石槽 1:1 渲染", "slug": "p4_cmp_s09_map_stele_resonance", "w": 972, "h": 844}, {"p": "P4", "t": "P4 · 18 张探索地图地貌", "label": "深渊环", "note": "", "slug": "p4_cmp_s09_map_abyss_ring", "w": 972, "h": 844}];
+const PHASES = [["P0", "P0 · 阻塞级缺陷", "12 项确定缺陷，全部代码修复，无需新美术"], ["P1", "P1 · 视觉底座", "色板 / 字号阶梯 / 九宫格 / 公共组件层统一"], ["P2", "P2 · 核心主循环", "加载 → 标题 → 登录 → 创角 → 主城 → 背包/邮件/任务 → 战斗 → 结算"], ["P3", "P3 · 二级页面", "养成、玩法、社交、商业化共 26 屏"], ["P4", "P4 · 探索地图", "18 张地图地貌、出生阵纹、三色导光石槽"]];
+const list = document.getElementById('list');
+const empty = document.getElementById('empty');
+let cur = 'ALL', q = '', view = DATA.slice(), idx = -1;
+
+function cardHTML(m){
+  return `<div class="card" data-slug="${m.slug}">
+    <img class="shot" loading="lazy" src="thumbs/${m.slug}.webp" alt="${m.label}">
+    <div class="zoom">放大 ⤢</div>
+    <div class="meta">
+      <div class="t">${m.label}</div>
+      ${m.note ? `<div class="n">${m.note}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function render(){
+  list.innerHTML = '';
+  let total = 0;
+  for (const [k, title, desc] of PHASES){
+    if (cur !== 'ALL' && cur !== k) continue;
+    const rows = view.filter(m => m.p === k);
+    if (!rows.length) continue;
+    total += rows.length;
+    const sec = document.createElement('section');
+    sec.className = 'phase';
+    sec.id = 'phase-' + k;
+    sec.innerHTML = `<h2><span class="tag">${k}</span>${title.replace(k + ' · ', '')}
+      <span style="color:var(--muted);font-weight:400;font-size:13px">（${rows.length} 张）</span></h2>
+      <p class="desc">${desc}</p>
+      <div class="grid">${rows.map(cardHTML).join('')}</div>`;
+    list.appendChild(sec);
+  }
+  empty.style.display = total ? 'none' : 'block';
+  list.querySelectorAll('.card').forEach(c => {
+    c.addEventListener('click', () => open(c.dataset.slug));
+  });
+}
+
+function filtered(){
+  const kw = q.trim().toLowerCase();
+  view = DATA.filter(m => !kw || (m.label + ' ' + m.note + ' ' + m.p).toLowerCase().includes(kw));
+  render();
+}
+
+function open(slug){
+  idx = view.findIndex(m => m.slug === slug);
+  show();
+  document.getElementById('lb').classList.add('on');
+}
+function show(){
+  const m = view[idx];
+  if (!m) return;
+  document.getElementById('lbT').textContent = m.label;
+  document.getElementById('lbN').textContent = m.note || '';
+  document.getElementById('lbI').src = 'big/' + m.slug + '.webp';
+  document.getElementById('lbF').textContent =
+    (idx + 1) + ' / ' + view.length + '　·　' + m.p + '　·　左：改前　右：改后';
+}
+function step(d){
+  idx = (idx + d + view.length) % view.length;
+  show();
+}
+document.getElementById('lbX').onclick = () =>
+  document.getElementById('lb').classList.remove('on');
+document.getElementById('lbP').onclick = e => { e.stopPropagation(); step(-1); };
+document.getElementById('lbNx').onclick = e => { e.stopPropagation(); step(1); };
+document.getElementById('lb').addEventListener('click', e => {
+  if (e.target.id === 'lb' || e.target.className === 'body')
+    document.getElementById('lb').classList.remove('on');
+});
+document.addEventListener('keydown', e => {
+  const on = document.getElementById('lb').classList.contains('on');
+  if (!on) return;
+  if (e.key === 'Escape') document.getElementById('lb').classList.remove('on');
+  if (e.key === 'ArrowLeft') step(-1);
+  if (e.key === 'ArrowRight') step(1);
+});
+document.querySelectorAll('.tab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    cur = t.dataset.p;
+    filtered();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+});
+document.getElementById('q').addEventListener('input', e => { q = e.target.value; filtered(); });
+
+render();
+</script>
+</body>
+</html>

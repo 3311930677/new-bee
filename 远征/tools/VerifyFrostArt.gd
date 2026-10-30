@@ -89,7 +89,7 @@ func _run() -> void:
 		map._player.position = Vector2(480, 910)
 		await get_tree().process_frame
 		city._open_dialog(G.city_npc("npc_frost_guard"), false)
-		var panel := city._panel.get_child(0) as Control
+		var panel := city._dlg.get("paper") as Control
 		_check(is_equal_approx(panel.position.y, screen_height - 190.0), "对话随屏幕底部定位 %d" % screen_height)
 		_check(panel.position.y + panel.size.y <= screen_height - 39.0, "对话底部可见 %d" % screen_height)
 		city._toast("霜关显示检查")
