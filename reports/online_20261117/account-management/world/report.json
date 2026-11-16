@@ -1,0 +1,104 @@
+{
+  "run_id": "295f9b92073a4cfd9d578c14493b550d",
+  "scope": "L0 desktop two-client same town, authority combat, atomic rewards and restart recovery; not mobile/WAN/PvP acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "9bcc4beda7f3a9ae1a9b17b5c6d2e26f7074e1fdb894a07d2e169a37acba2521",
+    "content_version": "3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "online_sources_sha256": "25af8c93a1e6688f2e7348ae6ae04be57ad9d4fb3e6a9303d2b9ff271d6803e6",
+  "gateway_binary_sha256": "0a0792274158cb0ade12e1f6c6d08ab9711abde600c1e658244b8a5706f2eb7f",
+  "injected_database_failures": 2,
+  "fault_database_counts": [
+    "0",
+    "0",
+    "0",
+    "200",
+    "0"
+  ],
+  "passed": true,
+  "final_database_counts": [
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "0"
+  ],
+  "clients": [
+    {
+      "battle_id": "23bf127e-3d0b-4ed7-b9fa-156e81e2c5bb",
+      "character_id": "477ac1b0-dd75-482e-b47f-868fbe64253c",
+      "commands": 33,
+      "receipt": {
+        "experience": 5.0,
+        "gold": 10.0,
+        "result_id": "8ae265ab-c831-45ab-8a70-e3bfbde34803",
+        "wallet_balance": 110.0
+      }
+    },
+    {
+      "battle_id": "a30ad186-bdf3-4437-99c9-1c80b37b2f50",
+      "character_id": "b6f3a1f3-a35f-4ca4-94a9-7d8ddde182a0",
+      "commands": 25,
+      "receipt": {
+        "experience": 5.0,
+        "gold": 10.0,
+        "result_id": "d805ccb0-2703-494f-8b34-6511c1785989",
+        "wallet_balance": 110.0
+      }
+    }
+  ],
+  "worker_errors": [],
+  "player_data_unchanged": true,
+  "checks": [
+    {
+      "name": "two real clients hold exclusive leases in one town",
+      "passed": true
+    },
+    {
+      "name": "both failures are independently identified as the injected PostgreSQL exception",
+      "passed": true
+    },
+    {
+      "name": "failed real victory transactions leave no partial reward, claim or input",
+      "passed": true
+    },
+    {
+      "name": "gateway and real authority process restart before reward retry",
+      "passed": true
+    },
+    {
+      "name": "client a completes real movement, combat, reward retry and reconnect",
+      "passed": true
+    },
+    {
+      "name": "client b completes real movement, combat, reward retry and reconnect",
+      "passed": true
+    },
+    {
+      "name": "database independently confirms two victories, exactly one reward each and revoked sessions",
+      "passed": true
+    },
+    {
+      "name": "actual 480x800 world, battle and result screenshots exist",
+      "passed": true
+    }
+  ],
+  "online_sources_unchanged": true
+}

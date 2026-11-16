@@ -65,12 +65,12 @@ def main():
         for tag in ("a", "b"):
             userdata = folder / ("client-" + tag)
             userdata.mkdir()
-            env = stack.env | {"APPDATA": str(userdata), "LOCALAPPDATA": str(userdata),
+            env = stack.client_environment({"APPDATA": str(userdata), "LOCALAPPDATA": str(userdata),
                                "YUANZHENG_TEST_URL": stack.url,
                                "YUANZHENG_TEST_USERNAME": "world_" + run_id[:16] + tag,
                                "YUANZHENG_TEST_PASSWORD": secrets.token_hex(20),
                                "YUANZHENG_TEST_NICKNAME": ("同行甲" if tag == "a" else "同行乙") + run_id[:5],
-                               "YUANZHENG_WORLD_TAG": tag, "YUANZHENG_WORLD_BARRIER": str(barrier)}
+                               "YUANZHENG_WORLD_TAG": tag, "YUANZHENG_WORLD_BARRIER": str(barrier)})
             flags = ["--headless"]
             if args.capture and tag == "a":
                 flags = []
@@ -90,6 +90,13 @@ def main():
         stack.sql("CREATE FUNCTION reject_world_reward() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.reason='battle_reward' THEN RAISE EXCEPTION 'injected award interruption'; END IF; RETURN NEW; END $$; CREATE TRIGGER reject_world_reward BEFORE INSERT ON wallet_ledger FOR EACH ROW EXECUTE FUNCTION reject_world_reward(); UPDATE battles SET started_at=now()")
         (barrier / "combat-start").write_text("ready", encoding="utf-8")
         wait_markers(["fault-a", "fault-b"])
+        # Both observed failures must be the actual PostgreSQL trigger, rather
+        # than an unrelated HTTP/authority failure with the same 500 status.
+        gateway_events = [json.loads(line) for path in folder.glob("gateway-*.log")
+                          for line in path.read_text(encoding="utf-8").splitlines() if line.startswith("{")]
+        injected_failures = sum(event.get("error_type") == "database_P0001" for event in gateway_events)
+        check(injected_failures == 2, "both failures are independently identified as the injected PostgreSQL exception")
+        report["injected_database_failures"] = injected_failures
         counts = stack.sql("SELECT (SELECT count(*) FROM battle_results),(SELECT count(*) FROM battle_reward_claims),(SELECT count(*) FROM wallet_ledger WHERE reason='battle_reward'),(SELECT sum(gold) FROM wallets),(SELECT count(*) FROM battle_inputs WHERE accepted IS NULL)").split("|")
         check(counts == ["0", "0", "0", "200", "0"], "failed real victory transactions leave no partial reward, claim or input")
         report["fault_database_counts"] = counts

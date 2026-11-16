@@ -88,6 +88,17 @@ def environment(proxy=None):
     return env
 
 
+def client_environment(base, extra):
+    # Test clients receive only their own account credentials and endpoint.
+    # Database URLs, worker MAC keys and future server-only settings stay private.
+    public = {key: value for key, value in base.items()
+              if not key.startswith("YUANZHENG_") and key != "PGPASSWORD"}
+    private = {"YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "PGPASSWORD"}
+    if private.intersection(extra):
+        raise RuntimeError("Server-only environment cannot be passed to a client")
+    return public | extra
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["init", "stop", "status", "deps", "test", "build", "run"])

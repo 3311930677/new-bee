@@ -21,6 +21,8 @@ python 远征/server/tools/run_stack.py --godot <Godot-4.7.2路径>
 
 客户端标题页点击“进入联机”，连接工具显示的地址，注册/登录并创建和选择在线角色，再点击“进入昭元边城”。方向键或屏幕下方按钮移动，靠近城南野狼后挑战；战斗中使用攻/技/物/逃。首胜奖励金币 10、阅历 5，确认结算回城。昵称、职业可以从单机角色预览；在线角色拥有独立 ID、钱包和进度。本阶段所有令牌只留客户端内存，退出后重新登录，不保存密码或刷新令牌。
 
+注册时保存一次性恢复码；忘记密码可在登录页使用，找回后旧会话退出，原角色与资产保留。账号安全页验证当前密码可更新恢复码并查看站内安全记录。恢复码默认遮挡，只在内存保留，由玩家点击复制/显示；密码和恢复码都丢失时，当前版本不能自动证明账号归属。角色列表的“管理”提供昵称确认删除和七天内恢复；重名时给三项候选昵称。
+
 ## 部署边界
 
 生产部署从环境变量读取 `YUANZHENG_DATABASE_URL`，禁止把凭据写入仓库或打进客户端。独立机器需要通过 PostgreSQL 的角色/网络权限限制数据库访问。API 监听非回环地址时必须配置 `--tls-cert / --tls-key`，或明确启用 `--behind-tls-proxy` 并由可信入口终止 TLS；应用不信任任意 `X-Forwarded-For`。
@@ -33,7 +35,7 @@ python 远征/server/tools/run_stack.py --godot <Godot-4.7.2路径>
 # YUANZHENG_ROOM_SECRET，网关附 --authority-address 127.0.0.1:<私有端口>。
 ```
 
-首次启动应用会在事务中执行嵌入式迁移；并行部署由数据库锁串行化，已执行迁移的 SHA256 变化会阻止启动。正式迁移只新增，不修改已上线 SQL。本次没有对任何已有系统数据库执行迁移。
+首次启动应用会在事务中执行嵌入式迁移；并行部署由数据库锁串行化，已执行迁移的 SHA256 变化会阻止启动。`--startup-timeout` 默认 `90s`，可设 `1s`–`10m`，仅用于初始连接、迁移和权威进程校验，日志记录迁移实际耗时；不改变 HTTP 或战斗指令期限。正式迁移只新增，不修改已上线 SQL。本次没有对任何已有系统数据库执行迁移。
 
 ## 测试范围
 
@@ -47,14 +49,17 @@ python 远征/server/tools/run_stack.py --godot <Godot-4.7.2路径>
 python 远征/server/tools/verify_clients.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_room.py --godot <Godot-4.7.2路径>
 python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --capture
+python 远征/server/tools/verify_accounts.py --godot <Godot-4.7.2路径> --capture
 ```
 
 第二条从当前共享战斗源码和全部 JSON 构建 `.local/room-project`，导入并检查脚本；真实 Go 签名客户端连接进程，检查签名、nonce、顺序、服务器时钟、重放、已提交状态校验、未提交输入/时钟回滚和移动判定。原单调时钟接口保留作私有探针；正式战斗同步由网关根据持久化时钟与输入驱动。
 
-第三条启动真实 PostgreSQL、Go 网关、Godot 权威进程和两个独立 Godot 客户端，同城移动并各自完成真实战斗。在胜利入账时通过数据库触发器注入故障，核对无半笔奖励/claim/输入，随后重启网关和战斗进程，再让客户端以原请求标识重试；独立查询数据库确认各自仅发奖一次。另验证重复回执、重登录后恢复未确认结算、确认回城、退出撤销会话及单机数据哈希。只清理随机测试 schema 和自有进程。
+第三条启动真实 PostgreSQL、Go 网关、Godot 权威进程和两个独立 Godot 客户端，同城移动并各自完成真实战斗。在胜利入账时通过数据库触发器注入故障，按安全日志中的 SQLSTATE 核对两个数据库异常，并核对无半笔奖励/claim/输入，随后重启网关和战斗进程，再让客户端以原请求标识重试；独立查询数据库确认各自仅发奖一次。另验证重复回执、重登录后恢复未确认结算、确认回城、退出撤销会话及单机数据哈希。只清理随机测试 schema 和自有进程。
 
 这仍是桌面本机证据，不能替代双手机、广域网、24 人压力、合作副本、PVP 或运营验收。`VerifyOnlineWorld` 与 `VerifyOnlineHttp` 需要外部真实服务与隔离测试身份，由对应 Python 工具启动；常规单机回归不依赖这些服务。
 
-验收记录保存在 `.local/verification`；Go 测试的完整 JSON 在 `go-integration.jsonl`。可审阅的本批证据归档至仓库根 `reports/online_20261116`，保留性能失败日志。
+第四条用真实账号页面按钮及 Go/PostgreSQL 验证注册恢复码遮挡、重名建议、删除确认/取消、恢复原角色、旧恢复码拒绝、新密码找回、站内记录确认和单机隔离。截图只保存遮挡状态，脚本扫描日志中的恢复码模式并拒绝把泄漏样本算作通过。三个客户端联测工具均过滤服务端数据库连接/私有密钥等环境变量，Godot 客户端还在运行时检查这些变量不存在。
+
+验收记录保存在 `.local/verification`；Go 测试的完整 JSON 在 `go-integration.jsonl`。首批证据在仓库根 `reports/online_20261116`；最新账号管理与双端重验在 [20261117/account-management](../../reports/online_20261117/account-management/README.md)，完整单机回归另行归档。此前性能/传输失败记录继续保留，不通过覆盖文件追认成功。
 
 协议：[online-protocol-v1.md](../docs/online-protocol-v1.md)。依赖 API 依据为 [pgx 官方文档](https://pkg.go.dev/github.com/jackc/pgx/v5)、[Go bcrypt 文档](https://pkg.go.dev/golang.org/x/crypto/bcrypt)。便携 PostgreSQL 来源由 [PostgreSQL 官方 Windows 下载页](https://www.postgresql.org/download/windows/)指向 EDB。

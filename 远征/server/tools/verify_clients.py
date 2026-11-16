@@ -13,7 +13,7 @@ import time
 import urllib.request
 import uuid
 
-from dev import SERVER, ROOT, LOCAL, PG, environment
+from dev import SERVER, ROOT, LOCAL, PG, environment, client_environment
 
 
 def player_snapshot():
@@ -54,7 +54,7 @@ def main():
     report = {"run_id": run_id, "schema": schema, "scope": "L0-A real accounts and characters; not map or battle acceptance"}
     try:
         gateway = subprocess.Popen([str(SERVER / "bin" / "gateway.exe"), "--game-root", str(SERVER.parent), "--listen", f"127.0.0.1:{port}"], cwd=SERVER, env=env, stdout=gateway_log, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
-        deadline = time.monotonic() + 45
+        deadline = time.monotonic() + 120
         while True:
             if gateway.poll() is not None:
                 raise RuntimeError("Gateway exited before ready; inspect gateway.log")
@@ -72,7 +72,7 @@ def main():
             local = folder / ("client_" + tag)
             local.mkdir()
             nickname = ("联测甲" if index == 0 else "联测乙") + run_id[:7]
-            client_env = env | {"APPDATA": str(local), "LOCALAPPDATA": str(local), "YUANZHENG_TEST_URL": url, "YUANZHENG_TEST_USERNAME": "test_" + run_id[:16] + tag, "YUANZHENG_TEST_PASSWORD": secrets.token_hex(24), "YUANZHENG_TEST_NICKNAME": nickname, "YUANZHENG_TEST_ROLE": "zs" if index == 0 else "fz"}
+            client_env = client_environment(env, {"APPDATA": str(local), "LOCALAPPDATA": str(local), "YUANZHENG_TEST_URL": url, "YUANZHENG_TEST_USERNAME": "test_" + run_id[:16] + tag, "YUANZHENG_TEST_PASSWORD": secrets.token_hex(24), "YUANZHENG_TEST_NICKNAME": nickname, "YUANZHENG_TEST_ROLE": "zs" if index == 0 else "fz"})
             flags = []
             capture = folder / ("client_" + tag + ".png")
             if args.capture and index == 0:

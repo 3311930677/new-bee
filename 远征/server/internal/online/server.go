@@ -1,6 +1,7 @@
 package online
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/json"
@@ -17,6 +18,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -85,8 +87,14 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/auth/login", s.login)
 	s.mux.HandleFunc("POST /v1/auth/refresh", s.refresh)
 	s.mux.HandleFunc("POST /v1/auth/logout", s.authorized(s.logout))
+	s.mux.HandleFunc("POST /v1/auth/recover", s.recoverAccount)
+	s.mux.HandleFunc("POST /v1/account/recovery-code", s.authorized(s.replaceRecoveryCode))
+	s.mux.HandleFunc("GET /v1/account/notifications", s.authorized(s.securityNotifications))
+	s.mux.HandleFunc("POST /v1/account/notifications/{id}/acknowledge", s.authorized(s.acknowledgeSecurityNotification))
 	s.mux.HandleFunc("GET /v1/session", s.authorized(s.session))
 	s.mux.HandleFunc("GET /v1/characters", s.authorized(s.characters))
+	s.mux.HandleFunc("GET /v1/characters/deleted", s.authorized(s.deletedCharacters))
+	s.mux.HandleFunc("GET /v1/nicknames/suggestions", s.authorized(s.nicknameSuggestions))
 	s.mux.HandleFunc("POST /v1/characters", s.authorized(s.createCharacter))
 	s.mux.HandleFunc("GET /v1/characters/{id}", s.authorized(s.character))
 	s.mux.HandleFunc("POST /v1/characters/{id}/select", s.authorized(s.selectCharacter))
@@ -163,13 +171,33 @@ func errorType(err error) string {
 	if errors.Is(err, context.DeadlineExceeded) {
 		return "timeout"
 	}
+	var databaseError *pgconn.PgError
+	if errors.As(err, &databaseError) {
+		// SQLSTATE is a public five-character classification. Messages and
+		// details can contain user input or credentials and must stay private.
+		if sqlStatePattern.MatchString(databaseError.Code) {
+			return "database_" + databaseError.Code
+		}
+		return "database_error"
+	}
 	return "internal"
 }
+
+var sqlStatePattern = regexp.MustCompile(`^[0-9A-Z]{5}$`)
+
 func decode(r *http.Request, out any) error {
 	if !strings.HasPrefix(strings.ToLower(r.Header.Get("Content-Type")), "application/json") {
 		return bad("json_required", "请求格式必须为 JSON")
 	}
-	d := json.NewDecoder(r.Body)
+	raw, err := io.ReadAll(r.Body)
+	if err != nil {
+		return bad("invalid_payload", "请求内容或字段不正确")
+	}
+	raw = bytes.TrimSpace(raw)
+	if len(raw) == 0 || raw[0] != '{' {
+		return bad("invalid_payload", "请求内容必须为 JSON 对象")
+	}
+	d := json.NewDecoder(bytes.NewReader(raw))
 	d.DisallowUnknownFields()
 	if err := d.Decode(out); err != nil {
 		return bad("invalid_payload", "请求内容或字段不正确")
@@ -187,7 +215,7 @@ func (s *Server) health(w http.ResponseWriter, r *http.Request) {
 	respond(w, 200, map[string]any{"status": "ok", "protocol_version": ProtocolVersion, "ruleset_version": RulesetVersion})
 }
 func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
-	features := []string{"accounts", "online_characters"}
+	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery"}
 	if s.cfg.Authority != nil {
 		features = append(features, "town_rooms", "authority_battles")
 	}

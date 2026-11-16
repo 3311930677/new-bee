@@ -3,6 +3,7 @@ extends Control
 const Profile := preload("res://src/online/OnlineProfile.gd")
 const Lacquer := preload("res://src/ui/LacquerUI.gd")
 const ROLE_NAMES := ["破军", "穿杨", "霜语", "晨星"]
+const AccountPage := preload("res://src/ui/OnlineAccount.tscn")
 
 var _status: Label
 var _url: LineEdit
@@ -16,6 +17,15 @@ var _create_form: VBoxContainer
 var _logout_action: Control
 var _details: Label
 var _enter_world: Control
+var _security_action: Control
+var _save_code_action: Control
+var _account_page: Control
+var _deleted_roster: VBoxContainer
+var _suggestions: VBoxContainer
+var _delete_form: VBoxContainer
+var _delete_words: Label
+var _delete_confirmation: LineEdit
+var _delete_target: Dictionary = {}
 var _busy := false
 var _buttons: Array[Control] = []
 
@@ -63,9 +73,24 @@ func _ready() -> void:
 	_password.max_length = 72
 	_button(_form, "登录在线账号", _authenticate.bind(false))
 	_button(_form, "注册在线账号", _authenticate.bind(true))
+	_button(_form, "忘记密码 · 使用恢复码", _open_account.bind("recovery"))
+	_save_code_action = _button(column, "保存账号恢复码", _open_account.bind("code"))
 	_roster = VBoxContainer.new()
 	_roster.add_theme_constant_override("separation", 10)
 	column.add_child(_roster)
+	_deleted_roster = VBoxContainer.new()
+	_deleted_roster.add_theme_constant_override("separation", 10)
+	column.add_child(_deleted_roster)
+	_delete_form = VBoxContainer.new()
+	_delete_form.add_theme_constant_override("separation", 10)
+	column.add_child(_delete_form)
+	_delete_words = G.gold_label("", G.FS_SM, false)
+	_delete_words.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_delete_form.add_child(_delete_words)
+	_delete_confirmation = _input_field(_delete_form, "完整输入要删除的角色昵称", false)
+	_button(_delete_form, "确认删除角色", _delete_character)
+	_button(_delete_form, "取消删除", _cancel_delete)
+	_delete_form.hide()
 	var create := VBoxContainer.new()
 	_create_form = create
 	create.name = "CreateCharacter"
@@ -81,15 +106,22 @@ func _ready() -> void:
 	create.add_child(_role)
 	_button(create, "预览单机角色身份", _preview_import)
 	_button(create, "确认创建在线角色", _create_character)
+	_suggestions = VBoxContainer.new()
+	_suggestions.add_theme_constant_override("separation", 8)
+	create.add_child(_suggestions)
 	_add_text(create, "可沿用职业和昵称；等级、金币、装备与宠物战力从线上重新成长。")
 	_details = G.gold_label("", G.FS_SM, false)
 	_details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_details)
 	_enter_world = _button(column, "进入昭元边城", _open_world)
 	_enter_world.visible = Online.is_authenticated() and not Online.selected_character.is_empty()
+	_security_action = _button(column, "账号安全 · 更新恢复码", _open_account.bind("security"))
 	_logout_action = _button(column, "退出在线账号", _logout)
 	_button(outer, "返回 · 继续单机", _back, false)
+	Online.state_changed.connect(_online_state_changed)
 	_refresh_roster()
+	if Online.is_authenticated():
+		call_deferred("_refresh_account_data")
 
 
 func _input_field(parent: Control, placeholder: String, secret: bool) -> LineEdit:
@@ -169,8 +201,11 @@ func _authenticate(register: bool) -> void:
 	_password.clear()
 	if _show_result(result, "在线账号已登录"):
 		await Online.refresh_characters()
+		await Online.refresh_deleted_characters()
 	_refresh_roster()
 	_set_busy(false)
+	if bool(result.get("ok", false)) and not Online.pending_recovery_code.is_empty():
+		_open_account("code")
 
 
 func _preview_import() -> void:
@@ -187,6 +222,15 @@ func _create_character() -> void:
 	var result: Dictionary = await Online.create_character({"nickname": _nickname.text, "role_id": Profile.ROLE_IDS[_role.selected], "appearance_id": "default"})
 	if _show_result(result, "在线角色创建成功"):
 		await Online.refresh_characters()
+		_clear_suggestions()
+	elif String(result.get("code", "")) == "nickname_unavailable":
+		_clear_suggestions()
+		var alternatives: Dictionary = await Online.nickname_suggestions(_nickname.text)
+		if bool(alternatives.get("ok", false)):
+			_add_text(_suggestions, "可选昵称（以创建时为准）")
+			for value in alternatives.data.get("suggestions", []):
+				var candidate := String(value)
+				_button(_suggestions, "使用 " + candidate, func() -> void: _nickname.text = candidate)
 	_refresh_roster()
 	_set_busy(false)
 
@@ -195,20 +239,42 @@ func _refresh_roster() -> void:
 	_form.visible = not Online.is_authenticated()
 	_create_form.visible = Online.is_authenticated()
 	_logout_action.visible = Online.is_authenticated()
-	_enter_world.visible = Online.is_authenticated() and not Online.selected_character.is_empty()
+	_security_action.visible = Online.is_authenticated()
+	_save_code_action.visible = not Online.pending_recovery_code.is_empty()
+	var features: Variant = Online.manifest.get("features", [])
+	_enter_world.visible = Online.is_authenticated() and not Online.selected_character.is_empty() and features is Array and features.has("town_rooms")
 	for child in _roster.get_children():
 		child.queue_free()
-	_buttons = _buttons.filter(func(button: Control) -> bool: return is_instance_valid(button) and not button.is_queued_for_deletion())
+	for child in _deleted_roster.get_children():
+		child.queue_free()
+	_buttons.assign(_buttons.filter(func(button: Variant) -> bool: return is_instance_valid(button) and button is Control and not button.is_queued_for_deletion()))
 	if not Online.is_authenticated():
+		_cancel_delete()
 		return
-	_add_text(_roster, "你的在线角色（%d/3）" % Online.characters.size())
+	_add_text(_roster, "你的在线角色（占用 %d/3 个名额）" % (Online.characters.size() + Online.deleted_characters.size()))
 	for value in Online.characters:
 		if not value is Dictionary:
 			continue
 		var character := value as Dictionary
 		var role_index := Profile.ROLE_IDS.find(String(character.get("role_id", "zs")))
-		var words := "%s · %s Lv.%d" % [character.get("nickname", ""), ROLE_NAMES[maxi(0, role_index)], int(character.get("level", 1))]
-		_button(_roster, words, _select_character.bind(String(character.get("id", ""))))
+		var words := "%s\n%s · Lv.%d" % [character.get("nickname", ""), ROLE_NAMES[maxi(0, role_index)], int(character.get("level", 1))]
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		_roster.add_child(row)
+		var choose := _button(row, words, _select_character.bind(String(character.get("id", ""))))
+		choose.custom_minimum_size.y = 62
+		var manage := _button(row, "管理", _begin_delete.bind(character))
+		manage.size_flags_horizontal = Control.SIZE_SHRINK_END
+		manage.custom_minimum_size.x = 76
+	if not Online.deleted_characters.is_empty():
+		_add_text(_deleted_roster, "七天内可恢复的角色")
+		for value in Online.deleted_characters:
+			if not value is Dictionary:
+				continue
+			var character := value as Dictionary
+			var until := String(character.get("recover_until", "")).replace("T", " ").left(16)
+			_add_text(_deleted_roster, "%s · 可恢复至 %s UTC" % [character.get("nickname", ""), until])
+			_button(_deleted_roster, "恢复 " + String(character.get("nickname", "")), _restore_character.bind(String(character.get("id", ""))))
 
 
 func _select_character(id: String) -> void:
@@ -220,14 +286,93 @@ func _select_character(id: String) -> void:
 		var detail: Dictionary = await Online.character_detail(id)
 		if bool(detail.get("ok", false)):
 			var wallet: Dictionary = detail.data.get("wallet", {})
-			_details.text = "%s · 在线金币 %d\n进入边城，与同行旅人一起踏上新的旅程。" % [Online.selected_character.get("nickname", ""), int(wallet.get("gold", 0))]
-		_enter_world.show()
+			var world_notice := "进入边城，与同行旅人一起踏上新的旅程。" if _world_available() else "已选择在线角色；当前服务器尚未开放城镇。"
+			_details.text = "%s · 在线金币 %d\n%s" % [Online.selected_character.get("nickname", ""), int(wallet.get("gold", 0)), world_notice]
+		_refresh_roster()
 	_set_busy(false)
 
 
 func _open_world() -> void:
-	if not _busy and not Online.selected_character.is_empty():
+	if not _busy and not Online.selected_character.is_empty() and _world_available():
 		G.go("res://src/ui/OnlineWorld.tscn")
+
+
+func _world_available() -> bool:
+	var features: Variant = Online.manifest.get("features", [])
+	return features is Array and features.has("town_rooms")
+
+
+func _online_state_changed() -> void:
+	_refresh_roster.call_deferred()
+
+
+func _refresh_account_data() -> void:
+	await Online.refresh_characters()
+	await Online.refresh_deleted_characters()
+	_refresh_roster()
+
+
+func _open_account(mode: String) -> void:
+	if _busy or is_instance_valid(_account_page):
+		return
+	if not Online.configure(_url.text):
+		_status.text = Online.last_error
+		return
+	if mode == "security" and not Online.is_authenticated():
+		_status.text = "请先登录这个服务器的在线账号。"
+		return
+	_account_page = AccountPage.instantiate() as Control
+	_account_page.mode = mode
+	_account_page.username_hint = _username.text
+	_account_page.closed.connect(func() -> void:
+		_account_page = null
+		_refresh_roster())
+	add_child(_account_page)
+
+
+func _begin_delete(character: Dictionary) -> void:
+	if _busy:
+		return
+	_delete_target = character.duplicate(true)
+	_delete_words.text = "删除「%s」后保留七天恢复期，期间仍占角色名额。\n确认删除前，请完整输入这个角色的昵称。" % character.get("nickname", "")
+	_delete_confirmation.clear()
+	_delete_form.show()
+
+
+func _cancel_delete() -> void:
+	_delete_target.clear()
+	_delete_confirmation.clear()
+	_delete_form.hide()
+
+
+func _delete_character() -> void:
+	if _busy or _delete_target.is_empty():
+		return
+	if _delete_confirmation.text != String(_delete_target.get("nickname", "")):
+		_status.text = "请完整输入要删除的角色昵称。"
+		return
+	_set_busy(true)
+	var result: Dictionary = await Online.delete_character(String(_delete_target.get("id", "")), _delete_confirmation.text)
+	if _show_result(result, "角色已进入七天恢复期"):
+		_cancel_delete()
+		_details.text = ""
+		await _refresh_account_data()
+	_set_busy(false)
+
+
+func _restore_character(id: String) -> void:
+	if _busy:
+		return
+	_set_busy(true)
+	var result: Dictionary = await Online.restore_character(id)
+	if _show_result(result, "角色已恢复，原有在线物资保留"):
+		await _refresh_account_data()
+	_set_busy(false)
+
+
+func _clear_suggestions() -> void:
+	for child in _suggestions.get_children():
+		child.queue_free()
 
 
 func _logout() -> void:

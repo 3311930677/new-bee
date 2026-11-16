@@ -13,13 +13,17 @@ ROOT = GAME.parent
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", required=True)
+    parser.add_argument("--tag", default="")
     args = parser.parse_args()
     if not re.fullmatch(r"[0-9]{8}", args.date):
         raise RuntimeError("Expected YYYYMMDD run label")
+    if args.tag and not re.fullmatch(r"[a-z0-9_-]{1,40}", args.tag):
+        raise RuntimeError("Expected a short verification tag")
+    label = args.date + ("_" + args.tag if args.tag else "")
     base = GAME / "tools/_logs"
-    console_path = base / f"online_full_console_{args.date}.log"
-    result_path = base / f"online_full_result_{args.date}.json"
-    log_folder = base / f"online_full_{args.date}"
+    console_path = base / f"online_full_console_{label}.log"
+    result_path = base / f"online_full_result_{label}.json"
+    log_folder = base / f"online_full_{label}"
     metadata = json.loads(result_path.read_text(encoding="utf-8-sig"))
     console = console_path.read_text(encoding="utf-8-sig", errors="strict")
     runner = (GAME / "tools/run_regression.ps1").read_text(encoding="utf-8")
@@ -30,6 +34,8 @@ def main():
             or "ALL GREEN" not in console or re.search(r"(?m)^FAIL\s", console)):
         raise RuntimeError("Strict full regression did not complete successfully")
     target = ROOT / "reports" / ("online_" + args.date)
+    if args.tag:
+        target = target / args.tag
     if target.exists():
         raise RuntimeError("Preserve existing evidence; choose a different run label")
     files = [(console_path, Path("full-regression-console.log")),

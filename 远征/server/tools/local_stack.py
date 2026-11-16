@@ -1,5 +1,6 @@
 """Run the real private Godot worker and Go gateway with one shared version/key."""
 import os
+import json
 from pathlib import Path
 import re
 import secrets
@@ -10,7 +11,7 @@ import urllib.request
 import uuid
 
 from build_room import build
-from dev import SERVER, PG, config, environment
+from dev import SERVER, PG, config, environment, client_environment
 from verify_room import RPC
 
 
@@ -21,10 +22,11 @@ def free_port():
 
 
 class LocalStack:
-    def __init__(self, godot: Path, folder: Path, *, isolated_test=False):
+    def __init__(self, godot: Path, folder: Path, *, isolated_test=False, with_world=True):
         self.godot, self.folder = godot.resolve(), folder.resolve()
         self.folder.mkdir(parents=True, exist_ok=True)
-        self.project, self.manifest = build(self.godot)
+        self.with_world = with_world
+        self.project, self.manifest = build(self.godot) if with_world else (None, {})
         self.env = environment()
         self.env |= {"YUANZHENG_ROOM_SECRET": secrets.token_hex(32),
                      "APPDATA": str(self.folder / "server-userdata"),
@@ -33,7 +35,7 @@ class LocalStack:
         while self.worker_port == self.gateway_port:
             self.gateway_port = free_port()
         self.url = f"http://127.0.0.1:{self.gateway_port}"
-        self.rpc = RPC(self.worker_port, self.env["YUANZHENG_ROOM_SECRET"], self.manifest)
+        self.rpc = RPC(self.worker_port, self.env["YUANZHENG_ROOM_SECRET"], self.manifest) if with_world else None
         self.schema = "world_" + uuid.uuid4().hex if isolated_test else None
         self.processes, self.logs = {}, []
         self.schema_created = False
@@ -57,9 +59,16 @@ class LocalStack:
             self.sql(f'CREATE SCHEMA "{self.schema}"')
             self.schema_created = True
             self.env["YUANZHENG_DATABASE_URL"] = self.env["YUANZHENG_TEST_DATABASE_URL"] + "&search_path=" + self.schema
-        self.start_worker()
+        if self.with_world:
+            self.start_worker()
         self.start_gateway()
+        if not self.with_world:
+            with self.opener.open(self.url + "/v1/manifest", timeout=5) as response:
+                self.manifest = json.load(response)["data"]
         return self
+
+    def client_environment(self, extra):
+        return client_environment(self.env, extra)
 
     def spawn(self, name, command):
         log = (self.folder / f"{name}-{len(self.logs)}.log").open("wb")
@@ -69,7 +78,7 @@ class LocalStack:
                                                 creationflags=subprocess.CREATE_NO_WINDOW)
 
     def ready(self, name, probe):
-        deadline = time.monotonic() + 45
+        deadline = time.monotonic() + 120
         while time.monotonic() < deadline:
             if self.processes[name].poll() is not None:
                 raise RuntimeError(f"{name} exited before ready; inspect generated log")
@@ -87,9 +96,11 @@ class LocalStack:
         self.ready("worker", lambda: self.rpc.call("ping").get("ok"))
 
     def start_gateway(self):
-        self.spawn("gateway", [SERVER / "bin/gateway.exe", "--game-root", SERVER.parent,
-                               "--listen", f"127.0.0.1:{self.gateway_port}",
-                               "--authority-address", f"127.0.0.1:{self.worker_port}"])
+        arguments = [SERVER / "bin/gateway.exe", "--game-root", SERVER.parent,
+                     "--listen", f"127.0.0.1:{self.gateway_port}"]
+        if self.with_world:
+            arguments += ["--authority-address", f"127.0.0.1:{self.worker_port}"]
+        self.spawn("gateway", arguments)
 
         def probe():
             with self.opener.open(self.url + "/healthz", timeout=2) as response:

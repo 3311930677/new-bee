@@ -35,7 +35,11 @@ func run(logger *slog.Logger) error {
 	key := flag.String("tls-key", "", "HTTPS private key path")
 	trustedTLS := flag.Bool("behind-tls-proxy", false, "Explicitly acknowledge deployment behind a trusted TLS reverse proxy")
 	roomAddress := flag.String("authority-address", "", "Optional private Godot worker loopback address")
+	startupTimeout := flag.Duration("startup-timeout", 90*time.Second, "Maximum database migration and initial service startup time")
 	flag.Parse()
+	if *startupTimeout < time.Second || *startupTimeout > 10*time.Minute {
+		return fmt.Errorf("startup timeout must be between 1 second and 10 minutes")
+	}
 	host, _, err := net.SplitHostPort(*listen)
 	if err != nil {
 		return fmt.Errorf("invalid listen address")
@@ -55,14 +59,16 @@ func run(logger *slog.Logger) error {
 		return fmt.Errorf("database configuration invalid")
 	}
 	defer db.Close()
-	initCtx, cancel := context.WithTimeout(ctx, 20*time.Second)
+	initCtx, cancel := context.WithTimeout(ctx, *startupTimeout)
 	defer cancel()
 	if err = db.Ping(initCtx); err != nil {
 		return fmt.Errorf("database unavailable")
 	}
+	migrationStarted := time.Now()
 	if err = online.Migrate(initCtx, db); err != nil {
 		return fmt.Errorf("database migration failed: %w", err)
 	}
+	logger.Info("database migrations ready", "duration_ms", time.Since(migrationStarted).Milliseconds())
 	hash := sha256.New()
 	contentFiles, err := filepath.Glob(filepath.Join(*gameRoot, "data", "*.json"))
 	if err != nil || len(contentFiles) == 0 {
