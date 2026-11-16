@@ -7,6 +7,25 @@ var _tag := ""
 var _page: Node2D
 var _before := ""
 var _save_before := PackedByteArray()
+var _probe_id := 0
+var _probe_started := 0
+var _probe_reported := false
+
+
+func _process(_delta: float) -> void:
+	# Metadata only, never headers, tokens or response bodies. Preserve the
+	# client's state before HTTPRequest closes its connection after a timeout.
+	for child in Online.get_children():
+		if not child is HTTPRequest or child.is_queued_for_deletion():
+			continue
+		var http := child as HTTPRequest
+		if http.get_instance_id() != _probe_id:
+			_probe_id = http.get_instance_id()
+			_probe_started = Time.get_ticks_msec()
+			_probe_reported = false
+		elif not _probe_reported and Time.get_ticks_msec() - _probe_started >= 1000:
+			_probe_reported = true
+			print("ONLINE_TRANSPORT_SLOW tag=%s state=%d downloaded=%d body_size=%d elapsed_ms=%d" % [_tag, http.get_http_client_status(), http.get_downloaded_bytes(), http.get_body_size(), Time.get_ticks_msec()-_probe_started])
 
 
 func _check(ok: bool, message: String) -> bool:
@@ -17,7 +36,7 @@ func _check(ok: bool, message: String) -> bool:
 
 
 func _ok(result: Dictionary, message: String) -> bool:
-	return _check(bool(result.get("ok", false)), "%s：%s" % [message, result.get("error", result.get("code", ""))])
+	return _check(bool(result.get("ok", false)), "%s：%s [status=%d code=%s transport=%d]" % [message, result.get("error", ""), int(result.get("status", 0)), result.get("code", ""), int(result.get("transport_result", -1))])
 
 
 func _local_snapshot() -> String:
@@ -55,6 +74,8 @@ func _ready() -> void:
 	_before = _local_snapshot()
 	_save_before = FileAccess.get_file_as_bytes(G.SAVE_PATH) if FileAccess.file_exists(G.SAVE_PATH) else PackedByteArray()
 	var username := OS.get_environment("YUANZHENG_TEST_USERNAME")
+	for variable in ["YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "PGPASSWORD"]:
+		_check(not OS.has_environment(variable), "客户端不接收服务器环境：" + variable)
 	var password := OS.get_environment("YUANZHENG_TEST_PASSWORD")
 	_check(Online.configure(OS.get_environment("YUANZHENG_TEST_URL")), "本地联测地址")
 	if not _ok(await Online.authenticate(username, password, true), "真实注册"):

@@ -1,0 +1,52 @@
+{
+  "scope": "real desktop account UI, deletion/recovery, nickname alternatives and saved recovery-code password reset; not email, mobile or public deployment acceptance",
+  "online_sources_sha256": "25af8c93a1e6688f2e7348ae6ae04be57ad9d4fb3e6a9303d2b9ff271d6803e6",
+  "gateway_binary_sha256": "0a0792274158cb0ade12e1f6c6d08ab9711abde600c1e658244b8a5706f2eb7f",
+  "exit_code": 0,
+  "errors": [],
+  "database_counts": [
+    "1",
+    "1",
+    "1",
+    "1",
+    "2",
+    "0",
+    "0"
+  ],
+  "expected_counts": [
+    "1",
+    "1",
+    "1",
+    "1",
+    "2",
+    "0",
+    "0"
+  ],
+  "recovery_code_in_logs": false,
+  "requested_captures_exist": true,
+  "passed": true,
+  "manifest": {
+    "appearance_ids": [
+      "default"
+    ],
+    "character_limit": 3,
+    "content_version": "3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17",
+    "features": [
+      "accounts",
+      "online_characters",
+      "account_recovery",
+      "character_recovery"
+    ],
+    "protocol_version": 1,
+    "roles": [
+      "zs",
+      "ck",
+      "fs",
+      "fz"
+    ],
+    "ruleset_version": "online-0.1",
+    "starting_gold": 100
+  },
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true
+}

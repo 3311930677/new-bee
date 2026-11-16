@@ -20,6 +20,8 @@ func _ready() -> void:
 	var before := _snapshot()
 	var bytes_before := FileAccess.get_file_as_bytes(G.SAVE_PATH) if FileAccess.file_exists(G.SAVE_PATH) else PackedByteArray()
 	var username := OS.get_environment("YUANZHENG_TEST_USERNAME")
+	for variable in ["YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "PGPASSWORD"]:
+		_check(not OS.has_environment(variable), "客户端不接收服务器环境：" + variable)
 	var password := OS.get_environment("YUANZHENG_TEST_PASSWORD")
 	var nickname := OS.get_environment("YUANZHENG_TEST_NICKNAME")
 	if username.is_empty() or password.is_empty() or nickname.is_empty():

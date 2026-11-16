@@ -92,7 +92,11 @@ func (h *harness) request(method, path, token, key string, body any) answer {
 	h.t.Helper()
 	var data []byte
 	if body != nil {
-		data, _ = json.Marshal(body)
+		var marshalError error
+		data, marshalError = json.Marshal(body)
+		if marshalError != nil {
+			h.t.Fatalf("test request cannot be marshaled: %v", marshalError)
+		}
 	}
 	req, err := http.NewRequest(method, h.server.URL+path, bytes.NewReader(data))
 	if err != nil {

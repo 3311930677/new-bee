@@ -11,6 +11,10 @@ const RESPONSE_LIMIT := 256 * 1024
 var base_url := "http://127.0.0.1:18080"
 var manifest: Dictionary = {}
 var characters: Array = []
+var deleted_characters: Array = []
+var security_notifications: Array = []
+var pending_recovery_code := ""
+var account_username := ""
 var selected_character: Dictionary = {}
 var last_error := ""
 var access_token := ""
@@ -64,8 +68,75 @@ func authenticate(username: String, password: String, register := false) -> Dict
 	var path := "/v1/auth/register" if register else "/v1/auth/login"
 	var result: Dictionary = await _request(HTTPClient.METHOD_POST, path, {"username": username, "password": password})
 	if bool(result.get("ok", false)):
+		clear_session()
+		account_username = username.strip_edges().to_lower()
+		pending_recovery_code = String(result.get("data", {}).get("recovery_code", ""))
 		_apply_tokens(result.get("data", {}))
 	return result
+
+
+func recover_account(username: String, code: String, password: String) -> Dictionary:
+	var result: Dictionary = await _request(HTTPClient.METHOD_POST, "/v1/auth/recover", {"username": username, "recovery_code": code, "password": password})
+	if bool(result.get("ok", false)):
+		clear_session()
+		pending_recovery_code = String(result.get("data", {}).get("recovery_code", ""))
+		state_changed.emit()
+	return result
+
+
+func replace_recovery_code(password: String) -> Dictionary:
+	var result: Dictionary = await _request(HTTPClient.METHOD_POST, "/v1/account/recovery-code", {"password": password}, "", true)
+	if bool(result.get("ok", false)):
+		pending_recovery_code = String(result.get("data", {}).get("recovery_code", ""))
+		state_changed.emit()
+	return result
+
+
+func forget_recovery_code() -> void:
+	pending_recovery_code = ""
+	state_changed.emit()
+
+
+func refresh_security_notifications() -> Dictionary:
+	var result: Dictionary = await _request(HTTPClient.METHOD_GET, "/v1/account/notifications", {}, "", true)
+	if bool(result.get("ok", false)):
+		var notices: Variant = result.get("data", {}).get("notifications", [])
+		security_notifications = notices.duplicate(true) if notices is Array else []
+	return result
+
+
+func acknowledge_security_notification(id: String) -> Dictionary:
+	if not _valid_id(id):
+		return _failure("找不到这条通知。", "invalid_notification")
+	return await _send_command("/v1/account/notifications/%s/acknowledge" % id, {}, "")
+
+
+func refresh_deleted_characters() -> Dictionary:
+	var result: Dictionary = await _request(HTTPClient.METHOD_GET, "/v1/characters/deleted", {}, "", true)
+	if bool(result.get("ok", false)):
+		var list: Variant = result.get("data", {}).get("characters", [])
+		deleted_characters = list.duplicate(true) if list is Array else []
+	return result
+
+
+func nickname_suggestions(nickname: String) -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/nicknames/suggestions?nickname=%s" % nickname.uri_encode(), {}, "", true)
+
+
+func delete_character(id: String, confirmation: String, request_id := "") -> Dictionary:
+	if not _valid_id(id):
+		return _failure("找不到该在线角色。", "invalid_character")
+	var result: Dictionary = await _send_command("/v1/characters/%s" % id, {"confirm_nickname": confirmation}, request_id, HTTPClient.METHOD_DELETE)
+	if bool(result.get("ok", false)) and String(selected_character.get("id", "")) == id:
+		selected_character.clear()
+		state_changed.emit()
+	return result
+
+
+func restore_character(id: String, request_id := "") -> Dictionary:
+	if not _valid_id(id):
+		return _failure("找不到该在线角色。", "invalid_character")
+	return await _send_command("/v1/characters/%s/restore" % id, {}, request_id)
 
 
 func refresh_characters() -> Dictionary:
@@ -148,6 +219,10 @@ func clear_session() -> void:
 	access_token = ""
 	_refresh_token = ""
 	characters.clear()
+	deleted_characters.clear()
+	security_notifications.clear()
+	pending_recovery_code = ""
+	account_username = ""
 	selected_character.clear()
 	_pending_commands.clear()
 	# Resolve awaiting callers while their scene still exists; a cancelled HTTPRequest
@@ -200,14 +275,14 @@ func _request(method: int, path: String, payload: Dictionary = {}, request_id :=
 	return result
 
 
-func _send_command(path: String, payload: Dictionary, explicit_key: String) -> Dictionary:
-	var intent := path + "|" + JSON.stringify(payload)
+func _send_command(path: String, payload: Dictionary, explicit_key: String, method := HTTPClient.METHOD_POST) -> Dictionary:
+	var intent := str(method) + "|" + path + "|" + JSON.stringify(payload)
 	var key := explicit_key
 	if key.is_empty():
 		if not _pending_commands.has(intent):
 			_pending_commands[intent] = new_request_id()
 		key = String(_pending_commands[intent])
-	var result: Dictionary = await _request(HTTPClient.METHOD_POST, path, payload, key, true)
+	var result: Dictionary = await _request(method, path, payload, key, true)
 	var status := int(result.get("status", 0))
 	if bool(result.get("ok", false)) or status in [400, 404, 409]:
 		_pending_commands.erase(intent)

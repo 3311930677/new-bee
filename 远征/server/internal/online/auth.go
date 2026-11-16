@@ -24,6 +24,7 @@ type tokenPair struct {
 	RefreshToken string `json:"refresh_token"`
 	ExpiresIn    int64  `json:"expires_in"`
 	SessionID    string `json:"session_id"`
+	RecoveryCode string `json:"recovery_code,omitempty"`
 }
 
 func randomToken() string {
@@ -69,7 +70,8 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 	}
 	defer tx.Rollback(r.Context())
 	id := newID()
-	_, err = tx.Exec(r.Context(), `INSERT INTO accounts(id,username,password_hash) VALUES($1,$2,$3)`, id, body.Username, hash)
+	code, salt, recoveryHash := newRecoveryCode()
+	_, err = tx.Exec(r.Context(), `INSERT INTO accounts(id,username,password_hash,recovery_salt,recovery_hash) VALUES($1,$2,$3,$4,$5)`, id, body.Username, hash, salt, recoveryHash)
 	if isUnique(err) {
 		s.fail(w, &apiError{409, "username_unavailable", "此账号已被使用"})
 		return
@@ -79,6 +81,7 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	pair, err := s.issueSession(r.Context(), tx, id)
+	pair.RecoveryCode = code
 	if err == nil {
 		err = tx.Commit(r.Context())
 	}
@@ -120,6 +123,18 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer tx.Rollback(r.Context())
+	// Recheck the hash under the same account lock as password recovery. A login
+	// verified just before a reset must not create a session using the old password.
+	var currentHash []byte
+	err = tx.QueryRow(r.Context(), `SELECT password_hash FROM accounts WHERE id=$1 FOR UPDATE`, id).Scan(&currentHash)
+	if err != nil {
+		s.fail(w, err)
+		return
+	}
+	if string(currentHash) != string(hash) && bcrypt.CompareHashAndPassword(currentHash, []byte(body.Password)) != nil {
+		s.fail(w, &apiError{401, "invalid_credentials", "账号或密码不正确"})
+		return
+	}
 	pair, err := s.issueSession(r.Context(), tx, id)
 	if err == nil {
 		err = tx.Commit(r.Context())
