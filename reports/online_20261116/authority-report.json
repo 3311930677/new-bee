@@ -1,0 +1,123 @@
+{
+  "scope": "isolated shared BattleSim + private signed RPC; not public multiplayer acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "58d852e24fcf08d900ee1e2b4ee54d6cdea6bd883056fb25bbdd4266851e2c1a",
+    "content_version": "d305f350db87fa61cf085b1aba714112d567873224aefba5aa2ffb113f105a52",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "go_health": {
+    "ok": true,
+    "content_version": "d305f350db87fa61cf085b1aba714112d567873224aefba5aa2ffb113f105a52",
+    "ruleset_version": "online-0.1",
+    "engine": "4.7.2-stable (official)",
+    "battles": 0
+  },
+  "passed": true,
+  "final_state_hash": "2dc380247fa0d5816e4dc95302fd65a41008b4b726c9729046ed58db8330fcad",
+  "ticks": 71,
+  "inputs": [
+    {
+      "accepted": true,
+      "action": {
+        "action": "attack"
+      },
+      "reason": "attacked",
+      "sequence": 1,
+      "tick": 68
+    },
+    {
+      "accepted": false,
+      "action": {
+        "action": "skill",
+        "skill_id": "gm_kill_all"
+      },
+      "reason": "unavailable",
+      "sequence": 2,
+      "tick": 71
+    },
+    {
+      "accepted": true,
+      "action": {
+        "action": "flee"
+      },
+      "reason": "fled",
+      "sequence": 3,
+      "tick": 71
+    }
+  ],
+  "checks": [
+    {
+      "name": "private worker starts with exact content version",
+      "passed": true
+    },
+    {
+      "name": "production Go RPC client authenticates a real Godot process",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated private request rejected",
+      "passed": true
+    },
+    {
+      "name": "replayed private nonce rejected",
+      "passed": true
+    },
+    {
+      "name": "shared BattleSim starts only on authority process",
+      "passed": true
+    },
+    {
+      "name": "authority advances by its own monotonic clock",
+      "passed": true
+    },
+    {
+      "name": "authority validates and executes manual attack",
+      "passed": true
+    },
+    {
+      "name": "duplicate command returns original receipt without a second attack",
+      "passed": true
+    },
+    {
+      "name": "same sequence cannot change action",
+      "passed": true
+    },
+    {
+      "name": "out of order input rejected",
+      "passed": true
+    },
+    {
+      "name": "unowned skill cannot execute",
+      "passed": true
+    },
+    {
+      "name": "authority controls final battle result",
+      "passed": true
+    },
+    {
+      "name": "seed and exact input log reproduce final authority state",
+      "passed": true
+    },
+    {
+      "name": "finished simulation can be released after persistence",
+      "passed": true
+    }
+  ],
+  "player_data_unchanged": true,
+  "script_errors": [],
+  "log": "E:\\new bee\\远征\\server\\.local\\verification\\room_db0153a4892e457985580b19ec597701\\room.log"
+}

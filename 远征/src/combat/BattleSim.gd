@@ -18,7 +18,7 @@ var finished := false
 var result := ""                      # "" / "victory" / "defeat"
 var auto_mode := false                # 托管
 var manual_basic_attack := false      # 手动模式：非托管时主角普攻由玩家点击触发
-var manual_attack_queued := false     # 手动模式下的待发普攻指令
+var manual_attack_queued := false     # 保留字段：手动模式已取消预输入，恒为 false
 var role_focus_target_uid := -1        # 玩家“攻”指令指定目标；不覆盖嘲讽/混乱与近战前排规则
 var potions_left := 0                 # 治疗药剂
 var potion_cd_ticks := 0              # 药剂 CD（8 秒一瓶，防连点误用）
@@ -455,8 +455,8 @@ func trigger_manual_attack() -> String:
 	if not role.can_act():
 		return "controlled"
 	if role.attack_timer < role.basic_threshold():
-		manual_attack_queued = true
-		return "queued"
+		# 手动模式不再预输入排队：冷却结束后「自己补一刀」会被误认成自动攻击。
+		return "cooldown"
 	manual_attack_queued = false
 	role.attack_timer = 0
 	role.do_basic_attack(self)

@@ -1,6 +1,7 @@
 # Godot 缓存
 .godot/
 *.godot
+!/远征/server/room/project.godot
 
 # 临时备份
 *.bak
@@ -62,3 +63,11 @@ _backups/
 /reports/**/*.apk
 /reports/github_sync_20261024/upload_staging/
 /tools/github-upload-deps/
+
+# Online development runtimes, local credentials, databases and binaries
+/tools/online-runtime/
+/远征/server/.local/
+/远征/server/bin/
+/远征/server/.env
+/远征/server/coverage.out
+/远征/server/test-results.json

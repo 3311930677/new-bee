@@ -1,0 +1,288 @@
+package online
+
+import (
+	"context"
+	"crypto/sha256"
+	"encoding/json"
+	"errors"
+	"io"
+	"log/slog"
+	"net"
+	"net/http"
+	"regexp"
+	"strings"
+	"sync"
+	"time"
+	"unicode"
+	"unicode/utf8"
+
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"golang.org/x/crypto/bcrypt"
+)
+
+const ProtocolVersion = 1
+const RulesetVersion = "online-0.1"
+
+type Config struct {
+	ContentVersion string
+	PasswordCost   int
+	AccessTTL      time.Duration
+	RefreshTTL     time.Duration
+	Logger         *slog.Logger
+	Authority      AuthorityRPC
+	Rules          OnlineRules
+}
+
+type Server struct {
+	db        *pgxpool.Pool
+	cfg       Config
+	mux       *http.ServeMux
+	limiter   rateLimiter
+	dummyHash []byte
+}
+
+type apiError struct {
+	status        int
+	code, message string
+}
+
+func (e *apiError) Error() string    { return e.code }
+func bad(code, message string) error { return &apiError{http.StatusBadRequest, code, message} }
+
+var errAuth = &apiError{http.StatusUnauthorized, "unauthorized", "登录已过期，请重新登录"}
+var errNotFound = &apiError{http.StatusNotFound, "not_found", "找不到该在线角色"}
+
+func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
+	if cfg.ContentVersion == "" {
+		return nil, errors.New("content version is required")
+	}
+	if cfg.Authority != nil {
+		if err := cfg.Rules.Validate(); err != nil {
+			return nil, err
+		}
+	}
+	if cfg.PasswordCost == 0 {
+		cfg.PasswordCost = bcrypt.DefaultCost
+	}
+	if cfg.AccessTTL == 0 {
+		cfg.AccessTTL = 30 * time.Minute
+	}
+	if cfg.RefreshTTL == 0 {
+		cfg.RefreshTTL = 7 * 24 * time.Hour
+	}
+	if cfg.Logger == nil {
+		cfg.Logger = slog.Default()
+	}
+	dummy, err := bcrypt.GenerateFromPassword([]byte("dummy-not-an-account-password"), cfg.PasswordCost)
+	if err != nil {
+		return nil, err
+	}
+	s := &Server{db: db, cfg: cfg, mux: http.NewServeMux(), dummyHash: dummy}
+	s.mux.HandleFunc("GET /healthz", s.health)
+	s.mux.HandleFunc("GET /v1/manifest", s.manifest)
+	s.mux.HandleFunc("POST /v1/auth/register", s.register)
+	s.mux.HandleFunc("POST /v1/auth/login", s.login)
+	s.mux.HandleFunc("POST /v1/auth/refresh", s.refresh)
+	s.mux.HandleFunc("POST /v1/auth/logout", s.authorized(s.logout))
+	s.mux.HandleFunc("GET /v1/session", s.authorized(s.session))
+	s.mux.HandleFunc("GET /v1/characters", s.authorized(s.characters))
+	s.mux.HandleFunc("POST /v1/characters", s.authorized(s.createCharacter))
+	s.mux.HandleFunc("GET /v1/characters/{id}", s.authorized(s.character))
+	s.mux.HandleFunc("POST /v1/characters/{id}/select", s.authorized(s.selectCharacter))
+	s.mux.HandleFunc("DELETE /v1/characters/{id}", s.authorized(s.deleteCharacter))
+	s.mux.HandleFunc("POST /v1/characters/{id}/restore", s.authorized(s.restoreCharacter))
+	s.mux.HandleFunc("POST /v1/rooms/join", s.authorized(s.joinRoom))
+	s.mux.HandleFunc("POST /v1/rooms/move", s.authorized(s.moveRoom))
+	s.mux.HandleFunc("GET /v1/rooms/current", s.authorized(s.roomSnapshot))
+	s.mux.HandleFunc("POST /v1/battles", s.authorized(s.startBattle))
+	s.mux.HandleFunc("GET /v1/battles/active", s.authorized(s.activeBattle))
+	s.mux.HandleFunc("GET /v1/battles/{id}", s.authorized(s.battleSnapshot))
+	s.mux.HandleFunc("POST /v1/battles/{id}/commands", s.authorized(s.battleCommand))
+	s.mux.HandleFunc("POST /v1/battles/{id}/acknowledge", s.authorized(s.acknowledgeBattle))
+	return s, nil
+}
+
+func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	started := time.Now()
+	observed := &responseObserver{ResponseWriter: w, status: 200}
+	defer func() {
+		// Only route templates and timings: no credentials, URLs, IDs or payloads.
+		s.cfg.Logger.Info("request", "route", r.Pattern, "method", r.Method, "status", observed.status, "duration_ms", time.Since(started).Milliseconds())
+	}()
+	w.Header().Set("Cache-Control", "no-store")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("X-Protocol-Version", "1")
+	w.Header().Set("X-Content-Version", s.cfg.ContentVersion)
+	r.Body = http.MaxBytesReader(w, r.Body, 16<<10)
+	ctx, cancel := context.WithTimeout(r.Context(), 15*time.Second)
+	defer cancel()
+	r = r.WithContext(ctx)
+	s.mux.ServeHTTP(observed, r)
+}
+
+type responseObserver struct {
+	http.ResponseWriter
+	status      int
+	wroteHeader bool
+}
+
+func (w *responseObserver) WriteHeader(status int) {
+	if w.wroteHeader {
+		return
+	}
+	w.wroteHeader = true
+	w.status = status
+	w.ResponseWriter.WriteHeader(status)
+}
+func (w *responseObserver) Write(data []byte) (int, error) {
+	if !w.wroteHeader {
+		w.WriteHeader(http.StatusOK)
+	}
+	return w.ResponseWriter.Write(data)
+}
+func (w *responseObserver) Unwrap() http.ResponseWriter { return w.ResponseWriter }
+
+func respond(w http.ResponseWriter, status int, data any) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(status)
+	_ = json.NewEncoder(w).Encode(map[string]any{"data": data})
+}
+func (s *Server) fail(w http.ResponseWriter, err error) {
+	e := &apiError{http.StatusInternalServerError, "internal_error", "服务暂时不可用，请稍后重试"}
+	if !errors.As(err, &e) {
+		e = &apiError{http.StatusInternalServerError, "internal_error", "服务暂时不可用，请稍后重试"}
+		// Never log credentials, tokens, request bodies or database errors with parameter values.
+		s.cfg.Logger.Error("online request failed", "error_type", errorType(err))
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(e.status)
+	_ = json.NewEncoder(w).Encode(map[string]any{"error": map[string]string{"code": e.code, "message": e.message}})
+}
+func errorType(err error) string {
+	if errors.Is(err, context.DeadlineExceeded) {
+		return "timeout"
+	}
+	return "internal"
+}
+func decode(r *http.Request, out any) error {
+	if !strings.HasPrefix(strings.ToLower(r.Header.Get("Content-Type")), "application/json") {
+		return bad("json_required", "请求格式必须为 JSON")
+	}
+	d := json.NewDecoder(r.Body)
+	d.DisallowUnknownFields()
+	if err := d.Decode(out); err != nil {
+		return bad("invalid_payload", "请求内容或字段不正确")
+	}
+	if d.Decode(&struct{}{}) != io.EOF {
+		return bad("invalid_payload", "请求中只能有一个 JSON 对象")
+	}
+	return nil
+}
+func (s *Server) health(w http.ResponseWriter, r *http.Request) {
+	if err := s.db.Ping(r.Context()); err != nil {
+		s.fail(w, &apiError{503, "database_unavailable", "数据库暂不可用"})
+		return
+	}
+	respond(w, 200, map[string]any{"status": "ok", "protocol_version": ProtocolVersion, "ruleset_version": RulesetVersion})
+}
+func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
+	features := []string{"accounts", "online_characters"}
+	if s.cfg.Authority != nil {
+		features = append(features, "town_rooms", "authority_battles")
+	}
+	respond(w, 200, map[string]any{"protocol_version": ProtocolVersion, "content_version": s.cfg.ContentVersion, "ruleset_version": RulesetVersion, "character_limit": 3, "roles": []string{"zs", "ck", "fs", "fz"}, "appearance_ids": []string{"default"}, "features": features, "starting_gold": 100})
+}
+
+type identity struct{ SessionID, AccountID, CharacterID string }
+type privateHandler func(http.ResponseWriter, *http.Request, identity)
+
+func (s *Server) authorized(next privateHandler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if token == "" || token == r.Header.Get("Authorization") || len(token) > 128 {
+			s.fail(w, errAuth)
+			return
+		}
+		hash := sha256.Sum256([]byte(token))
+		var who identity
+		err := s.db.QueryRow(r.Context(), `SELECT id::text, account_id::text, coalesce(active_character_id::text,'') FROM sessions WHERE access_hash=$1 AND revoked_at IS NULL AND access_expires_at>now() AND expires_at>now()`, hash[:]).Scan(&who.SessionID, &who.AccountID, &who.CharacterID)
+		if errors.Is(err, pgx.ErrNoRows) {
+			s.fail(w, errAuth)
+			return
+		}
+		if err != nil {
+			s.fail(w, err)
+			return
+		}
+		next(w, r, who)
+	}
+}
+func (s *Server) version(r *http.Request) error {
+	if r.Header.Get("X-Content-Version") != s.cfg.ContentVersion {
+		return &apiError{409, "content_version_mismatch", "客户端内容版本不一致，请更新后重试"}
+	}
+	return nil
+}
+
+type rateBucket struct {
+	count int
+	until time.Time
+}
+type rateLimiter struct {
+	mu          sync.Mutex
+	buckets     map[string]rateBucket
+	lastCleanup time.Time
+}
+
+func (l *rateLimiter) allow(key string, limit int, window time.Duration) bool {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	now := time.Now()
+	if l.buckets == nil {
+		l.buckets = make(map[string]rateBucket)
+	}
+	if now.Sub(l.lastCleanup) > time.Minute {
+		for k, v := range l.buckets {
+			if now.After(v.until) {
+				delete(l.buckets, k)
+			}
+		}
+		l.lastCleanup = now
+	}
+	b := l.buckets[key]
+	if now.After(b.until) {
+		b = rateBucket{until: now.Add(window)}
+	}
+	b.count++
+	l.buckets[key] = b
+	return b.count <= limit
+}
+func (s *Server) authLimit(w http.ResponseWriter, r *http.Request) bool {
+	ip, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		ip = r.RemoteAddr
+	}
+	if !s.limiter.allow("auth:"+ip, 30, time.Minute) {
+		w.Header().Set("Retry-After", "60")
+		s.fail(w, &apiError{429, "rate_limited", "操作过于频繁，请稍后重试"})
+		return false
+	}
+	return true
+}
+
+var usernamePattern = regexp.MustCompile(`^[a-z0-9_]{3,32}$`)
+var requestPattern = regexp.MustCompile(`^[a-zA-Z0-9_-]{8,80}$`)
+
+func normalizeNickname(n string) (string, string, error) {
+	n = strings.TrimSpace(n)
+	if utf8.RuneCountInString(n) < 2 || utf8.RuneCountInString(n) > 12 {
+		return "", "", bad("invalid_nickname", "昵称需为 2–12 个汉字、字母或数字")
+	}
+	for _, c := range n {
+		if !unicode.IsLetter(c) && !unicode.IsDigit(c) {
+			return "", "", bad("invalid_nickname", "昵称只能使用汉字、字母或数字")
+		}
+	}
+	return n, strings.ToLower(n), nil
+}

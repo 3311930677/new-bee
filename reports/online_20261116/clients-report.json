@@ -1,0 +1,41 @@
+{
+  "run_id": "0b6a64b17748492d832a8b47797842f2",
+  "schema": "e2e_0b6a64b17748492d832a8b47797842f2",
+  "scope": "L0-A real accounts and characters; not map or battle acceptance",
+  "clients": [
+    {
+      "client": "a",
+      "passed": true,
+      "exit_code": 0,
+      "elapsed_seconds": 64.77,
+      "errors": [],
+      "log": "E:\\new bee\\远征\\server\\.local\\verification\\0b6a64b17748492d832a8b47797842f2\\client_a.log",
+      "capture": "E:\\new bee\\远征\\server\\.local\\verification\\0b6a64b17748492d832a8b47797842f2\\client_a.png"
+    },
+    {
+      "client": "b",
+      "passed": true,
+      "exit_code": 0,
+      "elapsed_seconds": 61.56,
+      "errors": [],
+      "log": "E:\\new bee\\远征\\server\\.local\\verification\\0b6a64b17748492d832a8b47797842f2\\client_b.log",
+      "capture": null
+    }
+  ],
+  "database_counts": [
+    2,
+    2,
+    2,
+    2,
+    0
+  ],
+  "expected_counts": [
+    2,
+    2,
+    2,
+    2,
+    0
+  ],
+  "passed": true,
+  "player_data_unchanged": true
+}

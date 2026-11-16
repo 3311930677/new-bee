@@ -1,0 +1,7 @@
+{
+  "version": "online-0.1",
+  "town": {"map_id": "lorin_wilds", "capacity": 24, "spawn": [600, 1520], "speed": 192},
+  "encounters": {
+    "training_wolf": {"monster_id": "mon_wolf", "position": [600, 1740], "radius": 112, "gold": 10, "experience": 5, "reward_policy": "once"}
+  }
+}

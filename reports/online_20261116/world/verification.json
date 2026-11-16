@@ -1,0 +1,33 @@
+{
+  "world_run": "world_dce6da1246ac43f187df26a48d2ce310",
+  "room_run": "room_403a0bcbceaf4869a1fa1422541309f0",
+  "go_top_level_tests": [
+    "TestAccountsSessionsAndRevocation",
+    "TestBattleSettlementRollbackRetryAndOnceReward",
+    "TestCharacterLimitOwnershipAndUntrustedAssets",
+    "TestConcurrentCreateAndReceiptSurvivesRestart",
+    "TestConcurrentDistinctCharacterLimit",
+    "TestConcurrentRoomJoinHasOneExclusiveLease",
+    "TestContextCancellationClosesPrivateSocket",
+    "TestDeleteRecoveryAndImmutableLedger",
+    "TestExpiredTokensAndConcurrentRefresh",
+    "TestPrivateAddressAndKeyBoundary",
+    "TestRejectTamperedResponseAndNonce",
+    "TestRollbackOnLedgerFailureAndRetry",
+    "TestSignedTransportAndUTF8",
+    "TestTownCapacityLeaseRotationAndMovementOwnership",
+    "TestVersionGateAndLimits"
+  ],
+  "go_passed": 15,
+  "authority_checks": 23,
+  "two_real_clients_world_battle_reward_restart_passed": true,
+  "offline_data_unchanged": true,
+  "goal_status": "active",
+  "L0_complete": false,
+  "limitations": [
+    "desktop loopback only; no mobile/WAN acceptance",
+    "HTTP snapshots without prediction/interpolation/AOI",
+    "no teams, cooperation, trading, guilds or PvP",
+    "VerifyPerf remains unresolved; no release gate or push claimed"
+  ]
+}

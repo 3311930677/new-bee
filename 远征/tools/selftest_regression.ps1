@@ -51,7 +51,7 @@ $fails = 0
 function Assert-Case {
 	param([string]$Title, [string[]]$RunnerArgs, [int]$WantExit, [string]$WantText, [int]$TimeoutSec)
 	$script:checks++
-	$argList = @("-NoProfile", "-File", ".\run_regression.ps1") + $RunnerArgs
+	$argList = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".\run_regression.ps1") + $RunnerArgs
 	if ($TimeoutSec -gt 0) { $argList += @("-TimeoutSec", [string]$TimeoutSec) }
 	$out = ""
 	$code = -1
