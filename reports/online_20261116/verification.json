@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-16",
+  "goal_status": "active",
+  "L0_complete": false,
+  "go_top_level_tests_passed": 12,
+  "go_tests": [
+    "TestSignedTransportAndUTF8",
+    "TestRejectTamperedResponseAndNonce",
+    "TestPrivateAddressAndKeyBoundary",
+    "TestContextCancellationClosesPrivateSocket",
+    "TestAccountsSessionsAndRevocation",
+    "TestConcurrentCreateAndReceiptSurvivesRestart",
+    "TestCharacterLimitOwnershipAndUntrustedAssets",
+    "TestRollbackOnLedgerFailureAndRetry",
+    "TestExpiredTokensAndConcurrentRefresh",
+    "TestVersionGateAndLimits",
+    "TestDeleteRecoveryAndImmutableLedger",
+    "TestConcurrentDistinctCharacterLimit"
+  ],
+  "two_real_clients_passed": true,
+  "authority_checks_passed": 14,
+  "player_data_unchanged": true,
+  "content_version": "d305f350db87fa61cf085b1aba714112d567873224aefba5aa2ffb113f105a52",
+  "full_regression": {
+    "observed_console_passed": 77,
+    "observed_console_total": 79,
+    "observed_exit_code": 1,
+    "archived_case_logs": 79,
+    "navigation_fixed_and_retested": true,
+    "performance_still_failing": true,
+    "note": "Console outcome observed during execution; runner does not store per-case process exit records."
+  },
+  "limits": [
+    "authority probe ends by retreat and verifies replay; no victory reward transaction yet",
+    "no two-client shared city yet",
+    "no real-device or WAN acceptance",
+    "L1-L6 and full L0 gates still pending",
+    "the historical release-check label means explicit release only; no database settlement was exercised"
+  ]
+}

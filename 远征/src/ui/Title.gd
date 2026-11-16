@@ -2,6 +2,7 @@ extends Control
 const ChestUI := preload("res://src/ui/TravelChestUI.gd")
 const Lacquer := preload("res://src/ui/LacquerUI.gd")
 const Kit := preload("res://src/ui/PixelKit.gd")
+const ONLINE_SCENE := preload("res://src/ui/OnlineGateway.tscn")
 const MENU := ["开始游戏", "游戏介绍", "游戏设置"]
 const MENU_ICONS := ["expedition", "book", "settings"]
 const LINKS := ["公告", "退出游戏", "制作组", "版本信息"]
@@ -19,6 +20,7 @@ var _shade: TextureRect
 var _subtitle: Label
 var _subtitle_group: Control
 var _footer: Control
+var _online_button: Control
 var _separators: Array[ColorRect] = []
 
 func _ready() -> void:
@@ -117,6 +119,15 @@ func _ready() -> void:
 		b.focus_entered.connect(func(): _focus = idx)
 		add_child(b)
 		_btns.append(b)
+	_online_button = G.gold_button("进入联机", 240, 44, G.FS_MD)
+	_online_button.name = "EnterOnline"
+	_online_button.focus_mode = Control.FOCUS_ALL
+	_online_button.gui_input.connect(func(event: InputEvent):
+		if _busy(): return
+		if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or event.is_action_pressed("ui_accept"):
+			_online_button.accept_event()
+			G.go("res://src/ui/OnlineGateway.tscn"))
+	add_child(_online_button)
 	_footer = _FooterRule.new()
 	_footer.name = "FooterRule"
 	add_child(_footer)
@@ -153,6 +164,8 @@ func _layout_page(safe_override: Rect2 = Rect2()) -> void:
 	_subtitle_group.position = Vector2(safe.get_center().x-130,safe.position.y+brand_y+BRAND_SIZE.y+2)
 	# 菜单落在底部石阶暗区：主角和路牌在按钮上方完整露出（参考稿三键约在 73% / 79% / 86% 高度）。
 	var cx := safe.get_center().x
+	_online_button.position = Vector2(cx - 120, safe.end.y - 344)
+	_online_button.size = Vector2(240, 44)
 	var sizes := [Vector2(280, 60), Vector2(256, 52), Vector2(256, 52)]
 	var tops := [safe.end.y - 284, safe.end.y - 214, safe.end.y - 152]
 	for i in _btns.size():
@@ -183,6 +196,9 @@ func _layout_page(safe_override: Rect2 = Rect2()) -> void:
 		_links[i].focus_neighbor_bottom = live[0].get_path()
 		_links[i].focus_neighbor_left = _links[(i + _links.size() - 1) % _links.size()].get_path()
 		_links[i].focus_neighbor_right = _links[(i + 1) % _links.size()].get_path()
+	_online_button.focus_neighbor_top = _links[0].get_path()
+	_online_button.focus_neighbor_bottom = live[0].get_path()
+	live[0].focus_neighbor_top = _online_button.get_path()
 
 ## 引导语呼吸闪烁。
 func _pulse_hint() -> void:

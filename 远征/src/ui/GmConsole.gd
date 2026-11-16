@@ -49,7 +49,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if _bar_layer != null:
 		var review_hide := bool(G.get_meta("ui_review_mode", false))
-		_bar_layer.visible = not review_hide and OS.is_debug_build()
+		_bar_layer.visible = not review_hide and OS.is_debug_build() and not _online_active()
 		if _float_bar != null:
 			var safe := G.ui_safe_rect(_float_bar)
 			_float_bar.position = _float_bar.position.clamp(safe.position+Vector2(4,4), (safe.end-_float_bar.size-Vector2(4,4)).max(safe.position+Vector2(4,4)))
@@ -57,6 +57,9 @@ func _process(_delta: float) -> void:
 
 ## 用 _input 抢在各界面之前：否则底层场景的 ESC 处理会先把按键吃掉
 func _input(event: InputEvent) -> void:
+	if _online_active():
+		if visible: close()
+		return
 	if OS.is_debug_build() and event.is_action_pressed("gm_console"):
 		toggle()
 		var vp := get_viewport()
@@ -79,11 +82,13 @@ func toggle() -> void:
 
 ## 手机端 / 设置页免口令直接开启开发者控制台
 func open_unlocked() -> void:
+	if _online_active(): return
 	G.gm_unlocked = true
 	open()
 
 
 func open() -> void:
+	if _online_active(): return
 	if _root == null:
 		_build()
 	_layout_modal()
@@ -92,6 +97,11 @@ func open() -> void:
 	_sync_state()
 	if not G.gm_unlocked and _pw != null:
 		_pw.grab_focus()
+
+
+func _online_active() -> bool:
+	var online := get_node_or_null("/root/Online")
+	return online != null and bool(online.call("is_authenticated"))
 
 
 func close() -> void:

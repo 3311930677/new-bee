@@ -4,6 +4,7 @@
 extends Control
 const Chest := preload("res://src/ui/TravelChestUI.gd")
 const ReviewFix:=preload("res://src/ui/ReviewFixUI.gd")
+const CommercialKit := preload("res://src/ui/KitV4.gd")
 const Grounding := preload("res://src/world/BuildingGrounding.gd")
 const GROUND_IDS := ["hall", "gate", "barracks", "forge", "archive", "kennel", "storehouse", "shrine"]
 
@@ -354,12 +355,51 @@ func _collect_queue() -> void:
 	_queue.append("showcase:pedestal")
 	for pet in TableCache.pets():_queue.append("showcase_pet:"+String(pet.id))
 	_queue.append("res://assets/ui/next_review_20261009/map.png")
+	# The standalone town uses different textures from the embedded main-world
+	# artwork. Warm its actual ground, decorations and resident idle strips too.
+	var town_cfg := TableCache.city_config_for("lorin_wilds")
+	var town_dir := String(town_cfg.get("asset_dir", "res://image/map_proc"))
+	var town_ground: Dictionary = town_cfg.get("ground", {})
+	var town_art: Array = town_ground.get("tiles", []).duplicate()
+	town_art.append(town_ground.get("path_sheet", ""))
+	town_art.append_array(town_cfg.get("decos", []))
+	for id in town_art:
+		var path := "%s/%s.png" % [town_dir, id]
+		if ResourceLoader.exists(path): _queue.append(path)
+	for resident in town_cfg.get("npcs", []):
+		var key := "%s_idle" % String(resident.get("id", ""))
+		if not G.res_path(key).is_empty(): _queue.append("res_texture:" + key)
+	_queue.append("res_texture:npc_guest_idle")
+	# Summon previews use G.res_tex, whereas Showcase uses a separate HD source.
+	# Warming only Showcase left the first summon click decoding these again.
+	for key in ["cur_soul", "itm_ticket_ten"]:
+		if not G.res_path(key).is_empty(): _queue.append("res_texture:" + key)
+	for pet in TableCache.pets():
+		_queue.append("res_texture:" + String(pet.id))
 	if ReferenceWorldArt.active("lorin_wilds"):
 		for group in ["buildings","npcs","foliage","props"]:
 			for id in ReferenceWorldArt.manifest().get(group,{}):_queue.append(ReferenceWorldArt.ROOT+String(id)+".png")
 		# Load the current town's ground only; field chunks load when entering the field.
 		for suffix in ["_floor_top","_floor_bottom"]:_queue.append(String(TableCache.main_world_map("lorin_wilds").get("reference_floor_root",ReferenceWorldArt.ROOT))+"lorin_wilds"+suffix+".png")
 	if preload("res://src/world/SunnyTravelArt.gd").active("lorin_wilds"):_queue.append("sunny:prepare")
+	# Dynamic UI textures are not dependencies of the preloaded scripts/scenes.
+	# Decode the actual home, summon and growth assets here, before the first click.
+	for folder in ["res://assets/ui/home/", "res://assets/ui/home/icons/", "res://assets/completion_20261024/ready/home/"]:
+		for file_name in DirAccess.get_files_at(folder):
+			var logical := file_name.trim_suffix(".remap")
+			if logical.ends_with(".png") and ResourceLoader.exists(folder + logical):
+				_queue.append(folder + logical)
+	for key in ["summon_hall_bg", "vfx_summon_pillar", "market_canopy", "bg_character_stage", "tab_equip", "tab_talent", "tab_skill", "tab_pet", "tab_mount", "tab_title", "nav_role", "nav_partner", "nav_quest", "nav_event", "nav_mail", "nav_bag", "nav_notice", "nav_menu", "slot_sil_weapon", "slot_sil_armor", "slot_sil_accessory"]:
+		_queue.append("commercial:" + key)
+	for key in ["bar_fill_exp", "currency_capsule", "rail_socket", "rail_socket_selected", "nav_base", "nav_socket", "nav_socket_selected", "sortie_medal", "pity_ring", "red_dot"]:
+		var kit_path: String = "res://assets/ui/kit_20261013/" + key + ".png"
+		if ResourceLoader.exists(kit_path): _queue.append(kit_path)
+	for role in [["zs", "pojun"], ["ck", "chuanyang"], ["fs", "shuangyu"], ["fz", "chenxing"]]:
+		_queue.append("commercial:%s_portrait" % role[0])
+		_queue.append("commercial:%s_avatar" % role[0])
+		for suffix in ["idle.png", "walk_frames.tres"]:
+			var role_path: String = "res://image/role/%s/%s_%s" % [role[0], role[1], suffix]
+			if ResourceLoader.exists(role_path): _queue.append(role_path)
 	_code.assign(PRELOAD_CODE)   # 注意：Array[String] 不能用 = duplicate()，类型不匹配会静默失败
 	_ground.assign(GROUND_IDS)
 	_total = _queue.size() + _code.size() + _ground.size()
@@ -376,6 +416,12 @@ func _process(_d: float) -> void:
 		elif path.begins_with("inventory_skin:"):
 			preload("res://src/ui/InventoryQuestSkin.gd").texture(path.trim_prefix("inventory_skin:"))
 			break
+		elif path.begins_with("commercial:"):
+			var texture := CommercialKit.commercial_tex(path.trim_prefix("commercial:"))
+			if texture != null: _warm_cache.append(texture)
+		elif path.begins_with("res_texture:"):
+			var texture := G.res_tex(path.trim_prefix("res_texture:"))
+			if texture != null: _warm_cache.append(texture)
 		elif path.begins_with("reviewfix:"):ReviewFix.texture(path.trim_prefix("reviewfix:"))
 		elif path=="showcase:pedestal":
 			preload("res://src/ui/NameTagLayout.gd").opaque_bounds(ReviewFix.texture("pedestal"))
@@ -398,6 +444,9 @@ func _process(_d: float) -> void:
 		var art := load("res://image/main_world/city_%s_reference_v2.png" % id) as Texture2D
 		if art != null:
 			_warm_art.append(art)
+			# The mask cache retains generated shadows, not this source texture.
+			# Keep it after the loading page is freed, like the other warm resources.
+			_warm_cache.append(art)
 			# Match CityScene's displayed width so entry reuses this mask cache.
 			var display_width:=192.0*preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
 			Grounding.prepare(art, roundi(display_width), roundi(display_width * art.get_height() / art.get_width()))

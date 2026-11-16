@@ -34,12 +34,17 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-    [int]$Expected = 78,
+    [int]$Expected = 79,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
 
 $ErrorActionPreference = "Stop"
+
+# Log folders contain source backups; never register their class_name scripts.
+$regressionLogRoot = Join-Path $PSScriptRoot "_logs"
+New-Item -ItemType Directory -Path $regressionLogRoot -Force | Out-Null
+[IO.File]::WriteAllText((Join-Path $regressionLogRoot ".gdignore"), "")
 
 # Isolate before the first engine process (autoload runs even during discovery).
 $playerAppData = $env:APPDATA
@@ -104,6 +109,7 @@ if ($verOut -notmatch "4\.7\.") {
 
 # ---------------- case table (name, kind, completion token) ----------------
 $cases = @(
+	@{ N = "VerifyOnlineBoundary"; K = "scene"; T = "ONLINE_BOUNDARY_OK" },
 	@{ N = "VerifyAssets";      K = "scene";  T = "ASSETS_OK" },
 	@{ N = "VerifyBattleScene"; K = "scene";  T = "BATTLE_SCENE_OK" },
 	@{ N = "VerifyPlayJourney"; K = "scene"; T = "PLAY_JOURNEY_OK" },

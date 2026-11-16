@@ -21,6 +21,7 @@ run/main_scene.android_deep_audit="res://src/qa/AndroidDeepAudit.tscn"
 [autoload]
 
 G="*res://src/autoload/G.gd"
+Online="*res://src/online/OnlineClient.gd"
 Audio="*res://src/autoload/Audio.gd"
 GmConsole="*res://src/ui/GmConsole.gd"
 
