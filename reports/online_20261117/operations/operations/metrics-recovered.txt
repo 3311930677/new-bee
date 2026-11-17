@@ -1,0 +1,48 @@
+# HELP yuanzheng_ready Whether all configured service dependencies and certificate validity are ready.
+# TYPE yuanzheng_ready gauge
+yuanzheng_ready 1
+# HELP yuanzheng_database_up Whether the database accepted a bounded connectivity check.
+# TYPE yuanzheng_database_up gauge
+yuanzheng_database_up 1
+# HELP yuanzheng_authority_configured Whether this gateway has a configured private authority.
+# TYPE yuanzheng_authority_configured gauge
+yuanzheng_authority_configured 1
+# HELP yuanzheng_authority_up Whether the configured authority answered with compatible versions.
+# TYPE yuanzheng_authority_up gauge
+yuanzheng_authority_up 1
+# HELP yuanzheng_state_query_up Whether database state gauges were read successfully.
+# TYPE yuanzheng_state_query_up gauge
+yuanzheng_state_query_up 1
+# HELP yuanzheng_tls_configured Whether direct TLS is configured on the public listener.
+# TYPE yuanzheng_tls_configured gauge
+yuanzheng_tls_configured 1
+# HELP yuanzheng_tls_certificate_valid Whether the configured certificate is currently within its validity period.
+# TYPE yuanzheng_tls_certificate_valid gauge
+yuanzheng_tls_certificate_valid 1
+# HELP yuanzheng_tls_certificate_expiry_seconds Seconds remaining until the configured certificate expires.
+# TYPE yuanzheng_tls_certificate_expiry_seconds gauge
+yuanzheng_tls_certificate_expiry_seconds 172687.3144938
+# HELP yuanzheng_active_sessions Number of unrevoked and unexpired access sessions.
+# TYPE yuanzheng_active_sessions gauge
+yuanzheng_active_sessions 0
+# HELP yuanzheng_active_room_leases Number of live room leases owned by valid sessions.
+# TYPE yuanzheng_active_room_leases gauge
+yuanzheng_active_room_leases 0
+# HELP yuanzheng_active_battles Number of persisted active battles.
+# TYPE yuanzheng_active_battles gauge
+yuanzheng_active_battles 0
+# HELP yuanzheng_unacknowledged_results Number of settled battles awaiting client acknowledgment.
+# TYPE yuanzheng_unacknowledged_results gauge
+yuanzheng_unacknowledged_results 0
+# HELP yuanzheng_process_uptime_seconds Seconds since the gateway started.
+# TYPE yuanzheng_process_uptime_seconds gauge
+yuanzheng_process_uptime_seconds 0.2888735
+# HELP yuanzheng_process_goroutines Number of current Go goroutines.
+# TYPE yuanzheng_process_goroutines gauge
+yuanzheng_process_goroutines 8
+# HELP yuanzheng_http_requests_total Number of completed requests by registered route template.
+# TYPE yuanzheng_http_requests_total counter
+# HELP yuanzheng_http_request_duration_seconds Wall-clock HTTP request duration in seconds.
+# TYPE yuanzheng_http_request_duration_seconds histogram
+# HELP yuanzheng_internal_failures_total Internal failures classified without private error details.
+# TYPE yuanzheng_internal_failures_total counter

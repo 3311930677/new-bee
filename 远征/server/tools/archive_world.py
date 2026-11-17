@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import shutil
 
-from dev import SERVER, ROOT, LOCAL
+from dev import SERVER, ROOT, LOCAL, completed_go_tests
 
 
 def main():
@@ -23,12 +23,7 @@ def main():
         raise RuntimeError("World evidence incomplete or failed")
     if not room.get("passed") or not room.get("player_data_unchanged") or len(room.get("checks", [])) < 23:
         raise RuntimeError("Private authority evidence incomplete or failed")
-    events = [json.loads(line) for line in (source / "go-integration.jsonl").read_text(encoding="utf-8").splitlines() if line.startswith("{")]
-    passed = {e["Test"] for e in events if e["Action"] == "pass" and e.get("Test") and "/" not in e["Test"]}
-    expected = {name for path in (SERVER / "internal").rglob("*_test.go")
-                for name in re.findall(r"(?m)^func (Test[A-Za-z0-9_]+)\(", path.read_text(encoding="utf-8"))}
-    if passed != expected or any(e["Action"] == "fail" for e in events):
-        raise RuntimeError("Go evidence incomplete or failed")
+    passed = completed_go_tests(source / "go-integration.jsonl")
     target = ROOT / "reports/online_20261116/world"
     if target.exists():
         raise RuntimeError("Evidence destination already exists; preserve previous snapshots")

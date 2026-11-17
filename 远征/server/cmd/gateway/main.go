@@ -3,7 +3,10 @@ package main
 import (
 	"context"
 	"crypto/sha256"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"log/slog"
@@ -13,6 +16,8 @@ import (
 	"os/signal"
 	"path/filepath"
 	"sort"
+	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -33,20 +38,30 @@ func run(logger *slog.Logger) error {
 	gameRoot := flag.String("game-root", "..", "Godot project directory")
 	cert := flag.String("tls-cert", "", "HTTPS certificate path")
 	key := flag.String("tls-key", "", "HTTPS private key path")
-	trustedTLS := flag.Bool("behind-tls-proxy", false, "Explicitly acknowledge deployment behind a trusted TLS reverse proxy")
+	trustedTLS := flag.Bool("behind-tls-proxy", false, "Acknowledge a same-host TLS reverse proxy; plaintext still binds loopback only")
 	roomAddress := flag.String("authority-address", "", "Optional private Godot worker loopback address")
+	adminListen := flag.String("admin-listen", "", "Optional literal loopback address for token-protected read-only metrics")
 	startupTimeout := flag.Duration("startup-timeout", 90*time.Second, "Maximum database migration and initial service startup time")
 	flag.Parse()
 	if *startupTimeout < time.Second || *startupTimeout > 10*time.Minute {
 		return fmt.Errorf("startup timeout must be between 1 second and 10 minutes")
 	}
-	host, _, err := net.SplitHostPort(*listen)
-	if err != nil {
-		return fmt.Errorf("invalid listen address")
+	adminToken := os.Getenv("YUANZHENG_ADMIN_TOKEN")
+	if err := validateListeners(*listen, *cert, *key, *adminListen, adminToken); err != nil {
+		return err
 	}
-	ip := net.ParseIP(host)
-	if (ip == nil || !ip.IsLoopback()) && (*cert == "" || *key == "") && !*trustedTLS {
-		return fmt.Errorf("non-loopback deployment requires TLS or --behind-tls-proxy")
+	var tlsConfig *tls.Config
+	var serverCertificate *x509.Certificate
+	if *cert != "" {
+		certificate, err := tls.LoadX509KeyPair(*cert, *key)
+		if err != nil {
+			return fmt.Errorf("TLS certificate or private key invalid")
+		}
+		tlsConfig = &tls.Config{MinVersion: tls.VersionTLS12, Certificates: []tls.Certificate{certificate}}
+		serverCertificate, err = x509.ParseCertificate(certificate.Certificate[0])
+		if err != nil {
+			return fmt.Errorf("TLS certificate cannot be parsed")
+		}
 	}
 	dsn := os.Getenv("YUANZHENG_DATABASE_URL")
 	if dsn == "" {
@@ -90,6 +105,9 @@ func run(logger *slog.Logger) error {
 	}
 	version := fmt.Sprintf("%x", hash.Sum(nil))
 	config := online.Config{ContentVersion: version, Logger: logger}
+	if serverCertificate != nil {
+		config.TLSNotBefore, config.TLSNotAfter = serverCertificate.NotBefore, serverCertificate.NotAfter
+	}
 	if *roomAddress != "" {
 		worker, err := authority.New(*roomAddress, []byte(os.Getenv("YUANZHENG_ROOM_SECRET")), version, online.RulesetVersion)
 		if err != nil {
@@ -111,25 +129,83 @@ func run(logger *slog.Logger) error {
 	if err != nil {
 		return err
 	}
-	server := &http.Server{Addr: *listen, Handler: app, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 20 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 << 10}
-	finished := make(chan error, 1)
-	go func() {
-		logger.Info("gateway listening", "address", *listen, "protocol", online.ProtocolVersion, "content_version", version)
-		if *cert != "" {
-			finished <- server.ListenAndServeTLS(*cert, *key)
-		} else {
-			finished <- server.ListenAndServe()
-		}
-	}()
-	select {
-	case err := <-finished:
-		if err != http.ErrServerClosed {
+	server := &http.Server{Addr: *listen, Handler: app, TLSConfig: tlsConfig, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 20 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 << 10}
+	publicListener, err := net.Listen("tcp", *listen)
+	if err != nil {
+		return fmt.Errorf("public listener unavailable: %w", err)
+	}
+	defer publicListener.Close()
+	defer server.Close()
+	servers := []*http.Server{server}
+	finished := make(chan error, 2)
+	if *adminListen != "" {
+		handler, err := app.AdminHandler(adminToken)
+		if err != nil {
 			return err
 		}
-		return nil
-	case <-ctx.Done():
-		end, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
-		return server.Shutdown(end)
+		listener, err := net.Listen("tcp", *adminListen)
+		if err != nil {
+			return fmt.Errorf("admin listener unavailable: %w", err)
+		}
+		defer listener.Close()
+		admin := &http.Server{Addr: *adminListen, Handler: handler, ReadHeaderTimeout: 3 * time.Second, ReadTimeout: 5 * time.Second, WriteTimeout: 5 * time.Second, IdleTimeout: 30 * time.Second, MaxHeaderBytes: 16 << 10}
+		defer admin.Close()
+		servers = append(servers, admin)
+		go func() { finished <- admin.Serve(listener) }()
+		logger.Info("read-only admin listening", "address", *adminListen)
 	}
+	go func() {
+		logger.Info("gateway listening", "address", *listen, "tls", tlsConfig != nil, "behind_tls_proxy", *trustedTLS, "protocol", online.ProtocolVersion, "content_version", version)
+		if tlsConfig != nil {
+			finished <- server.ServeTLS(publicListener, "", "")
+		} else {
+			finished <- server.Serve(publicListener)
+		}
+	}()
+	var serveError error
+	select {
+	case serveError = <-finished:
+	case <-ctx.Done():
+	}
+	end, endCancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer endCancel()
+	for _, service := range servers {
+		if err = service.Shutdown(end); err != nil {
+			_ = service.Close()
+			if serveError == nil {
+				serveError = err
+			}
+		}
+	}
+	if errors.Is(serveError, http.ErrServerClosed) {
+		return nil
+	}
+	return serveError
+}
+
+func validateListeners(listen, cert, key, adminListen, adminToken string) error {
+	host, port, err := net.SplitHostPort(listen)
+	number, portError := strconv.Atoi(port)
+	if err != nil || portError != nil || number < 1 || number > 65535 {
+		return fmt.Errorf("invalid public listen address")
+	}
+	if (cert == "") != (key == "") {
+		return fmt.Errorf("TLS certificate and private key must be supplied together")
+	}
+	ip := net.ParseIP(host)
+	if cert == "" && (ip == nil || !ip.IsLoopback()) {
+		return fmt.Errorf("plaintext HTTP requires a literal loopback address, including behind a TLS proxy")
+	}
+	if adminListen != "" {
+		host, port, err = net.SplitHostPort(adminListen)
+		number, portError = strconv.Atoi(port)
+		ip = net.ParseIP(host)
+		if err != nil || portError != nil || ip == nil || !ip.IsLoopback() || number < 1024 || number > 65535 {
+			return fmt.Errorf("admin listener requires a literal loopback address and unprivileged port")
+		}
+		if len(adminToken) < 32 || strings.TrimSpace(adminToken) != adminToken {
+			return fmt.Errorf("YUANZHENG_ADMIN_TOKEN must contain at least 32 characters without surrounding whitespace")
+		}
+	}
+	return nil
 }

@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 import shutil
 
-from dev import LOCAL, ROOT, SERVER
+from dev import LOCAL, ROOT, SERVER, completed_go_tests
 from verify_world import source_fingerprint
 
 
@@ -36,12 +36,7 @@ def main():
         raise RuntimeError("World recovery did not observe both injected failures")
     if accounts["gateway_binary_sha256"] != world["gateway_binary_sha256"]:
         raise RuntimeError("Clients did not verify the same gateway build")
-    events = [json.loads(line) for line in (source / "go-integration.jsonl").read_text(encoding="utf-8").splitlines() if line.startswith("{")]
-    passed = {e["Test"] for e in events if e["Action"] == "pass" and e.get("Test") and "/" not in e["Test"]}
-    expected = {name for path in (SERVER / "internal").rglob("*_test.go")
-                for name in re.findall(r"(?m)^func (Test[A-Za-z0-9_]+)\(", path.read_text(encoding="utf-8"))}
-    if passed != expected or any(e["Action"] == "fail" for e in events):
-        raise RuntimeError("Incomplete Go test evidence")
+    passed = completed_go_tests(source / "go-integration.jsonl")
     regression = ROOT / "reports" / ("online_" + args.date) / "account-regression"
     singleplayer = json.loads((regression / "verification.json").read_text(encoding="utf-8"))
     if singleplayer.get("passed_cases") != singleplayer.get("expected_cases") or singleplayer.get("exit_code") != 0:

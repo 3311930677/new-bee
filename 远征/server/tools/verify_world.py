@@ -17,8 +17,9 @@ from verify_clients import player_snapshot
 
 def source_fingerprint():
     paths = []
-    for directory in (SERVER / "cmd", SERVER / "internal", SERVER / "room", SERVER / "tools", SERVER.parent / "src/online"):
-        paths.extend(path for path in directory.rglob("*") if path.suffix in (".go", ".sql", ".gd", ".py", ".godot"))
+    for directory in (SERVER / "cmd", SERVER / "internal", SERVER / "room", SERVER / "tools", SERVER / "deploy", SERVER.parent / "src/online"):
+        paths.extend(path for path in directory.rglob("*") if path.suffix in (".go", ".sql", ".gd", ".py", ".godot", ".yml", ".yaml", ".example"))
+    paths.extend((SERVER / "go.mod", SERVER / "go.sum"))
     paths.extend((SERVER.parent / "src/ui").glob("Online*.*"))
     paths.extend((SERVER.parent / "tools").glob("VerifyOnline*.*"))
     digest = hashlib.sha256()
@@ -31,18 +32,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--godot", type=Path, required=True)
     parser.add_argument("--capture", action="store_true")
+    parser.add_argument("--tls-directory", type=Path)
     args = parser.parse_args()
     run_id = uuid.uuid4().hex
     folder = LOCAL / "verification" / ("world_" + run_id)
     folder.mkdir(parents=True)
     barrier = folder / "barriers"
     barrier.mkdir()
-    stack = LocalStack(args.godot, folder, isolated_test=True)
+    stack = LocalStack(args.godot, folder, isolated_test=True, tls_directory=args.tls_directory)
     before = player_snapshot()
     clients, logs = {}, []
     checks = []
     fingerprint = source_fingerprint()
     report = {"run_id": run_id, "scope": "L0 desktop two-client same town, authority combat, atomic rewards and restart recovery; not mobile/WAN/PvP acceptance", "manifest": stack.manifest,
+              "transport": "https-validating-debug-ca" if args.tls_directory else "http-loopback",
               "online_sources_sha256": fingerprint,
               "gateway_binary_sha256": hashlib.sha256((SERVER / "bin/gateway.exe").read_bytes()).hexdigest()}
 
@@ -71,6 +74,8 @@ def main():
                                "YUANZHENG_TEST_PASSWORD": secrets.token_hex(20),
                                "YUANZHENG_TEST_NICKNAME": ("同行甲" if tag == "a" else "同行乙") + run_id[:5],
                                "YUANZHENG_WORLD_TAG": tag, "YUANZHENG_WORLD_BARRIER": str(barrier)})
+            if args.tls_directory:
+                env["YUANZHENG_TEST_CA"] = str(args.tls_directory.resolve() / "ca-cert.pem")
             flags = ["--headless"]
             if args.capture and tag == "a":
                 flags = []

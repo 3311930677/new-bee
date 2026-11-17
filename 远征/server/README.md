@@ -25,7 +25,7 @@ python 远征/server/tools/run_stack.py --godot <Godot-4.7.2路径>
 
 ## 部署边界
 
-生产部署从环境变量读取 `YUANZHENG_DATABASE_URL`，禁止把凭据写入仓库或打进客户端。独立机器需要通过 PostgreSQL 的角色/网络权限限制数据库访问。API 监听非回环地址时必须配置 `--tls-cert / --tls-key`，或明确启用 `--behind-tls-proxy` 并由可信入口终止 TLS；应用不信任任意 `X-Forwarded-For`。
+生产部署从环境变量读取 `YUANZHENG_DATABASE_URL`，禁止把凭据写入仓库或打进客户端。独立机器需要通过 PostgreSQL 的角色/网络权限限制数据库访问。API 监听非回环地址时必须配置完整的 `--tls-cert / --tls-key`；同机反向代理可启用 `--behind-tls-proxy`，其明文后端仍只能绑定字面回环地址。应用不信任任意 `X-Forwarded-For`。
 
 ```powershell
 # 在 server 目录，连接已准备的数据库后运行已构建服务。
@@ -35,7 +35,13 @@ python 远征/server/tools/run_stack.py --godot <Godot-4.7.2路径>
 # YUANZHENG_ROOM_SECRET，网关附 --authority-address 127.0.0.1:<私有端口>。
 ```
 
+权威进程只接收自己的房间签名密钥，不接收数据库、管理令牌或 TLS 私钥等环境。`run_stack.py` 按进程过滤这些值；手工部署也需分开服务环境。权威进程启动时发现持久化/管理凭据会拒绝运行，并且不回显值。
+
 首次启动应用会在事务中执行嵌入式迁移；并行部署由数据库锁串行化，已执行迁移的 SHA256 变化会阻止启动。`--startup-timeout` 默认 `90s`，可设 `1s`–`10m`，仅用于初始连接、迁移和权威进程校验，日志记录迁移实际耗时；不改变 HTTP 或战斗指令期限。正式迁移只新增，不修改已上线 SQL。本次没有对任何已有系统数据库执行迁移。
+
+`/livez` 判断进程能否响应；`/healthz` 保留数据库连通检查；`/readyz` 在两秒期限内检查数据库、已配置权威进程的签名响应及版本、当前直连 TLS 证书有效期。只启用账号 API 时不要求房间进程；依赖或证书不可用时就绪返回 503。
+
+管理指标默认关闭。需要时由服务环境提供随机 `YUANZHENG_ADMIN_TOKEN`（至少 32 字节），加 `--admin-listen 127.0.0.1:18081`，再以 `Authorization: Bearer` 读取该端口的 `/metrics`、`/readyz`、`/livez`；游戏监听的 `/metrics` 始终不可用。指标只使用固定路由、方法与状态分类，包含请求耗时、依赖、证书到期、有效会话/租约、战斗和未确认结果，不含角色 ID 或凭据。管理文件权限、启动示例和验收边界见[部署与监控说明](../docs/online-operations.md)。
 
 ## 测试范围
 
@@ -50,6 +56,8 @@ python 远征/server/tools/verify_clients.py --godot <Godot-4.7.2路径> --captu
 python 远征/server/tools/verify_room.py --godot <Godot-4.7.2路径>
 python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_accounts.py --godot <Godot-4.7.2路径> --capture
+python 远征/server/tools/bootstrap_monitoring.py --proxy <本机实际代理>
+python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
 ```
 
 第二条从当前共享战斗源码和全部 JSON 构建 `.local/room-project`，导入并检查脚本；真实 Go 签名客户端连接进程，检查签名、nonce、顺序、服务器时钟、重放、已提交状态校验、未提交输入/时钟回滚和移动判定。原单调时钟接口保留作私有探针；正式战斗同步由网关根据持久化时钟与输入驱动。
@@ -59,6 +67,10 @@ python 远征/server/tools/verify_accounts.py --godot <Godot-4.7.2路径> --capt
 这仍是桌面本机证据，不能替代双手机、广域网、24 人压力、合作副本、PVP 或运营验收。`VerifyOnlineWorld` 与 `VerifyOnlineHttp` 需要外部真实服务与隔离测试身份，由对应 Python 工具启动；常规单机回归不依赖这些服务。
 
 第四条用真实账号页面按钮及 Go/PostgreSQL 验证注册恢复码遮挡、重名建议、删除确认/取消、恢复原角色、旧恢复码拒绝、新密码找回、站内记录确认和单机隔离。截图只保存遮挡状态，脚本扫描日志中的恢复码模式并拒绝把泄漏样本算作通过。三个客户端联测工具均过滤服务端数据库连接/私有密钥等环境变量，Godot 客户端还在运行时检查这些变量不存在。
+
+最后一条使用真实 Godot HTTPS 客户端、网关、数据库、权威进程和本机 Prometheus：检查有效证书、不受信任根、错误主机名及过期证书；实际抓取私有指标、观察依赖告警触发/恢复，并中断仅此网关的数据库连接检查无半笔资产。测试 CA 不进入系统信任库，私钥和管理令牌不传给客户端，不向外部接收人发送通知。正式监控模板在 `deploy/monitoring`，实际工具校验和告警状态另行留证。
+
+`verify_world.py --tls-directory <开发证书目录> --capture` 可用同一验证中的短期 CA 重验完整双端战斗链；仅调试构建接受显式测试 CA，仍校验证书和主机名。`VerifyOnlineTLS` 与其他外部服务验收一样由 Python 工具提供上下文，常规单机 79 项不依赖服务或测试证书。
 
 验收记录保存在 `.local/verification`；Go 测试的完整 JSON 在 `go-integration.jsonl`。首批证据在仓库根 `reports/online_20261116`；最新账号管理与双端重验在 [20261117/account-management](../../reports/online_20261117/account-management/README.md)，完整单机回归另行归档。此前性能/传输失败记录继续保留，不通过覆盖文件追认成功。
 

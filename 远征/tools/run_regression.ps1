@@ -314,6 +314,8 @@ $hostNoise = @(
 )
 $noiseCases = 0
 $noiseLines = 0
+$hostNoiseCases = 0
+$hostNoiseLines = 0
 
 $fail = 0
 foreach ($c in $cases) {
@@ -354,18 +356,22 @@ foreach ($c in $cases) {
 	}
 	$sigErr = @{}
 	$caseNoise = 0
+	$caseHostNoise = 0
 	foreach ($line in ($out -split "`r?`n")) {
 		$t = $line.Trim()
 		if ($t -eq "") { continue }
 		$isNoise = $false
 		foreach ($n in $exitNoise) { if ($t -cmatch [regex]::Escape($n)) { $isNoise = $true } }
-		foreach ($n in $hostNoise) { if ($t -ceq $n) { $isNoise = $true } }
+		$isHostNoise = $false
+		foreach ($n in $hostNoise) { if ($t -ceq $n) { $isHostNoise = $true } }
+		if ($isHostNoise) { $caseHostNoise++; continue }
 		if ($isNoise) { $caseNoise++; continue }
 		foreach ($p in $errPatterns) {
 			if ($t -cmatch [regex]::Escape($p)) { $sigErr[$p] = $true }
 		}
 	}
 	if ($caseNoise -gt 0) { $noiseCases++; $noiseLines += $caseNoise }
+	if ($caseHostNoise -gt 0) { $hostNoiseCases++; $hostNoiseLines += $caseHostNoise }
 	foreach ($p in $errPatterns) {
 		if ($sigErr.ContainsKey($p)) { $reasons += ("output contains [" + $p + "]") }
 	}
@@ -413,6 +419,10 @@ foreach ($c in $cases) {
 }
 
 Write-Host ""
+if ($hostNoiseCases -gt 0) {
+	Write-Host ("NOTE: " + $hostNoiseCases + " case(s) emitted " + $hostNoiseLines +
+		" host certificate-store diagnostic(s). Only the exact known sandbox line is allowed; TLS verification requires a usable certificate context.")
+}
 if ($noiseCases -gt 0) {
 	Write-Host ("NOTE: " + $noiseCases + " case(s) emitted " + $noiseLines +
 		" engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use)." +

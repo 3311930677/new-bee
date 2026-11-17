@@ -34,6 +34,8 @@ type Config struct {
 	Logger         *slog.Logger
 	Authority      AuthorityRPC
 	Rules          OnlineRules
+	TLSNotBefore   time.Time
+	TLSNotAfter    time.Time
 }
 
 type Server struct {
@@ -42,6 +44,8 @@ type Server struct {
 	mux       *http.ServeMux
 	limiter   rateLimiter
 	dummyHash []byte
+	metrics   runtimeMetrics
+	startedAt time.Time
 }
 
 type apiError struct {
@@ -58,6 +62,9 @@ var errNotFound = &apiError{http.StatusNotFound, "not_found", "找不到该在�
 func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	if cfg.ContentVersion == "" {
 		return nil, errors.New("content version is required")
+	}
+	if cfg.TLSNotBefore.IsZero() != cfg.TLSNotAfter.IsZero() || (!cfg.TLSNotAfter.IsZero() && !cfg.TLSNotAfter.After(cfg.TLSNotBefore)) {
+		return nil, errors.New("invalid TLS certificate validity configuration")
 	}
 	if cfg.Authority != nil {
 		if err := cfg.Rules.Validate(); err != nil {
@@ -80,8 +87,10 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Server{db: db, cfg: cfg, mux: http.NewServeMux(), dummyHash: dummy}
+	s := &Server{db: db, cfg: cfg, mux: http.NewServeMux(), dummyHash: dummy, startedAt: time.Now()}
 	s.mux.HandleFunc("GET /healthz", s.health)
+	s.mux.HandleFunc("GET /livez", s.liveness)
+	s.mux.HandleFunc("GET /readyz", s.ready)
 	s.mux.HandleFunc("GET /v1/manifest", s.manifest)
 	s.mux.HandleFunc("POST /v1/auth/register", s.register)
 	s.mux.HandleFunc("POST /v1/auth/login", s.login)
@@ -116,7 +125,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	observed := &responseObserver{ResponseWriter: w, status: 200}
 	defer func() {
 		// Only route templates and timings: no credentials, URLs, IDs or payloads.
-		s.cfg.Logger.Info("request", "route", r.Pattern, "method", r.Method, "status", observed.status, "duration_ms", time.Since(started).Milliseconds())
+		elapsed := time.Since(started)
+		s.metrics.observeRequest(r.Pattern, r.Method, observed.status, elapsed)
+		s.cfg.Logger.Info("request", "route", r.Pattern, "method", metricMethod(r.Method), "status", observed.status, "duration_ms", elapsed.Milliseconds())
 	}()
 	w.Header().Set("Cache-Control", "no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
@@ -126,6 +137,15 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 15*time.Second)
 	defer cancel()
 	r = r.WithContext(ctx)
+	// Read the bounded body before authentication or dependency failures can
+	// produce an early reply. TLS clients may still be sending a second record;
+	// closing with unread input can discard an otherwise valid error response.
+	raw, err := io.ReadAll(r.Body)
+	if err != nil {
+		s.fail(observed, bad("invalid_payload", "请求内容或字段不正确"))
+		return
+	}
+	r.Body = io.NopCloser(bytes.NewReader(raw))
 	s.mux.ServeHTTP(observed, r)
 }
 
@@ -161,7 +181,9 @@ func (s *Server) fail(w http.ResponseWriter, err error) {
 	if !errors.As(err, &e) {
 		e = &apiError{http.StatusInternalServerError, "internal_error", "服务暂时不可用，请稍后重试"}
 		// Never log credentials, tokens, request bodies or database errors with parameter values.
-		s.cfg.Logger.Error("online request failed", "error_type", errorType(err))
+		kind := errorType(err)
+		s.metrics.observeError(kind)
+		s.cfg.Logger.Error("online request failed", "error_type", kind)
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(e.status)
@@ -170,6 +192,10 @@ func (s *Server) fail(w http.ResponseWriter, err error) {
 func errorType(err error) string {
 	if errors.Is(err, context.DeadlineExceeded) {
 		return "timeout"
+	}
+	var connectionError *pgconn.ConnectError
+	if errors.As(err, &connectionError) || errors.Is(err, pgconn.ErrConnClosed) {
+		return "database_connection"
 	}
 	var databaseError *pgconn.PgError
 	if errors.As(err, &databaseError) {

@@ -44,12 +44,16 @@ $noMark   = Write-Fixture "no_marker"        "4.7.2-stable" @('echo hello world'
 $failMark = Write-Fixture "fail_marker"      "4.7.2-stable" @('echo ASSETS_FAIL', 'exit /b 1')
 $oldVer   = Write-Fixture "old_version"      "4.6.1-stable" @('echo ASSETS_OK all textures resolved')
 $hang     = Write-Fixture "hang"             "4.7.2-stable" @('ping -n 21 127.0.0.1 > nul', 'echo ASSETS_OK all textures resolved')
+$hostCA   = Write-Fixture "known_host_ca"    "4.7.2-stable" @('echo ASSETS_OK all textures resolved', 'echo ERROR: Failed to read the root certificate store.')
+$nearCA   = Write-Fixture "unknown_host_ca"  "4.7.2-stable" @('echo ASSETS_OK all textures resolved', 'echo ERROR: Failed to read the root certificate store. Unexpected suffix')
+$plainErr = Write-Fixture "ordinary_error"   "4.7.2-stable" @('echo ASSETS_OK all textures resolved', 'echo ERROR: unexpected trust failure')
+$exitRID  = Write-Fixture "known_exit_rid"   "4.7.2-stable" @('echo ASSETS_OK all textures resolved', 'echo ERROR: 2 resources still in use at exit')
 
 $checks = 0
 $fails = 0
 
 function Assert-Case {
-	param([string]$Title, [string[]]$RunnerArgs, [int]$WantExit, [string]$WantText, [int]$TimeoutSec)
+	param([string]$Title, [string[]]$RunnerArgs, [int]$WantExit, [string]$WantText, [int]$TimeoutSec, [string]$WantAbsentText)
 	$script:checks++
 	$argList = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".\run_regression.ps1") + $RunnerArgs
 	if ($TimeoutSec -gt 0) { $argList += @("-TimeoutSec", [string]$TimeoutSec) }
@@ -68,6 +72,7 @@ function Assert-Case {
 	if ($WantExit -eq 0 -and $code -ne 0) { $problem += "expected success; " }
 	if ($WantExit -gt 0 -and $code -eq 0) { $problem += "expected failure but runner succeeded; " }
 	if ($WantText -ne "" -and ($out -notmatch [regex]::Escape($WantText))) { $problem += ("missing text [" + $WantText + "]; ") }
+	if ($WantAbsentText -ne "" -and ($out -match [regex]::Escape($WantAbsentText))) { $problem += ("unexpected text [" + $WantAbsentText + "]; ") }
 	if ($problem -eq "") {
 		Write-Host ("PASS  " + $Title + "  (" + [int]$sw.Elapsed.TotalSeconds + "s)")
 	} else {
@@ -99,6 +104,10 @@ Assert-Case "empty filter is an error"          -RunnerArgs @("-List",",","-Godo
 Assert-Case "missing -Godot exe is an error"    -RunnerArgs @("-Only","VerifyAssets","-Godot","C:\no\such\godot.exe") -WantExit 2 -WantText "does not exist"
 Assert-Case "engine not 4.7.x is an error"      -RunnerArgs @("-Only","VerifyAssets","-Godot",$oldVer)  -WantExit 2   -WantText "must be 4.7.x"
 Assert-Case "-AllowAnyVersion lets 4.6 run"     -RunnerArgs @("-Only","VerifyAssets","-Godot",$oldVer,"-AllowAnyVersion") -WantExit 0 -WantText "PASS  VerifyAssets"
+Assert-Case "exact host CA diagnostic is separate" -RunnerArgs @("-Only","VerifyAssets","-Godot",$hostCA) -WantExit 0 -WantText "host certificate-store diagnostic(s)" -WantAbsentText "engine exit-time resource diagnostic(s)"
+Assert-Case "similar CA error is not exempted" -RunnerArgs @("-Only","VerifyAssets","-Godot",$nearCA) -WantExit 1 -WantText "output contains [ERROR:]"
+Assert-Case "ordinary ERROR after OK fails" -RunnerArgs @("-Only","VerifyAssets","-Godot",$plainErr) -WantExit 1 -WantText "output contains [ERROR:]"
+Assert-Case "known shutdown resource line stays counted" -RunnerArgs @("-Only","VerifyAssets","-Godot",$exitRID) -WantExit 0 -WantText "engine exit-time resource diagnostic(s)" -WantAbsentText "host certificate-store diagnostic(s)"
 
 Write-Host ""
 if ($fails -eq 0) {

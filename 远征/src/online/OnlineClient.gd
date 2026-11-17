@@ -24,6 +24,7 @@ var _active_requests: Array[HTTPRequest] = []
 var _local_content_version := ""
 var _refreshing := false
 var _pending_commands: Dictionary = {}
+var _debug_tls_options: TLSOptions
 
 
 func _ready() -> void:
@@ -44,7 +45,23 @@ func configure(url: String) -> bool:
 	if url != base_url:
 		clear_session()
 		manifest.clear()
+		_debug_tls_options = null
 	base_url = url
+	return true
+
+
+func configure_debug_ca(certificate_path: String) -> bool:
+	# Local verification may trust its disposable CA without altering system
+	# trust. The normal validating client and hostname checks remain enabled.
+	if not OS.is_debug_build():
+		return false
+	var certificate := X509Certificate.new()
+	if certificate.load(certificate_path) != OK:
+		last_error = "测试证书无法读取。"
+		return false
+	clear_session()
+	manifest.clear()
+	_debug_tls_options = TLSOptions.client(certificate)
 	return true
 
 
@@ -309,6 +326,8 @@ func _raw_request(method: int, path: String, payload: Dictionary, request_id: St
 	http.use_threads = true
 	http.timeout = REQUEST_TIMEOUT
 	http.body_size_limit = RESPONSE_LIMIT
+	if _debug_tls_options != null:
+		http.set_tls_options(_debug_tls_options)
 	add_child(http)
 	# A startup caller can resume from process_frame before the first full idle
 	# iteration. Start the request after the new HTTP node has joined that cycle.

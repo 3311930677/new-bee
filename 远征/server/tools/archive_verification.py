@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import shutil
 
-from dev import SERVER, ROOT, LOCAL
+from dev import SERVER, ROOT, LOCAL, completed_go_tests
 
 
 def main():
@@ -18,17 +18,15 @@ def main():
     source = LOCAL / "verification"
     clients = json.loads((source / args.clients / "report.json").read_text(encoding="utf-8"))
     room = json.loads((source / args.room / "report.json").read_text(encoding="utf-8"))
-    events = [json.loads(line) for line in (source / "go-integration.jsonl").read_text(encoding="utf-8").splitlines() if line.startswith("{")]
-    tests = [event["Test"] for event in events if event["Action"] == "pass" and event.get("Test") and "/" not in event["Test"]]
-    failures = [event for event in events if event["Action"] == "fail"]
-    if len(tests) < 12 or failures:
-        raise RuntimeError("Go test evidence incomplete or failed")
+    tests = completed_go_tests(source / "go-integration.jsonl")
     if not clients.get("passed") or not clients.get("player_data_unchanged") or len(clients.get("clients", [])) != 2 or not all(c["passed"] for c in clients["clients"]):
         raise RuntimeError("Two-client evidence incomplete or failed")
     if not room.get("passed") or not room.get("player_data_unchanged") or len(room.get("checks", [])) < 14 or not all(c["passed"] for c in room["checks"]):
         raise RuntimeError("Authority evidence incomplete or failed")
     target = ROOT / "reports" / "online_20261116"
-    target.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        raise RuntimeError("Preserve existing evidence; destination already exists")
+    target.mkdir(parents=True)
     for src, dest in [
         (source / args.clients / "report.json", "clients-report.json"),
         (source / args.clients / "client_a.png", "online-character-480x800.png"),

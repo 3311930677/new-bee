@@ -93,10 +93,30 @@ def client_environment(base, extra):
     # Database URLs, worker MAC keys and future server-only settings stay private.
     public = {key: value for key, value in base.items()
               if not key.startswith("YUANZHENG_") and key != "PGPASSWORD"}
-    private = {"YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "PGPASSWORD"}
+    private = {"YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "YUANZHENG_ADMIN_TOKEN", "YUANZHENG_TLS_KEY", "PGPASSWORD"}
     if private.intersection(extra):
         raise RuntimeError("Server-only environment cannot be passed to a client")
     return public | extra
+
+
+def completed_go_tests(path):
+    events = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.startswith("{")]
+    module = re.search(r"(?m)^module\s+(\S+)", (SERVER / "go.mod").read_text(encoding="utf-8")).group(1)
+    expected = {module + "/" + path.parent.relative_to(SERVER).as_posix() + "::" + name
+                for directory in ("cmd", "internal") for path in (SERVER / directory).rglob("*_test.go")
+                for name in re.findall(r"(?m)^func (Test[A-Za-z0-9_]+)\(", path.read_text(encoding="utf-8"))}
+    passed = {e["Package"] + "::" + e["Test"] for e in events
+              if e["Action"] == "pass" and e.get("Test") and "/" not in e["Test"]}
+    if not expected or passed != expected or any(e["Action"] == "fail" for e in events):
+        raise RuntimeError(f"Incomplete Go test evidence: {len(passed)}/{len(expected)} package-qualified tests completed")
+    return sorted(passed)
+
+
+def worker_environment(base):
+    public = {key: value for key, value in base.items()
+              if not key.startswith("YUANZHENG_") and key != "PGPASSWORD"}
+    # The worker signs simulation responses; it never owns DB or admin access.
+    return public | {"YUANZHENG_ROOM_SECRET": base.get("YUANZHENG_ROOM_SECRET", "")}
 
 
 def main():
@@ -114,17 +134,14 @@ def main():
     if args.action == "deps":
         command([GO, "mod", "tidy"], env=env)
     elif args.action == "test":
-        result = command([GO, "test", "./...", "-count=1", "-v", "-json"], env=env, logfile=LOCAL / "verification" / "go-integration.jsonl")
-        events = [json.loads(line) for line in result.stdout.splitlines() if line.startswith("{")]
-        expected = {name for path in (SERVER / "internal").rglob("*_test.go")
-                    for name in re.findall(r"(?m)^func (Test[A-Za-z0-9_]+)\(", path.read_text(encoding="utf-8"))}
-        passed = {e["Test"] for e in events if e["Action"] == "pass" and e.get("Test") and "/" not in e["Test"]}
-        if passed != expected or any(e["Action"] == "fail" for e in events):
-            raise RuntimeError(f"Incomplete Go test evidence: {len(passed)}/{len(expected)} top-level tests completed")
+        path = LOCAL / "verification" / "go-integration.jsonl"
+        command([GO, "test", "./...", "-count=1", "-v", "-json"], env=env, logfile=path)
+        completed_go_tests(path)
     elif args.action == "build":
         (SERVER / "bin").mkdir(exist_ok=True)
         command([GO, "build", "-trimpath", "-o", "bin/gateway.exe", "./cmd/gateway"], env=env)
         command([GO, "build", "-trimpath", "-o", "bin/authoritycheck.exe", "./cmd/authoritycheck"], env=env)
+        command([GO, "build", "-trimpath", "-o", "bin/devcert.exe", "./cmd/devcert"], env=env)
     elif args.action == "run":
         command([SERVER / "bin" / "gateway.exe", "--game-root", SERVER.parent], env=env)
 

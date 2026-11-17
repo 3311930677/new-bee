@@ -26,7 +26,9 @@ func _ready() -> void:
 	_check(not Online.configure("http://example.com"), "非本地服务禁止明文 HTTP")
 	_check(not Online.configure("https://account:password@example.com"), "地址中不允许嵌入凭据")
 	_check(Online.configure("https://example.com"), "正式连接使用 HTTPS")
+	Online._debug_tls_options = TLSOptions.client()
 	_check(Online.configure("http://127.0.0.1:1"), "调试构建可连接回环服务")
+	_check(Online._debug_tls_options == null, "切换服务器时不沿用上一连接的调试证书配置")
 	Online.access_token = "boundary-test-not-a-server-session"
 	Online.selected_character = {"id": "online-character", "nickname": "在线旅人", "level": 1}
 	var gm := get_node_or_null("/root/GmConsole")
