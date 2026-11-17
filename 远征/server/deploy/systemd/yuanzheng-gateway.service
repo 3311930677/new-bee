@@ -1,0 +1,38 @@
+[Unit]
+Description=Yuanzheng TLS gateway role
+After=network-online.target yuanzheng-authority.service
+Wants=network-online.target yuanzheng-authority.service
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+Type=exec
+User=yuanzheng-gateway
+Group=yuanzheng-gateway
+WorkingDirectory=/var/lib/yuanzheng-gateway
+StateDirectory=yuanzheng-gateway
+StateDirectoryMode=0700
+LoadCredential=room-secret:/etc/yuanzheng/secrets/room-secret
+LoadCredential=database-url:/etc/yuanzheng/secrets/runtime-database-url
+LoadCredential=admin-token:/etc/yuanzheng/secrets/admin-token
+ExecStart=/opt/yuanzheng/current/bin/servicehost --config /etc/yuanzheng/gateway.json
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=20
+KillMode=control-group
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

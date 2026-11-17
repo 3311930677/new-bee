@@ -1,0 +1,2 @@
+{"time":"2026-11-17T22:31:26.9009129+08:00","level":"INFO","msg":"database migrations ready","mode":"check","restricted_role":true,"duration_ms":6}
+{"time":"2026-11-17T22:31:26.9220567+08:00","level":"ERROR","msg":"gateway stopped","reason":"authority unavailable: dial tcp 127.0.0.1:65288: connectex: No connection could be made because the target machine actively refused it."}

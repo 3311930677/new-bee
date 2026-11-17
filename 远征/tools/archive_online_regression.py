@@ -83,6 +83,18 @@ def main():
             raise RuntimeError("Second-act snapshot does not match the completed run")
         files.append((used_second_act, Path("VerifySecondAct-used.gd.snapshot")))
     files.append((GAME / "tools/run_regression.ps1", Path("run_regression-current.ps1.snapshot")))
+    extra_sources = metadata.get("extra_sources_sha256", {})
+    if extra_sources:
+        if not metadata.get("extra_sources_unchanged"):
+            raise RuntimeError("Additional verified sources changed during the run")
+        for name, digest in extra_sources.items():
+            relative = Path(name)
+            saved = log_folder / "source-used" / (name + ".snapshot")
+            if (relative.is_absolute() or ".." in relative.parts or not saved.is_file()
+                    or hashlib.sha256(saved.read_bytes()).hexdigest() != digest
+                    or hashlib.sha256((GAME / relative).read_bytes()).hexdigest() != digest):
+                raise RuntimeError("Additional source snapshot does not match completed run")
+            files.append((saved, Path("source-used") / (name + ".snapshot")))
     validation = {}
     if args.validation_prefix:
         prefix = args.validation_prefix
@@ -121,6 +133,7 @@ def main():
                "host_certificate_store_diagnostics": {"cases": host_cases, "lines": host_lines, "scope": "exact preexisting sandbox allowance; real TLS verified separately"},
                "original_console_diagnostic_notes": [line for line in console.splitlines() if line.startswith("NOTE:")],
                "validation": validation,
+               "additional_sources_sha256": extra_sources,
                "scope": "strict full singleplayer regression; online end-to-end evidence is archived separately"}
     (target / "diagnostics-audit.json").write_text(json.dumps({"verdict_rules_changed": False, "cases": diagnostic_cases}, ensure_ascii=False, indent=2), encoding="utf-8")
     (target / "verification.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "kind": "authority",
+  "executable": "/opt/yuanzheng/current/bin/godot",
+  "game_root": "/opt/yuanzheng/current/authority",
+  "state_directory": "/var/lib/yuanzheng-authority",
+  "listen": "127.0.0.1:19081",
+  "content_version": "REPLACE_WITH_RELEASE_CONTENT_SHA256",
+  "ruleset_version": "online-0.1",
+  "policy": {
+    "probe_interval_ms": 2000,
+    "probe_timeout_ms": 1000,
+    "startup_timeout_sec": 120,
+    "stop_timeout_sec": 12,
+    "failure_threshold": 3,
+    "liveness_grace_ms": 5000,
+    "restart_window_sec": 300,
+    "restart_burst": 5,
+    "backoff_initial_ms": 2000,
+    "backoff_maximum_ms": 30000
+  }
+}

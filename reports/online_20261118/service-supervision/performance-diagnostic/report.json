@@ -1,0 +1,109 @@
+{
+  "samples": [
+    {
+      "sample": 1,
+      "started_utc": "2026-11-17T17:35:14.236492+00:00",
+      "finished_utc": "2026-11-17T17:35:32.535396+00:00",
+      "exit_code": 0,
+      "phases": [
+        {
+          "frame1_us": 25756,
+          "frame2_us": 45,
+          "panel": "世界",
+          "sync_us": 35071,
+          "total_ms": 61
+        },
+        {
+          "frame1_us": 8197,
+          "frame2_us": 34,
+          "panel": "图鉴",
+          "sync_us": 38800,
+          "total_ms": 47
+        },
+        {
+          "frame1_us": 9491,
+          "frame2_us": 645,
+          "panel": "召唤",
+          "sync_us": 17765,
+          "total_ms": 28
+        },
+        {
+          "frame1_us": 4072,
+          "frame2_us": 40,
+          "panel": "兑换",
+          "sync_us": 41411,
+          "total_ms": 46
+        },
+        {
+          "frame1_us": 18014,
+          "frame2_us": 32,
+          "panel": "设置",
+          "sync_us": 57152,
+          "total_ms": 75
+        },
+        {
+          "frame1_us": 21526,
+          "frame2_us": 36,
+          "panel": "养成",
+          "sync_us": 35876,
+          "total_ms": 58
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "started_utc": "2026-11-17T17:35:32.561455+00:00",
+      "finished_utc": "2026-11-17T17:35:43.000887+00:00",
+      "exit_code": 0,
+      "phases": [
+        {
+          "frame1_us": 24524,
+          "frame2_us": 45,
+          "panel": "世界",
+          "sync_us": 40108,
+          "total_ms": 65
+        },
+        {
+          "frame1_us": 8141,
+          "frame2_us": 36,
+          "panel": "图鉴",
+          "sync_us": 36660,
+          "total_ms": 45
+        },
+        {
+          "frame1_us": 9290,
+          "frame2_us": 632,
+          "panel": "召唤",
+          "sync_us": 18796,
+          "total_ms": 29
+        },
+        {
+          "frame1_us": 4025,
+          "frame2_us": 27,
+          "panel": "兑换",
+          "sync_us": 44574,
+          "total_ms": 48
+        },
+        {
+          "frame1_us": 18292,
+          "frame2_us": 28,
+          "panel": "设置",
+          "sync_us": 57491,
+          "total_ms": 76
+        },
+        {
+          "frame1_us": 20125,
+          "frame2_us": 28,
+          "panel": "养成",
+          "sync_us": 34663,
+          "total_ms": 55
+        }
+      ]
+    }
+  ],
+  "sample_count_fixed_before_run": 2,
+  "source_sha256": "61d017e4ceae223ab5d6055ed5c808aa22950e3376ebd88a3e1b197fc1083455",
+  "original_test_unchanged": true,
+  "player_data_unchanged": true,
+  "scope": "isolated diagnostic copy; original budgets and assertions unchanged; both samples retained regardless of pass/fail"
+}

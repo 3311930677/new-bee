@@ -1,0 +1,29 @@
+{"time":"2026-11-17T22:40:49.7018603+08:00","level":"INFO","msg":"database migrations ready","mode":"check","restricted_role":true,"duration_ms":18}
+{"time":"2026-11-17T22:40:49.8430386+08:00","level":"INFO","msg":"read-only admin listening","address":"127.0.0.1:53221"}
+{"time":"2026-11-17T22:40:49.8430386+08:00","level":"INFO","msg":"gateway listening","address":"127.0.0.1:53218","tls":true,"behind_tls_proxy":false,"protocol":1,"content_version":"3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17"}
+{"time":"2026-11-17T22:40:50.7400221+08:00","level":"INFO","msg":"request","route":"GET /v1/characters","method":"GET","status":401,"duration_ms":3}
+{"time":"2026-11-17T22:40:50.7497474+08:00","level":"INFO","msg":"request","route":"GET /v1/characters","method":"GET","status":401,"duration_ms":0}
+{"time":"2026-11-17T22:40:50.7743618+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/refresh","method":"POST","status":401,"duration_ms":3}
+{"time":"2026-11-17T22:40:50.8366161+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/refresh","method":"POST","status":401,"duration_ms":65}
+{"time":"2026-11-17T22:40:50.8616076+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/login","method":"POST","status":200,"duration_ms":68}
+{"time":"2026-11-17T22:40:50.8902069+08:00","level":"INFO","msg":"request","route":"POST /v1/characters/{id}/select","method":"POST","status":200,"duration_ms":8}
+{"time":"2026-11-17T22:40:50.9141922+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/login","method":"POST","status":200,"duration_ms":58}
+{"time":"2026-11-17T22:40:50.9162787+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":1}
+{"time":"2026-11-17T22:40:50.9380662+08:00","level":"INFO","msg":"request","route":"POST /v1/characters/{id}/select","method":"POST","status":200,"duration_ms":4}
+{"time":"2026-11-17T22:40:50.9589359+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":2}
+{"time":"2026-11-17T22:40:50.9594504+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/join","method":"POST","status":200,"duration_ms":10}
+{"time":"2026-11-17T22:40:50.9804345+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":3}
+{"time":"2026-11-17T22:40:50.986747+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/join","method":"POST","status":200,"duration_ms":8}
+{"time":"2026-11-17T22:40:51.0071573+08:00","level":"INFO","msg":"request","route":"GET /v1/battles/active","method":"GET","status":200,"duration_ms":9}
+{"time":"2026-11-17T22:40:51.0148508+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":6}
+{"time":"2026-11-17T22:40:51.0459514+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/acknowledge","method":"POST","status":200,"duration_ms":5}
+{"time":"2026-11-17T22:40:51.0495476+08:00","level":"INFO","msg":"request","route":"GET /v1/battles/active","method":"GET","status":200,"duration_ms":5}
+{"time":"2026-11-17T22:40:51.0778206+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/acknowledge","method":"POST","status":200,"duration_ms":4}
+{"time":"2026-11-17T22:40:51.092373+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":5}
+{"time":"2026-11-17T22:40:51.1243816+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":12}
+{"time":"2026-11-17T22:40:51.1314356+08:00","level":"INFO","msg":"request","route":"GET /v1/battles/active","method":"GET","status":200,"duration_ms":5}
+{"time":"2026-11-17T22:40:51.1509567+08:00","level":"INFO","msg":"request","route":"GET /v1/characters/{id}","method":"GET","status":200,"duration_ms":2}
+{"time":"2026-11-17T22:40:51.1561792+08:00","level":"INFO","msg":"request","route":"GET /v1/battles/active","method":"GET","status":200,"duration_ms":1}
+{"time":"2026-11-17T22:40:51.1735279+08:00","level":"INFO","msg":"request","route":"GET /v1/characters/{id}","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T22:40:51.1851372+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/logout","method":"POST","status":200,"duration_ms":3}
+{"time":"2026-11-17T22:40:51.4264087+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/logout","method":"POST","status":200,"duration_ms":3}

@@ -16,3 +16,5 @@
 受限数据库与恢复批次：[独立数据库身份、只读备份与真实新库恢复](database-recovery/README.md)（Go 40/40、受限网关三次启动、真实 HTTPS 双端 9/9、17 张表一致及旧会话/租约失效）、[本批完整单机回归](database-regression/README.md)（79/79、实际退出码 0）。归档不包含数据库 dump、私钥或凭据；已有退出资源诊断、移动端/公网和完整 L0–L6 仍继续跟踪。
 
 身份展示批次：[性别/批准头像、导入提示与真实同行名片](character-identity/README.md)（Go 43/43、真实双端身份 6/6、同构建战斗/新库恢复 9/9）、[最终完整回归](identity-regression-2/README.md)（79/79、实际退出码 0）。[首轮 78/79 失败](identity-regression-first/README.md)及正常/受控帧时序诊断单独保留；第二幕测试只调整等待物理更新的时机，游戏规则与原断言不变。已有单机改动保留，完整联机目标保持 active。
+
+后续跨日批次：[独立角色监督与真实故障恢复](../online_20261118/service-supervision/README.md)（Go 53/53、真实双端监督/恢复 12/12）及[11 月 18 日完整回归](../online_20261118/supervision-regression/README.md)（79/79、实际退出码 0）。本目录继续保留[服务监督首轮 78/79 性能失败](supervision-regression-first/README.md)，兑换 234/130ms 的原尖峰仍未解释；后续没有改动游戏/预热/性能测试或预算。

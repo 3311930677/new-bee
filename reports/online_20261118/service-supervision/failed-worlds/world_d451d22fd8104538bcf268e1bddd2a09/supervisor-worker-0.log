@@ -1,0 +1,6 @@
+{"time":"2026-11-17T22:24:28.0429047+08:00","level":"INFO","msg":"service state","kind":"authority","phase":"starting","reason":"launch","generation":1,"child_pid":0,"ready":false}
+{"time":"2026-11-17T22:24:28.5878372+08:00","level":"INFO","msg":"service state","kind":"authority","phase":"running","reason":"healthy","generation":1,"child_pid":67292,"ready":true}
+{"time":"2026-11-17T22:24:36.5799491+08:00","level":"INFO","msg":"service state","kind":"authority","phase":"starting","reason":"liveness_pending","generation":1,"child_pid":67292,"ready":false}
+{"time":"2026-11-17T22:24:36.8500636+08:00","level":"INFO","msg":"service state","kind":"authority","phase":"backoff","reason":"liveness_timeout","generation":1,"child_pid":0,"ready":false}
+{"time":"2026-11-17T22:24:38.8659415+08:00","level":"INFO","msg":"service state","kind":"authority","phase":"starting","reason":"launch","generation":2,"child_pid":0,"ready":false}
+{"time":"2026-11-17T22:24:39.4448072+08:00","level":"INFO","msg":"service state","kind":"authority","phase":"stopped","reason":"requested","generation":2,"child_pid":0,"ready":false}

@@ -153,6 +153,7 @@ def main():
         command([GO, "build", "-trimpath", "-o", "bin/authoritycheck.exe", "./cmd/authoritycheck"], env=env)
         command([GO, "build", "-trimpath", "-o", "bin/devcert.exe", "./cmd/devcert"], env=env)
         command([GO, "build", "-trimpath", "-o", "bin/dbops.exe", "./cmd/dbops"], env=env)
+        command([GO, "build", "-trimpath", "-o", "bin/servicehost.exe", "./cmd/servicehost"], env=env)
     elif args.action == "run":
         command([SERVER / "bin" / "gateway.exe", "--game-root", SERVER.parent], env=env)
 
