@@ -1,0 +1,188 @@
+{
+  "world_run": "world_4f4d8659144244c6a9078cb33aaa5f5e",
+  "passed": true,
+  "go_passed": 40,
+  "go_test_cases": [
+    "yuanzheng/online/cmd/gateway::TestListenerBoundaries",
+    "yuanzheng/online/cmd/gateway::TestRestrictedGatewayRejectsOfflineCredentialEnvironment",
+    "yuanzheng/online/internal/authority::TestContextCancellationClosesPrivateSocket",
+    "yuanzheng/online/internal/authority::TestPrivateAddressAndKeyBoundary",
+    "yuanzheng/online/internal/authority::TestRejectTamperedResponseAndNonce",
+    "yuanzheng/online/internal/authority::TestSignedTransportAndUTF8",
+    "yuanzheng/online/internal/dbops::TestFailedRestoreQuarantinesOnlyItsNewDatabase",
+    "yuanzheng/online/internal/dbops::TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase",
+    "yuanzheng/online/internal/dbops::TestNativeToolEnvironmentKeepsCredentialsOffCommandArguments",
+    "yuanzheng/online/internal/dbops::TestProvisionRefusesEnumOnlyAndLargeObjectDatabases",
+    "yuanzheng/online/internal/dbops::TestReadOnlyMigrationGateRejectsDriftAndFutureSchema",
+    "yuanzheng/online/internal/dbops::TestRestoreRejectsCorruptionBeforeCreatingDatabase",
+    "yuanzheng/online/internal/dbops::TestRestrictedRoleServesAccountRecoveryAndCharacterTransactions",
+    "yuanzheng/online/internal/dbops::TestRuntimeAndBackupCannotOwnMigrateOrRewriteLedger",
+    "yuanzheng/online/internal/devcert::TestDevelopmentCertificatesNeverOverwriteExistingDirectory",
+    "yuanzheng/online/internal/devcert::TestDevelopmentCertificatesValidateAndRejectFixtures",
+    "yuanzheng/online/internal/online::TestAccountsSessionsAndRevocation",
+    "yuanzheng/online/internal/online::TestAdminMetricsAuthenticationStateAndPrivacy",
+    "yuanzheng/online/internal/online::TestBattleSettlementRollbackRetryAndOnceReward",
+    "yuanzheng/online/internal/online::TestCharacterLimitOwnershipAndUntrustedAssets",
+    "yuanzheng/online/internal/online::TestCharacterManagementListsOwnershipAndSuggestions",
+    "yuanzheng/online/internal/online::TestConcurrentCreateAndReceiptSurvivesRestart",
+    "yuanzheng/online/internal/online::TestConcurrentDistinctCharacterLimit",
+    "yuanzheng/online/internal/online::TestConcurrentRoomJoinHasOneExclusiveLease",
+    "yuanzheng/online/internal/online::TestDeleteRecoveryAndImmutableLedger",
+    "yuanzheng/online/internal/online::TestDependencyErrorConsumesBoundedRequestBeforeResponding",
+    "yuanzheng/online/internal/online::TestErrorClassificationExcludesDatabaseDetails",
+    "yuanzheng/online/internal/online::TestExpiredTokensAndConcurrentRefresh",
+    "yuanzheng/online/internal/online::TestLivenessSurvivesDatabaseFailureAndAccountOnlyReadiness",
+    "yuanzheng/online/internal/online::TestNicknameSuggestionsSurviveExhaustedShortSuffixes",
+    "yuanzheng/online/internal/online::TestPasswordChangeCannotRaceOldPasswordLogin",
+    "yuanzheng/online/internal/online::TestReadinessAndMetricsTrackCertificateValidity",
+    "yuanzheng/online/internal/online::TestReadinessChecksWorkerVersionsAndDeadline",
+    "yuanzheng/online/internal/online::TestRecoveryCodeHashedRotatedAndRevokesSessions",
+    "yuanzheng/online/internal/online::TestRecoveryLimitsAndNotificationOwnership",
+    "yuanzheng/online/internal/online::TestRecoveryTransactionRollbackAndConcurrentSingleUse",
+    "yuanzheng/online/internal/online::TestRequestMetricsCumulativeBucketsAndConcurrentScrapes",
+    "yuanzheng/online/internal/online::TestRollbackOnLedgerFailureAndRetry",
+    "yuanzheng/online/internal/online::TestTownCapacityLeaseRotationAndMovementOwnership",
+    "yuanzheng/online/internal/online::TestVersionGateAndLimits"
+  ],
+  "go_exit_code": 0,
+  "world_checks": 9,
+  "database_recovery": {
+    "passed": true,
+    "scope": "actual read-only-role pg_dump, new-database restore, two real unconfirmed Godot victories; no live endpoint promotion",
+    "tables_matched": 17,
+    "before_counts": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2"
+    ],
+    "restored_counts": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "0"
+    ],
+    "expired_leases": 2,
+    "revoked_sessions": 2,
+    "post_backup_source_audit_retained": true,
+    "post_backup_audit_absent_from_restored_snapshot": true,
+    "gateway_restricted_starts": 3,
+    "backup_started_utc": "2026-11-17T10:53:12.9004469Z",
+    "backup_finished_utc": "2026-11-17T10:53:13.1569146Z",
+    "restore_started_utc": "2026-11-17T10:53:13.3059677Z",
+    "restore_finished_utc": "2026-11-17T10:53:22.9913894Z",
+    "dump_sha256": "cebd9dc5ca69c962c1955e54362f62ac7e08a30cf4347bf8e92fe8740d388dea",
+    "dbops_binary_sha256": "ce3a362deb075127d2195cd915339c349508b54d6ce28b78e547f5e4922b2bcd",
+    "offline_actions": [
+      {
+        "action": "provision",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "migrate",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "grant",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "gateway-reject-offline-credential",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "gateway-reject-owner-role",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "gateway-reject-future-schema",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "migrate",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "backup",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "restore",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "restore",
+        "exit_code": 1,
+        "expected_success": false
+      }
+    ]
+  },
+  "online_sources_sha256": "923f72e35c1b042bf41db764f93b62c224c47539507184c903d99582e95ac262",
+  "gateway_binary_sha256": "4cba5ea77fe99ddc9fa7237ef337c9e2edf6c5a0c5f00a96aae599a8d72450f7",
+  "dbops_binary_sha256": "ce3a362deb075127d2195cd915339c349508b54d6ce28b78e547f5e4922b2bcd",
+  "full_regression": "../database-regression/verification.json",
+  "evidence_sha256": {
+    "go-integration.jsonl": "a9270d998c94ee81ea483b1d78d4aa83b3d4a028f55cc6deff8e786b2a389285",
+    "go-result.json": "f063967fd16b3c7c3544c2eae4d1bab6f885c2d6533cfa10df6a0e5932a0475b",
+    "go-console.log": "a9270d998c94ee81ea483b1d78d4aa83b3d4a028f55cc6deff8e786b2a389285",
+    "world/report.json": "665413da06925cc52407ac3cab045e7e89aee109a7995dd499435abb8000b131",
+    "world/client-a.log": "ea2ac1c03a7c279ae65c240c50f318f830a6ad07100ec0710430d2cf05687a7a",
+    "world/client-b.log": "6d7f4564a22f1a0cd1be13fa61c5b23396212808cf082eb5315889f9ef7afb76",
+    "world/backup-manifest.json": "7c378609a20bf9106900853d15f994769debdc0fb194204d23adaf6f4926e4e6",
+    "world/restore-report.json": "f55f64d9a207ecc271140f15874e597efbea635312494aac23d35c748ebaf41b",
+    "world/certificate-generation.log": "056cc2bbdb78b0688f84d2f81bbe2f895c54b5d9a0a9084e34602e2201e986dc",
+    "world/world-a.png": "2a9ffb944162692746d2f7e84a12e182b6b5e7eaf6d36efd06352d02069a9cda",
+    "world/battle-a.png": "64229337fbeeb04b39998b39574bd8fca2ec37f185553c9d22a082f639312a4f",
+    "world/result-a.png": "ec8b6a2d8965f5d09c6a98be8a743987ba3b132ab05413fe7f32b0e44740d7d8",
+    "world/gateway-1.log": "b81cbc2ba811e40098febfda6b7b202373b46746957ba01ad72d6c63ad554277",
+    "world/gateway-3.log": "4182c2bd6c48f3d87c9141816d1b87b5ffc66bf2798fe3559bcbef5cd137d5d5",
+    "world/gateway-5.log": "bade4c2e876bb60345e1081e9b29c4ad32d43e2e5822d061859876ee174b0d6f",
+    "world/gateway-rejected-future-schema.log": "ae11e09f4008ed06a11b571f260184551d8e239492d10ca1f3243fc7f5017cd9",
+    "world/gateway-rejected-offline-credential.log": "ff4dad6960bdc773b459915ca48c73fff1b18ddfb55c91c48e3f7d0a8855c1cd",
+    "world/gateway-rejected-owner-role.log": "cb8066ce0eeb35a132e864b343c41e0e4ac3d8f21334ba8cfc01e9e485f8c8a8",
+    "world/worker-0.log": "b988e2806571006fcf1224620c6eced3bc2742521c7ad79fc25173aebe8c34de",
+    "world/worker-2.log": "b988e2806571006fcf1224620c6eced3bc2742521c7ad79fc25173aebe8c34de",
+    "world/worker-4.log": "b988e2806571006fcf1224620c6eced3bc2742521c7ad79fc25173aebe8c34de",
+    "world/dbops-1-provision.log": "dc34393f9a2a75d1af685c31621c7c658778f344945698668107b2d9e2ff1fe7",
+    "world/dbops-10-restore.log": "12c3edd5ebda6b9baae885ab9c1e43b310f46f8e5ff0b4c6b59909e3960c85f6",
+    "world/dbops-2-migrate.log": "3676c1eb6d5fa714cb066ec37bdd9fb7e72ddc0f69f8914dd65cdfffc2853df9",
+    "world/dbops-3-grant.log": "759c0a81ded0630ac30b0b2974a218cb63f3c15ac161309bb36556d799d2c3b7",
+    "world/dbops-7-migrate.log": "8111969d9d5c37a7e9ee7ec7b215b4a54743b5a67a2ba5045d59b700c4e2849e",
+    "world/dbops-8-backup.log": "a5e1b1fb5d935e815b28ca1bd5808279bc05c5894a8bccaaf8105fb3e8c483a3",
+    "world/dbops-9-restore.log": "7410327a56e1caaad71759ed95279092978ba4b0c60e1d4f67242e993406752e"
+  },
+  "private_artifacts_excluded": [
+    "database.dump",
+    "TLS private keys",
+    "server connection URLs",
+    "role passwords",
+    "client credentials",
+    "barrier files"
+  ],
+  "goal_status": "active",
+  "L0_complete": false,
+  "scope": "worktree validation of restricted DB runtime and logical restore; desktop loopback with disposable CA",
+  "limitations": [
+    "no public deployment or live production endpoint switch",
+    "no OS service identity/NTFS permission acceptance",
+    "no encrypted offsite retention, WAL archiving or point-in-time recovery",
+    "no mobile/WAN/capacity acceptance",
+    "preexisting client transport timeouts and engine shutdown diagnostics remain separately tracked",
+    "L0 through L6 delivery scope remains open"
+  ]
+}

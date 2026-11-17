@@ -12,3 +12,5 @@
 同日后续批次独立保留：[账号恢复/角色管理及真实联机重验](account-management/README.md)（服务端 22/22、真实账号页、双端 8/8）、[账号界面修改后的完整回归](account-regression/README.md)（79/79）。后续记录不覆盖本目录最初的性能样本和退出诊断计数。
 
 本机 TLS/监控批次：[运维与 HTTPS 双端验收](operations/README.md)（Go 31 项、权威 25 项、真实 TLS/告警/数据库故障演练、HTTPS 双端 8 项）、[完整回归与诊断审计](operations-regression/README.md)（79/79，计数自检 15 项及正常证书环境 2 项）。主机证书库诊断已与退出资源诊断分开登记，历史原始输出继续保留。
+
+受限数据库与恢复批次：[独立数据库身份、只读备份与真实新库恢复](database-recovery/README.md)（Go 40/40、受限网关三次启动、真实 HTTPS 双端 9/9、17 张表一致及旧会话/租约失效）、[本批完整单机回归](database-regression/README.md)（79/79、实际退出码 0）。归档不包含数据库 dump、私钥或凭据；已有退出资源诊断、移动端/公网和完整 L0–L6 仍继续跟踪。

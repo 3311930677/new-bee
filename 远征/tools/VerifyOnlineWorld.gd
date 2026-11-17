@@ -169,10 +169,21 @@ func _ready() -> void:
 		_ok(repeated, "结算请求重放")
 		_check(String(repeated.get("data", {}).get("battle", {}).get("receipt", {}).get("result_id", "")) == String(receipt.get("result_id", "")), "重放使用同一张结算回执")
 	await _capture("result-" + _tag)
+	if OS.get_environment("YUANZHENG_DATABASE_RECOVERY") == "1":
+		_marker("backup-ready-" + _tag)
+		if not await _wait_marker("restore-complete", 150.0):
+			_finish()
+			return
+		var old_session: Dictionary = await Online.refresh_characters()
+		_check(not bool(old_session.get("ok", false)) and int(old_session.get("status", 0)) == 401 and not Online.is_authenticated(), "数据库恢复后旧访问和刷新令牌失效")
 	if not _ok(await Online.authenticate(username, password), "断线后重新登录"):
 		_finish()
 		return
 	_ok(await Online.select_character(id), "重新选择原角色")
+	if OS.get_environment("YUANZHENG_DATABASE_RECOVERY") == "1":
+		var restored_retry: Dictionary = await Online.battle_command(battle_id, final_action, final_key)
+		_ok(restored_retry, "从备份恢复原结算请求")
+		_check(String(restored_retry.get("data", {}).get("battle", {}).get("receipt", {}).get("result_id", "")) == String(receipt.get("result_id", "")), "恢复后原请求仍为同一奖励回执")
 	_ok(await _page.enter_world(), "重新进入并恢复未确认结算")
 	_check(String(_page.battle.get("id", "")) == battle_id and String(_page.battle.get("status", "")) == "settled", "结算响应丢失后仍能恢复")
 	_ok(await _page.confirm_result(), "确认回执并回城")

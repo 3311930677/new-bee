@@ -42,7 +42,17 @@ func run(logger *slog.Logger) error {
 	roomAddress := flag.String("authority-address", "", "Optional private Godot worker loopback address")
 	adminListen := flag.String("admin-listen", "", "Optional literal loopback address for token-protected read-only metrics")
 	startupTimeout := flag.Duration("startup-timeout", 90*time.Second, "Maximum database migration and initial service startup time")
+	migrationMode := flag.String("migration-mode", "auto", "auto for local development; check for a separately migrated database")
+	restrictedDB := flag.Bool("require-restricted-database", false, "Reject database ownership and administrative privileges; requires migration-mode=check")
 	flag.Parse()
+	if (*migrationMode != "auto" && *migrationMode != "check") || (*restrictedDB && *migrationMode != "check") {
+		return fmt.Errorf("invalid migration mode; restricted database startup requires check")
+	}
+	if *restrictedDB {
+		if err := validateRuntimeEnvironment(); err != nil {
+			return err
+		}
+	}
 	if *startupTimeout < time.Second || *startupTimeout > 10*time.Minute {
 		return fmt.Errorf("startup timeout must be between 1 second and 10 minutes")
 	}
@@ -80,10 +90,20 @@ func run(logger *slog.Logger) error {
 		return fmt.Errorf("database unavailable")
 	}
 	migrationStarted := time.Now()
-	if err = online.Migrate(initCtx, db); err != nil {
-		return fmt.Errorf("database migration failed: %w", err)
+	if *migrationMode == "auto" {
+		err = online.Migrate(initCtx, db)
+	} else {
+		err = online.CheckMigrations(initCtx, db)
 	}
-	logger.Info("database migrations ready", "duration_ms", time.Since(migrationStarted).Milliseconds())
+	if err != nil {
+		return fmt.Errorf("database migration %s failed: %w", *migrationMode, err)
+	}
+	if *restrictedDB {
+		if err = online.CheckRuntimePrivileges(initCtx, db); err != nil {
+			return err
+		}
+	}
+	logger.Info("database migrations ready", "mode", *migrationMode, "restricted_role", *restrictedDB, "duration_ms", time.Since(migrationStarted).Milliseconds())
 	hash := sha256.New()
 	contentFiles, err := filepath.Glob(filepath.Join(*gameRoot, "data", "*.json"))
 	if err != nil || len(contentFiles) == 0 {
@@ -181,6 +201,15 @@ func run(logger *slog.Logger) error {
 		return nil
 	}
 	return serveError
+}
+
+func validateRuntimeEnvironment() error {
+	for _, name := range []string{"YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_DBADMIN_URL", "YUANZHENG_MIGRATION_DATABASE_URL", "YUANZHENG_BACKUP_DATABASE_URL", "YUANZHENG_MIGRATOR_PASSWORD", "YUANZHENG_RUNTIME_PASSWORD", "YUANZHENG_BACKUP_PASSWORD", "PGPASSWORD", "PGPASSFILE", "PGSERVICE", "PGSERVICEFILE"} {
+		if os.Getenv(name) != "" {
+			return fmt.Errorf("restricted gateway must not inherit offline database credentials")
+		}
+	}
+	return nil
 }
 
 func validateListeners(listen, cert, key, adminListen, adminToken string) error {

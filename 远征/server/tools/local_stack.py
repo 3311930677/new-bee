@@ -13,7 +13,7 @@ import urllib.parse
 import uuid
 
 from build_room import build
-from dev import SERVER, PG, config, environment, client_environment, worker_environment
+from dev import SERVER, PG, config, environment, client_environment, worker_environment, gateway_environment
 from verify_room import RPC
 
 
@@ -25,7 +25,12 @@ def free_port():
 
 class LocalStack:
     def __init__(self, godot: Path, folder: Path, *, isolated_test=False, with_world=True,
-                 tls_directory=None, with_admin=False, database_proxy_port=None):
+                 tls_directory=None, with_admin=False, database_proxy_port=None,
+                 migration_mode="auto", require_restricted_database=False):
+        if migration_mode not in ("auto", "check") or (require_restricted_database and migration_mode != "check"):
+            raise RuntimeError("Restricted runtime requires a separately migrated database")
+        self.migration_mode = migration_mode
+        self.require_restricted_database = require_restricted_database
         self.godot, self.folder = godot.resolve(), folder.resolve()
         self.folder.mkdir(parents=True, exist_ok=True)
         self.with_world = with_world
@@ -121,7 +126,9 @@ class LocalStack:
         if not require_ready and not (self.admin_url and self.tls_directory):
             raise RuntimeError("Liveness-only startup is reserved for explicit TLS negative fixtures")
         arguments = [SERVER / "bin/gateway.exe", "--game-root", SERVER.parent,
-                     "--listen", f"127.0.0.1:{self.gateway_port}"]
+                     "--listen", f"127.0.0.1:{self.gateway_port}", "--migration-mode", self.migration_mode]
+        if self.require_restricted_database:
+            arguments += ["--require-restricted-database"]
         if self.with_world:
             arguments += ["--authority-address", f"127.0.0.1:{self.worker_port}"]
         if self.tls_directory:
@@ -129,7 +136,7 @@ class LocalStack:
                           "--tls-key", self.tls_directory / "server-key.pem"]
         if self.admin_url:
             arguments += ["--admin-listen", f"127.0.0.1:{self.admin_port}"]
-        self.spawn("gateway", arguments)
+        self.spawn("gateway", arguments, env=gateway_environment(self.env))
 
         def probe():
             url = self.admin_url or self.url

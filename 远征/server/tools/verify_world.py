@@ -33,13 +33,21 @@ def main():
     parser.add_argument("--godot", type=Path, required=True)
     parser.add_argument("--capture", action="store_true")
     parser.add_argument("--tls-directory", type=Path)
+    parser.add_argument("--database-recovery", action="store_true", help="Use separate DB roles and restore a real backup before confirming both victories")
     args = parser.parse_args()
     run_id = uuid.uuid4().hex
     folder = LOCAL / "verification" / ("world_" + run_id)
     folder.mkdir(parents=True)
     barrier = folder / "barriers"
     barrier.mkdir()
-    stack = LocalStack(args.godot, folder, isolated_test=True, tls_directory=args.tls_directory)
+    recovery = None
+    if args.database_recovery:
+        from database_recovery import DatabaseRecovery
+        recovery = DatabaseRecovery(folder)
+        if args.tls_directory is None:
+            args.tls_directory = recovery.create_tls()
+    stack = LocalStack(args.godot, folder, isolated_test=not args.database_recovery, tls_directory=args.tls_directory,
+                       migration_mode="check" if recovery else "auto", require_restricted_database=bool(recovery))
     before = player_snapshot()
     clients, logs = {}, []
     checks = []
@@ -64,6 +72,8 @@ def main():
             time.sleep(0.1)
 
     try:
+        if recovery:
+            recovery.provision(stack)
         stack.start()
         for tag in ("a", "b"):
             userdata = folder / ("client-" + tag)
@@ -74,6 +84,8 @@ def main():
                                "YUANZHENG_TEST_PASSWORD": secrets.token_hex(20),
                                "YUANZHENG_TEST_NICKNAME": ("同行甲" if tag == "a" else "同行乙") + run_id[:5],
                                "YUANZHENG_WORLD_TAG": tag, "YUANZHENG_WORLD_BARRIER": str(barrier)})
+            if recovery:
+                env["YUANZHENG_DATABASE_RECOVERY"] = "1"
             if args.tls_directory:
                 env["YUANZHENG_TEST_CA"] = str(args.tls_directory.resolve() / "ca-cert.pem")
             flags = ["--headless"]
@@ -113,6 +125,11 @@ def main():
         check(previous_epoch != stack.rpc.call("ping")["epoch"], "gateway and real authority process restart before reward retry")
         stack.sql("DROP TRIGGER reject_world_reward ON wallet_ledger")
         (barrier / "repair-complete").write_text("ready", encoding="utf-8")
+        if recovery:
+            wait_markers(["backup-ready-a", "backup-ready-b"], 150)
+            report["database_recovery"] = recovery.restore(stack)
+            check(report["database_recovery"]["passed"], "a real read-only backup restores both unconfirmed victories with revoked old sessions")
+            (barrier / "restore-complete").write_text("ready", encoding="utf-8")
         for tag, process in clients.items():
             try:
                 code = process.wait(timeout=150)
@@ -140,6 +157,8 @@ def main():
         for log in logs:
             log.close()
         stack.close()
+        if recovery:
+            recovery.close()
         report["worker_errors"] = [line for path in folder.glob("worker-*.log")
                                    for line in path.read_text(encoding="utf-8", errors="replace").splitlines()
                                    if any(marker in line for marker in ("SCRIPT ERROR", "Parse Error", "Compile Error", "ERROR:"))]

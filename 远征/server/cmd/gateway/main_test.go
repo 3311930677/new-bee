@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strings"
 	"testing"
 )
@@ -35,5 +36,22 @@ func TestListenerBoundaries(t *testing.T) {
 				t.Fatal("configuration error exposed admin token")
 			}
 		})
+	}
+}
+
+func TestRestrictedGatewayRejectsOfflineCredentialEnvironment(t *testing.T) {
+	names := []string{"YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_DBADMIN_URL", "YUANZHENG_MIGRATION_DATABASE_URL", "YUANZHENG_BACKUP_DATABASE_URL", "YUANZHENG_MIGRATOR_PASSWORD", "YUANZHENG_RUNTIME_PASSWORD", "YUANZHENG_BACKUP_PASSWORD", "PGPASSWORD", "PGPASSFILE", "PGSERVICE", "PGSERVICEFILE"}
+	for _, name := range names {
+		t.Setenv(name, "")
+	}
+	if err := validateRuntimeEnvironment(); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range names {
+		t.Setenv(name, "private-must-not-be-reported")
+		if err := validateRuntimeEnvironment(); err == nil || strings.Contains(err.Error(), os.Getenv(name)) {
+			t.Fatal("offline credential accepted or disclosed")
+		}
+		t.Setenv(name, "")
 	}
 }

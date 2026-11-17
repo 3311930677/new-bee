@@ -39,6 +39,8 @@ python 远征/server/tools/run_stack.py --godot <Godot-4.7.2路径>
 
 首次启动应用会在事务中执行嵌入式迁移；并行部署由数据库锁串行化，已执行迁移的 SHA256 变化会阻止启动。`--startup-timeout` 默认 `90s`，可设 `1s`–`10m`，仅用于初始连接、迁移和权威进程校验，日志记录迁移实际耗时；不改变 HTTP 或战斗指令期限。正式迁移只新增，不修改已上线 SQL。本次没有对任何已有系统数据库执行迁移。
 
+独立部署先用离线 `dbops.exe` 给新空库配置 migrator/runtime/backup 三种身份、执行迁移和明确授权，再让网关使用 `--migration-mode check --require-restricted-database`。该模式只读检查迁移，拒绝所有权/管理权限和继承的离线凭据。`auto` 是本地开发默认，不能代替正式权限模式。`dbops.exe` 还提供使用同一导出快照的只读逻辑备份，以及仅面向新库的校验恢复；恢复撤销旧会话和租约，保留资产、回执和未确认结算，不自动切换正在使用的服务。参数、身份边界和未完成的生产备份策略见[部署说明](../docs/online-operations.md)。
+
 `/livez` 判断进程能否响应；`/healthz` 保留数据库连通检查；`/readyz` 在两秒期限内检查数据库、已配置权威进程的签名响应及版本、当前直连 TLS 证书有效期。只启用账号 API 时不要求房间进程；依赖或证书不可用时就绪返回 503。
 
 管理指标默认关闭。需要时由服务环境提供随机 `YUANZHENG_ADMIN_TOKEN`（至少 32 字节），加 `--admin-listen 127.0.0.1:18081`，再以 `Authorization: Bearer` 读取该端口的 `/metrics`、`/readyz`、`/livez`；游戏监听的 `/metrics` 始终不可用。指标只使用固定路由、方法与状态分类，包含请求耗时、依赖、证书到期、有效会话/租约、战斗和未确认结果，不含角色 ID 或凭据。管理文件权限、启动示例和验收边界见[部署与监控说明](../docs/online-operations.md)。
@@ -55,6 +57,7 @@ python 远征/server/tools/run_stack.py --godot <Godot-4.7.2路径>
 python 远征/server/tools/verify_clients.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_room.py --godot <Godot-4.7.2路径>
 python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --capture
+python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --database-recovery --capture
 python 远征/server/tools/verify_accounts.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/bootstrap_monitoring.py --proxy <本机实际代理>
 python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
@@ -66,7 +69,9 @@ python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
 
 这仍是桌面本机证据，不能替代双手机、广域网、24 人压力、合作副本、PVP 或运营验收。`VerifyOnlineWorld` 与 `VerifyOnlineHttp` 需要外部真实服务与隔离测试身份，由对应 Python 工具启动；常规单机回归不依赖这些服务。
 
-第四条用真实账号页面按钮及 Go/PostgreSQL 验证注册恢复码遮挡、重名建议、删除确认/取消、恢复原角色、旧恢复码拒绝、新密码找回、站内记录确认和单机隔离。截图只保存遮挡状态，脚本扫描日志中的恢复码模式并拒绝把泄漏样本算作通过。三个客户端联测工具均过滤服务端数据库连接/私有密钥等环境变量，Godot 客户端还在运行时检查这些变量不存在。
+`--database-recovery` 变体新建专用测试库与三种独立数据库身份，以 TLS 和无 DDL 权限的网关完成同样的真实双端链，再在两个未确认胜利时使用只读身份备份、恢复到新库、撤销旧会话并重启服务。两个原客户端必须拒绝旧令牌、普通登录回到原角色、以原请求取得同一回执并各确认一次奖励。仅清理该运行创建的随机库与角色，私有 dump 和密码留在忽略目录；归档验收只取脱敏报告和日志。
+
+账号页面脚本用真实按钮及 Go/PostgreSQL 验证注册恢复码遮挡、重名建议、删除确认/取消、恢复原角色、旧恢复码拒绝、新密码找回、站内记录确认和单机隔离。截图只保存遮挡状态，脚本扫描日志中的恢复码模式并拒绝把泄漏样本算作通过。客户端联测工具均过滤服务端数据库连接/私有密钥等环境变量，Godot 客户端还在运行时检查这些变量不存在。
 
 最后一条使用真实 Godot HTTPS 客户端、网关、数据库、权威进程和本机 Prometheus：检查有效证书、不受信任根、错误主机名及过期证书；实际抓取私有指标、观察依赖告警触发/恢复，并中断仅此网关的数据库连接检查无半笔资产。测试 CA 不进入系统信任库，私钥和管理令牌不传给客户端，不向外部接收人发送通知。正式监控模板在 `deploy/monitoring`，实际工具校验和告警状态另行留证。
 
