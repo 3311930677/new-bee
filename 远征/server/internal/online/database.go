@@ -9,11 +9,77 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 //go:embed migrations/*.sql
 var migrations embed.FS
+
+// CheckMigrations is the read-only startup path for a restricted runtime role.
+// Unknown migrations also fail closed, so an old gateway cannot silently start
+// against a newer database after an application rollback.
+func CheckMigrations(ctx context.Context, db *pgxpool.Pool) error {
+	tx, err := db.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.RepeatableRead, AccessMode: pgx.ReadOnly})
+	if err != nil {
+		return fmt.Errorf("migration check unavailable")
+	}
+	defer tx.Rollback(ctx)
+	rows, err := tx.Query(ctx, `SELECT name,sha256 FROM schema_migrations ORDER BY name`)
+	if err != nil {
+		return fmt.Errorf("migration history unavailable; run the separate migrator first")
+	}
+	applied := map[string]string{}
+	for rows.Next() {
+		var name, digest string
+		if err := rows.Scan(&name, &digest); err != nil {
+			rows.Close()
+			return fmt.Errorf("migration history unreadable")
+		}
+		applied[name] = digest
+	}
+	rows.Close()
+	if rows.Err() != nil {
+		return fmt.Errorf("migration history unreadable")
+	}
+	files, err := migrations.ReadDir("migrations")
+	if err != nil || len(files) != len(applied) {
+		return fmt.Errorf("database migration set does not match this server")
+	}
+	for _, file := range files {
+		body, err := migrations.ReadFile("migrations/" + file.Name())
+		if err != nil || applied[file.Name()] != fmt.Sprintf("%x", sha256.Sum256(body)) {
+			return fmt.Errorf("database migration checksum does not match this server")
+		}
+	}
+	return tx.Commit(ctx)
+}
+
+// CheckRuntimePrivileges rejects ownership and privilege escalation routes.
+// This checks the effective login, including memberships usable through SET ROLE.
+func CheckRuntimePrivileges(ctx context.Context, db *pgxpool.Pool) error {
+	var unsafe bool
+	err := db.QueryRow(ctx, `SELECT
+        EXISTS(SELECT 1 FROM pg_roles r WHERE
+          (r.rolsuper OR r.rolcreatedb OR r.rolcreaterole OR r.rolreplication OR r.rolbypassrls OR r.rolname LIKE 'pg\_%')
+          AND pg_has_role(current_user,r.oid,'MEMBER'))
+        OR has_database_privilege(current_database(),'CREATE,TEMP')
+        OR has_schema_privilege(current_schema(),'CREATE')
+        OR EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+          WHERE n.nspname=current_schema() AND pg_has_role(current_user,c.relowner,'MEMBER'))
+        OR has_table_privilege('schema_migrations','INSERT,UPDATE,DELETE,TRUNCATE')
+        OR has_table_privilege('wallet_ledger','UPDATE,DELETE,TRUNCATE,TRIGGER')
+        OR EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+          WHERE n.nspname=current_schema() AND c.relkind IN ('r','p') AND
+          has_table_privilege(c.oid,'TRUNCATE,TRIGGER,REFERENCES'))`).Scan(&unsafe)
+	if err != nil {
+		return fmt.Errorf("runtime database privilege check unavailable")
+	}
+	if unsafe {
+		return fmt.Errorf("runtime database role has ownership or administrative privileges")
+	}
+	return nil
+}
 
 // Migrate serializes deploys and rejects changes to already applied migrations.
 func Migrate(ctx context.Context, db *pgxpool.Pool) error {
@@ -33,6 +99,29 @@ func Migrate(ctx context.Context, db *pgxpool.Pool) error {
 		return err
 	}
 	sort.Slice(files, func(i, j int) bool { return files[i].Name() < files[j].Name() })
+	expected := map[string]bool{}
+	for _, file := range files {
+		expected[file.Name()] = true
+	}
+	rows, err := tx.Query(ctx, `SELECT name FROM schema_migrations`)
+	if err != nil {
+		return err
+	}
+	for rows.Next() {
+		var name string
+		if err := rows.Scan(&name); err != nil {
+			rows.Close()
+			return fmt.Errorf("migration history unreadable")
+		}
+		if !expected[name] {
+			rows.Close()
+			return fmt.Errorf("database contains a migration unknown to this server")
+		}
+	}
+	rows.Close()
+	if rows.Err() != nil {
+		return rows.Err()
+	}
 	for _, file := range files {
 		body, err := migrations.ReadFile("migrations/" + file.Name())
 		if err != nil {

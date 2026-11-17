@@ -93,7 +93,9 @@ def client_environment(base, extra):
     # Database URLs, worker MAC keys and future server-only settings stay private.
     public = {key: value for key, value in base.items()
               if not key.startswith("YUANZHENG_") and key != "PGPASSWORD"}
-    private = {"YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "YUANZHENG_ADMIN_TOKEN", "YUANZHENG_TLS_KEY", "PGPASSWORD"}
+    private = {"YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "YUANZHENG_ADMIN_TOKEN", "YUANZHENG_TLS_KEY", "PGPASSWORD",
+               "YUANZHENG_DBADMIN_URL", "YUANZHENG_MIGRATION_DATABASE_URL", "YUANZHENG_BACKUP_DATABASE_URL",
+               "YUANZHENG_MIGRATOR_PASSWORD", "YUANZHENG_RUNTIME_PASSWORD", "YUANZHENG_BACKUP_PASSWORD"}
     if private.intersection(extra):
         raise RuntimeError("Server-only environment cannot be passed to a client")
     return public | extra
@@ -119,6 +121,14 @@ def worker_environment(base):
     return public | {"YUANZHENG_ROOM_SECRET": base.get("YUANZHENG_ROOM_SECRET", "")}
 
 
+def gateway_environment(base):
+    # Offline migration/backup credentials and the test superuser URL never
+    # belong in a running gateway, even when its own URL is restricted.
+    allowed = {"YUANZHENG_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "YUANZHENG_ADMIN_TOKEN"}
+    return {key: value for key, value in base.items()
+            if (not key.startswith("YUANZHENG_") or key in allowed) and not key.upper().startswith("PG")}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["init", "stop", "status", "deps", "test", "build", "run"])
@@ -142,6 +152,7 @@ def main():
         command([GO, "build", "-trimpath", "-o", "bin/gateway.exe", "./cmd/gateway"], env=env)
         command([GO, "build", "-trimpath", "-o", "bin/authoritycheck.exe", "./cmd/authoritycheck"], env=env)
         command([GO, "build", "-trimpath", "-o", "bin/devcert.exe", "./cmd/devcert"], env=env)
+        command([GO, "build", "-trimpath", "-o", "bin/dbops.exe", "./cmd/dbops"], env=env)
     elif args.action == "run":
         command([SERVER / "bin" / "gateway.exe", "--game-root", SERVER.parent], env=env)
 
