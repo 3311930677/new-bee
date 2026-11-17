@@ -113,7 +113,7 @@ func TestCharacterManagementListsOwnershipAndSuggestions(t *testing.T) {
 	h := setup(t)
 	first := h.register("manager_one").value("access_token")
 	second := h.register("manager_two").value("access_token")
-	created := h.request("POST", "/v1/characters", first, "management-create", createCharacterBody{"远行旅人甲乙丙丁戊己庚辛", "zs", "default"})
+	created := h.request("POST", "/v1/characters", first, "management-create", testCharacterBody("远行旅人甲乙丙丁戊己庚辛", "zs", "default"))
 	requireStatus(t, created, 201)
 	id := created.characterID()
 	suggestions := h.request("GET", "/v1/nicknames/suggestions?nickname="+"远行旅人甲乙丙丁戊己庚辛", first, "", nil)

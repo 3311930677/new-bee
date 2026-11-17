@@ -1,0 +1,123 @@
+{
+  "run_id": "60d622d2a02f4ebf98cbcfe9952e0f14",
+  "scope": "real desktop TLS identity UI, local custom-avatar fallback, restricted PostgreSQL runtime, two clients seeing server-owned identity; not mobile/WAN/L1 social acceptance",
+  "online_sources_sha256": "e4b0e4f4b286f9165e6fd961d337a99dbb2943ab338fa51bf62ee06aa4ce7e8b",
+  "gateway_binary_sha256": "6a8054b07d00fcae081216eadd07030b18fba94298ff3128ab25acd2e8136916",
+  "transport": "https-validating-debug-ca",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "daebc576ce1d00f2c3367c0579e1538034d661245256ee0b5630ccf20a583119",
+    "content_version": "3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  },
+  "passed": true,
+  "database_counts": [
+    "2",
+    "2",
+    "2",
+    "2",
+    "0",
+    "0"
+  ],
+  "database_identities": [
+    "ck|male|role_fz",
+    "zs|female|role_fs"
+  ],
+  "offline_actions": [
+    {
+      "action": "provision",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "migrate",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "grant",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "gateway-reject-offline-credential",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-owner-role",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-future-schema",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "migrate",
+      "exit_code": 1,
+      "expected_success": false
+    }
+  ],
+  "clients": [
+    {
+      "avatar_id": "role_fs",
+      "character_id": "493f0b58-da7b-4426-b2a1-577fb9c210e5",
+      "gender_id": "female"
+    },
+    {
+      "avatar_id": "role_fz",
+      "character_id": "2eed5ad4-a36e-47f4-83bf-b69df4599981",
+      "gender_id": "male"
+    }
+  ],
+  "worker_errors": [],
+  "private_values_in_logs": false,
+  "recovery_code_in_logs": false,
+  "checks": [
+    {
+      "name": "real client a completes identity UI and other-player profile",
+      "passed": true
+    },
+    {
+      "name": "real client b completes identity UI and other-player profile",
+      "passed": true
+    },
+    {
+      "name": "independent SQL confirms two restored characters, starter ledgers and no active sessions/leases",
+      "passed": true
+    },
+    {
+      "name": "independent SQL confirms gender and portrait remain separate from profession",
+      "passed": true
+    },
+    {
+      "name": "both real clients complete reciprocal profile inspection",
+      "passed": true
+    },
+    {
+      "name": "actual 480x800 creation and profile captures exist",
+      "passed": true
+    }
+  ],
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true
+}

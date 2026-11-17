@@ -1,0 +1,30 @@
+{
+  "started_utc": "2026-11-17T13:31:45.166488+00:00",
+  "finished_utc": "2026-11-17T13:31:56.379405+00:00",
+  "exit_code": 0,
+  "controlled_physics_rate": 0,
+  "original_second_act_sha256": "875d066dbfb077913f2b5914cc26fd7d01f2d32c873178663cf3785074961fe3",
+  "original_source_unchanged": true,
+  "player_data_unchanged": true,
+  "samples": [
+    {
+      "distance": 148.041030883789,
+      "modal": false,
+      "phase": "after_two_process_frames",
+      "physics_before": 181,
+      "physics_now": 184,
+      "seen": true,
+      "status": "ready"
+    },
+    {
+      "distance": 147.388305664063,
+      "modal": false,
+      "phase": "after_physics_frame",
+      "physics_before": 181,
+      "physics_now": 185,
+      "seen": true,
+      "status": "ready"
+    }
+  ],
+  "scope": "isolated copy of failed existing test; records two process frames then one real physics update before the original observation assertion"
+}

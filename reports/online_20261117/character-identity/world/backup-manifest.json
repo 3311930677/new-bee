@@ -1,0 +1,97 @@
+{
+  "format": 1,
+  "database": "yz_drill_309a28e73f5f442c9760",
+  "schema": "game",
+  "server_version": 180007,
+  "started_utc": "2026-11-17T13:14:29.0005483Z",
+  "finished_utc": "2026-11-17T13:14:39.4617985Z",
+  "dump_sha256": "d63fa2ccd77b4dffd4402af0e0ee6e7557de9b00adb901f6107f58f2911b64c3",
+  "dump_bytes": 62617,
+  "tables": [
+    {
+      "name": "accounts",
+      "rows": 2,
+      "sha256": "93a20fe52496ec57690016d521fd5746f8a1a61a6e5652d91769524a1f4ef3a5"
+    },
+    {
+      "name": "audit_events",
+      "rows": 2,
+      "sha256": "6226071a4feaef945972c35cd14a889223b58381fee0453476d307281b748e6a"
+    },
+    {
+      "name": "battle_inputs",
+      "rows": 65,
+      "sha256": "fdebeda31484d5015a6083ba3fb47cfc6de563e31801dd55079b5589c60d9eac"
+    },
+    {
+      "name": "battle_results",
+      "rows": 2,
+      "sha256": "23ecc0cbb83b943a281aae80bd64595765957f85ef298008d374702d90b3c0a0"
+    },
+    {
+      "name": "battle_reward_claims",
+      "rows": 2,
+      "sha256": "8289970807c1aeaae084cd28584ac8b3356eae3c730debcc5e4d3edc282c4da2"
+    },
+    {
+      "name": "battles",
+      "rows": 2,
+      "sha256": "2d87a0158cf2c8a71c15d0d67ba29f914897b95bf314407b8140e610798de677"
+    },
+    {
+      "name": "character_progress",
+      "rows": 2,
+      "sha256": "119d2856d9d6fd338f63ccf6400c3f17747586cbd440a2b2a192e0b867115bc5"
+    },
+    {
+      "name": "characters",
+      "rows": 2,
+      "sha256": "c6883676d1c012babbf1d55258324c1ad22a30ba34d89654a3f49585b647a01f"
+    },
+    {
+      "name": "command_receipts",
+      "rows": 89,
+      "sha256": "6ac52ca42652fc49e3c1e7b795d04a8c4505eefe40ab697db956042d149643f6"
+    },
+    {
+      "name": "inventory_items",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "room_instances",
+      "rows": 1,
+      "sha256": "d006e57a2e37befdf803ffa9cba44c31028d99e3af1823df5dd8e9b92bf91043"
+    },
+    {
+      "name": "room_leases",
+      "rows": 2,
+      "sha256": "57bc87d2caf14d48d708721b51c97d4d204a4df990caf4f5f656cca707f29978"
+    },
+    {
+      "name": "schema_migrations",
+      "rows": 4,
+      "sha256": "0e2d54783905978aa5868a1606efa7c74ab4d9fdb0da1e7292030216627f6d54"
+    },
+    {
+      "name": "security_notifications",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "sessions",
+      "rows": 2,
+      "sha256": "dd1706298b26d096a624de4bd2f6ad300f295bf63f25ae12d58eef619907cc0c"
+    },
+    {
+      "name": "wallet_ledger",
+      "rows": 4,
+      "sha256": "5ff02f630020d5392b5506658c372f8b1ded98e6fd47744d075b782f4f2dee6d"
+    },
+    {
+      "name": "wallets",
+      "rows": 2,
+      "sha256": "4669f1a0586a93184cd1ef4468cfb983b139863a6acabdb9eed46daa55d07bee"
+    }
+  ]
+}

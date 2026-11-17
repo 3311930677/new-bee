@@ -96,7 +96,7 @@ func setupTown(t *testing.T, capacity int) *harness {
 func (h *harness) townRole(name string) (string, string, roomLease) {
 	h.t.Helper()
 	token := h.register(name).value("access_token")
-	created := h.request("POST", "/v1/characters", token, "create-role-"+name, createCharacterBody{strings.ReplaceAll(name, "_", ""), "zs", "default"})
+	created := h.request("POST", "/v1/characters", token, "create-role-"+name, testCharacterBody(strings.ReplaceAll(name, "_", ""), "zs", "default"))
 	requireStatus(h.t, created, 201)
 	id := created.characterID()
 	requireStatus(h.t, h.request("POST", "/v1/characters/"+id+"/select", token, "select-role-"+name, map[string]any{}), 200)
@@ -199,7 +199,7 @@ func TestBattleSettlementRollbackRetryAndOnceReward(t *testing.T) {
 	requireStatus(t, h.request("GET", "/v1/battles/"+id, other, "", nil), 404)
 	requireStatus(t, h.request("POST", "/v1/battles/"+id+"/acknowledge", token, "early-ack-0001", map[string]any{}), 409)
 	requireStatus(t, h.request("DELETE", "/v1/characters/"+charID, token, "delete-busy-01", map[string]string{"confirm_nickname": "battleowner"}), 409)
-	second := h.request("POST", "/v1/characters", token, "second-role-01", createCharacterBody{"secondrole", "ck", "default"})
+	second := h.request("POST", "/v1/characters", token, "second-role-01", testCharacterBody("secondrole", "ck", "default"))
 	requireStatus(t, second, 201)
 	requireStatus(t, h.request("POST", "/v1/characters/"+second.characterID()+"/select", token, "switch-busy-01", map[string]any{}), 409)
 	// Fail after the authority has accepted an attack, during the wallet ledger write.

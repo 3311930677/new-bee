@@ -4,6 +4,7 @@ extends Node2D
 const Art := preload("res://src/world/ReferenceWorldArt.gd")
 const Field := preload("res://src/ui/FieldUI.gd")
 const BattlePage := preload("res://src/ui/OnlineBattle.tscn")
+const Profile := preload("res://src/online/OnlineProfile.gd")
 
 var auto_connect := true
 var automatic_poll := true
@@ -24,6 +25,7 @@ var _poll_elapsed := 0.0
 var _move_elapsed := 0.0
 var _held := Vector2.ZERO
 var _connected := false
+var _profiles: Control
 
 
 func _ready() -> void:
@@ -76,7 +78,11 @@ func _ready() -> void:
 				_held = direction if event.pressed else Vector2.ZERO
 				arrow.accept_event())
 		arrow.mouse_exited.connect(func() -> void: _held = Vector2.ZERO)
-	_button(bottom, "返回在线角色", _back)
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation", 8)
+	bottom.add_child(actions)
+	_button(actions, "同行名片", _open_profiles)
+	_button(actions, "返回在线角色", _back)
 	if auto_connect:
 		call_deferred("enter_world")
 
@@ -237,6 +243,8 @@ func confirm_result() -> Dictionary:
 
 func _present_battle(value: Variant) -> void:
 	battle = value.duplicate(true) if value is Dictionary else {}
+	if not battle.is_empty():
+		_close_profiles()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -281,7 +289,7 @@ func _process(delta: float) -> void:
 		else:
 			refresh_world()
 		return
-	if battle.is_empty() and _move_elapsed >= 0.15:
+	if battle.is_empty() and not is_instance_valid(_profiles) and _move_elapsed >= 0.15:
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		if direction.is_zero_approx():
 			direction = _held
@@ -298,14 +306,73 @@ func _back() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not G.ui_blocked and event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
-		_back()
+		if is_instance_valid(_profiles):
+			_close_profiles()
+		else:
+			_back()
+
+
+func _open_profiles() -> void:
+	if is_instance_valid(_profiles) or not battle.is_empty():
+		return
+	_held = Vector2.ZERO
+	_profiles = Control.new()
+	_profiles.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_hud.add_child(_profiles)
+	G.veil(_profiles, 0.9, true)
+	var margin := MarginContainer.new()
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right", "top", "bottom"]:
+		margin.add_theme_constant_override("margin_" + side, 24)
+	_profiles.add_child(margin)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 12)
+	margin.add_child(column)
+	column.add_child(G.gold_label("同行旅人", G.FS_BIG))
+	column.add_child(G.gold_label("当前同频道 %d 人 · 身份信息由旅人选择" % entities.size(), G.FS_SM, false))
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.add_child(scroll)
+	var roster := VBoxContainer.new()
+	roster.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	roster.add_theme_constant_override("separation", 12)
+	scroll.add_child(roster)
+	for value in entities:
+		if not value is Dictionary:
+			continue
+		var identity := value as Dictionary
+		var row := HBoxContainer.new()
+		row.name = "ProfileEntry_" + String(identity.get("id", ""))
+		row.set_meta("character_id", String(identity.get("id", "")))
+		row.add_theme_constant_override("separation", 12)
+		roster.add_child(row)
+		var portrait := Field.portrait(Profile.avatar_role(identity), Vector2.ZERO, Vector2(76, 84))
+		portrait.custom_minimum_size = Vector2(76, 84)
+		portrait.set_meta("avatar_role", Profile.avatar_role(identity))
+		row.add_child(portrait)
+		var words := VBoxContainer.new()
+		words.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		words.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.add_child(words)
+		var own := " · 我" if String(identity.get("id", "")) == String(Online.selected_character.get("id", "")) else ""
+		words.add_child(G.gold_label(String(identity.get("nickname", "旅人")) + own, G.FS_MD))
+		var role_index := maxi(0, Profile.ROLE_IDS.find(String(identity.get("role_id", "zs"))))
+		words.add_child(G.gold_label("%s · %s · Lv.%d" % [["破军", "穿杨", "霜语", "晨星"][role_index], Profile.gender_name(String(identity.get("gender_id", "unspecified"))), int(identity.get("level", 1))], G.FS_SM, false))
+	_button(column, "关闭名片", _close_profiles)
+
+
+func _close_profiles() -> void:
+	if is_instance_valid(_profiles):
+		_profiles.queue_free()
+	_profiles = null
 
 
 class Traveller extends Node2D:
 	var identity: Dictionary = {}
 	var _texture: Texture2D
 	func _ready() -> void:
-		var role_id := String(identity.get("role_id", "zs"))
+		var role_id := Profile.safe_role(String(identity.get("role_id", "zs")))
 		var slug := String({"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}.get(role_id, "pojun"))
 		var source := load("res://image/role/%s/%s_idle.png" % [role_id, slug]) as Texture2D
 		var region := AtlasTexture.new()

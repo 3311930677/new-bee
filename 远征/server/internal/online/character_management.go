@@ -24,7 +24,7 @@ func (s *Server) deletedCharacters(w http.ResponseWriter, r *http.Request, who i
 	list := []deleted{}
 	for rows.Next() {
 		var c deleted
-		if err = rows.Scan(&c.ID, &c.Nickname, &c.RoleID, &c.AppearanceID, &c.Level, &c.Experience, &c.MapID, &c.Version, &c.DeletedAt, &c.RecoverUntil); err != nil {
+		if err = rows.Scan(&c.ID, &c.Nickname, &c.RoleID, &c.AppearanceID, &c.GenderID, &c.AvatarID, &c.Level, &c.Experience, &c.MapID, &c.Version, &c.DeletedAt, &c.RecoverUntil); err != nil {
 			s.fail(w, err)
 			return
 		}

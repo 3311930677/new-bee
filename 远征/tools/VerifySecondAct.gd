@@ -349,7 +349,8 @@ func _run_port_side_quests() -> void:
 			_check(scale != null, "盐鳞王观察支线必须有真实首领")
 			if scale != null:
 				map._player.position = scale.position + Vector2(150, 0)
-				await get_tree().process_frame
+				# Observation runs in _physics_process; two idle frames may precede it.
+				await get_tree().physics_frame
 				await get_tree().process_frame
 			_check(map._battle == null and G.side_status_of(qid) == QuestService.SIDE_READY, "在接触前应完成盐鳞王观察，不强迫战斗")
 		else:

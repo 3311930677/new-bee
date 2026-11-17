@@ -11,15 +11,20 @@ func _check(ok: bool, reason: String) -> void:
 
 
 func _local_state() -> String:
-	return JSON.stringify({"role": G.selected_role, "name": G.player_name, "wallet": G.wallet, "prog": G.prog, "items": G.items, "account": G.account})
+	return JSON.stringify({"role": G.selected_role, "name": G.player_name, "gender": G.gender, "avatar_id": G.avatar_id, "avatar_custom": G.avatar_custom, "avatar_use_custom": G.avatar_use_custom, "wallet": G.wallet, "prog": G.prog, "items": G.items, "account": G.account})
 
 
 func _ready() -> void:
 	var before := _local_state()
 	var save_before := FileAccess.get_file_as_bytes(G.SAVE_PATH) if FileAccess.file_exists(G.SAVE_PATH) else PackedByteArray()
-	var preview := Profile.import_preview({"selected_role": "fs", "player_name": "归路旅人", "wallet": {"gold": 999999999}, "prog": {"level": 60}, "gm_unlocked": true})
-	_check(preview.identity.size() == 3, "角色导入只包含三个身份白名单字段")
+	var preview := Profile.import_preview({"selected_role": "fs", "player_name": "归路旅人", "gender": "女", "avatar_id": "role_fz", "wallet": {"gold": 999999999}, "prog": {"level": 60}, "gm_unlocked": true})
+	_check(preview.identity.size() == 5, "角色导入只包含五个身份白名单字段")
 	_check(preview.identity.role_id == "fs" and preview.identity.nickname == "归路旅人", "保留职业和昵称建议")
+	_check(preview.identity.gender_id == "female" and preview.identity.avatar_id == "role_fz", "保留已批准的性别与头像建议")
+	var custom := Profile.import_preview({"selected_role": "ck", "gender": "invalid", "avatar_id": "role_fs", "avatar_use_custom": true, "avatar_custom": "../../private.png"})
+	_check(custom.identity.gender_id == "unspecified" and custom.identity.avatar_id == "role_default", "自选图片回退职业小像，无效性别回退未指定")
+	_check(not custom.identity.has("avatar_custom") and not custom.avatar_notice.contains("private.png"), "本机头像文件名不进入请求或说明")
+	_check(Profile.avatar_role({"role_id": "gm", "avatar_id": "../../private"}) == "zs", "客户端绘制只解析已批准职业资源")
 	_check(not preview.identity.has("wallet") and not preview.identity.has("prog"), "本地物资不进入在线创建请求")
 	_check(Profile.import_preview({"selected_role": "gm"}).identity.role_id == "zs", "无效本地职业回退公开职业")
 	_check(Profile.content_version().length() == 64, "客户端从实际内容计算 SHA256")
@@ -29,6 +34,13 @@ func _ready() -> void:
 	Online._debug_tls_options = TLSOptions.client()
 	_check(Online.configure("http://127.0.0.1:1"), "调试构建可连接回环服务")
 	_check(Online._debug_tls_options == null, "切换服务器时不沿用上一连接的调试证书配置")
+	Online.manifest = {"features": ["character_identity"], "gender_ids": Profile.GENDER_IDS, "avatar_ids": Profile.AVATAR_IDS}
+	var invalid_avatar: Dictionary = await Online.create_character({"nickname": "边界旅人", "role_id": "zs", "avatar_id": "user://private.png"})
+	_check(String(invalid_avatar.get("code", "")) == "invalid_avatar", "未批准头像在客户端发请求前拒绝")
+	Online.manifest = {"features": []}
+	var unsupported: Dictionary = await Online.create_character({"nickname": "边界旅人", "role_id": "zs", "gender_id": "female"})
+	_check(String(unsupported.get("code", "")) == "identity_not_supported", "旧服务器不静默丢弃明确选择的身份")
+	Online.manifest.clear()
 	Online.access_token = "boundary-test-not-a-server-session"
 	Online.selected_character = {"id": "online-character", "nickname": "在线旅人", "level": 1}
 	var gm := get_node_or_null("/root/GmConsole")

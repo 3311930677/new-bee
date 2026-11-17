@@ -176,23 +176,24 @@ func (s *Server) roomSnapshot(w http.ResponseWriter, r *http.Request, who identi
 		s.fail(w, err)
 		return
 	}
-	rows, err := tx.Query(r.Context(), `SELECT c.id::text,c.nickname,c.role_id,l.x,l.y,l.move_sequence,EXISTS(SELECT 1 FROM battles b WHERE b.character_id=c.id AND b.status='active') FROM room_leases l JOIN sessions s ON s.id=l.session_id JOIN characters c ON c.id=l.character_id WHERE l.room_id=$1 AND l.expires_at>now() AND s.revoked_at IS NULL AND s.expires_at>now() AND s.access_expires_at>now() AND s.active_character_id=c.id AND c.deleted_at IS NULL ORDER BY c.id`, l.RoomID)
+	rows, err := tx.Query(r.Context(), `SELECT c.id::text,c.nickname,c.role_id,c.gender_id,c.avatar_id,c.level,l.x,l.y,l.move_sequence,EXISTS(SELECT 1 FROM battles b WHERE b.character_id=c.id AND b.status='active') FROM room_leases l JOIN sessions s ON s.id=l.session_id JOIN characters c ON c.id=l.character_id WHERE l.room_id=$1 AND l.expires_at>now() AND s.revoked_at IS NULL AND s.expires_at>now() AND s.access_expires_at>now() AND s.active_character_id=c.id AND c.deleted_at IS NULL ORDER BY c.id`, l.RoomID)
 	if err != nil {
 		s.fail(w, err)
 		return
 	}
 	entities := []map[string]any{}
 	for rows.Next() {
-		var id, name, role string
+		var id, name, role, gender, avatar string
+		var level int
 		var x, y float64
 		var sequence int64
 		var fighting bool
-		if err = rows.Scan(&id, &name, &role, &x, &y, &sequence, &fighting); err != nil {
+		if err = rows.Scan(&id, &name, &role, &gender, &avatar, &level, &x, &y, &sequence, &fighting); err != nil {
 			rows.Close()
 			s.fail(w, err)
 			return
 		}
-		entities = append(entities, map[string]any{"id": id, "nickname": name, "role_id": role, "x": x, "y": y, "move_sequence": sequence, "in_battle": fighting})
+		entities = append(entities, map[string]any{"id": id, "nickname": name, "role_id": role, "gender_id": gender, "avatar_id": avatar, "level": level, "x": x, "y": y, "move_sequence": sequence, "in_battle": fighting})
 	}
 	rows.Close()
 	if rows.Err() != nil {

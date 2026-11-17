@@ -1,0 +1,27 @@
+{
+  "expected_cases": 79,
+  "passed_cases": 79,
+  "exit_code": 0,
+  "started_at_utc": "2026-11-17T13:34:04.314566+00:00",
+  "finished_at_utc": "2026-11-17T13:45:39.198875+00:00",
+  "load_screen_sha256": "d3a35ebd4e6c04d8bf634e5f5584dd02be164fa79a66d3f7176cdef03c3d6f60",
+  "performance_thresholds_changed": false,
+  "goal_status": "active",
+  "L0_complete": false,
+  "raw_console_encoding": "gb18030",
+  "engine_shutdown_diagnostics": {
+    "cases": 20,
+    "lines": 37,
+    "tracked_issue": 43
+  },
+  "host_certificate_store_diagnostics": {
+    "cases": 0,
+    "lines": 0,
+    "scope": "exact preexisting sandbox allowance; real TLS verified separately"
+  },
+  "original_console_diagnostic_notes": [
+    "NOTE: 20 case(s) emitted 37 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43."
+  ],
+  "validation": {},
+  "scope": "strict full singleplayer regression; online end-to-end evidence is archived separately"
+}

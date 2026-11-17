@@ -30,6 +30,10 @@ type answer struct {
 	body   []byte
 }
 
+func testCharacterBody(nickname, role, appearance string) createCharacterBody {
+	return createCharacterBody{Nickname: nickname, RoleID: role, AppearanceID: appearance}
+}
+
 func (a answer) value(key string) string {
 	var value string
 	_ = json.Unmarshal(a.data[key], &value)
@@ -185,7 +189,7 @@ func TestConcurrentCreateAndReceiptSurvivesRestart(t *testing.T) {
 	h := setup(t)
 	account := h.register("creator_account")
 	token := account.value("access_token")
-	body := createCharacterBody{"并肩旅人", "zs", "default"}
+	body := testCharacterBody("并肩旅人", "zs", "default")
 	const workers = 16
 	answers := make(chan answer, workers)
 	var wg sync.WaitGroup
@@ -241,22 +245,22 @@ func TestCharacterLimitOwnershipAndUntrustedAssets(t *testing.T) {
 	h := setup(t)
 	first := h.register("owner_account")
 	token := first.value("access_token")
-	a := h.request("POST", "/v1/characters", token, "create-first-001", createCharacterBody{"归路旅人", "fs", "default"})
+	a := h.request("POST", "/v1/characters", token, "create-first-001", testCharacterBody("归路旅人", "fs", "default"))
 	requireStatus(t, a, 201)
 	id := a.characterID()
 	requireStatus(t, h.request("POST", "/v1/characters", token, "injected-assets-01", map[string]any{"nickname": "改档旅人", "role_id": "zs", "wallet": map[string]int{"gold": 999999}}), 400)
-	requireStatus(t, h.request("POST", "/v1/characters", token, "bad-appearance-01", createCharacterBody{"稀有旅人", "zs", "unapproved"}), 400)
-	requireStatus(t, h.request("POST", "/v1/characters", token, "bad-role-0000001", createCharacterBody{"无效旅人", "gm", "default"}), 400)
-	requireStatus(t, h.request("POST", "/v1/characters", token, "", createCharacterBody{"无标旅人", "zs", "default"}), 400)
+	requireStatus(t, h.request("POST", "/v1/characters", token, "bad-appearance-01", testCharacterBody("稀有旅人", "zs", "unapproved")), 400)
+	requireStatus(t, h.request("POST", "/v1/characters", token, "bad-role-0000001", testCharacterBody("无效旅人", "gm", "default")), 400)
+	requireStatus(t, h.request("POST", "/v1/characters", token, "", testCharacterBody("无标旅人", "zs", "default")), 400)
 	second := h.register("other_account")
 	other := second.value("access_token")
 	requireStatus(t, h.request("GET", "/v1/characters/"+id, other, "", nil), 404)
 	requireStatus(t, h.request("POST", "/v1/characters/"+id+"/select", other, "select-other-001", map[string]any{}), 404)
-	requireStatus(t, h.request("POST", "/v1/characters", other, "duplicate-name-001", createCharacterBody{"归路旅人", "ck", "default"}), 409)
+	requireStatus(t, h.request("POST", "/v1/characters", other, "duplicate-name-001", testCharacterBody("归路旅人", "ck", "default")), 409)
 	for _, entry := range []struct{ name, key string }{{"第二旅人", "create-second-01"}, {"第三旅人", "create-third-001"}} {
-		requireStatus(t, h.request("POST", "/v1/characters", token, entry.key, createCharacterBody{entry.name, "ck", "default"}), 201)
+		requireStatus(t, h.request("POST", "/v1/characters", token, entry.key, testCharacterBody(entry.name, "ck", "default")), 201)
 	}
-	requireStatus(t, h.request("POST", "/v1/characters", token, "create-fourth-01", createCharacterBody{"第四旅人", "fz", "default"}), 409)
+	requireStatus(t, h.request("POST", "/v1/characters", token, "create-fourth-01", testCharacterBody("第四旅人", "fz", "default")), 409)
 	requireStatus(t, h.request("POST", "/v1/characters/"+id+"/select", token, "select-first-01", map[string]any{}), 200)
 	current := h.request("GET", "/v1/session", token, "", nil)
 	requireStatus(t, current, 200)
@@ -275,7 +279,7 @@ func TestRollbackOnLedgerFailureAndRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	body := createCharacterBody{"重试旅人", "fz", "default"}
+	body := testCharacterBody("重试旅人", "fz", "default")
 	requireStatus(t, h.request("POST", "/v1/characters", token, "rollback-request-01", body), 500)
 	for _, table := range []string{"characters", "wallets", "wallet_ledger", "command_receipts", "character_progress"} {
 		if n := h.count("SELECT count(*) FROM " + table); n != 0 {
@@ -356,7 +360,7 @@ func TestVersionGateAndLimits(t *testing.T) {
 func TestDeleteRecoveryAndImmutableLedger(t *testing.T) {
 	h := setup(t)
 	token := h.register("recovery_account").value("access_token")
-	created := h.request("POST", "/v1/characters", token, "recovery-create-01", createCharacterBody{"待归旅人", "zs", "default"})
+	created := h.request("POST", "/v1/characters", token, "recovery-create-01", testCharacterBody("待归旅人", "zs", "default"))
 	requireStatus(t, created, 201)
 	id := created.characterID()
 	requireStatus(t, h.request("POST", "/v1/characters/"+id+"/select", token, "recovery-select-01", map[string]any{}), 200)
@@ -397,7 +401,7 @@ func TestConcurrentDistinctCharacterLimit(t *testing.T) {
 		go func(index int) {
 			defer wg.Done()
 			suffix := string(rune('a' + index))
-			results <- h.request("POST", "/v1/characters", token, "distinct-create-"+suffix, createCharacterBody{"并发旅人" + suffix, "zs", "default"})
+			results <- h.request("POST", "/v1/characters", token, "distinct-create-"+suffix, testCharacterBody("并发旅人"+suffix, "zs", "default"))
 		}(i)
 	}
 	wg.Wait()

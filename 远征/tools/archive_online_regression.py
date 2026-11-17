@@ -37,6 +37,10 @@ def main():
             or len(passed) != len(expected) or set(passed) != set(expected)
             or "ALL GREEN" not in console or re.search(r"(?m)^FAIL\s", console)):
         raise RuntimeError("Strict full regression did not complete successfully")
+    if (not metadata.get("runner_unchanged") or not metadata.get("load_screen_unchanged")
+            or hashlib.sha256((GAME / "tools/run_regression.ps1").read_bytes()).hexdigest() != metadata.get("runner_sha256")
+            or hashlib.sha256((GAME / "src/ui/LoadScreen.gd").read_bytes()).hexdigest() != metadata.get("load_screen_sha256")):
+        raise RuntimeError("Runner or loading source changed since the completed run")
     target = ROOT / "reports" / ("online_" + args.date)
     if args.tag:
         target = target / args.tag
@@ -68,7 +72,16 @@ def main():
     shutdown_lines = sum(item["engine_shutdown_lines"] for item in diagnostic_cases)
     used_runner = log_folder / "runner-used.ps1.snapshot"
     if used_runner.is_file():
+        if hashlib.sha256(used_runner.read_bytes()).hexdigest() != metadata["runner_sha256"]:
+            raise RuntimeError("Saved runner does not match the executed source")
         files.append((used_runner, Path("run_regression-used.ps1.snapshot")))
+    used_second_act = log_folder / "VerifySecondAct-used.gd.snapshot"
+    if "second_act_sha256" in metadata:
+        if (not metadata.get("second_act_unchanged") or not used_second_act.is_file()
+                or hashlib.sha256(used_second_act.read_bytes()).hexdigest() != metadata["second_act_sha256"]
+                or hashlib.sha256((GAME / "tools/VerifySecondAct.gd").read_bytes()).hexdigest() != metadata["second_act_sha256"]):
+            raise RuntimeError("Second-act snapshot does not match the completed run")
+        files.append((used_second_act, Path("VerifySecondAct-used.gd.snapshot")))
     files.append((GAME / "tools/run_regression.ps1", Path("run_regression-current.ps1.snapshot")))
     validation = {}
     if args.validation_prefix:
