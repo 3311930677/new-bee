@@ -72,6 +72,8 @@ func connect_service() -> Dictionary:
 	var data: Dictionary = result.get("data", {})
 	if int(data.get("protocol_version", 0)) != 1 or String(data.get("ruleset_version", "")) != Profile.RULESET_VERSION or String(data.get("content_version", "")) != _local_content_version:
 		return _failure("客户端与服务器版本不一致，请更新游戏。", "content_version_mismatch")
+	if Profile.identity_supported(data) and not Profile.catalogue_matches(data):
+		return _failure("客户端与服务器的身份小像版本不一致，请更新游戏。", "content_version_mismatch")
 	manifest = data.duplicate(true)
 	state_changed.emit()
 	return result
@@ -168,6 +170,19 @@ func refresh_characters() -> Dictionary:
 func create_character(identity: Dictionary, request_id := "") -> Dictionary:
 	# Whitelist a second time even when the caller uses an import preview.
 	var payload := {"nickname": String(identity.get("nickname", "")), "role_id": String(identity.get("role_id", "")), "appearance_id": String(identity.get("appearance_id", "default"))}
+	var gender := String(identity.get("gender_id", "unspecified"))
+	var avatar := String(identity.get("avatar_id", "role_default"))
+	if not Profile.GENDER_IDS.has(gender):
+		return _failure("请选择已开放的性别信息。", "invalid_gender")
+	if not Profile.AVATAR_IDS.has(avatar):
+		return _failure("请选择已开放的职业小像。", "invalid_avatar")
+	if gender != "unspecified" or avatar != "role_default":
+		if not Profile.identity_supported(manifest):
+			return _failure("当前服务器尚未开放身份小像选择，请使用默认身份或更新服务器。", "identity_not_supported")
+		if gender != "unspecified":
+			payload.gender_id = gender
+		if avatar != "role_default":
+			payload.avatar_id = avatar
 	return await _send_command("/v1/characters", payload, request_id)
 
 

@@ -4,6 +4,7 @@ const Profile := preload("res://src/online/OnlineProfile.gd")
 const Lacquer := preload("res://src/ui/LacquerUI.gd")
 const ROLE_NAMES := ["破军", "穿杨", "霜语", "晨星"]
 const AccountPage := preload("res://src/ui/OnlineAccount.tscn")
+const Field := preload("res://src/ui/FieldUI.gd")
 
 var _status: Label
 var _url: LineEdit
@@ -11,6 +12,11 @@ var _username: LineEdit
 var _password: LineEdit
 var _nickname: LineEdit
 var _role: OptionButton
+var _gender: OptionButton
+var _avatar: OptionButton
+var _avatar_preview: Control
+var _identity_hint: Label
+var _import_notice: Label
 var _form: VBoxContainer
 var _roster: VBoxContainer
 var _create_form: VBoxContainer
@@ -104,12 +110,42 @@ func _ready() -> void:
 	for role_name in ROLE_NAMES:
 		_role.add_item(role_name)
 	create.add_child(_role)
+	var identity_row := HBoxContainer.new()
+	identity_row.add_theme_constant_override("separation", 12)
+	create.add_child(identity_row)
+	_avatar_preview = Field.portrait("zs", Vector2.ZERO, Vector2(80, 88))
+	_avatar_preview.custom_minimum_size = Vector2(80, 88)
+	_avatar_preview.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	identity_row.add_child(_avatar_preview)
+	var identity_options := VBoxContainer.new()
+	identity_options.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity_options.add_theme_constant_override("separation", 8)
+	identity_row.add_child(identity_options)
+	_gender = OptionButton.new()
+	_gender.custom_minimum_size.y = 44
+	for words in Profile.GENDER_NAMES:
+		_gender.add_item("性别：" + words)
+	identity_options.add_child(_gender)
+	_avatar = OptionButton.new()
+	_avatar.custom_minimum_size.y = 44
+	for words in Profile.AVATAR_NAMES:
+		_avatar.add_item("头像：" + words)
+	identity_options.add_child(_avatar)
+	_role.item_selected.connect(func(_index: int) -> void: _update_avatar_preview())
+	_avatar.item_selected.connect(func(_index: int) -> void: _update_avatar_preview())
+	_identity_hint = G.gold_label("性别与小像会显示在同行名片中；性别可选未指定。", G.FS_SM, false)
+	_identity_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	create.add_child(_identity_hint)
 	_button(create, "预览单机角色身份", _preview_import)
+	_import_notice = G.gold_label("", G.FS_SM, false)
+	_import_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	create.add_child(_import_notice)
+	_import_notice.hide()
 	_button(create, "确认创建在线角色", _create_character)
 	_suggestions = VBoxContainer.new()
 	_suggestions.add_theme_constant_override("separation", 8)
 	create.add_child(_suggestions)
-	_add_text(create, "可沿用职业和昵称；等级、金币、装备与宠物战力从线上重新成长。")
+	_add_text(create, "可沿用职业、昵称和身份建议；等级、金币、装备与宠物战力从线上重新成长。")
 	_details = G.gold_label("", G.FS_SM, false)
 	_details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_details)
@@ -163,6 +199,9 @@ func _add_text(parent: Control, words: String) -> void:
 
 func _set_busy(value: bool) -> void:
 	_busy = value
+	_role.disabled = value
+	_gender.disabled = value or not _identity_available()
+	_avatar.disabled = value or not _identity_available()
 	for button in _buttons:
 		if is_instance_valid(button):
 			button.modulate.a = 0.5 if value else 1.0
@@ -209,20 +248,40 @@ func _authenticate(register: bool) -> void:
 
 
 func _preview_import() -> void:
-	var preview := Profile.import_preview({"player_name": G.player_name, "selected_role": G.selected_role})
+	var preview := Profile.import_preview({"player_name": G.player_name, "selected_role": G.selected_role, "gender": G.gender, "avatar_id": G.avatar_id, "avatar_use_custom": G.avatar_use_custom})
 	_nickname.text = String(preview.identity.nickname)
 	_role.select(Profile.ROLE_IDS.find(String(preview.identity.role_id)))
-	_details.text = "%s\n不带入：%s" % [preview.notice, "、".join(preview.not_imported)]
+	_gender.select(Profile.GENDER_IDS.find(String(preview.identity.gender_id)) if _identity_available() else 0)
+	_avatar.select(Profile.AVATAR_IDS.find(String(preview.identity.avatar_id)) if _identity_available() else 0)
+	_update_avatar_preview()
+	var compatibility := "" if _identity_available() else "\n当前服务器仅支持默认身份，本次预览使用未指定性别和职业头像。"
+	_import_notice.text = "%s\n%s\n不带入：%s%s" % [preview.notice, preview.avatar_notice, "、".join(preview.not_imported), compatibility]
+	_import_notice.show()
+
+
+func _identity_available() -> bool:
+	return Profile.identity_supported(Online.manifest) and Profile.catalogue_matches(Online.manifest)
+
+
+func _update_avatar_preview() -> void:
+	var identity := {"role_id": Profile.ROLE_IDS[_role.selected], "avatar_id": Profile.AVATAR_IDS[_avatar.selected]}
+	var avatar_role := Profile.avatar_role(identity)
+	var picture := Field.portrait(avatar_role, Vector2.ZERO, Vector2(80, 88))
+	_avatar_preview.set("texture", picture.get("texture"))
+	_avatar_preview.set_meta("avatar_role", avatar_role)
+	_avatar_preview.queue_redraw()
+	picture.free()
 
 
 func _create_character() -> void:
 	if _busy:
 		return
 	_set_busy(true)
-	var result: Dictionary = await Online.create_character({"nickname": _nickname.text, "role_id": Profile.ROLE_IDS[_role.selected], "appearance_id": "default"})
+	var result: Dictionary = await Online.create_character({"nickname": _nickname.text, "role_id": Profile.ROLE_IDS[_role.selected], "appearance_id": "default", "gender_id": Profile.GENDER_IDS[_gender.selected], "avatar_id": Profile.AVATAR_IDS[_avatar.selected]})
 	if _show_result(result, "在线角色创建成功"):
 		await Online.refresh_characters()
 		_clear_suggestions()
+		_import_notice.hide()
 	elif String(result.get("code", "")) == "nickname_unavailable":
 		_clear_suggestions()
 		var alternatives: Dictionary = await Online.nickname_suggestions(_nickname.text)
@@ -241,6 +300,9 @@ func _refresh_roster() -> void:
 	_logout_action.visible = Online.is_authenticated()
 	_security_action.visible = Online.is_authenticated()
 	_save_code_action.visible = not Online.pending_recovery_code.is_empty()
+	_gender.disabled = _busy or not _identity_available()
+	_avatar.disabled = _busy or not _identity_available()
+	_identity_hint.text = "性别与小像会显示在同行名片中；战斗使用职业形象。" if _identity_available() else "当前服务器仅开放默认身份，性别和小像选择暂不可用。"
 	var features: Variant = Online.manifest.get("features", [])
 	_enter_world.visible = Online.is_authenticated() and not Online.selected_character.is_empty() and features is Array and features.has("town_rooms")
 	for child in _roster.get_children():
@@ -257,10 +319,13 @@ func _refresh_roster() -> void:
 			continue
 		var character := value as Dictionary
 		var role_index := Profile.ROLE_IDS.find(String(character.get("role_id", "zs")))
-		var words := "%s\n%s · Lv.%d" % [character.get("nickname", ""), ROLE_NAMES[maxi(0, role_index)], int(character.get("level", 1))]
+		var words := "%s\n%s · %s · Lv.%d" % [character.get("nickname", ""), ROLE_NAMES[maxi(0, role_index)], Profile.gender_name(String(character.get("gender_id", "unspecified"))), int(character.get("level", 1))]
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		_roster.add_child(row)
+		var portrait := Field.portrait(Profile.avatar_role(character), Vector2.ZERO, Vector2(56, 62))
+		portrait.custom_minimum_size = Vector2(56, 62)
+		row.add_child(portrait)
 		var choose := _button(row, words, _select_character.bind(String(character.get("id", ""))))
 		choose.custom_minimum_size.y = 62
 		var manage := _button(row, "管理", _begin_delete.bind(character))

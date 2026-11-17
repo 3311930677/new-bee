@@ -1,0 +1,195 @@
+{
+  "run_id": "6b8e1beee55d42929e4f74ee04aff42e",
+  "scope": "L0 desktop two-client same town, authority combat, atomic rewards and restart recovery; not mobile/WAN/PvP acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "daebc576ce1d00f2c3367c0579e1538034d661245256ee0b5630ccf20a583119",
+    "content_version": "3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "online_sources_sha256": "e4b0e4f4b286f9165e6fd961d337a99dbb2943ab338fa51bf62ee06aa4ce7e8b",
+  "gateway_binary_sha256": "6a8054b07d00fcae081216eadd07030b18fba94298ff3128ab25acd2e8136916",
+  "injected_database_failures": 2,
+  "fault_database_counts": [
+    "0",
+    "0",
+    "0",
+    "200",
+    "0"
+  ],
+  "database_recovery": {
+    "passed": true,
+    "scope": "actual read-only-role pg_dump, new-database restore, two real unconfirmed Godot victories; no live endpoint promotion",
+    "tables_matched": 17,
+    "before_counts": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2"
+    ],
+    "restored_counts": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "0"
+    ],
+    "expired_leases": 2,
+    "revoked_sessions": 2,
+    "post_backup_source_audit_retained": true,
+    "post_backup_audit_absent_from_restored_snapshot": true,
+    "gateway_restricted_starts": 3,
+    "backup_started_utc": "2026-11-17T13:14:29.0005483Z",
+    "backup_finished_utc": "2026-11-17T13:14:39.4617985Z",
+    "restore_started_utc": "2026-11-17T13:14:39.734764Z",
+    "restore_finished_utc": "2026-11-17T13:14:44.7902674Z",
+    "dump_sha256": "d63fa2ccd77b4dffd4402af0e0ee6e7557de9b00adb901f6107f58f2911b64c3",
+    "dbops_binary_sha256": "3c8125a92ab0f8f085b003de3d4066b24b920e62caab418f7fdbbce5ecb3dc95",
+    "offline_actions": [
+      {
+        "action": "provision",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "migrate",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "grant",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "gateway-reject-offline-credential",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "gateway-reject-owner-role",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "gateway-reject-future-schema",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "migrate",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "backup",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "restore",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "restore",
+        "exit_code": 1,
+        "expected_success": false
+      }
+    ]
+  },
+  "passed": true,
+  "final_database_counts": [
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "0"
+  ],
+  "clients": [
+    {
+      "battle_id": "9071f8e2-88a8-479b-a480-6a51bb2113b5",
+      "character_id": "6ce85a3e-43ca-47d6-b923-96f71cc55400",
+      "commands": 35,
+      "receipt": {
+        "experience": 5.0,
+        "gold": 10.0,
+        "result_id": "7fcc09d4-9203-4c3f-afbb-32468af82c9c",
+        "wallet_balance": 110.0
+      }
+    },
+    {
+      "battle_id": "b5fd3785-daa6-497e-a4a3-2d97681b19a7",
+      "character_id": "603c290a-5820-4547-8829-d79f6c806368",
+      "commands": 30,
+      "receipt": {
+        "experience": 5.0,
+        "gold": 10.0,
+        "result_id": "02fa0b3e-cfb9-452e-b0eb-fb1401a2a046",
+        "wallet_balance": 110.0
+      }
+    }
+  ],
+  "worker_errors": [],
+  "player_data_unchanged": true,
+  "checks": [
+    {
+      "name": "two real clients hold exclusive leases in one town",
+      "passed": true
+    },
+    {
+      "name": "both failures are independently identified as the injected PostgreSQL exception",
+      "passed": true
+    },
+    {
+      "name": "failed real victory transactions leave no partial reward, claim or input",
+      "passed": true
+    },
+    {
+      "name": "gateway and real authority process restart before reward retry",
+      "passed": true
+    },
+    {
+      "name": "a real read-only backup restores both unconfirmed victories with revoked old sessions",
+      "passed": true
+    },
+    {
+      "name": "client a completes real movement, combat, reward retry and reconnect",
+      "passed": true
+    },
+    {
+      "name": "client b completes real movement, combat, reward retry and reconnect",
+      "passed": true
+    },
+    {
+      "name": "database independently confirms two victories, exactly one reward each and revoked sessions",
+      "passed": true
+    },
+    {
+      "name": "actual 480x800 world, battle and result screenshots exist",
+      "passed": true
+    }
+  ],
+  "online_sources_unchanged": true
+}

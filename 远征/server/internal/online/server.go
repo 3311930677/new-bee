@@ -241,11 +241,11 @@ func (s *Server) health(w http.ResponseWriter, r *http.Request) {
 	respond(w, 200, map[string]any{"status": "ok", "protocol_version": ProtocolVersion, "ruleset_version": RulesetVersion})
 }
 func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
-	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery"}
+	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery", "character_identity"}
 	if s.cfg.Authority != nil {
 		features = append(features, "town_rooms", "authority_battles")
 	}
-	respond(w, 200, map[string]any{"protocol_version": ProtocolVersion, "content_version": s.cfg.ContentVersion, "ruleset_version": RulesetVersion, "character_limit": 3, "roles": []string{"zs", "ck", "fs", "fz"}, "appearance_ids": []string{"default"}, "features": features, "starting_gold": 100})
+	respond(w, 200, map[string]any{"protocol_version": ProtocolVersion, "content_version": s.cfg.ContentVersion, "ruleset_version": RulesetVersion, "character_limit": 3, "roles": []string{"zs", "ck", "fs", "fz"}, "appearance_ids": []string{"default"}, "gender_ids": genderIDs, "avatar_ids": avatarIDs, "features": features, "starting_gold": 100})
 }
 
 type identity struct{ SessionID, AccountID, CharacterID string }

@@ -16,17 +16,19 @@ type Character struct {
 	Nickname     string `json:"nickname"`
 	RoleID       string `json:"role_id"`
 	AppearanceID string `json:"appearance_id"`
+	GenderID     string `json:"gender_id"`
+	AvatarID     string `json:"avatar_id"`
 	Level        int    `json:"level"`
 	Experience   int64  `json:"experience"`
 	MapID        string `json:"map_id"`
 	Version      int64  `json:"version"`
 }
 
-const characterColumns = `id::text,nickname,role_id,appearance_id,level,experience,map_id,version`
+const characterColumns = `id::text,nickname,role_id,appearance_id,gender_id,avatar_id,level,experience,map_id,version`
 
 func scanCharacter(row pgx.Row) (Character, error) {
 	var c Character
-	err := row.Scan(&c.ID, &c.Nickname, &c.RoleID, &c.AppearanceID, &c.Level, &c.Experience, &c.MapID, &c.Version)
+	err := row.Scan(&c.ID, &c.Nickname, &c.RoleID, &c.AppearanceID, &c.GenderID, &c.AvatarID, &c.Level, &c.Experience, &c.MapID, &c.Version)
 	return c, err
 }
 
@@ -34,6 +36,8 @@ type createCharacterBody struct {
 	Nickname     string `json:"nickname"`
 	RoleID       string `json:"role_id"`
 	AppearanceID string `json:"appearance_id"`
+	GenderID     string `json:"gender_id,omitempty"`
+	AvatarID     string `json:"avatar_id,omitempty"`
 }
 
 func (s *Server) characters(w http.ResponseWriter, r *http.Request, who identity) {
@@ -139,6 +143,10 @@ func (s *Server) createCharacter(w http.ResponseWriter, r *http.Request, who ide
 		s.fail(w, bad("invalid_appearance", "此外观尚未在线开放"))
 		return
 	}
+	if err := normalizeCharacterIdentity(&body); err != nil {
+		s.fail(w, err)
+		return
+	}
 	body.Nickname = nickname
 	data, err := s.command(r, who, "character.create", body, func(ctx context.Context, tx pgx.Tx) (any, error) {
 		var count int
@@ -149,7 +157,7 @@ func (s *Server) createCharacter(w http.ResponseWriter, r *http.Request, who ide
 			return nil, &apiError{409, "character_limit", "最多保留三个在线角色，恢复期内角色也占用名额"}
 		}
 		id := newID()
-		c, err := scanCharacter(tx.QueryRow(ctx, `INSERT INTO characters(id,account_id,nickname,nickname_key,role_id,appearance_id) VALUES($1,$2,$3,$4,$5,$6) RETURNING `+characterColumns, id, who.AccountID, nickname, key, body.RoleID, body.AppearanceID))
+		c, err := scanCharacter(tx.QueryRow(ctx, `INSERT INTO characters(id,account_id,nickname,nickname_key,role_id,appearance_id,gender_id,avatar_id) VALUES($1,$2,$3,$4,$5,$6,coalesce(nullif($7,''),'unspecified'),coalesce(nullif($8,''),'role_default')) RETURNING `+characterColumns, id, who.AccountID, nickname, key, body.RoleID, body.AppearanceID, body.GenderID, body.AvatarID))
 		if isUnique(err) {
 			return nil, &apiError{409, "nickname_unavailable", "此昵称已被使用，请换一个昵称"}
 		}
