@@ -1,0 +1,45 @@
+groups:
+  - name: yuanzheng
+    rules:
+      - alert: YuanzhengScrapeUnavailable
+        expr: up{job="yuanzheng"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "远征入口指标无法抓取"
+      - alert: YuanzhengDependenciesUnavailable
+        expr: yuanzheng_ready{job="yuanzheng"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "远征入口依赖或证书不可用"
+      - alert: YuanzhengStateQueryUnavailable
+        expr: yuanzheng_state_query_up{job="yuanzheng"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "远征在线状态查询失败"
+      - alert: YuanzhengCertificateExpiresSoon
+        expr: yuanzheng_tls_certificate_expiry_seconds{job="yuanzheng"} < 604800
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "远征证书将在七天内到期或已经过期"
+      - alert: YuanzhengBattleResponseSlow
+        expr: histogram_quantile(0.95, sum by (le, instance) (rate(yuanzheng_http_request_duration_seconds_bucket{job="yuanzheng",route="POST /v1/battles/{id}/commands"}[5m]))) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "远征战斗请求服务端耗时 P95 超过 500ms"
+      - alert: YuanzhengPendingResults
+        expr: yuanzheng_unacknowledged_results{job="yuanzheng"} > 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "远征存在持续未确认的战斗结算，请检查后处理"

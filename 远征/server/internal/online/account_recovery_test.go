@@ -262,6 +262,8 @@ func TestErrorClassificationExcludesDatabaseDetails(t *testing.T) {
 	}{
 		{fmt.Errorf("wrapped: %w", &pgconn.PgError{Code: "P0001", Message: "secret password", Detail: "private user payload"}), "database_P0001"},
 		{&pgconn.PgError{Code: "unsafe user text", Message: "private data"}, "database_error"},
+		{&pgconn.ConnectError{}, "database_connection"},
+		{pgconn.ErrConnClosed, "database_connection"},
 		{context.DeadlineExceeded, "timeout"},
 		{errors.New("private internal detail"), "internal"},
 	} {

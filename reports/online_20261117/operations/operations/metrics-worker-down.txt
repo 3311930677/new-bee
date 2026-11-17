@@ -1,0 +1,230 @@
+# HELP yuanzheng_ready Whether all configured service dependencies and certificate validity are ready.
+# TYPE yuanzheng_ready gauge
+yuanzheng_ready 0
+# HELP yuanzheng_database_up Whether the database accepted a bounded connectivity check.
+# TYPE yuanzheng_database_up gauge
+yuanzheng_database_up 1
+# HELP yuanzheng_authority_configured Whether this gateway has a configured private authority.
+# TYPE yuanzheng_authority_configured gauge
+yuanzheng_authority_configured 1
+# HELP yuanzheng_authority_up Whether the configured authority answered with compatible versions.
+# TYPE yuanzheng_authority_up gauge
+yuanzheng_authority_up 0
+# HELP yuanzheng_state_query_up Whether database state gauges were read successfully.
+# TYPE yuanzheng_state_query_up gauge
+yuanzheng_state_query_up 1
+# HELP yuanzheng_tls_configured Whether direct TLS is configured on the public listener.
+# TYPE yuanzheng_tls_configured gauge
+yuanzheng_tls_configured 1
+# HELP yuanzheng_tls_certificate_valid Whether the configured certificate is currently within its validity period.
+# TYPE yuanzheng_tls_certificate_valid gauge
+yuanzheng_tls_certificate_valid 1
+# HELP yuanzheng_tls_certificate_expiry_seconds Seconds remaining until the configured certificate expires.
+# TYPE yuanzheng_tls_certificate_expiry_seconds gauge
+yuanzheng_tls_certificate_expiry_seconds 172715.9900119
+# HELP yuanzheng_active_sessions Number of unrevoked and unexpired access sessions.
+# TYPE yuanzheng_active_sessions gauge
+yuanzheng_active_sessions 1
+# HELP yuanzheng_active_room_leases Number of live room leases owned by valid sessions.
+# TYPE yuanzheng_active_room_leases gauge
+yuanzheng_active_room_leases 1
+# HELP yuanzheng_active_battles Number of persisted active battles.
+# TYPE yuanzheng_active_battles gauge
+yuanzheng_active_battles 1
+# HELP yuanzheng_unacknowledged_results Number of settled battles awaiting client acknowledgment.
+# TYPE yuanzheng_unacknowledged_results gauge
+yuanzheng_unacknowledged_results 0
+# HELP yuanzheng_process_uptime_seconds Seconds since the gateway started.
+# TYPE yuanzheng_process_uptime_seconds gauge
+yuanzheng_process_uptime_seconds 65.3764673
+# HELP yuanzheng_process_goroutines Number of current Go goroutines.
+# TYPE yuanzheng_process_goroutines gauge
+yuanzheng_process_goroutines 9
+# HELP yuanzheng_http_requests_total Number of completed requests by registered route template.
+# TYPE yuanzheng_http_requests_total counter
+yuanzheng_http_requests_total{route="GET /healthz",method="GET",status_class="2xx"} 2
+yuanzheng_http_requests_total{route="GET /livez",method="GET",status_class="2xx"} 2
+yuanzheng_http_requests_total{route="GET /readyz",method="GET",status_class="2xx"} 1
+yuanzheng_http_requests_total{route="GET /readyz",method="GET",status_class="5xx"} 1
+yuanzheng_http_requests_total{route="GET /v1/characters/{id}",method="GET",status_class="2xx"} 1
+yuanzheng_http_requests_total{route="GET /v1/manifest",method="GET",status_class="2xx"} 1
+yuanzheng_http_requests_total{route="POST /v1/auth/logout",method="POST",status_class="2xx"} 1
+yuanzheng_http_requests_total{route="POST /v1/auth/register",method="POST",status_class="2xx"} 2
+yuanzheng_http_requests_total{route="POST /v1/battles",method="POST",status_class="2xx"} 1
+yuanzheng_http_requests_total{route="POST /v1/characters",method="POST",status_class="2xx"} 2
+yuanzheng_http_requests_total{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx"} 2
+yuanzheng_http_requests_total{route="POST /v1/rooms/join",method="POST",status_class="2xx"} 1
+yuanzheng_http_requests_total{route="POST /v1/rooms/move",method="POST",status_class="2xx"} 8
+yuanzheng_http_requests_total{route="unmatched",method="GET",status_class="4xx"} 1
+# HELP yuanzheng_http_request_duration_seconds Wall-clock HTTP request duration in seconds.
+# TYPE yuanzheng_http_request_duration_seconds histogram
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="0.01"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="0.025"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="0.05"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="0.1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="0.25"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="0.5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="15"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /healthz",method="GET",status_class="2xx",le="+Inf"} 2
+yuanzheng_http_request_duration_seconds_count{route="GET /healthz",method="GET",status_class="2xx"} 2
+yuanzheng_http_request_duration_seconds_sum{route="GET /healthz",method="GET",status_class="2xx"} 0.0005136
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="0.01"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="0.025"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="0.05"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="0.1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="0.25"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="0.5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="15"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="GET /livez",method="GET",status_class="2xx",le="+Inf"} 2
+yuanzheng_http_request_duration_seconds_count{route="GET /livez",method="GET",status_class="2xx"} 2
+yuanzheng_http_request_duration_seconds_sum{route="GET /livez",method="GET",status_class="2xx"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="0.01"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="0.025"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="2xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="GET /readyz",method="GET",status_class="2xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="GET /readyz",method="GET",status_class="2xx"} 0.013361
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="0.01"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="0.025"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /readyz",method="GET",status_class="5xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="GET /readyz",method="GET",status_class="5xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="GET /readyz",method="GET",status_class="5xx"} 0.0016722
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="0.01"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="0.025"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/characters/{id}",method="GET",status_class="2xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="GET /v1/characters/{id}",method="GET",status_class="2xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="GET /v1/characters/{id}",method="GET",status_class="2xx"} 0.0025968
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="0.01"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="0.025"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="GET /v1/manifest",method="GET",status_class="2xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="GET /v1/manifest",method="GET",status_class="2xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="GET /v1/manifest",method="GET",status_class="2xx"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="0.01"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="0.025"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/logout",method="POST",status_class="2xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="POST /v1/auth/logout",method="POST",status_class="2xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="POST /v1/auth/logout",method="POST",status_class="2xx"} 0.0057975
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="0.01"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="0.025"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="0.05"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="0.1"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="0.5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="15"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/auth/register",method="POST",status_class="2xx",le="+Inf"} 2
+yuanzheng_http_request_duration_seconds_count{route="POST /v1/auth/register",method="POST",status_class="2xx"} 2
+yuanzheng_http_request_duration_seconds_sum{route="POST /v1/auth/register",method="POST",status_class="2xx"} 0.48172919999999997
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="0.01"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="0.025"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/battles",method="POST",status_class="2xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="POST /v1/battles",method="POST",status_class="2xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="POST /v1/battles",method="POST",status_class="2xx"} 0.0447459
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="0.01"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="0.025"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="0.1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="0.25"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="0.5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="15"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters",method="POST",status_class="2xx",le="+Inf"} 2
+yuanzheng_http_request_duration_seconds_count{route="POST /v1/characters",method="POST",status_class="2xx"} 2
+yuanzheng_http_request_duration_seconds_sum{route="POST /v1/characters",method="POST",status_class="2xx"} 0.07728320000000001
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="0.01"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="0.025"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="0.05"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="0.1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="0.25"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="0.5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="1"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="5"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="15"} 2
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx",le="+Inf"} 2
+yuanzheng_http_request_duration_seconds_count{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx"} 2
+yuanzheng_http_request_duration_seconds_sum{route="POST /v1/characters/{id}/select",method="POST",status_class="2xx"} 0.012617
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="0.01"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="0.025"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/join",method="POST",status_class="2xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="POST /v1/rooms/join",method="POST",status_class="2xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="POST /v1/rooms/join",method="POST",status_class="2xx"} 0.0313665
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="0.01"} 0
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="0.025"} 5
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="0.05"} 6
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="0.1"} 6
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="0.25"} 7
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="0.5"} 8
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="1"} 8
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="5"} 8
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="15"} 8
+yuanzheng_http_request_duration_seconds_bucket{route="POST /v1/rooms/move",method="POST",status_class="2xx",le="+Inf"} 8
+yuanzheng_http_request_duration_seconds_count{route="POST /v1/rooms/move",method="POST",status_class="2xx"} 8
+yuanzheng_http_request_duration_seconds_sum{route="POST /v1/rooms/move",method="POST",status_class="2xx"} 0.528163
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="0.01"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="0.025"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="0.05"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="0.1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="0.25"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="0.5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="1"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="5"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="15"} 1
+yuanzheng_http_request_duration_seconds_bucket{route="unmatched",method="GET",status_class="4xx",le="+Inf"} 1
+yuanzheng_http_request_duration_seconds_count{route="unmatched",method="GET",status_class="4xx"} 1
+yuanzheng_http_request_duration_seconds_sum{route="unmatched",method="GET",status_class="4xx"} 0
+# HELP yuanzheng_internal_failures_total Internal failures classified without private error details.
+# TYPE yuanzheng_internal_failures_total counter

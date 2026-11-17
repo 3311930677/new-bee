@@ -1,0 +1,594 @@
+{
+  "scope": "desktop loopback TLS verification, real dependency outages, private metrics and actual Prometheus alerts; not public deployment, delivery to an operator, mobile or capacity acceptance",
+  "online_sources_sha256": "dd5357c498971c393e9fc51962ef928fe99132b0235ea52daaa3a2d34653a091",
+  "go_test_cases": [
+    "yuanzheng/online/cmd/gateway::TestListenerBoundaries",
+    "yuanzheng/online/internal/authority::TestContextCancellationClosesPrivateSocket",
+    "yuanzheng/online/internal/authority::TestPrivateAddressAndKeyBoundary",
+    "yuanzheng/online/internal/authority::TestRejectTamperedResponseAndNonce",
+    "yuanzheng/online/internal/authority::TestSignedTransportAndUTF8",
+    "yuanzheng/online/internal/devcert::TestDevelopmentCertificatesNeverOverwriteExistingDirectory",
+    "yuanzheng/online/internal/devcert::TestDevelopmentCertificatesValidateAndRejectFixtures",
+    "yuanzheng/online/internal/online::TestAccountsSessionsAndRevocation",
+    "yuanzheng/online/internal/online::TestAdminMetricsAuthenticationStateAndPrivacy",
+    "yuanzheng/online/internal/online::TestBattleSettlementRollbackRetryAndOnceReward",
+    "yuanzheng/online/internal/online::TestCharacterLimitOwnershipAndUntrustedAssets",
+    "yuanzheng/online/internal/online::TestCharacterManagementListsOwnershipAndSuggestions",
+    "yuanzheng/online/internal/online::TestConcurrentCreateAndReceiptSurvivesRestart",
+    "yuanzheng/online/internal/online::TestConcurrentDistinctCharacterLimit",
+    "yuanzheng/online/internal/online::TestConcurrentRoomJoinHasOneExclusiveLease",
+    "yuanzheng/online/internal/online::TestDeleteRecoveryAndImmutableLedger",
+    "yuanzheng/online/internal/online::TestDependencyErrorConsumesBoundedRequestBeforeResponding",
+    "yuanzheng/online/internal/online::TestErrorClassificationExcludesDatabaseDetails",
+    "yuanzheng/online/internal/online::TestExpiredTokensAndConcurrentRefresh",
+    "yuanzheng/online/internal/online::TestLivenessSurvivesDatabaseFailureAndAccountOnlyReadiness",
+    "yuanzheng/online/internal/online::TestNicknameSuggestionsSurviveExhaustedShortSuffixes",
+    "yuanzheng/online/internal/online::TestPasswordChangeCannotRaceOldPasswordLogin",
+    "yuanzheng/online/internal/online::TestReadinessAndMetricsTrackCertificateValidity",
+    "yuanzheng/online/internal/online::TestReadinessChecksWorkerVersionsAndDeadline",
+    "yuanzheng/online/internal/online::TestRecoveryCodeHashedRotatedAndRevokesSessions",
+    "yuanzheng/online/internal/online::TestRecoveryLimitsAndNotificationOwnership",
+    "yuanzheng/online/internal/online::TestRecoveryTransactionRollbackAndConcurrentSingleUse",
+    "yuanzheng/online/internal/online::TestRequestMetricsCumulativeBucketsAndConcurrentScrapes",
+    "yuanzheng/online/internal/online::TestRollbackOnLedgerFailureAndRetry",
+    "yuanzheng/online/internal/online::TestTownCapacityLeaseRotationAndMovementOwnership",
+    "yuanzheng/online/internal/online::TestVersionGateAndLimits"
+  ],
+  "gateway_binary_sha256": "4cccdb3162f12cf73e399f99c5a9c36725491961463e6e76b8ef0ed3d9b6316e",
+  "certificate_manifest": {
+    "generated_at": "2026-11-16T21:45:43.4274043Z",
+    "server_valid_until": "2026-11-18T21:45:43.4274043Z",
+    "public_files_sha256": {
+      "ca-cert.pem": "cb7dd8407a474503cbf1d3872f6f089746699e772315434da885015e743c6412",
+      "expired-cert.pem": "dd231e10563a6f754606751ef00441c2e50f4fd8d539fce71e2b6d88cf0a8e79",
+      "server-cert.pem": "bbdf418e521fd4d5e19b8963f7ad306d25595aff6b321e732289bc6f1be05b9f",
+      "untrusted-ca.pem": "749ededd2bfc06ddd5f79d0431d40c2f249221c35114cae571b92d881fd26b94",
+      "wrong-name-cert.pem": "d0c15407bb16b357084dfe6d60ff1122701e218508ed253473847c719483350a"
+    },
+    "private_key_file": "server-key.pem",
+    "purpose": "disposable loopback development; not production PKI or system trust"
+  },
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "dff00e8ef0a6ef737f07c4d34f55f0fc740a7d6bb9d939e1c65f71c4e93b7e3e",
+    "content_version": "3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "tls_cases": [
+    {
+      "case": "valid",
+      "exit_code": 0,
+      "expected_tls_error_lines": 0
+    },
+    {
+      "case": "default-untrusted",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    },
+    {
+      "case": "wrong-ca",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    },
+    {
+      "case": "wrong-name",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    },
+    {
+      "case": "expired",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    }
+  ],
+  "worker_alert_firing": [
+    {
+      "metric": {
+        "__name__": "ALERTS",
+        "alertname": "YuanzhengDependenciesUnavailable",
+        "alertstate": "firing",
+        "instance": "127.0.0.1:58662",
+        "job": "yuanzheng",
+        "severity": "critical"
+      },
+      "value": [
+        1794865632.31,
+        "1"
+      ]
+    }
+  ],
+  "database_fault_response_statuses": {
+    "500": 40
+  },
+  "database_fault_request_ms": 563,
+  "database_alert_firing": [
+    {
+      "metric": {
+        "__name__": "ALERTS",
+        "alertname": "YuanzhengDependenciesUnavailable",
+        "alertstate": "firing",
+        "instance": "127.0.0.1:58662",
+        "job": "yuanzheng",
+        "severity": "critical"
+      },
+      "value": [
+        1794865640.26,
+        "1"
+      ]
+    }
+  ],
+  "passed": true,
+  "final_database_counts": [
+    "2",
+    "3",
+    "3",
+    "3",
+    "0",
+    "1",
+    "1"
+  ],
+  "monitoring": {
+    "version": "3.16.0",
+    "source": "https://github.com/prometheus/prometheus/releases/download/v3.16.0/prometheus-3.16.0.windows-amd64.zip",
+    "sha256": "89c03c2f24400fb58668440b6d7226f68564acda27d657e77acfbda42be32cb3",
+    "checksums_source": "https://github.com/prometheus/prometheus/releases/download/v3.16.0/sha256sums.txt",
+    "location": "E:\\new bee\\tools\\online-runtime\\prometheus-3.16.0",
+    "executables_sha256": {
+      "prometheus.exe": "ac39610df6a7a45face0a08476ac9ae85b1e13d82da891d33739dea448100eb4",
+      "promtool.exe": "b18a0f297fd3350a104cfcb9745c9e7f3b71cc6474875159fd56195a8289c570"
+    }
+  },
+  "alert_test_for": "1s; production template uses 1m",
+  "tls_directory": "E:\\new bee\\远征\\server\\.local\\verification\\operations_147328edbbb941b19182ba543e0153af\\tls",
+  "secret_values_in_logs": [],
+  "checks": [
+    {
+      "name": "verified official Prometheus runtime is available",
+      "passed": true
+    },
+    {
+      "name": "built runtime available: gateway.exe",
+      "passed": true
+    },
+    {
+      "name": "built runtime available: devcert.exe",
+      "passed": true
+    },
+    {
+      "name": "disposable certificates generated without installing a system root",
+      "passed": true
+    },
+    {
+      "name": "actual HTTPS gateway exposes /readyz",
+      "passed": true
+    },
+    {
+      "name": "actual HTTPS gateway exposes /healthz",
+      "passed": true
+    },
+    {
+      "name": "actual HTTPS gateway exposes /livez",
+      "passed": true
+    },
+    {
+      "name": "public game listener does not expose metrics",
+      "passed": true
+    },
+    {
+      "name": "admin rejects missing or wrong management token",
+      "passed": true
+    },
+    {
+      "name": "admin rejects missing or wrong management token",
+      "passed": true
+    },
+    {
+      "name": "real Godot validates TLS case valid",
+      "passed": true
+    },
+    {
+      "name": "real Godot validates TLS case default-untrusted",
+      "passed": true
+    },
+    {
+      "name": "invalid certificate is rejected before credentials in default-untrusted",
+      "passed": true
+    },
+    {
+      "name": "real Godot validates TLS case wrong-ca",
+      "passed": true
+    },
+    {
+      "name": "invalid certificate is rejected before credentials in wrong-ca",
+      "passed": true
+    },
+    {
+      "name": "actual TLS API creates the operational test account",
+      "passed": true
+    },
+    {
+      "name": "game access token cannot read management metrics",
+      "passed": true
+    },
+    {
+      "name": "operational test creates authoritative assets",
+      "passed": true
+    },
+    {
+      "name": "operational test selects its own role",
+      "passed": true
+    },
+    {
+      "name": "operational test obtains a live lease",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 0",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 1",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 2",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 3",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 4",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 5",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 6",
+      "passed": true
+    },
+    {
+      "name": "authority approves actual movement step 7",
+      "passed": true
+    },
+    {
+      "name": "real Godot authority creates the operational battle",
+      "passed": true
+    },
+    {
+      "name": "protected metrics respond during healthy",
+      "passed": true
+    },
+    {
+      "name": "live metrics retain the required LF wire format during healthy",
+      "passed": true
+    },
+    {
+      "name": "private gauges match real online session, lease and battle",
+      "passed": true
+    },
+    {
+      "name": "TLS certificate validity is observable without exposing the private key",
+      "passed": true
+    },
+    {
+      "name": "official promtool accepts the live metrics exposition",
+      "passed": true
+    },
+    {
+      "name": "official promtool validates monitoring configuration and alert rules",
+      "passed": true
+    },
+    {
+      "name": "real Prometheus scrapes the protected gateway",
+      "passed": true
+    },
+    {
+      "name": "worker outage changes readiness without confusing database health or liveness",
+      "passed": true
+    },
+    {
+      "name": "protected metrics respond during worker-down",
+      "passed": true
+    },
+    {
+      "name": "live metrics retain the required LF wire format during worker-down",
+      "passed": true
+    },
+    {
+      "name": "worker outage is classified independently in live metrics",
+      "passed": true
+    },
+    {
+      "name": "real dependency alert fires for the stopped authority",
+      "passed": true
+    },
+    {
+      "name": "the restarted authority has a new real process epoch",
+      "passed": true
+    },
+    {
+      "name": "readiness recovers after authority restart",
+      "passed": true
+    },
+    {
+      "name": "persisted battle recovers after authority restart",
+      "passed": true
+    },
+    {
+      "name": "operational battle can conclude through the real authority",
+      "passed": true
+    },
+    {
+      "name": "dependency alert resolves after authority recovery",
+      "passed": true
+    },
+    {
+      "name": "isolated database traffic outage preserves process liveness",
+      "passed": true
+    },
+    {
+      "name": "protected metrics respond during database-down",
+      "passed": true
+    },
+    {
+      "name": "live metrics retain the required LF wire format during database-down",
+      "passed": true
+    },
+    {
+      "name": "database outage omits unknown state gauges and keeps authority classification",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "database outage returns a complete failure without confirming a new role",
+      "passed": true
+    },
+    {
+      "name": "independent database query confirms no partial role during the isolated outage",
+      "passed": true
+    },
+    {
+      "name": "real dependency alert fires for the isolated database outage",
+      "passed": true
+    },
+    {
+      "name": "database connectivity and readiness recover",
+      "passed": true
+    },
+    {
+      "name": "original request creates one role after database recovery and replays one receipt",
+      "passed": true
+    },
+    {
+      "name": "dependency alert resolves after database recovery",
+      "passed": true
+    },
+    {
+      "name": "operational result is acknowledged without reward replay",
+      "passed": true
+    },
+    {
+      "name": "operational session is revoked",
+      "passed": true
+    },
+    {
+      "name": "real Godot validates TLS case wrong-name",
+      "passed": true
+    },
+    {
+      "name": "invalid certificate is rejected before credentials in wrong-name",
+      "passed": true
+    },
+    {
+      "name": "real Godot validates TLS case expired",
+      "passed": true
+    },
+    {
+      "name": "invalid certificate is rejected before credentials in expired",
+      "passed": true
+    },
+    {
+      "name": "protected metrics respond during expired-certificate",
+      "passed": true
+    },
+    {
+      "name": "live metrics retain the required LF wire format during expired-certificate",
+      "passed": true
+    },
+    {
+      "name": "expired TLS certificate also removes service readiness and is visible to monitoring",
+      "passed": true
+    },
+    {
+      "name": "protected metrics respond during recovered",
+      "passed": true
+    },
+    {
+      "name": "live metrics retain the required LF wire format during recovered",
+      "passed": true
+    },
+    {
+      "name": "fully recovered metrics show no stale sessions, leases, active battles or pending results",
+      "passed": true
+    },
+    {
+      "name": "database independently confirms exact accounts, roles, unchanged starter assets and acknowledged result",
+      "passed": true
+    }
+  ],
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true,
+  "worker_errors": []
+}

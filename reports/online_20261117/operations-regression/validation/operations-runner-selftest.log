@@ -1,0 +1,19 @@
+== regression runner fault injection ==
+
+PASS  clean case passes  (4s)
+PASS  OK followed by SCRIPT ERROR fails  (4s)
+PASS  OK marker but exit code 1 fails  (4s)
+PASS  exit 0 without completion line  (4s)
+PASS  engine printed a FAIL marker  (3s)
+PASS  wedged case is killed by timeout  (45s)
+PASS  unknown case name is an error  (3s)
+PASS  empty filter is an error  (3s)
+PASS  missing -Godot exe is an error  (3s)
+PASS  engine not 4.7.x is an error  (3s)
+PASS  -AllowAnyVersion lets 4.6 run  (4s)
+PASS  exact host CA diagnostic is separate  (4s)
+PASS  similar CA error is not exempted  (3s)
+PASS  ordinary ERROR after OK fails  (3s)
+PASS  known shutdown resource line stays counted  (3s)
+
+RUNNER SELFTEST GREEN (15 fault-injection checks)

@@ -1,0 +1,85 @@
+{"time":"2026-11-17T05:41:56.5568028+08:00","level":"INFO","msg":"database migrations ready","duration_ms":5580}
+{"time":"2026-11-17T05:41:56.7462529+08:00","level":"INFO","msg":"read-only admin listening","address":"127.0.0.1:62577"}
+{"time":"2026-11-17T05:41:56.7462529+08:00","level":"INFO","msg":"gateway listening","address":"127.0.0.1:62575","tls":true,"behind_tls_proxy":false,"protocol":1,"content_version":"3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17"}
+{"time":"2026-11-17T05:41:56.8036049+08:00","level":"INFO","msg":"request","route":"GET /v1/manifest","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T05:41:56.8825632+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/register","method":"POST","status":201,"duration_ms":73}
+{"time":"2026-11-17T05:41:56.8907905+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:56.8907905+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:56.9436488+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:56.9436488+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:41:56.9764917+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:56.9764917+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.0471441+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.0471441+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":4}
+{"time":"2026-11-17T05:41:57.0815773+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.0815773+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:41:57.1291095+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.1291095+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:57.1658899+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.1658899+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.2237974+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.2237974+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":4}
+{"time":"2026-11-17T05:41:57.2615952+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.2615952+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.3085713+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.3085713+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:57.3436203+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.3436203+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.39626+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.39626+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.4417545+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.4417545+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.4891962+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.4891962+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.5464+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.5464+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:57.5955765+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.5955765+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.630113+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.630113+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.674339+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.674339+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.714297+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.714297+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.7481073+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.7481073+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:57.7989568+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.7994663+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":5}
+{"time":"2026-11-17T05:41:57.8430448+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.8430448+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":5}
+{"time":"2026-11-17T05:41:57.8877027+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.8882242+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":4}
+{"time":"2026-11-17T05:41:57.9337883+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.9343084+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:57.9762789+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:57.9762789+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.0257767+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.0257767+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:58.0605756+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.0605756+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.0970466+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.0970466+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.1430899+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.1430899+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:58.1906751+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.1906751+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":4}
+{"time":"2026-11-17T05:41:58.2328996+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.2328996+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.2946526+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.2946526+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:58.3554057+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.3554057+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.3959313+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.3959313+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.4320304+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.4320304+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":4}
+{"time":"2026-11-17T05:41:58.4776205+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.4776205+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.5178058+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.5183309+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.5656125+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.5656125+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}
+{"time":"2026-11-17T05:41:58.6109681+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.6109681+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":3}
+{"time":"2026-11-17T05:41:58.6572525+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:41:58.6572525+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":2}

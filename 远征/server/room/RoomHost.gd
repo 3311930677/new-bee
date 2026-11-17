@@ -19,6 +19,11 @@ var _touched: Dictionary = {}
 
 func _initialize() -> void:
 	Engine.max_fps = 60
+	for variable in ["YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ADMIN_TOKEN", "YUANZHENG_TLS_KEY", "PGPASSWORD"]:
+		if OS.has_environment(variable):
+			printerr("ROOM_START_FAILED forbidden persistence or management credentials")
+			quit(1)
+			return
 	_epoch = Crypto.new().generate_random_bytes(16).hex_encode()
 	_secret = OS.get_environment("YUANZHENG_ROOM_SECRET").to_utf8_buffer()
 	if _secret.size() < 32:

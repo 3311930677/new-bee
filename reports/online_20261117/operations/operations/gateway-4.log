@@ -1,0 +1,4 @@
+{"time":"2026-11-17T05:47:29.302705+08:00","level":"INFO","msg":"database migrations ready","duration_ms":4}
+{"time":"2026-11-17T05:47:29.3823959+08:00","level":"INFO","msg":"read-only admin listening","address":"127.0.0.1:58662"}
+{"time":"2026-11-17T05:47:29.3823959+08:00","level":"INFO","msg":"gateway listening","address":"127.0.0.1:58659","tls":true,"behind_tls_proxy":false,"protocol":1,"content_version":"3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17"}
+2026/11/17 05:47:34 http: TLS handshake error from 127.0.0.1:49755: local error: tls: bad record MAC

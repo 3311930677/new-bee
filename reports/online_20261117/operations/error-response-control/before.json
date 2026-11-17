@@ -1,0 +1,10 @@
+{
+  "folder": "E:\\new bee\\远征\\server\\.local\\verification\\fault_responses_e459443bf8b142e98ca7b92362e795fd",
+  "gateway_binary_sha256": "0d2abbb4b26a49e73a28975c23a59ffdb5e7a023f723d52931e7d6acb5a2a0c6",
+  "attempts": 40,
+  "outcomes": {
+    "RemoteDisconnected": 23,
+    "http_500": 17
+  },
+  "partial_roles": "0"
+}

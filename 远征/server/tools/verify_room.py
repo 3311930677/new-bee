@@ -12,7 +12,7 @@ import time
 import uuid
 
 from build_room import build
-from dev import LOCAL, SERVER
+from dev import LOCAL, SERVER, worker_environment
 from verify_clients import player_snapshot
 
 
@@ -62,7 +62,7 @@ def main():
         port = listener.getsockname()[1]
     rpc = RPC(port, secret, manifest)
     before = player_snapshot()
-    env = os.environ | {"APPDATA": str(folder / "userdata"), "LOCALAPPDATA": str(folder / "userdata"), "YUANZHENG_ROOM_SECRET": secret}
+    env = worker_environment(os.environ | {"APPDATA": str(folder / "userdata"), "LOCALAPPDATA": str(folder / "userdata"), "YUANZHENG_ROOM_SECRET": secret})
     checks = []
     report = {"scope": "isolated shared BattleSim + private signed RPC; not public multiplayer acceptance", "manifest": manifest}
     log = (folder / "room.log").open("wb")
@@ -74,6 +74,12 @@ def main():
             raise RuntimeError(name)
 
     try:
+        for tag, variable in (("database", "YUANZHENG_DATABASE_URL"), ("management", "YUANZHENG_ADMIN_TOKEN")):
+            invalid = subprocess.run([str(args.godot.resolve()), "--headless", "--path", str(project), "--script", "res://RoomHost.gd", "--", f"--port={port}"],
+                env=env | {variable: "forbidden-test-context"}, capture_output=True, text=True, encoding="utf-8", timeout=15, creationflags=subprocess.CREATE_NO_WINDOW)
+            (folder / ("forbidden-" + tag + ".log")).write_text(invalid.stdout + invalid.stderr, encoding="utf-8")
+            check(invalid.returncode == 1 and "ROOM_START_FAILED forbidden persistence or management credentials" in invalid.stderr and "forbidden-test-context" not in invalid.stdout + invalid.stderr,
+                  "authority refuses inherited " + tag + " credentials without logging their values")
         process = subprocess.Popen([str(args.godot.resolve()), "--headless", "--path", str(project), "--script", "res://RoomHost.gd", "--", f"--port={port}"], env=env, stdout=log, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
         deadline = time.monotonic() + 30
         while True:

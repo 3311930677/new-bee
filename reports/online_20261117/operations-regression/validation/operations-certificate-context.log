@@ -1,0 +1,12 @@
+Godot  : E:\new bee\tools\godot-4.7.2\Godot_v4.7.2-stable_win64.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: E:\new bee\Ô¶Õ÷
+UserDir: E:/new bee/Ô¶Õ÷/tools/_logs/user_sandbox_0a19b75862844d69a6ddeeaae2fed17b/Godot/app_userdata/Ô¶Õ÷/
+Cases  : 2  (timeout 240s, quit-after 6000 frames)
+Logs   : tools/_logs/operations-certificate-context
+Commit : 1d952e3a
+
+PASS  VerifyOnlineBoundary
+PASS  VerifyDrops
+
+ALL GREEN  (2 cases, every case: exit 0 + own _OK line + no error pattern)

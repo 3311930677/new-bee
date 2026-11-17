@@ -1,0 +1,135 @@
+{
+  "operations_run": "operations_147328edbbb941b19182ba543e0153af",
+  "https_world_run": "world_2dcd91f97d314e48a4eed62ea69b0b25",
+  "room_run": "room_f8ba902d297b4e7a8e6497a6d7621afe",
+  "go_passed": 31,
+  "go_test_cases": [
+    "yuanzheng/online/cmd/gateway::TestListenerBoundaries",
+    "yuanzheng/online/internal/authority::TestContextCancellationClosesPrivateSocket",
+    "yuanzheng/online/internal/authority::TestPrivateAddressAndKeyBoundary",
+    "yuanzheng/online/internal/authority::TestRejectTamperedResponseAndNonce",
+    "yuanzheng/online/internal/authority::TestSignedTransportAndUTF8",
+    "yuanzheng/online/internal/devcert::TestDevelopmentCertificatesNeverOverwriteExistingDirectory",
+    "yuanzheng/online/internal/devcert::TestDevelopmentCertificatesValidateAndRejectFixtures",
+    "yuanzheng/online/internal/online::TestAccountsSessionsAndRevocation",
+    "yuanzheng/online/internal/online::TestAdminMetricsAuthenticationStateAndPrivacy",
+    "yuanzheng/online/internal/online::TestBattleSettlementRollbackRetryAndOnceReward",
+    "yuanzheng/online/internal/online::TestCharacterLimitOwnershipAndUntrustedAssets",
+    "yuanzheng/online/internal/online::TestCharacterManagementListsOwnershipAndSuggestions",
+    "yuanzheng/online/internal/online::TestConcurrentCreateAndReceiptSurvivesRestart",
+    "yuanzheng/online/internal/online::TestConcurrentDistinctCharacterLimit",
+    "yuanzheng/online/internal/online::TestConcurrentRoomJoinHasOneExclusiveLease",
+    "yuanzheng/online/internal/online::TestDeleteRecoveryAndImmutableLedger",
+    "yuanzheng/online/internal/online::TestDependencyErrorConsumesBoundedRequestBeforeResponding",
+    "yuanzheng/online/internal/online::TestErrorClassificationExcludesDatabaseDetails",
+    "yuanzheng/online/internal/online::TestExpiredTokensAndConcurrentRefresh",
+    "yuanzheng/online/internal/online::TestLivenessSurvivesDatabaseFailureAndAccountOnlyReadiness",
+    "yuanzheng/online/internal/online::TestNicknameSuggestionsSurviveExhaustedShortSuffixes",
+    "yuanzheng/online/internal/online::TestPasswordChangeCannotRaceOldPasswordLogin",
+    "yuanzheng/online/internal/online::TestReadinessAndMetricsTrackCertificateValidity",
+    "yuanzheng/online/internal/online::TestReadinessChecksWorkerVersionsAndDeadline",
+    "yuanzheng/online/internal/online::TestRecoveryCodeHashedRotatedAndRevokesSessions",
+    "yuanzheng/online/internal/online::TestRecoveryLimitsAndNotificationOwnership",
+    "yuanzheng/online/internal/online::TestRecoveryTransactionRollbackAndConcurrentSingleUse",
+    "yuanzheng/online/internal/online::TestRequestMetricsCumulativeBucketsAndConcurrentScrapes",
+    "yuanzheng/online/internal/online::TestRollbackOnLedgerFailureAndRetry",
+    "yuanzheng/online/internal/online::TestTownCapacityLeaseRotationAndMovementOwnership",
+    "yuanzheng/online/internal/online::TestVersionGateAndLimits"
+  ],
+  "operation_checks": 108,
+  "tls_cases": [
+    {
+      "case": "valid",
+      "exit_code": 0,
+      "expected_tls_error_lines": 0
+    },
+    {
+      "case": "default-untrusted",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    },
+    {
+      "case": "wrong-ca",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    },
+    {
+      "case": "wrong-name",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    },
+    {
+      "case": "expired",
+      "exit_code": 0,
+      "expected_tls_error_lines": 1
+    }
+  ],
+  "private_authority_checks": 25,
+  "error_response_control": {
+    "before": "fault_responses_e459443bf8b142e98ca7b92362e795fd",
+    "after": "fault_responses_7a404dc2eef242feb98341fa67ded15a",
+    "before_outcomes": {
+      "RemoteDisconnected": 23,
+      "http_500": 17
+    },
+    "after_outcomes": {
+      "http_500": 40
+    }
+  },
+  "gateway_binary_sha256": "4cccdb3162f12cf73e399f99c5a9c36725491961463e6e76b8ef0ed3d9b6316e",
+  "online_sources_sha256": "dd5357c498971c393e9fc51962ef928fe99132b0235ea52daaa3a2d34653a091",
+  "full_regression": "../operations-regression/verification.json",
+  "evidence_sha256": {
+    "go-integration.jsonl": "4567cc011c2a74d82b4c48b400c2969c680b99d101929d2aa081ec3fd566013d",
+    "error-response-control/before.json": "060943f3d7348d57e60de4b8d23774f5116a2dd5fb3b1a1a9e4103a1a0284ca2",
+    "error-response-control/before-gateway-0.log": "a499bc45768468aa32ce07eae2f5b1165dff2a2228d728c0b0bd866b376964d9",
+    "error-response-control/after.json": "2633a7c696b6e0e8467423129b9373c0570ff8908a02128c1cc379c7e3fce4f3",
+    "error-response-control/after-gateway-0.log": "5fa48a32a9fe43ea2812b9a61e51766874f6a5b2125e15f7b089b4e1c3cfa94e",
+    "error-response-control/probe.py.snapshot": "ce067517308096d0e34e644e2d7ddede673b735f132cde97f90616fe1d5b0ef7",
+    "authority/report.json": "db0b6adefbe8194071606cd541ec989d2a8ebc474256f3779a95ffa8c1c41fe5",
+    "authority/room.log": "bf697a0fe6836d5faf9b2b446b23662aab0270a200a0905798464e4f502ead77",
+    "authority/go-authority-check.json": "fb39ba7bd67a68fc15f0ae42d85b7cbbfe267f44ad33204efe739ca217a72866",
+    "authority/forbidden-database.log": "167b9b57b50d5e832934b836856b3075edfaf9afdf0de3f8be3e1a37a94f3b60",
+    "authority/forbidden-management.log": "167b9b57b50d5e832934b836856b3075edfaf9afdf0de3f8be3e1a37a94f3b60",
+    "operations/report.json": "2ad115f67ef04127cb16ecb501cc6b821cd01179d3faa3d5c5885ee41d7aa767",
+    "operations/certificate-generation.log": "b9e80e24ba384f31d11638c13c32488ed787da47231104903c28ea64ee2c2a7f",
+    "operations/promtool-metrics.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operations/promtool-config.log": "71d19d6e6b5d4dd4cbcd888e1c282fca858c9ce87f9794c1de422ff212bba0cb",
+    "operations/prometheus.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operations/tls-valid.log": "c394f5b7028106fcc795762d92c3062ca6cf3aa79f695f7ba81c493be0fa57ea",
+    "operations/tls-default-untrusted.log": "9b5cdffefcad74778965d3037f8bd47b21cca45dfea7c18452d2e30497707f95",
+    "operations/tls-wrong-ca.log": "1eaa1902f7c28ce5d6f90de0de07093f6bf71d6075af1c52d67852a28ddd0dfb",
+    "operations/tls-wrong-name.log": "5e3af7046f319377a2db1f4a17386e54f5f83edcc41b724a0448d637b2a31065",
+    "operations/tls-expired.log": "1bb0a02827e9ccc6da20e2a6db92550ccc473c6f12204103ce5295e5e52c8b0e",
+    "operations/metrics-healthy.txt": "0e64d79216b967baba1aef56039548998bab34c08c07de41863dabf23d2ad587",
+    "operations/metrics-worker-down.txt": "1a55cd6a3dce5bcfd30a3d00a02d950bd9579569c199622c80517db92ccb6b01",
+    "operations/metrics-database-down.txt": "5ec6f5bc6127cab347ca98e525fd6fb25cb6a3bd070b2aca93f01d3b4ab45159",
+    "operations/metrics-expired-certificate.txt": "95f0da5809494d9a2f74b12ada173bafd2a04e3acfd7b40d4eb50bec999a1b1b",
+    "operations/metrics-recovered.txt": "485d0694e74d95733f755b490813f089dc24fc7e64c583d9c74fc6222006aeb0",
+    "operations/gateway-1.log": "624194e76adb8a495c7868cf6c9cfd3212834f473a31965855ec909eb43ba6b1",
+    "operations/gateway-3.log": "d5eda8ce599a350ebc036d9a1514d34a476b857d389dd2085d1d7e0e65fdabfd",
+    "operations/gateway-4.log": "8d4e42c8be827edbcc57768c1474aa2b75495d9678212ca13aa7303a626ab749",
+    "operations/gateway-5.log": "6639803261a13e5f465e4bec1e3c677a8182e995bf6eee55676bba9ffea8f0b8",
+    "operations/worker-0.log": "046ade2b2ee3c5546e7df9fa4635088e2c6eaea7ee786cf84fbd1270361cd144",
+    "operations/worker-2.log": "046ade2b2ee3c5546e7df9fa4635088e2c6eaea7ee786cf84fbd1270361cd144",
+    "world/gateway-1.log": "a43013348e967287019add17614f172ffa5ef09b4726c76ca4247e31710a8628",
+    "world/gateway-3.log": "e5489d4362c61fe2ed1a3400c61c794e28357bd496f3796aaf7a8ac7facebe7d",
+    "world/worker-0.log": "432b112d964110e31d9652bd6801fec277ef52c1f364c7be8619fb52ff479d4e",
+    "world/worker-2.log": "432b112d964110e31d9652bd6801fec277ef52c1f364c7be8619fb52ff479d4e",
+    "world/report.json": "3d16e6f94881139f9a792cea84170355f4b67b7a6fcd0922e9d97d46a36044ab",
+    "world/client-a.log": "565cb9acce813edeeabea472540a3f1efa744ff2a99077980c14e9406d78e73e",
+    "world/client-b.log": "baa749033a8af4a654908afd7853ab6f771b5fea5b9b2cf6eb7fd7705ae7ce8f",
+    "world/world-a.png": "15d4c7bdb2bde3f8dc15daeeafae987f777011c932e9da369870500338616dea",
+    "world/battle-a.png": "a0c93f7b6400b2b4d1361aa397a1a9da5ebbc53454c05a164a30a45c6a7175f8",
+    "world/result-a.png": "3159d1e07b18f0854f18aadbb08a5e17ea571a814643a5788653df0c0fd71016"
+  },
+  "goal_status": "active",
+  "L0_complete": false,
+  "limitations": [
+    "desktop loopback with a disposable CA; no installed system root or public certificate deployment",
+    "real local Prometheus alert state; no external operator notification delivery",
+    "preexisting intermittent client transport timeout remains under investigation",
+    "no mobile/WAN/capacity, cooperative combat, economy, guild or PvP acceptance",
+    "workspace validation with unrelated existing changes preserved"
+  ]
+}

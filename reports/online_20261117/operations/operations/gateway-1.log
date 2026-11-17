@@ -1,0 +1,121 @@
+{"time":"2026-11-17T05:46:01.5466758+08:00","level":"INFO","msg":"database migrations ready","duration_ms":4651}
+{"time":"2026-11-17T05:46:01.6335208+08:00","level":"INFO","msg":"read-only admin listening","address":"127.0.0.1:58662"}
+{"time":"2026-11-17T05:46:01.6335208+08:00","level":"INFO","msg":"gateway listening","address":"127.0.0.1:58659","tls":true,"behind_tls_proxy":false,"protocol":1,"content_version":"3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17"}
+{"time":"2026-11-17T05:46:02.0959153+08:00","level":"INFO","msg":"request","route":"GET /readyz","method":"GET","status":200,"duration_ms":13}
+{"time":"2026-11-17T05:46:02.0990235+08:00","level":"INFO","msg":"request","route":"GET /healthz","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T05:46:02.1036419+08:00","level":"INFO","msg":"request","route":"GET /livez","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T05:46:02.1061949+08:00","level":"INFO","msg":"request","route":"","method":"GET","status":404,"duration_ms":0}
+{"time":"2026-11-17T05:46:18.7004644+08:00","level":"INFO","msg":"request","route":"GET /v1/manifest","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T05:46:19.0857974+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/register","method":"POST","status":201,"duration_ms":364}
+{"time":"2026-11-17T05:46:19.1909457+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":201,"duration_ms":70}
+{"time":"2026-11-17T05:46:19.2236619+08:00","level":"INFO","msg":"request","route":"POST /v1/characters/{id}/select","method":"POST","status":200,"duration_ms":6}
+{"time":"2026-11-17T05:46:19.2524912+08:00","level":"INFO","msg":"request","route":"GET /v1/characters/{id}","method":"GET","status":200,"duration_ms":2}
+{"time":"2026-11-17T05:46:19.3122905+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/logout","method":"POST","status":200,"duration_ms":5}
+2026/11/17 05:46:25 http: TLS handshake error from 127.0.0.1:61712: local error: tls: bad record MAC
+2026/11/17 05:46:30 http: TLS handshake error from 127.0.0.1:58176: local error: tls: bad record MAC
+{"time":"2026-11-17T05:46:31.2275933+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/register","method":"POST","status":201,"duration_ms":117}
+{"time":"2026-11-17T05:46:31.2853774+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":201,"duration_ms":6}
+{"time":"2026-11-17T05:46:31.3983987+08:00","level":"INFO","msg":"request","route":"POST /v1/characters/{id}/select","method":"POST","status":200,"duration_ms":6}
+{"time":"2026-11-17T05:46:31.5588393+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/join","method":"POST","status":200,"duration_ms":31}
+{"time":"2026-11-17T05:46:32.1314598+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":292}
+{"time":"2026-11-17T05:46:32.4407311+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":114}
+{"time":"2026-11-17T05:46:32.6419757+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":22}
+{"time":"2026-11-17T05:46:32.8412813+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":23}
+{"time":"2026-11-17T05:46:33.0260508+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":10}
+{"time":"2026-11-17T05:46:33.2285279+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":16}
+{"time":"2026-11-17T05:46:33.4310159+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":33}
+{"time":"2026-11-17T05:46:33.6272283+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":200,"duration_ms":13}
+{"time":"2026-11-17T05:46:33.6822118+08:00","level":"INFO","msg":"request","route":"POST /v1/battles","method":"POST","status":201,"duration_ms":44}
+{"time":"2026-11-17T05:47:06.9949181+08:00","level":"INFO","msg":"request","route":"GET /readyz","method":"GET","status":503,"duration_ms":1}
+{"time":"2026-11-17T05:47:07.0013272+08:00","level":"INFO","msg":"request","route":"GET /livez","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T05:47:07.0062564+08:00","level":"INFO","msg":"request","route":"GET /healthz","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T05:47:12.8829544+08:00","level":"INFO","msg":"request","route":"GET /readyz","method":"GET","status":200,"duration_ms":16}
+{"time":"2026-11-17T05:47:12.931225+08:00","level":"INFO","msg":"request","route":"GET /v1/battles/active","method":"GET","status":200,"duration_ms":44}
+{"time":"2026-11-17T05:47:13.0960262+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":147}
+{"time":"2026-11-17T05:47:15.4627042+08:00","level":"INFO","msg":"request","route":"GET /readyz","method":"GET","status":503,"duration_ms":9}
+{"time":"2026-11-17T05:47:15.4658857+08:00","level":"INFO","msg":"request","route":"GET /livez","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.5614515+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.5614515+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.5646223+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.5646223+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.5682293+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.5682293+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.587665+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.587665+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.6041242+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6041242+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.6070877+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6070877+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.6102429+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6102429+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.6359398+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6359398+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.6506969+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6506969+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.6662362+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6662362+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.6814145+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6814145+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.6972498+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.6972498+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.7134095+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.7134095+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.7287635+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.7287635+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.7446107+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.7446107+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.7597873+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.7602984+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.7744875+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.7744875+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.7776732+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.7776732+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.7805106+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.7805106+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.8055057+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.8055057+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.8211512+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.8211512+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.8353727+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.8353727+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.8525186+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.8525186+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.8680868+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.8680868+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.8834165+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.8834165+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.899614+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.899614+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.9157782+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.9157782+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.9319668+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.9319668+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.9472963+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.9472963+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:15.9640611+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.9640611+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.9803472+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.9803472+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:15.9951388+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:15.9951388+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:16.010554+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.010554+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:16.0137914+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.0137914+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:16.0421419+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.0421419+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:16.058293+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.058293+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":0}
+{"time":"2026-11-17T05:47:16.073041+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.073041+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:16.0886567+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.0886567+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:16.1044531+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.1044531+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:16.1202208+08:00","level":"ERROR","msg":"online request failed","error_type":"database_connection"}
+{"time":"2026-11-17T05:47:16.1202208+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":500,"duration_ms":1}
+{"time":"2026-11-17T05:47:20.3332507+08:00","level":"INFO","msg":"request","route":"GET /readyz","method":"GET","status":200,"duration_ms":44}
+{"time":"2026-11-17T05:47:20.3515562+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":201,"duration_ms":14}
+{"time":"2026-11-17T05:47:20.3831954+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":201,"duration_ms":1}
+{"time":"2026-11-17T05:47:23.4472988+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/acknowledge","method":"POST","status":200,"duration_ms":7}
+{"time":"2026-11-17T05:47:23.4624572+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/logout","method":"POST","status":200,"duration_ms":7}

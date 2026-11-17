@@ -1,0 +1,70 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+import http.client
+import hashlib
+import json
+import secrets
+import threading
+import time
+import urllib.error
+import urllib.request
+import uuid
+from database_fault_proxy import DatabaseFaultProxy
+from dev import LOCAL, config
+from local_stack import LocalStack
+
+folder = LOCAL / "verification" / ("fault_responses_" + uuid.uuid4().hex)
+tls = LOCAL / "verification/operations_f2274477ae8e44abbeeae967c2404bf2/tls"
+proxy = DatabaseFaultProxy(config()["port"])
+stack = LocalStack(Path(r"E:\new bee\tools\godot-4.7.2\Godot_v4.7.2-stable_win64.exe"), folder, isolated_test=True, with_world=False, tls_directory=tls, with_admin=True, database_proxy_port=proxy.port)
+binary = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parents[1] / "bin/gateway.exe"
+original_spawn = stack.spawn
+def spawn(name, arguments, **kwargs):
+    if name == "gateway": arguments = [binary, *arguments[1:]]
+    return original_spawn(name, arguments, **kwargs)
+stack.spawn = spawn
+stop = threading.Event()
+thread = None
+counts = {}
+try:
+    stack.start()
+    def post(path, data, token=None, key=None):
+        headers = {"Content-Type":"application/json", "X-Content-Version":stack.manifest["content_version"]}
+        if token: headers["Authorization"] = "Bearer " + token
+        if key: headers["Idempotency-Key"] = key
+        request = urllib.request.Request(stack.url + path, json.dumps(data).encode(), headers, method="POST")
+        try: response = stack.opener.open(request, timeout=20)
+        except urllib.error.HTTPError as error: response = error
+        with response: return response.status, json.load(response)
+    status, account = post("/v1/auth/register", {"username":"probe_"+uuid.uuid4().hex[:16],"password":secrets.token_hex(20)})
+    if status != 201: raise RuntimeError("registration failed")
+    token = account["data"]["access_token"]
+    def scrape():
+        while not stop.is_set():
+            try:
+                request = urllib.request.Request(stack.admin_url + "/metrics", headers={"Authorization":"Bearer "+stack.env["YUANZHENG_ADMIN_TOKEN"]})
+                with stack.opener.open(request, timeout=4) as response: response.read()
+            except Exception: pass
+            stop.wait(0.1)
+    thread = threading.Thread(target=scrape, daemon=True)
+    thread.start()
+    proxy.pause()
+    for index in range(40):
+        try:
+            status, _ = post("/v1/characters", {"nickname":"故障旅人", "role_id":"zs", "appearance_id":"default"}, token, "probe-fault-request-001")
+            name = "http_" + str(status)
+        except Exception as error:
+            name = type(error).__name__
+        counts[name] = counts.get(name, 0) + 1
+        time.sleep(0.025)
+    proxy.resume()
+    result = {"folder":str(folder), "gateway_binary_sha256":hashlib.sha256(binary.read_bytes()).hexdigest(), "attempts":sum(counts.values()), "outcomes":counts, "partial_roles":stack.sql("SELECT count(*) FROM characters")}
+    (folder/"probe.json").write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
+    print(json.dumps(result,ensure_ascii=False,indent=2))
+finally:
+    stop.set()
+    if thread: thread.join(timeout=5)
+    proxy.resume()
+    stack.close()
+    proxy.close()

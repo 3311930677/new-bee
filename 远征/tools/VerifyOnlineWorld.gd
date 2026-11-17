@@ -74,10 +74,14 @@ func _ready() -> void:
 	_before = _local_snapshot()
 	_save_before = FileAccess.get_file_as_bytes(G.SAVE_PATH) if FileAccess.file_exists(G.SAVE_PATH) else PackedByteArray()
 	var username := OS.get_environment("YUANZHENG_TEST_USERNAME")
-	for variable in ["YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "PGPASSWORD"]:
+	for variable in ["YUANZHENG_DATABASE_URL", "YUANZHENG_TEST_DATABASE_URL", "YUANZHENG_ROOM_SECRET", "YUANZHENG_ADMIN_TOKEN", "YUANZHENG_TLS_KEY", "PGPASSWORD"]:
 		_check(not OS.has_environment(variable), "客户端不接收服务器环境：" + variable)
 	var password := OS.get_environment("YUANZHENG_TEST_PASSWORD")
 	_check(Online.configure(OS.get_environment("YUANZHENG_TEST_URL")), "本地联测地址")
+	if not OS.get_environment("YUANZHENG_TEST_CA").is_empty():
+		if not _check(Online.configure_debug_ca(OS.get_environment("YUANZHENG_TEST_CA")), "使用仍验证主机名的测试 CA"):
+			_finish()
+			return
 	if not _ok(await Online.authenticate(username, password, true), "真实注册"):
 		_finish()
 		return
