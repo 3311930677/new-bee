@@ -1,0 +1,23 @@
+{"time":"2026-11-17T22:24:29.3785698+08:00","level":"INFO","msg":"database migrations ready","mode":"check","restricted_role":true,"duration_ms":4}
+{"time":"2026-11-17T22:24:29.451486+08:00","level":"INFO","msg":"read-only admin listening","address":"127.0.0.1:50160"}
+{"time":"2026-11-17T22:24:29.451486+08:00","level":"INFO","msg":"gateway listening","address":"127.0.0.1:50158","tls":true,"behind_tls_proxy":false,"protocol":1,"content_version":"3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17"}
+{"time":"2026-11-17T22:24:37.1422075+08:00","level":"INFO","msg":"request","route":"GET /v1/manifest","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T22:24:37.2437677+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/register","method":"POST","status":201,"duration_ms":68}
+{"time":"2026-11-17T22:24:37.2989634+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":201,"duration_ms":27}
+{"time":"2026-11-17T22:24:37.3510479+08:00","level":"INFO","msg":"request","route":"POST /v1/characters/{id}/select","method":"POST","status":200,"duration_ms":25}
+{"time":"2026-11-17T22:24:37.5963761+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/join","method":"POST","status":200,"duration_ms":22}
+{"time":"2026-11-17T22:24:37.6300359+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":2}
+{"time":"2026-11-17T22:24:37.674845+08:00","level":"INFO","msg":"request","route":"GET /v1/battles/active","method":"GET","status":200,"duration_ms":1}
+{"time":"2026-11-17T22:24:37.7875844+08:00","level":"INFO","msg":"request","route":"GET /v1/manifest","method":"GET","status":200,"duration_ms":0}
+{"time":"2026-11-17T22:24:37.8614183+08:00","level":"INFO","msg":"request","route":"POST /v1/auth/register","method":"POST","status":201,"duration_ms":56}
+{"time":"2026-11-17T22:24:37.8973882+08:00","level":"INFO","msg":"request","route":"POST /v1/characters","method":"POST","status":201,"duration_ms":3}
+{"time":"2026-11-17T22:24:37.9192132+08:00","level":"INFO","msg":"request","route":"POST /v1/characters/{id}/select","method":"POST","status":200,"duration_ms":2}
+{"time":"2026-11-17T22:24:38.308344+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/join","method":"POST","status":200,"duration_ms":5}
+{"time":"2026-11-17T22:24:38.3336864+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":5}
+{"time":"2026-11-17T22:24:38.4162356+08:00","level":"INFO","msg":"request","route":"GET /v1/battles/active","method":"GET","status":200,"duration_ms":6}
+{"time":"2026-11-17T22:24:38.4531566+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":6}
+{"time":"2026-11-17T22:24:38.5003579+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":503,"duration_ms":11}
+{"time":"2026-11-17T22:24:38.529871+08:00","level":"INFO","msg":"request","route":"GET /v1/rooms/current","method":"GET","status":200,"duration_ms":10}
+{"time":"2026-11-17T22:24:38.5767976+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":503,"duration_ms":7}
+{"time":"2026-11-17T22:24:38.689893+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":503,"duration_ms":5}
+{"time":"2026-11-17T22:24:38.7515181+08:00","level":"INFO","msg":"request","route":"POST /v1/rooms/move","method":"POST","status":503,"duration_ms":2}

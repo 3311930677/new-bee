@@ -116,7 +116,7 @@ class DatabaseRecovery:
         (self.folder / ("gateway-rejected-" + name + ".log")).write_text(output, encoding="utf-8")
         self.events.append({"action": "gateway-reject-" + name, "exit_code": result.returncode, "expected_success": False})
 
-    def restore(self, stack):
+    def restore(self, stack, *, expected_gateway_starts=3):
         counts_sql = "SELECT (SELECT count(*) FROM accounts),(SELECT count(*) FROM wallets WHERE gold=110),(SELECT count(*) FROM wallet_ledger WHERE reason='battle_reward'),(SELECT count(*) FROM battles WHERE acknowledged_at IS NULL),(SELECT count(*) FROM battle_results),(SELECT count(*) FROM battle_reward_claims),(SELECT count(*) FROM sessions WHERE revoked_at IS NULL)"
         before = stack.sql(counts_sql).split("|")
         if before != ["2"] * 7:
@@ -145,10 +145,12 @@ class DatabaseRecovery:
             raise RuntimeError("Restored independent SQL counts, lease expiry or snapshot boundary mismatch")
         stack.start_worker()
         stack.start_gateway()
+        if hasattr(stack, "sync_logs"):
+            stack.sync_logs()
         gateway_events = [json.loads(line) for path in self.folder.glob("gateway-[0-9]*.log") for line in path.read_text(encoding="utf-8").splitlines() if line.startswith("{")]
         migrations = [event for event in gateway_events if event.get("msg") == "database migrations ready"]
-        if len(migrations) != 3 or not all(event.get("mode") == "check" and event.get("restricted_role") for event in migrations):
-            raise RuntimeError("All three actual gateway starts must verify a restricted runtime role without DDL")
+        if len(migrations) != expected_gateway_starts or not all(event.get("mode") == "check" and event.get("restricted_role") for event in migrations):
+            raise RuntimeError("Every expected gateway start must verify a restricted runtime role without DDL")
         return {"passed": True, "scope": "actual read-only-role pg_dump, new-database restore, two real unconfirmed Godot victories; no live endpoint promotion",
                 "tables_matched": len(restored["tables_matched_before_session_invalidation"]), "before_counts": before, "restored_counts": after,
                 "expired_leases": restored["leases_invalidated"], "revoked_sessions": restored["sessions_revoked"],

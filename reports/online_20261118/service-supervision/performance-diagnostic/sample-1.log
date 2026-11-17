@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PERF 加载页预热完（含编译）    13353 ms
+PERF GameHome 进场景              71 ms（预算 260）
+PERF_PHASE {"frame1_us":25756,"frame2_us":45,"panel":"世界","sync_us":35071,"total_ms":61}
+PERF 开浮层 世界     第1次       61 ms（预算 130）
+PERF 开浮层 世界     第2次       31 ms（预算 70，3 次取最小）
+PERF_PHASE {"frame1_us":8197,"frame2_us":34,"panel":"图鉴","sync_us":38800,"total_ms":47}
+PERF 开浮层 图鉴     第1次       47 ms（预算 130）
+PERF 开浮层 图鉴     第2次       20 ms（预算 70，3 次取最小）
+PERF_PHASE {"frame1_us":9491,"frame2_us":645,"panel":"召唤","sync_us":17765,"total_ms":28}
+PERF 开浮层 召唤     第1次       28 ms（预算 130）
+PERF 开浮层 召唤     第2次       15 ms（预算 70，3 次取最小）
+PERF_PHASE {"frame1_us":4072,"frame2_us":40,"panel":"兑换","sync_us":41411,"total_ms":46}
+PERF 开浮层 兑换     第1次       46 ms（预算 130）
+PERF 开浮层 兑换     第2次       13 ms（预算 70，3 次取最小）
+PERF_PHASE {"frame1_us":18014,"frame2_us":32,"panel":"设置","sync_us":57152,"total_ms":75}
+PERF 开浮层 设置     第1次       75 ms（预算 130）
+PERF 开浮层 设置     第2次       45 ms（预算 70，3 次取最小）
+PERF_PHASE {"frame1_us":21526,"frame2_us":36,"panel":"养成","sync_us":35876,"total_ms":58}
+PERF 开浮层 养成     第1次       58 ms（预算 130）
+PERF 开浮层 养成     第2次       38 ms（预算 70，3 次取最小）
+PERF CityScene 进场景            194 ms（预算 700）
+PERF_OK all tests passed

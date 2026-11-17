@@ -1,0 +1,96 @@
+{
+  "target_database": "yz_restore_57d669caa9f243fdae94",
+  "started_utc": "2026-11-17T14:40:43.3252367Z",
+  "finished_utc": "2026-11-17T14:40:47.0745254Z",
+  "dump_sha256": "55691f43aad355af2eca2e1743e3b6daff6b05667eaa6f2c3244bdd34586fc76",
+  "tables_matched_before_session_invalidation": [
+    {
+      "name": "accounts",
+      "rows": 2,
+      "sha256": "6604b48ea52e7504312e7b192e3442562d4df9faf845d4999552c3e24afba27a"
+    },
+    {
+      "name": "audit_events",
+      "rows": 2,
+      "sha256": "81862d5248194079055f26c9d732f37c089bad48bbde72e039461c74a11be80c"
+    },
+    {
+      "name": "battle_inputs",
+      "rows": 66,
+      "sha256": "6e7349fe3bdbbdfeb6faafb457f89785b0eab9d58c98ace22d4cc1fa95194f0d"
+    },
+    {
+      "name": "battle_results",
+      "rows": 2,
+      "sha256": "eca92c3c1eddbaaffeda431f0300b8c4241c97c83d79b039b56c88be3b91838b"
+    },
+    {
+      "name": "battle_reward_claims",
+      "rows": 2,
+      "sha256": "5305e89815fc12a642ec3d1c3f2cdd7857b407a0ac8994a1b21a4db5bcfb93d3"
+    },
+    {
+      "name": "battles",
+      "rows": 2,
+      "sha256": "eae9a6c84035e80c1ca98544ea1d29b3a2df5b79fd3ab2731201bdaf826b0f40"
+    },
+    {
+      "name": "character_progress",
+      "rows": 2,
+      "sha256": "9819efaf100d97625dd7fb57ac4aff3b863e92bc175294f1c8c21a6959a7f773"
+    },
+    {
+      "name": "characters",
+      "rows": 2,
+      "sha256": "c03fcdadfad73437781aead48d0f8311bff8a875a488c60df11d10fe12aa3da1"
+    },
+    {
+      "name": "command_receipts",
+      "rows": 90,
+      "sha256": "6c2a448c6aed5f7aa22410ee2be114eab951a25136621e84b296465f2491d682"
+    },
+    {
+      "name": "inventory_items",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "room_instances",
+      "rows": 1,
+      "sha256": "cdc1fe3062f23ec15ab8a282e797fc2ee7d4ed78158d029e94fe56f76d4a5f7e"
+    },
+    {
+      "name": "room_leases",
+      "rows": 2,
+      "sha256": "f2607e205f88d6db5bc62c790d7fd27b4530d6e8a498cce81a971f288832b359"
+    },
+    {
+      "name": "schema_migrations",
+      "rows": 4,
+      "sha256": "e01235978a97606cbd4237ffa84c69f4b47bc03fa1016fbad723e9658e5cf251"
+    },
+    {
+      "name": "security_notifications",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "sessions",
+      "rows": 2,
+      "sha256": "48d0f87988fc36108782c62f37d2b7319a24b2734f30f7805d402d928ec5c3a2"
+    },
+    {
+      "name": "wallet_ledger",
+      "rows": 4,
+      "sha256": "82dfb3b4d05ea50667e76241054201eeac187b0e31d15b69e9f66c6136b2678a"
+    },
+    {
+      "name": "wallets",
+      "rows": 2,
+      "sha256": "b94210d9474d44427d9185550612058c284d7c7c7e15cb8b6700210d22329843"
+    }
+  ],
+  "sessions_revoked": 2,
+  "leases_invalidated": 2,
+  "ready_for_review": true
+}

@@ -1,0 +1,65 @@
+{
+  "run_id": "d451d22fd8104538bcf268e1bddd2a09",
+  "scope": "L0 desktop two-client same town, authority combat, atomic rewards and restart recovery; not mobile/WAN/PvP acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "daebc576ce1d00f2c3367c0579e1538034d661245256ee0b5630ccf20a583119",
+    "content_version": "3f622d4c443c2a629aa67a9a92c6eaf1d872508d054d9792ddeb0d763d23ef17",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "online_sources_sha256": "cdd1c1771575428abe98431a0b4682f292b64851d591f689da441624f6e3c5ea",
+  "gateway_binary_sha256": "503c951dea72ca20e8796e179844c118fb8d452346803f52a52b7f10b5ec15b8",
+  "supervision": {
+    "scope": "real foreground Windows role hosts; distinct OS identities and native OS manager restart are not accepted by this drill",
+    "host_binary_sha256": "faaf861f22e4ef5654be912030725c108663cf2d0502fdd5eb93941d0f7baa26",
+    "events": [
+      {
+        "kind": "host_death",
+        "role": "gateway",
+        "child_reaped": true,
+        "host_manager_restart": "verifier explicit restart; OS service-manager restart not accepted here",
+        "old_child_pid": 40976,
+        "new_child_pid": 37732
+      }
+    ],
+    "planned_stops": [
+      {
+        "role": "gateway",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      },
+      {
+        "role": "worker",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      }
+    ]
+  },
+  "passed": false,
+  "error": "A real client exited before the recovery barrier; inspect client logs",
+  "worker_errors": [],
+  "player_data_unchanged": true,
+  "checks": [
+    {
+      "name": "actual supervisor death closes its job and reaps only its owned gateway",
+      "passed": true
+    }
+  ],
+  "online_sources_unchanged": true
+}

@@ -86,6 +86,46 @@
 
 协议与工具依据：[PostgreSQL 18 pg_dump](https://www.postgresql.org/docs/18/app-pgdump.html)、[pg_restore](https://www.postgresql.org/docs/18/app-pgrestore.html)、[权限](https://www.postgresql.org/docs/18/ddl-priv.html)和[默认权限](https://www.postgresql.org/docs/18/sql-alterdefaultprivileges.html)。逻辑导出不等于完整的生产持续备份方案。
 
+## 独立服务监督的实现约定
+
+网关与权威各自使用独立监督入口和配置，不由一个携带全部凭据的进程启动整套生产服务。入口只接受固定的网关/权威角色、绝对程序和内容路径、私有凭据目录；网关强制只读迁移检查及受限数据库身份。子进程环境按角色构造，不继承离线数据库、管理或其他角色凭据。
+
+监督区分存活与就绪：网关管理监听的 `/livez` 无响应才触发无响应恢复；数据库或权威故障导致 `/readyz` 失败时保留仍存活的网关。权威使用签名、版本化的私有 ping。意外退出和持续无响应受重启窗口、次数与退避约束；已启动的进程还须同时达到连续失败次数及持续失败时长，避免把一次延后的探测及紧接的失败当成长时间卡死。默认探测间隔 2 秒、单次期限 1 秒、3 次连续失败且持续至少 5 秒；游戏请求期限不随此改变。停止请求不重启，监督入口异常退出时清理自己拥有的子进程。状态和有界日志保存在该角色的私有状态目录，不提供公开写管理接口。
+
+桌面原生进程演练验证自动重启、依赖未就绪、重启上限和原子奖励；Linux 服务管理器配置再分配不同系统身份和凭据。两种证据分别登记，当前 Windows 用户下的监督演练不能证明生产操作系统身份隔离，配置模板也不能证明目标服务器已部署。
+
+`server/bin/servicehost.exe`（Linux 为 `servicehost`）读取一个角色的 JSON 配置。只允许 `gateway/authority`，不提供任意命令或 shell；内容摘要必须匹配实际全部 JSON。网关配置强制 `--migration-mode check --require-restricted-database`。状态、凭据目录必须在只读内容目录之外，两个角色不能共用状态目录。私有目录持有实例锁，同一状态目录只能启动一个监督器。
+
+| 角色 | 凭据目录中允许的文件 | 子进程获得 |
+|---|---|---|
+| authority | `room-secret` | 自己的 RPC 密钥 |
+| gateway | `room-secret`、`database-url`、`admin-token` | 自己的受限数据库 URL、RPC 密钥、管理令牌 |
+
+目录中出现其他文件即拒绝。子进程只继承明确的操作系统/代理环境和自己的凭据，不继承离线数据库、其他服务或无关 API 密钥，也不继承 `CREDENTIALS_DIRECTORY`。Linux 凭据文件及目录禁止组/其他用户访问；Windows 当前入口需要显式 `--development-acl`，明确只是前台开发验证，未提供生产 NTFS 权限验收。程序、配置、TLS 文件和私有目录均由服务端管理，不进入客户端包。
+
+```powershell
+# 先按 .json.example 建立该环境的配置和私有凭据文件；以下参数只有路径。
+# 两个角色分别运行；前台开发的实际 NTFS 身份隔离仍待验收。
+.\bin\servicehost.exe --config <authority配置绝对路径> `
+  --credentials-directory <authority私有凭据目录> --development-acl
+.\bin\servicehost.exe --config <gateway配置绝对路径> `
+  --credentials-directory <gateway私有凭据目录> --development-acl
+# 向本次实例写入私有停止请求；旧请求不能停止新实例，不依赖保存的 PID 杀进程。
+.\bin\servicehost.exe --request-stop <该角色状态目录绝对路径>
+```
+
+Windows 子进程置于带 `KILL_ON_JOB_CLOSE` 的独立 Job，监督器死亡时操作系统关闭句柄并终止该 Job；验证器额外核对子进程的实际父 PID、程序路径及原进程句柄，故障操作只作用于该次自有进程。正常开发停止也终止本角色的 Job；此路径使用进程终止，由既有数据库事务和持久化回执保证不重发奖励。Linux 分支发送 SIGTERM 并在限时后结束自己的进程组，正式服务还配置 `KillMode=control-group`；Linux 运行时和服务管理器行为仍须在目标机实测。依据为 [Microsoft Job Objects](https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects)及 [systemd.service](https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html)。
+
+`status.json` 记录当前监督器/子进程 PID、实例 nonce、代次、存活/就绪、探测错误类别和耗时、连续失败时长及终止状态，不含凭据或游戏角色。状态用临时文件原子替换；停止请求也原子替换，已有硬链接的目标不被改写。子进程日志每份最多约 2 MiB，超过后标记截断，保留最近 8 份匹配本工具命名的日志，不删除操作员其他文件。服务管理器还应管理自身日志留存；有界日志不代替完整运营审计。
+
+### Linux 服务配置与目标机门槛
+
+`deploy/systemd` 提供两个服务、专用系统用户声明及非秘密 JSON 示例。网关 `Wants/After` 权威，未配置把依赖失败变为强制停止的绑定；每个服务使用不同 `User/Group` 和 0700 状态目录。`LoadCredential` 由系统管理器从 root 私有源文件复制该角色凭据，监督器从它提供的目录读取；只读文件系统、私有临时目录、空能力集和禁止提权作为模板默认值。依据为 [systemd 凭据接口](https://systemd.io/CREDENTIALS/)和 [systemd.exec](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html)。
+
+示例内容摘要是故意保留的占位符，必须替换为实际发布包摘要；不能直接启用占位配置。实际发布包需含对应平台的网关、监督器、Godot、已在目标平台导入的独立权威工程，以及与客户端一致的全部 JSON。程序和内容由 root 持有、服务用户只读；TLS 私钥仅网关身份可读；离线迁移和备份凭据不装入运行服务。先离线迁移/授权，再检查真实证书、就绪和管理监听。
+
+目标机应执行 `systemd-sysusers` 和 `systemd-analyze verify`，核对两身份及各自文件访问，再验证服务自动重启、依赖故障、停止后没有残留进程、重启上限、原角色回执恢复及告警。当前机器只有 Windows，未安装/启用这些 Linux 系统服务；交叉编译或读取配置不是上述运行时验收。目标服务器、域名和通知接收方配置后继续完成，不用模板追认部署成功。
+
 ## 后续发布门槛
 
 服务监督/重启、备份加密与异地留存/持续恢复、迁移和发布切换/回退、操作系统服务身份、手机跨网络验证、容量/费用和独立告警送达仍需逐项实现与取证。新数据库身份与逻辑恢复的实际验收结果登记在实施台账；不能仅据上面的工具说明推断通过。目标服务器、域名和真实通知接收方尚未配置，当前文档不宣称公网部署或通知已生效。

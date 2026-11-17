@@ -1,0 +1,4 @@
+{"time":"2026-11-17T22:24:29.2937601+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"starting","reason":"launch","generation":1,"child_pid":0,"ready":false}
+{"time":"2026-11-17T22:24:29.5993456+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"running","reason":"healthy","generation":1,"child_pid":37732,"ready":true}
+{"time":"2026-11-17T22:24:36.8353763+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"degraded","reason":"dependency_not_ready","generation":1,"child_pid":37732,"ready":false}
+{"time":"2026-11-17T22:24:39.3370683+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"stopped","reason":"requested","generation":1,"child_pid":0,"ready":false}

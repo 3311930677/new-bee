@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 581.08 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 3070 Laptop GPU
+
+ERROR: ONLINE_WORLD_FAIL 服务器拒绝伪造位置
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyOnlineWorld.gd:34)
+       [1] _ready (res://tools/VerifyOnlineWorld.gd:111)
+       [2] move_world (res://src/online/OnlineClient.gd:214)
+       [3] _send_command (res://src/online/OnlineClient.gd:321)
+       [4] _request (res://src/online/OnlineClient.gd:307)
+       [5] _raw_request (res://src/online/OnlineClient.gd:385)
+ERROR: ONLINE_WORLD_FAIL 服务器批准逐步移动：世界服务暂时不可用，请稍后重试 [status=503 code=authority_unavailable transport=-1]
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyOnlineWorld.gd:34)
+       [1] _ok (res://tools/VerifyOnlineWorld.gd:39)
+       [2] _ready (res://tools/VerifyOnlineWorld.gd:114)
+       [3] move_by (res://src/ui/OnlineWorld.gd:189)
+       [4] move_world (res://src/online/OnlineClient.gd:214)
+       [5] _send_command (res://src/online/OnlineClient.gd:321)
+       [6] _request (res://src/online/OnlineClient.gd:307)
+       [7] _raw_request (res://src/online/OnlineClient.gd:385)
+ONLINE_WORLD_FAIL fails=2

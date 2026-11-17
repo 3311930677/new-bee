@@ -18,7 +18,7 @@ from verify_clients import player_snapshot
 def source_fingerprint():
     paths = []
     for directory in (SERVER / "cmd", SERVER / "internal", SERVER / "room", SERVER / "tools", SERVER / "deploy", SERVER.parent / "src/online"):
-        paths.extend(path for path in directory.rglob("*") if path.suffix in (".go", ".sql", ".gd", ".py", ".godot", ".yml", ".yaml", ".example"))
+        paths.extend(path for path in directory.rglob("*") if path.suffix in (".go", ".sql", ".gd", ".py", ".godot", ".yml", ".yaml", ".example", ".service", ".conf"))
     paths.extend((SERVER / "go.mod", SERVER / "go.sum"))
     paths.extend((SERVER.parent / "src/ui").glob("Online*.*"))
     paths.extend((SERVER.parent / "tools").glob("VerifyOnline*.*"))
@@ -34,7 +34,10 @@ def main():
     parser.add_argument("--capture", action="store_true")
     parser.add_argument("--tls-directory", type=Path)
     parser.add_argument("--database-recovery", action="store_true", help="Use separate DB roles and restore a real backup before confirming both victories")
+    parser.add_argument("--supervision", action="store_true", help="Verify independent role hosts, actual child exit/hang and owned-child cleanup")
     args = parser.parse_args()
+    if args.supervision and not args.database_recovery:
+        parser.error("--supervision requires --database-recovery and restricted runtime identities")
     run_id = uuid.uuid4().hex
     folder = LOCAL / "verification" / ("world_" + run_id)
     folder.mkdir(parents=True)
@@ -46,8 +49,12 @@ def main():
         recovery = DatabaseRecovery(folder)
         if args.tls_directory is None:
             args.tls_directory = recovery.create_tls()
-    stack = LocalStack(args.godot, folder, isolated_test=not args.database_recovery, tls_directory=args.tls_directory,
-                       migration_mode="check" if recovery else "auto", require_restricted_database=bool(recovery))
+    if args.supervision:
+        from supervised_stack import SupervisedStack
+        stack = SupervisedStack(args.godot, folder, tls_directory=args.tls_directory)
+    else:
+        stack = LocalStack(args.godot, folder, isolated_test=not args.database_recovery, tls_directory=args.tls_directory,
+                           migration_mode="check" if recovery else "auto", require_restricted_database=bool(recovery))
     before = player_snapshot()
     clients, logs = {}, []
     checks = []
@@ -75,6 +82,12 @@ def main():
         if recovery:
             recovery.provision(stack)
         stack.start()
+        if args.supervision:
+            report["supervision"] = {"scope": "real foreground Windows role hosts; distinct OS identities and native OS manager restart are not accepted by this drill",
+                                     "host_binary_sha256": hashlib.sha256((SERVER / "bin/servicehost.exe").read_bytes()).hexdigest(),
+                                     "events": stack.supervision_events, "planned_stops": stack.planned_stops}
+            event = stack.hard_host_recovery("gateway")
+            check(event["child_reaped"] and event["new_child_pid"] != event["old_child_pid"], "actual supervisor death closes its job and reaps only its owned gateway")
         for tag in ("a", "b"):
             userdata = folder / ("client-" + tag)
             userdata.mkdir()
@@ -109,6 +122,8 @@ def main():
         wait_markers(["fault-a", "fault-b"])
         # Both observed failures must be the actual PostgreSQL trigger, rather
         # than an unrelated HTTP/authority failure with the same 500 status.
+        if args.supervision:
+            stack.sync_logs()
         gateway_events = [json.loads(line) for path in folder.glob("gateway-*.log")
                           for line in path.read_text(encoding="utf-8").splitlines() if line.startswith("{")]
         injected_failures = sum(event.get("error_type") == "database_P0001" for event in gateway_events)
@@ -118,16 +133,24 @@ def main():
         check(counts == ["0", "0", "0", "200", "0"], "failed real victory transactions leave no partial reward, claim or input")
         report["fault_database_counts"] = counts
         previous_epoch = stack.rpc.call("ping")["epoch"]
-        stack.stop("gateway")
-        stack.stop("worker")
-        stack.start_worker()
-        stack.start_gateway()
+        if args.supervision:
+            worker = stack.fault_child("worker", "hang")
+            check(worker["suspended_threads"] > 0 and worker["host_pid_unchanged"] and worker["gateway_dependency_failure_without_restart"],
+                  "real hung authority recovers automatically while the live gateway only becomes unready")
+            gateway = stack.fault_child("gateway", "exit")
+            check(gateway["host_pid_unchanged"] and gateway["generation_after"] == gateway["generation_before"] + 1,
+                  "a killed real gateway automatically restarts under the same role host")
+        else:
+            stack.stop("gateway")
+            stack.stop("worker")
+            stack.start_worker()
+            stack.start_gateway()
         check(previous_epoch != stack.rpc.call("ping")["epoch"], "gateway and real authority process restart before reward retry")
         stack.sql("DROP TRIGGER reject_world_reward ON wallet_ledger")
         (barrier / "repair-complete").write_text("ready", encoding="utf-8")
         if recovery:
             wait_markers(["backup-ready-a", "backup-ready-b"], 150)
-            report["database_recovery"] = recovery.restore(stack)
+            report["database_recovery"] = recovery.restore(stack, expected_gateway_starts=4 if args.supervision else 3)
             check(report["database_recovery"]["passed"], "a real read-only backup restores both unconfirmed victories with revoked old sessions")
             (barrier / "restore-complete").write_text("ready", encoding="utf-8")
         for tag, process in clients.items():

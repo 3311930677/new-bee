@@ -58,6 +58,7 @@ python 远征/server/tools/verify_clients.py --godot <Godot-4.7.2路径> --captu
 python 远征/server/tools/verify_room.py --godot <Godot-4.7.2路径>
 python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --database-recovery --capture
+python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --database-recovery --supervision --capture
 python 远征/server/tools/verify_accounts.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_identity.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/bootstrap_monitoring.py --proxy <本机实际代理>
@@ -71,6 +72,10 @@ python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
 这仍是桌面本机证据，不能替代双手机、广域网、24 人压力、合作副本、PVP 或运营验收。`VerifyOnlineWorld` 与 `VerifyOnlineHttp` 需要外部真实服务与隔离测试身份，由对应 Python 工具启动；常规单机回归不依赖这些服务。
 
 `--database-recovery` 变体新建专用测试库与三种独立数据库身份，以 TLS 和无 DDL 权限的网关完成同样的真实双端链，再在两个未确认胜利时使用只读身份备份、恢复到新库、撤销旧会话并重启服务。两个原客户端必须拒绝旧令牌、普通登录回到原角色、以原请求取得同一回执并各确认一次奖励。仅清理该运行创建的随机库与角色，私有 dump 和密码留在忽略目录；归档验收只取脱敏报告和日志。
+
+再加 `--supervision` 会让两种角色各自运行在 `servicehost` 下：真实终止一个监督器并核对其子进程也退出，然后挂起这次自有 Godot 的线程、验证自动恢复和网关只变为未就绪，再终止实际网关子进程、验证原监督器自动重启。既有两笔数据库奖励故障、原请求重试、新库恢复及单机隔离继续执行。Windows 前台测试显式记录 `development-acl`，没有据此宣称生产服务身份或系统管理器已验收。
+
+`dev.py build` 同时构建 `bin/servicehost.exe`。独立配置、角色凭据文件、重启窗口/次数/持续失败条件、有界日志和 Linux 分身份模板见[服务监督说明](../docs/online-operations.md#独立服务监督的实现约定)。生产网关始终是受限数据库模式；`run_stack.py` 保留为本机直接开发入口。
 
 账号页面脚本用真实按钮及 Go/PostgreSQL 验证注册恢复码遮挡、重名建议、删除确认/取消、恢复原角色、旧恢复码拒绝、新密码找回、站内记录确认和单机隔离。截图只保存遮挡状态，脚本扫描日志中的恢复码模式并拒绝把泄漏样本算作通过。客户端联测工具均过滤服务端数据库连接/私有密钥等环境变量，Godot 客户端还在运行时检查这些变量不存在。
 
