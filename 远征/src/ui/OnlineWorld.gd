@@ -6,6 +6,7 @@ const Field := preload("res://src/ui/FieldUI.gd")
 const BattlePage := preload("res://src/ui/OnlineBattle.tscn")
 const Profile := preload("res://src/online/OnlineProfile.gd")
 const JourneyPanel := preload("res://src/ui/OnlineJourneyPanel.gd")
+const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 
 var auto_connect := true
 var automatic_poll := true
@@ -31,6 +32,12 @@ var _journey_panel: Control
 var _journey: Dictionary = {}
 var _journey_marker: Node2D
 var _marker_key := ""
+var _positions: PositionStream
+var _position_tick := 0
+var _positions_last := -10000
+var _positions_retry_at := 0
+var _player_draw_target := Vector2.ZERO
+var _player_draw_ready := false
 
 
 func _ready() -> void:
@@ -139,28 +146,15 @@ func refresh_world() -> Dictionary:
 
 
 func _apply_world(data: Dictionary) -> void:
-	lease = (data.get("lease", {}) as Dictionary).duplicate(true)
-	entities = (data.get("entities", []) as Array).duplicate(true)
+	var current := data.get("lease", {}) as Dictionary
+	var new_lease: bool = current.get("room_id") != lease.get("room_id") or current.get("generation") != lease.get("generation")
+	if new_lease:
+		_close_positions()
+	lease = current.duplicate(true)
 	_encounters = (data.get("encounters", {}) as Dictionary).duplicate(true)
-	_town_label.text = "昭元边城 · 同行 %d 人" % entities.size()
-	var live_ids: Array[String] = []
-	for entity_value in entities:
-		if not entity_value is Dictionary:
-			continue
-		var entity := entity_value as Dictionary
-		var id := String(entity.get("id", ""))
-		live_ids.append(id)
-		if not _actors.has(id):
-			var actor := Traveller.new()
-			actor.identity = entity
-			_actors[id] = actor
-			_world.add_child(actor)
-		(_actors[id] as Node2D).position = Vector2(float(entity.get("x", 0)), float(entity.get("y", 0)))
-	for id in _actors.keys():
-		if not live_ids.has(String(id)):
-			(_actors[id] as Node2D).queue_free()
-			_actors.erase(id)
-	_camera.position = Vector2(float(lease.get("x", 600)), float(lease.get("y", 1520)))
+	if not _positions_recent():
+		_apply_people(data.get("entities", []), false)
+	_show_player(Vector2(float(lease.get("x", 600)), float(lease.get("y", 1520))), new_lease or not automatic_poll)
 	_update_journey(data.get("journey", {}))
 	if not _world.has_node("TrainingWolf") and _encounters.has("training_wolf"):
 		var target := Node2D.new()
@@ -177,6 +171,85 @@ func _apply_world(data: Dictionary) -> void:
 		caption.position = Vector2(-90, -112)
 		caption.size = Vector2(180, 30)
 		target.add_child(caption)
+
+
+func _apply_people(people: Array, interpolate: bool) -> void:
+	entities = people.duplicate(true)
+	_town_label.text = "昭元边城 · 附近 %d 人" % entities.size()
+	var live_ids: Array[String] = []
+	var own_id := String(lease.get("character_id", ""))
+	for entity_value in entities:
+		if not entity_value is Dictionary:
+			continue
+		var entity := entity_value as Dictionary
+		var id := String(entity.get("id", ""))
+		var at := Vector2(float(entity.get("x", 0)), float(entity.get("y", 0)))
+		live_ids.append(id)
+		if not _actors.has(id):
+			var actor := Traveller.new()
+			actor.identity = entity
+			actor.position = _camera.position if id == own_id and _player_draw_ready else at
+			_actors[id] = actor
+			_world.add_child(actor)
+		if id != own_id:
+			(_actors[id] as Traveller).update_position(at, interpolate)
+	for id in _actors.keys():
+		if not live_ids.has(String(id)):
+			(_actors[id] as Node2D).queue_free()
+			_actors.erase(id)
+
+
+func _show_player(target: Vector2, instant: bool) -> void:
+	_player_draw_target = target
+	if instant or not _player_draw_ready:
+		_player_draw_ready = true
+		_draw_player(target)
+
+
+func _draw_player(point: Vector2) -> void:
+	_camera.position = point
+	var own_id := String(lease.get("character_id", ""))
+	if _actors.has(own_id):
+		(_actors[own_id] as Node2D).position = point
+
+
+func _positions_recent() -> bool:
+	return Time.get_ticks_msec() - _positions_last < 1200
+
+
+func _close_positions() -> void:
+	if _positions != null:
+		_positions.close()
+	_positions = null
+	_position_tick = 0
+	_positions_last = -10000
+	_positions_retry_at = 0
+
+
+func _poll_positions() -> void:
+	var now := Time.get_ticks_msec()
+	if _positions == null and now >= _positions_retry_at:
+		_positions = Online.open_world_positions()
+		_position_tick = 0
+		_positions_retry_at = now + 800
+	if _positions == null:
+		return
+	var frame := _positions.poll_latest()
+	if not _positions.is_open():
+		_positions = null
+		_positions_retry_at = now + 250
+	if frame.is_empty():
+		return
+	if frame.get("room_id") != lease.get("room_id") or frame.get("map_id") != lease.get("map_id") or frame.get("generation") != lease.get("generation"):
+		_close_positions()
+		_positions_retry_at = now + 800
+		return
+	var tick := int(frame.get("tick", 0))
+	if tick <= _position_tick or not frame.get("entities") is Array:
+		return
+	_position_tick = tick
+	_positions_last = now
+	_apply_people(frame.entities, true)
 
 
 func _update_journey(value: Dictionary) -> void:
@@ -321,14 +394,15 @@ func move_by(direction: Vector2) -> Dictionary:
 	if _busy or not battle.is_empty() or lease.is_empty():
 		return {"ok": false, "code": "busy"}
 	_busy = true
-	var target := Vector2(float(lease.x), float(lease.y)) + direction.limit_length(24)
+	var confirmed := Vector2(float(lease.x), float(lease.y))
+	var target := confirmed + direction.limit_length(24)
+	if automatic_poll:
+		_show_player(target, false)
 	var result: Dictionary = await Online.move_world(lease, target)
 	if bool(result.get("ok", false)):
 		lease = (result.data.lease as Dictionary).duplicate(true)
-		_camera.position = Vector2(float(lease.x), float(lease.y))
-		var own_id := String(lease.get("character_id", ""))
-		if _actors.has(own_id):
-			(_actors[own_id] as Node2D).position = _camera.position
+		confirmed = Vector2(float(lease.x), float(lease.y))
+	_show_player(confirmed, not automatic_poll)
 	_show_error(result)
 	_busy = false
 	return result
@@ -389,6 +463,7 @@ func confirm_result() -> Dictionary:
 func _present_battle(value: Variant) -> void:
 	battle = value.duplicate(true) if value is Dictionary else {}
 	if not battle.is_empty():
+		_close_positions()
 		_close_profiles()
 		_close_journey()
 	_hud.visible = battle.is_empty()
@@ -409,6 +484,7 @@ func _present_battle(value: Variant) -> void:
 func _show_error(result: Dictionary) -> void:
 	if not bool(result.get("ok", false)):
 		if String(result.get("code", "")) in ["room_required", "stale_lease"]:
+			_close_positions()
 			lease.clear()
 		var message := String(result.get("error", "连接中断，请稍后重试。"))
 		_status.text = message
@@ -419,14 +495,20 @@ func _show_error(result: Dictionary) -> void:
 func _process(delta: float) -> void:
 	if not _connected or not automatic_poll or G.ui_blocked:
 		return
+	if _player_draw_ready and not _camera.position.is_equal_approx(_player_draw_target):
+		_draw_player(_camera.position.move_toward(_player_draw_target, 300.0 * delta))
+	if Online.is_authenticated() and not lease.is_empty() and battle.is_empty():
+		_poll_positions()
 	_poll_elapsed += delta
 	_move_elapsed += delta
 	if _busy:
 		return
 	if not Online.is_authenticated():
+		_close_positions()
 		_status.text = "登录已过期，请返回在线角色重新登录。"
 		return
-	if _poll_elapsed >= 0.7:
+	var refresh_interval := 4.0 if _positions_recent() else 0.7
+	if _poll_elapsed >= refresh_interval:
 		_poll_elapsed = 0.0
 		if not battle.is_empty():
 			refresh_battle()
@@ -446,7 +528,12 @@ func _process(delta: float) -> void:
 
 func _back() -> void:
 	_connected = false
+	_close_positions()
 	G.go("res://src/ui/OnlineGateway.tscn")
+
+
+func _exit_tree() -> void:
+	_close_positions()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -477,7 +564,7 @@ func _open_profiles() -> void:
 	column.add_theme_constant_override("separation", 12)
 	margin.add_child(column)
 	column.add_child(G.gold_label("同行旅人", G.FS_BIG))
-	column.add_child(G.gold_label("当前同频道 %d 人 · 身份信息由旅人选择" % entities.size(), G.FS_SM, false))
+	column.add_child(G.gold_label("附近 %d 人 · 身份信息由旅人选择" % entities.size(), G.FS_SM, false))
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -519,7 +606,11 @@ func _close_profiles() -> void:
 class Traveller extends Node2D:
 	var identity: Dictionary = {}
 	var _texture: Texture2D
+	var _from := Vector2.ZERO
+	var _aim := Vector2.ZERO
+	var _progress := 0.0
 	func _ready() -> void:
+		set_process(false)
 		var role_id := Profile.safe_role(String(identity.get("role_id", "zs")))
 		var slug := String({"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}.get(role_id, "pojun"))
 		var source := load("res://image/role/%s/%s_idle.png" % [role_id, slug]) as Texture2D
@@ -533,6 +624,21 @@ class Traveller extends Node2D:
 		caption.position = Vector2(-110, -122)
 		caption.size = Vector2(220, 28)
 		add_child(caption)
+	func update_position(at: Vector2, interpolate: bool) -> void:
+		if not interpolate:
+			position = at
+			_aim = at
+			set_process(false)
+		elif not _aim.is_equal_approx(at):
+			_from = position
+			_aim = at
+			_progress = 0.0
+			set_process(not position.is_equal_approx(at))
+	func _process(delta: float) -> void:
+		_progress = minf(_progress + delta * 10.0, 1.0)
+		position = _from.lerp(_aim, _progress)
+		if _progress == 1.0:
+			set_process(false)
 	func _draw() -> void:
 		draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.3))
 		draw_circle(Vector2.ZERO, 23, Color(G.BG_DEEP, 0.3))

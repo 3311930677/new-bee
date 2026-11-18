@@ -1,0 +1,4 @@
+{"time":"2026-11-19T00:32:47.6809545+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"starting","reason":"launch","generation":1,"child_pid":0,"ready":false,"probe_ms":0,"probe_code":"","unhealthy_ms":0}
+{"time":"2026-11-19T00:32:47.7059393+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"starting","reason":"liveness_pending","generation":1,"child_pid":8120,"ready":false,"probe_ms":0,"probe_code":"","unhealthy_ms":0}
+{"time":"2026-11-19T00:32:48.0579646+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"running","reason":"healthy","generation":1,"child_pid":8120,"ready":true,"probe_ms":4,"probe_code":"","unhealthy_ms":0}
+{"time":"2026-11-19T00:32:49.9762996+08:00","level":"INFO","msg":"service state","kind":"gateway","phase":"stopped","reason":"requested","generation":1,"child_pid":0,"ready":false,"probe_ms":16,"probe_code":"","unhealthy_ms":0}

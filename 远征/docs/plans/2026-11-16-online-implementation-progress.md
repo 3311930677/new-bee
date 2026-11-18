@@ -169,8 +169,21 @@
   - **完整单机回归**：**79/79 PASS（`ALL GREEN`），退出码 0**（`online_full_20261119_l0h_final`，UTC `16:01:19–16:14:53`），原性能预算未放宽（`VerifyPerf`: GameHome 75/260、世界 60/130、图鉴 51/130、召唤 34/130、兑换 48/130、设置 82/130 与 50/70、养成 63/130、CityScene 108/700ms）；16 项用例 31 条退出资源诊断（issue #43）继续记录，主机证书库诊断 0。
 - 修复并保留历史失败样本：修复 `servicehost/manager.go` Windows `readStatus`/`replaceStateFile` 与状态定时落盘的竞争（先于修复复现的 `world_370b384c9a514410a99602b8d821d1cd` 停机失败与单测 `stop_windows_test.go` 均已留档）；同时完整保留本轮先前的 15,000ms 网关/DB 超时失败（`journey_50ae6159ad004eb3b1fbc5c0f21f376f`、`world_e2ee9b84334540fa98662de0343f24a5`、`roles_test.go` 高并发恢复单次超时）及 Windows `_console.exe` 包装进程句柄差异导致的超时（`world_5fe4395b799246789dfaba71a8e23089`），不做覆盖追认。
 
+### L0 本机运维与 Prometheus 重验（11 月 19 日）
+
+- 在 L0-H 已提交版本（`0c2ef90d`）上安装校验官方 `prometheus-3.16.0`，重跑 `verify_operations.py`（`operations_d905b55475e4428bbeb5e9cd77cc27af`）全部通过：有效 TLS 与 `default-untrusted`/`wrong-ca`/`wrong-name`/`expired` 负例拒绝、`promtool check metrics/config`、权威停机与数据库故障代理断开期间告警触发与恢复。目标 Linux 宿主机部署、外部告警通道与移动广域网继续记录为外部环境阻塞。
+
+### L1-A 实时位置流、AOI 视野订阅、本地预测与远端插值（11 月 19 日）
+
+- 网关新增 `town_positions` 功能位与 `GET /v1/rooms/positions`（`application/x-ndjson`、10Hz、单连接 8 秒生命周期自动重连、480px AOI 视野半径、单房间频道共享采集与会话撤销即时关闭）；`/v1/rooms/current` 快照同步使用相同 480px 邻近裁剪，跨频道与未活跃会话角色不曝光。
+- 客户端新增 [WorldPositionStream.gd](../../src/online/WorldPositionStream.gd) 消费服务端确认帧；[OnlineWorld.gd](../../src/ui/OnlineWorld.gd) 在玩家输入后立即对本地角色执行预测平滑并在响应后向权威位置对齐，对附近旅人节点执行 100ms 线性插值，进出 480px 视野自动生成与销毁节点，切入战斗、陈旧租约、退场与登出均关闭位置流。
+- 实测与回归验证（源码指纹 `2e0601026c86a5ef6beae933ded368e6d34a044dbe8fcf554fe6f0933431d556`，脱敏证据见 `reports/online_20261119/position-stream/`）：
+  - **Go / PostgreSQL 套件**：**59/59 通过，退出码 0**（含新增 `TestRoomPositionStreamFollowsCommittedNearbyPlayers` 验证位置流、AOI 出入圈、会话撤销关闭，与 `TestTownPositionFeedSharesAChannelAcross24Clients` 验证 24 人同频道共享订阅及第 25 人隔离）。
+  - **双真实端位置流验证**（`verify_positions.py`）：`positions_a239e75527c2443a99f73ea990e7ef3c` 通过，两端退出码 `0`，实测 `local_prediction_seen: true`、`tween_seen: true`、离开 AOI 退订（`y=2048`）与重回视野恢复订阅（`y=1592`）、登出清理 `database_counts: ["2","1","0"]`，已目检 `position-together.png`。
+  - **L0 关键项回归复验**：`verify_journey.py` **6/6 通过**（`journey_49c6c60c613f4c50b64368e9495cf551`，19 表恢复、16 条行囊与任务历史）、`verify_world.py --database-recovery --supervision` **12/12 通过**（`world_22ac6d267c284537810494b1e7231025`，权威恢复 9.296s / 网关恢复 2.547s、19 表恢复）、`VerifyOnlineBoundary` 退出码 `0`。
+
 ### 未解决与下一批
 
 - 首条任务路线已可玩。仍需完整的新手内容及 20–30 分钟实测、碑窟可进入的多人副本和完整合作战斗。
 - 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、目标手机及跨网络联机仍需验收。此前的偶发客户端超时和单机退出资源诊断继续跟踪。
-- 继续推进 L1 的移动预测、插值与视野订阅，以及频道、NPC、跨图、好友聊天与组队。L2–L6 仍按完整台账验收，经济活动开放前保留既定测试门槛。**L0 整体仍在开发，完整目标保持 active。**
+- 接下来继续推进 L1 其余切片：**L1-B**（频道列表与切线、按角色隔离的 NPC 状态与对话、`lorin_wilds` ↔ `maple_road` 跨图迁移）与 **L1-C**（好友、屏蔽、举报、聊天与真正组队入队/大厅控制）。L2–L6 仍按完整台账验收，经济活动开放前保留既定测试门槛。**L0 整体部署仍受外部环境阻塞，L1 正在开发，完整目标保持 active。**
