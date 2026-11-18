@@ -1,0 +1,184 @@
+{
+  "scope": "isolated shared BattleSim + private signed RPC; not public multiplayer acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "620c11fd352a0bb7e0f1207ef0cff0e26bd874937294b71d73353736e93f9dea",
+    "content_version": "0b4631213b5f9c41625c76de818e7d893fa43f3a6b915602c11c01e5e14a642f",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "go_health": {
+    "epoch": "80fb59a3bfe9d29de88ef49bc85bd4c0",
+    "ok": true,
+    "content_version": "0b4631213b5f9c41625c76de818e7d893fa43f3a6b915602c11c01e5e14a642f",
+    "ruleset_version": "online-0.1",
+    "engine": "4.7.2-stable (official)",
+    "battles": 0
+  },
+  "passed": true,
+  "final_state_hash": "b1be3a44a47219bb750bc896dd86f18e94d0102536f5d685b0ba9881e0cbadcc",
+  "ticks": 72,
+  "inputs": [
+    {
+      "accepted": true,
+      "action": {
+        "action": "attack"
+      },
+      "reason": "attacked",
+      "sequence": 1,
+      "tick": 70
+    },
+    {
+      "accepted": false,
+      "action": {
+        "action": "skill",
+        "skill_id": "gm_kill_all"
+      },
+      "reason": "unavailable",
+      "sequence": 2,
+      "tick": 72
+    },
+    {
+      "accepted": true,
+      "action": {
+        "action": "flee"
+      },
+      "reason": "fled",
+      "sequence": 3,
+      "tick": 72
+    }
+  ],
+  "checks": [
+    {
+      "name": "authority refuses inherited database credentials without logging their values",
+      "passed": true
+    },
+    {
+      "name": "authority refuses inherited management credentials without logging their values",
+      "passed": true
+    },
+    {
+      "name": "private worker starts with exact content version",
+      "passed": true
+    },
+    {
+      "name": "production Go RPC client authenticates a real Godot process",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated private request rejected",
+      "passed": true
+    },
+    {
+      "name": "replayed private nonce rejected",
+      "passed": true
+    },
+    {
+      "name": "shared BattleSim starts only on authority process",
+      "passed": true
+    },
+    {
+      "name": "authority advances by its own monotonic clock",
+      "passed": true
+    },
+    {
+      "name": "authority validates and executes manual attack",
+      "passed": true
+    },
+    {
+      "name": "duplicate command returns original receipt without a second attack",
+      "passed": true
+    },
+    {
+      "name": "same sequence cannot change action",
+      "passed": true
+    },
+    {
+      "name": "out of order input rejected",
+      "passed": true
+    },
+    {
+      "name": "unowned skill cannot execute",
+      "passed": true
+    },
+    {
+      "name": "authority controls final battle result",
+      "passed": true
+    },
+    {
+      "name": "seed and exact input log reproduce final authority state",
+      "passed": true
+    },
+    {
+      "name": "finished simulation can be explicitly released",
+      "passed": true
+    },
+    {
+      "name": "persistent journal uses gateway clock without autonomous advancement",
+      "passed": true
+    },
+    {
+      "name": "provisional command executes before database outcome is known",
+      "passed": true
+    },
+    {
+      "name": "rolled back command is removed by rebuilding committed checkpoint",
+      "passed": true
+    },
+    {
+      "name": "uncommitted clock advancement also rolls back exactly",
+      "passed": true
+    },
+    {
+      "name": "cache miss rebuilds committed actions and validates state hash",
+      "passed": true
+    },
+    {
+      "name": "committed input outcome cannot silently change during recovery",
+      "passed": true
+    },
+    {
+      "name": "divergent committed checkpoint fails closed",
+      "passed": true
+    },
+    {
+      "name": "shared world validates an ordinary city movement",
+      "passed": true
+    },
+    {
+      "name": "shared world rejects a client teleport",
+      "passed": true
+    },
+    {
+      "name": "authority accepts valid equipment, potions and pet_rockturtle loadout",
+      "passed": true
+    },
+    {
+      "name": "loadout simulation can flee before release",
+      "passed": true
+    },
+    {
+      "name": "loadout simulation can be released",
+      "passed": true
+    },
+    {
+      "name": "authority rejects unapproved companion loadout",
+      "passed": true
+    }
+  ],
+  "player_data_unchanged": true,
+  "script_errors": [],
+  "log": "E:\\new bee\\远征\\server\\.local\\verification\\room_a4c7962ce31840fda19cd7b6c2933880\\room.log"
+}

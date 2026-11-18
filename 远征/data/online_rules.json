@@ -1,9 +1,22 @@
 {
   "version": "online-0.1",
   "town": {"map_id": "lorin_wilds", "capacity": 24, "spawn": [600, 1520], "speed": 192},
+  "maps": {
+    "lorin_wilds": {"name": "昭元边城", "capacity": 24, "spawn": [600, 1520], "speed": 192, "arrivals": {"from_maple_road": [600, 300]}},
+    "maple_road": {"name": "枫林古道", "capacity": 24, "spawn": [480, 1860], "speed": 192, "arrivals": {"from_city": [480, 1860]}}
+  },
+  "portals": {
+    "north_gate": {"from_map": "lorin_wilds", "position": [616, 140], "radius": 130, "to_map": "maple_road", "arrival": "from_city", "label": "北门 · 前往枫林古道"},
+    "south_gate": {"from_map": "maple_road", "position": [480, 1990], "radius": 130, "to_map": "lorin_wilds", "arrival": "from_maple_road", "label": "南口 · 返回昭元边城"}
+  },
+  "npcs": {
+    "npc_warden": {"map_id": "lorin_wilds", "name": "守备官", "position": [698, 1580], "radius": 112, "greeting": "城防稳固，若要出城往北门去便是枫林古道。", "after_patrol_greeting": "听说你已取得碑窟通行印信，北门外的古道也有同伴在探路。"},
+    "npc_maple_scout": {"map_id": "maple_road", "name": "古道斥候", "position": [480, 1660], "radius": 112, "greeting": "前方野狼成群，切勿大意。若需休整可回南口入城。", "after_patrol_greeting": "你身上带着青姨签发的碑窟通行印信，失声碑窟日后就靠你们了。"}
+  },
   "encounters": {
-    "training_wolf": {"monster_id": "mon_wolf", "position": [600, 1740], "radius": 112, "gold": 10, "experience": 5, "reward_policy": "once"},
-    "southern_patrol": {"monster_id": "mon_treant", "position": [752, 1850], "radius": 112, "gold": 15, "experience": 10, "reward_policy": "once", "journey_step": "patrol_trial"}
+    "training_wolf": {"map_id": "lorin_wilds", "monster_id": "mon_wolf", "position": [600, 1740], "radius": 112, "gold": 10, "experience": 5, "reward_policy": "once"},
+    "southern_patrol": {"map_id": "lorin_wilds", "monster_id": "mon_treant", "position": [752, 1850], "radius": 112, "gold": 15, "experience": 10, "reward_policy": "once", "journey_step": "patrol_trial"},
+    "maple_wolf": {"map_id": "maple_road", "monster_id": "mon_wolf", "position": [200, 1460], "radius": 112, "gold": 12, "experience": 8, "reward_policy": "per_battle"}
   },
   "journey": {
     "pack_slots": 32,
