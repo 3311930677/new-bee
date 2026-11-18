@@ -192,8 +192,19 @@
   - **双真实端 L1-B 验证**（`verify_world_l1.py`）：`world_l1_ca32c1f27ac240928b233bf23f02f5c8` 通过，两端退出码 `0`（NPC 对话按角色隔离、北门跨图至枫林古道后城内玩家立即退订、古道斥候与 `maple_wolf` 权威战斗结算、重登仍位于 `maple_road`、南口返回边城 `[600, 300]`、20 表备份恢复一致、已目检 `maple-road.png`）。
   - **L1-A / L0-H 无回退复验**：`verify_positions.py`（`positions_650c26eb82b04aaea689d5629871318b`）通过、`verify_journey.py`（`journey_0e2da7d87a1a4a75a66c91d9df27df4b` **6/6**，20 表恢复）通过、`VerifyOnlineBoundary` 退出码 `0`。
 
+### L1-C 好友、屏蔽、举报、聊天与真正组队（11 月 19 日）
+
+- 迁移 `007_online_social_parties.sql` 新增 `friend_requests`、`friendships`、`player_blocks`、`player_reports`、`chat_messages`、`parties`、`party_members`、`party_invites`（数据库最小权限与只读备份恢复扩展至 **28 张表**；`dbops/roles.go` 为 `friendships`/`player_blocks`/`parties`/`party_members` 精确授予受限 `DELETE` 权限及 `chat_messages_id_seq` 序列权限，`player_reports` 与 `chat_messages` 通过触发器与权限控制保证只追加不可改删；角色软删除同步离队）。
+- 网关实现 [social.go](../../server/internal/online/social.go) 与 [parties.go](../../server/internal/online/parties.go) 并发布 `social_chat`/`parties` 功能位；客户端在 [OnlineClient.gd](../../src/online/OnlineClient.gd) 与 [OnlineSocialPanel.gd](../../src/ui/OnlineSocialPanel.gd) 落地队伍管理（建队、邀请、接受/拒绝、准备、移交队长、踢人、离队）、好友申请与删除、屏蔽与解除、举报及频道/附近/队伍聊天界面。
+- 实测与回归验证（脱敏证据见 `reports/online_20261119/social-parties/` 与 `reports/online_20261119/l1-regression/`）：
+  - **Go / PostgreSQL 套件**：**64/64 通过，退出码 0**（含 `TestFriendsBlockReportAndChatFiltering`、`TestPartyCreateInviteReadyLeaderTransferKickAndCapacity` 与 `dbops` 28 表权限/备份校验）。
+  - **独立 Godot 权威检查**：`room_3131c5ab3f384990ae899210e98b3336` **29/29 通过，退出码 0**。
+  - **双真实端 L1-C 验证**（`verify_social_l1.py`）：`social_l1_3d0bb4230ff94b8c855c5423de016abf`（最终源码指纹 `c99c5b35a84b96b78edc5c98104a85d7301dfa3fa9840d3cb6b2a91b0119894a`）通过，两端退出码 `0`（含 `ui_cancel` 关窗保留城镇租约、好友/屏蔽/举报/聊天/组队与 28 表恢复；已目检 `social-party.png`）。
+  - **L1-B / L1-A / L0-H 双端复验**：`world_l1_2b6d3ce0ef1a473a9c17fb251246760f`（28 表恢复）、`positions_09b418562bd945caaafb870c92ccbaed`、`journey_d791908924a4475e96c56e3a97a50523`（**6/6**，28 表恢复）全部通过。
+  - **完整单机回归**：最终轮 **79/79 PASS（`ALL GREEN`），退出码 `0`**（UTC `17:32:56–17:45:17`，`VerifyPerf` 预算全部达标，19 项用例 34 条 issue #43 退出资源诊断继续记录）；首轮 `78/79` 失败（`VerifyNav` 检出 `OnlineSocialPanel.gd` 缺少 `ui_cancel` 处理）完整保留于 `reports/online_20261119/l1-regression-first/`。
+
 ### 未解决与下一批
 
-- 首条任务路线已可玩。仍需完整的新手内容及 20–30 分钟实测、碑窟可进入的多人副本和完整合作战斗。
-- 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、目标手机及跨网络联机仍需验收。此前的偶发客户端超时和单机退出资源诊断继续跟踪。
-- 接下来继续推进 L1 最终纵向切片 **L1-C**（好友、屏蔽、举报、聊天与真正组队入队/准备/踢人/队长转移及服务端屏蔽过滤），随后按计划进入 L2 多人副本。L2–L6 仍按完整台账验收，经济活动开放前保留既定测试门槛。**L0 部署受外部环境阻塞，L1 正在持续交付，完整目标保持 active。**
+- **L1 全部功能切片已在本机闭环交付验证**；接下来进入 **L2（2–4 人失声碑窟与退潮水闸合作副本、多房合作机制、救援、个人掉落、匹配与断线重连）**。
+- 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、目标手机及跨网络联机仍需验收。此前偶发客户端超时和单机退出资源诊断（issue #43）继续跟踪。
+- L2–L6 仍按完整台账验收，经济活动开放前保留既定测试门槛。**L0 外部部署阻塞仍待目标机验收，L1 交付完毕，完整联机目标保持 active。**

@@ -303,6 +303,9 @@ func (s *Server) deleteCharacter(w http.ResponseWriter, r *http.Request, who ide
 		if _, err = tx.Exec(ctx, `UPDATE sessions SET active_character_id=NULL,updated_at=now(),version=version+1 WHERE active_character_id=$1`, id); err != nil {
 			return nil, err
 		}
+		if err = removePartyMemberIfPresent(ctx, tx, id); err != nil {
+			return nil, err
+		}
 		if _, err = tx.Exec(ctx, `INSERT INTO audit_events(account_id,character_id,action) VALUES($1,$2,'character.delete')`, who.AccountID, id); err != nil {
 			return nil, err
 		}

@@ -129,7 +129,7 @@ def main():
         (folder / "restore-report.json").write_text(json.dumps(restored, indent=2), encoding="utf8")
         restored_characters = recovery.sql(recovery.target, CHARACTER_SUMMARY).splitlines()
         tables = {row["name"]: row["rows"] for row in manifest["tables"]}
-        check(restored.get("ready_for_review") and len(restored["tables_matched_before_session_invalidation"]) == 20
+        check(restored.get("ready_for_review") and len(restored["tables_matched_before_session_invalidation"]) == 28
               and tables.get("inventory_ledger") == 16 and tables.get("quest_events") == 16 and restored_characters == characters,
               "new database restore preserves both actual inventories and completed quest history")
         report["database_restore"] = {
