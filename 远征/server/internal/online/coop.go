@@ -1044,6 +1044,52 @@ func (s *Server) interactCoopStage(w http.ResponseWriter, r *http.Request, who i
 			default:
 				return nil, bad("invalid_mechanic", "未知的副本机关")
 			}
+		case "ore_vein":
+			switch body.MechanicID {
+			case "rail_map":
+				solvedAny["rail_map"] = true
+				correct = true
+				feedback = "旧矿图指明：北侧拨直岔轨、南侧切入主坑道后矿车才能通行。"
+			case "north_lever":
+				if solvedAny["rail_map"] != true {
+					return nil, bad("mechanic_locked", "请先查看旧矿图")
+				}
+				solvedAny["north_lever"] = true
+				correct = true
+				feedback = "北侧矿道岔轨扳正。"
+			case "south_switch":
+				if solvedAny["rail_map"] != true {
+					return nil, bad("mechanic_locked", "请先查看旧矿图")
+				}
+				solvedAny["south_switch"] = true
+				correct = true
+				feedback = "南侧主坑道锁止解除，赤砂矿脉主路畅通。"
+			default:
+				return nil, bad("invalid_mechanic", "未知的副本机关")
+			}
+		case "stele_depths":
+			switch body.MechanicID {
+			case "echo_glyph":
+				solvedAny["echo_glyph"] = true
+				correct = true
+				feedback = "深碑古文显影：外环先落静声纹，内环再合碑心锁。"
+			case "outer_pillar":
+				if solvedAny["echo_glyph"] != true {
+					return nil, bad("mechanic_locked", "请先解读深碑古文")
+				}
+				solvedAny["outer_pillar"] = true
+				correct = true
+				feedback = "外环共鸣柱校音完成，碑震退散。"
+			case "inner_pillar":
+				if solvedAny["outer_pillar"] != true {
+					return nil, bad("mechanic_locked", "请先完成外环共鸣柱校音")
+				}
+				solvedAny["inner_pillar"] = true
+				correct = true
+				feedback = "内环碑心锁合拢，古碑沉殿大门洞开。"
+			default:
+				return nil, bad("invalid_mechanic", "未知的副本机关")
+			}
 		}
 		roomState["solved_mechanics"] = solvedAny
 		if feedback != "" {

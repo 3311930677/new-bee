@@ -1,0 +1,155 @@
+{
+  "verifier_version": 2,
+  "source_sha256": "7dda16102953308f73c5af4e7d017a395d7b352ae64928a8dbdd25c65f268f39",
+  "content_version": "f4d1d6e5f2b2c9144f73add469357e9070dd2bf9de3782b6dbd3511941938ea1",
+  "ruleset_version": "online-0.1",
+  "shared_combat_sources": [
+    "src\\combat\\BattleSim.gd",
+    "src\\combat\\Combatant.gd",
+    "src\\combat\\DamageCalc.gd",
+    "src\\combat\\MonsterAI.gd",
+    "src\\combat\\SkillSystem.gd",
+    "src\\combat\\TableCache.gd",
+    "src\\combat\\TraitSystem.gd",
+    "src\\world\\CampaignPressure.gd",
+    "src\\world\\CompanionService.gd",
+    "src\\online\\OnlineProfile.gd"
+  ],
+  "autoloads": []
+}
+{
+  "report": "E:\\new bee\\远征\\server\\.local\\verification\\journey_d2708cdd88444a2e8f954ea05ddfef89\\report.json",
+  "run_id": "d2708cdd88444a2e8f954ea05ddfef89",
+  "scope": "two native Godot clients, distinct roles, real town journey, owned items, pet battle, re-login and offline restore",
+  "online_sources_sha256": "198740af3b96ade445692973de6b8f14a587a8d9a51866aa4b68dd33b5a02f81",
+  "gateway_binary_sha256": "300d72bf79003c31e73f698549fc7413de17f8686c3775c2ab69c27562063e6b",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "7dda16102953308f73c5af4e7d017a395d7b352ae64928a8dbdd25c65f268f39",
+    "content_version": "f4d1d6e5f2b2c9144f73add469357e9070dd2bf9de3782b6dbd3511941938ea1",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  },
+  "clients": [
+    {
+      "character_id": "1c7fe9b0-d38a-485c-890f-58f32f3c753b",
+      "role_id": "zs",
+      "step": "complete"
+    },
+    {
+      "character_id": "83039a06-1388-4cfe-889f-a0d944c095cc",
+      "role_id": "fz",
+      "step": "complete"
+    }
+  ],
+  "characters": [
+    "fz|complete|125|15|8|4|3|2|4|1|3|2",
+    "zs|complete|125|15|8|4|3|2|4|1|3|2"
+  ],
+  "session_counts": [
+    "2",
+    "1",
+    "0"
+  ],
+  "database_restore": {
+    "tables_matched": 46,
+    "restored_characters": [
+      "fz|complete|125|15|8|4|3|2|4|1|3|2",
+      "zs|complete|125|15|8|4|3|2|4|1|3|2"
+    ],
+    "inventory_history_rows": 16,
+    "quest_history_rows": 16
+  },
+  "passed": true,
+  "checks": [
+    {
+      "name": "native journey completed by client a",
+      "passed": true
+    },
+    {
+      "name": "native journey completed by client b",
+      "passed": true
+    },
+    {
+      "name": "each owner has eight quest events, correct gear, two medicines, one real consumption and two victories",
+      "passed": true
+    },
+    {
+      "name": "independent SQL confirms two accounts, one town and no active sessions",
+      "passed": true
+    },
+    {
+      "name": "new database restore preserves both actual inventories and completed quest history",
+      "passed": true
+    }
+  ],
+  "offline_actions": [
+    {
+      "action": "provision",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "migrate",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "grant",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "gateway-reject-offline-credential",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-owner-role",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-future-schema",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "migrate",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "backup",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "restore",
+      "exit_code": 0,
+      "expected_success": true
+    }
+  ],
+  "cleanup_errors": [],
+  "worker_errors": [],
+  "private_values_in_logs": false,
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true
+}

@@ -141,6 +141,48 @@ func (s *Server) worldBossViewTx(ctx context.Context, tx pgx.Tx, rules *WorldBos
 	}, nil
 }
 
+func (s *Server) worldBossRulesForMap(mapID string) *WorldBossRules {
+	if mapID != "" {
+		if wb, ok := s.cfg.Rules.WorldBosses[mapID]; ok {
+			copyWB := wb
+			return &copyWB
+		}
+		if s.cfg.Rules.WorldBoss != nil && s.cfg.Rules.WorldBoss.MapID == mapID {
+			return s.cfg.Rules.WorldBoss
+		}
+	}
+	if s.cfg.Rules.WorldBoss != nil {
+		return s.cfg.Rules.WorldBoss
+	}
+	for _, wb := range s.cfg.Rules.WorldBosses {
+		copyWB := wb
+		return &copyWB
+	}
+	return nil
+}
+
+func (s *Server) allWorldBossRules() []WorldBossRules {
+	seen := map[string]bool{}
+	var list []WorldBossRules
+	if s.cfg.Rules.WorldBoss != nil {
+		list = append(list, *s.cfg.Rules.WorldBoss)
+		seen[s.cfg.Rules.WorldBoss.MapID] = true
+	}
+	for _, mapID := range []string{"maple_road", "shenyuan_port"} {
+		if wb, ok := s.cfg.Rules.WorldBosses[mapID]; ok && !seen[wb.MapID] {
+			list = append(list, wb)
+			seen[wb.MapID] = true
+		}
+	}
+	for _, wb := range s.cfg.Rules.WorldBosses {
+		if !seen[wb.MapID] {
+			list = append(list, wb)
+			seen[wb.MapID] = true
+		}
+	}
+	return list
+}
+
 func (s *Server) currentWorldBoss(w http.ResponseWriter, r *http.Request, who identity) {
 	tx, c, err := s.beginActive(r.Context(), who)
 	if err != nil {
@@ -148,27 +190,72 @@ func (s *Server) currentWorldBoss(w http.ResponseWriter, r *http.Request, who id
 		return
 	}
 	defer tx.Rollback(r.Context())
-	if s.cfg.Rules.WorldBoss == nil || s.cfg.Authority == nil {
+	all := s.allWorldBossRules()
+	if len(all) == 0 || s.cfg.Authority == nil {
 		s.fail(w, errWorldBossUnavailable)
 		return
 	}
-	var roomID string
-	_ = tx.QueryRow(r.Context(), `SELECT room_id::text FROM room_leases WHERE character_id=$1 AND expires_at>now()`, c.ID).Scan(&roomID)
-	eventID, err := s.ensureActiveWorldBossTx(r.Context(), tx, s.cfg.Rules.WorldBoss, roomID)
-	if err != nil {
-		s.fail(w, err)
-		return
+	var roomID, liveMap string
+	_ = tx.QueryRow(r.Context(), `SELECT l.room_id::text,i.map_id FROM room_leases l JOIN room_instances i ON i.id=l.room_id WHERE l.character_id=$1 AND l.expires_at>now()`, c.ID).Scan(&roomID, &liveMap)
+	reqMap := r.URL.Query().Get("map_id")
+	if reqMap == "" {
+		reqMap = liveMap
 	}
-	view, err := s.worldBossViewTx(r.Context(), tx, s.cfg.Rules.WorldBoss, eventID, c.ID, who.AccountID)
-	if err != nil {
-		s.fail(w, err)
-		return
+	if reqMap == "" {
+		reqMap = c.MapID
 	}
+	primary := s.worldBossRulesForMap(reqMap)
+	bosses := make([]map[string]any, 0, len(all))
+	var primaryView map[string]any
+	for _, wb := range all {
+		ruleCopy := wb
+		isTarget := primary != nil && wb.MapID == primary.MapID
+		var v map[string]any
+		if isTarget {
+			eventID, err := s.ensureActiveWorldBossTx(r.Context(), tx, &ruleCopy, roomID)
+			if err != nil {
+				s.fail(w, err)
+				return
+			}
+			v, err = s.worldBossViewTx(r.Context(), tx, &ruleCopy, eventID, c.ID, who.AccountID)
+			if err != nil {
+				s.fail(w, err)
+				return
+			}
+			primaryView = v
+		} else {
+			var existingID string
+			_ = tx.QueryRow(r.Context(), `SELECT id::text FROM world_boss_events WHERE map_id=$1 AND state IN ('scheduled','active','defeated','closed') ORDER BY starts_at DESC LIMIT 1`, wb.MapID).Scan(&existingID)
+			if existingID != "" {
+				v, err = s.worldBossViewTx(r.Context(), tx, &ruleCopy, existingID, c.ID, who.AccountID)
+				if err != nil {
+					s.fail(w, err)
+					return
+				}
+			} else {
+				v = map[string]any{
+					"id": "", "map_id": wb.MapID, "boss_id": wb.BossID, "name": wb.Name,
+					"state": "scheduled", "max_hp": wb.MaxHP, "current_hp": wb.MaxHP,
+					"objectives": wb.Objectives, "rewards": wb.Rewards,
+					"participation": map[string]any{"objective_steps": 0, "damage_dealt": 0, "reward_tier": "none"},
+				}
+			}
+		}
+		bosses = append(bosses, v)
+	}
+	if primaryView == nil && len(bosses) > 0 {
+		primaryView = bosses[0]
+	}
+	outView := make(map[string]any, len(primaryView)+1)
+	for k, val := range primaryView {
+		outView[k] = val
+	}
+	outView["bosses"] = bosses
 	if err = tx.Commit(r.Context()); err != nil {
 		s.fail(w, err)
 		return
 	}
-	respond(w, 200, view)
+	respond(w, 200, outView)
 }
 
 func (s *Server) worldBossObjective(w http.ResponseWriter, r *http.Request, who identity) {
@@ -193,7 +280,11 @@ func (s *Server) worldBossObjective(w http.ResponseWriter, r *http.Request, who 
 		if err != nil {
 			return nil, err
 		}
-		rules := s.cfg.Rules.WorldBoss
+		var state, evMapID string
+		if err = tx.QueryRow(ctx, `SELECT state,map_id FROM world_boss_events WHERE id=$1 FOR UPDATE`, eventID).Scan(&state, &evMapID); err != nil {
+			return nil, errNotFound
+		}
+		rules := s.worldBossRulesForMap(evMapID)
 		if rules == nil {
 			return nil, errWorldBossUnavailable
 		}
@@ -206,10 +297,6 @@ func (s *Server) worldBossObjective(w http.ResponseWriter, r *http.Request, who 
 		}
 		if !validObj {
 			return nil, bad("invalid_objective", "未知的公共首领阶段目标")
-		}
-		var state string
-		if err = tx.QueryRow(ctx, `SELECT state FROM world_boss_events WHERE id=$1 FOR UPDATE`, eventID).Scan(&state); err != nil {
-			return nil, errNotFound
 		}
 		if state == "closed" {
 			return nil, errWorldBossClosed
@@ -283,18 +370,21 @@ func (s *Server) worldBossEngage(w http.ResponseWriter, r *http.Request, who ide
 		if err != nil {
 			return nil, err
 		}
-		rules := s.cfg.Rules.WorldBoss
 		journey := s.cfg.Rules.Journey
-		if rules == nil || journey == nil || s.cfg.Authority == nil {
+		if journey == nil || s.cfg.Authority == nil {
+			return nil, errWorldBossUnavailable
+		}
+		var state, evMapID string
+		var currentHP int64
+		if err = tx.QueryRow(ctx, `SELECT state,map_id,current_hp FROM world_boss_events WHERE id=$1 FOR UPDATE`, eventID).Scan(&state, &evMapID, &currentHP); err != nil {
+			return nil, errNotFound
+		}
+		rules := s.worldBossRulesForMap(evMapID)
+		if rules == nil {
 			return nil, errWorldBossUnavailable
 		}
 		if c.Level < rules.MinLevel {
 			return nil, &apiError{409, "level_too_low", "角色等级未达到公共首领要求"}
-		}
-		var state string
-		var currentHP int64
-		if err = tx.QueryRow(ctx, `SELECT state,current_hp FROM world_boss_events WHERE id=$1 FOR UPDATE`, eventID).Scan(&state, &currentHP); err != nil {
-			return nil, errNotFound
 		}
 		if state == "closed" {
 			return nil, errWorldBossClosed
@@ -382,14 +472,17 @@ func (s *Server) claimWorldBossReward(w http.ResponseWriter, r *http.Request, wh
 		if err != nil {
 			return nil, err
 		}
-		rules := s.cfg.Rules.WorldBoss
 		journey := s.cfg.Rules.Journey
-		if rules == nil || journey == nil {
+		if journey == nil {
 			return nil, errWorldBossUnavailable
 		}
-		var state string
-		if err = tx.QueryRow(ctx, `SELECT state FROM world_boss_events WHERE id=$1`, eventID).Scan(&state); err != nil {
+		var state, evMapID string
+		if err = tx.QueryRow(ctx, `SELECT state,map_id FROM world_boss_events WHERE id=$1`, eventID).Scan(&state, &evMapID); err != nil {
 			return nil, errNotFound
+		}
+		rules := s.worldBossRulesForMap(evMapID)
+		if rules == nil {
+			return nil, errWorldBossUnavailable
 		}
 		var tier string
 		var rewardedAt *time.Time

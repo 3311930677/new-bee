@@ -472,8 +472,9 @@ func claim_coop_drop(drop_id: String, request_id := "") -> Dictionary:
 	return await _send_command("/v1/coop/drops/%s/claim" % drop_id, {}, request_id)
 
 
-func world_boss_current() -> Dictionary:
-	return await _request(HTTPClient.METHOD_GET, "/v1/world-boss/current", {}, "", true)
+func world_boss_current(map_id := "") -> Dictionary:
+	var q := "?map_id=" + map_id.uri_encode() if not map_id.is_empty() else ""
+	return await _request(HTTPClient.METHOD_GET, "/v1/world-boss/current" + q, {}, "", true)
 
 
 func world_boss_objective(event_id: String, objective_id: String, request_id := "") -> Dictionary:
@@ -564,6 +565,75 @@ func cancel_trade_session(trade_id: String, request_id := "") -> Dictionary:
 	if not _valid_id(trade_id):
 		return _failure("面对面交易标识无效。", "invalid_trade")
 	return await _send_command("/v1/trade/sessions/%s/cancel" % trade_id, {}, request_id)
+
+
+func guild_state() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/guilds/state", {}, "", true)
+
+
+func create_guild(guild_name: String, motto := "", request_id := "") -> Dictionary:
+	return await _send_command("/v1/guilds", {"name": guild_name, "motto": motto}, request_id)
+
+
+func invite_guild(target_character_id: String) -> Dictionary:
+	if not _valid_id(target_character_id):
+		return _failure("招募对象无效。", "invalid_character")
+	return await _request(HTTPClient.METHOD_POST, "/v1/guilds/invite", {"target_character_id": target_character_id}, "", true)
+
+
+func respond_guild_invite(invite_id: String, accept: bool, request_id := "") -> Dictionary:
+	if not _valid_id(invite_id):
+		return _failure("帮派邀请标识无效。", "invalid_invite")
+	return await _send_command("/v1/guilds/invites/%s/respond" % invite_id, {"accept": accept}, request_id)
+
+
+func update_guild_permissions(target_id: String, rank: String, can_invite: bool, can_warehouse: bool, can_announcement: bool, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("帮派成员标识无效。", "invalid_character")
+	return await _send_command("/v1/guilds/permissions", {
+		"target_character_id": target_id,
+		"rank": rank,
+		"can_invite": can_invite,
+		"can_manage_warehouse": can_warehouse,
+		"can_edit_announcement": can_announcement,
+	}, request_id)
+
+
+func update_guild_banner(announcement: String, decor_banner := "", decor_monument := "", request_id := "") -> Dictionary:
+	var payload := {"announcement": announcement}
+	if not decor_banner.is_empty():
+		payload["decor_banner"] = decor_banner
+	if not decor_monument.is_empty():
+		payload["decor_monument"] = decor_monument
+	return await _send_command("/v1/guilds/announcement", payload, request_id)
+
+
+func deposit_guild_warehouse(item_uid: String, quantity: int, request_id := "") -> Dictionary:
+	if not _valid_id(item_uid):
+		return _failure("物品标识无效。", "invalid_item")
+	return await _send_command("/v1/guilds/warehouse/deposit", {"item_uid": item_uid, "quantity": quantity}, request_id)
+
+
+func withdraw_guild_warehouse(template_id: String, quantity: int, request_id := "") -> Dictionary:
+	return await _send_command("/v1/guilds/warehouse/withdraw", {"template_id": template_id, "quantity": quantity}, request_id)
+
+
+func contribute_guild_task(template_id: String, quantity: int, request_id := "") -> Dictionary:
+	return await _send_command("/v1/guilds/tasks/contribute", {"template_id": template_id, "quantity": quantity}, request_id)
+
+
+func leave_guild(request_id := "") -> Dictionary:
+	return await _send_command("/v1/guilds/leave", {}, request_id)
+
+
+func transfer_guild_leader(target_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("继任成员标识无效。", "invalid_character")
+	return await _send_command("/v1/guilds/leader", {"target_character_id": target_id}, request_id)
+
+
+func claim_inactive_guild_leader(request_id := "") -> Dictionary:
+	return await _send_command("/v1/guilds/claim-leadership", {}, request_id)
 
 
 func logout() -> void:

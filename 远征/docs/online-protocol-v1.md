@@ -118,6 +118,12 @@
 - **寄售托管、税费与邮件领奖（M1 / M2）**：`GET /v1/market/orders`、`POST /v1/market/orders`、`POST /v1/market/orders/{id}/buy`、`POST /v1/market/orders/{id}/cancel`、`GET /v1/market/payouts` 与 `POST /v1/market/payouts/{id}/claim` 实现最多 20 单上限、1%（最低 1 金）不可退上架费、4% 成交税、行囊物品消费转托管（挂牌期卖家不可穿戴、不可重复交易）、部分成交、`FOR UPDATE` 互斥购买与撤单、同账号自买拦截并触发 `economy_alerts`（`self_trade_attempt` / `price_outlier` / `wash_volume`），以及基于 `market_payouts` 邮箱附件领钱领物与满包（`pack_full`）防吞保护；M2 `equipment` 保留 `item_properties` 词条强化与 `item_origin` 来源，强制 `initial_qty = 1` 且仅允许 `tradeable=true` 且 `bound=false` 实例。
 - **好友面对面交换（M3）**：`GET /v1/trade/sessions`、`POST /v1/trade/sessions`、`POST /v1/trade/sessions/{id}/offer`、`POST /v1/trade/sessions/{id}/confirm` 与 `POST /v1/trade/sessions/{id}/cancel` 限制仅对非屏蔽且同图好友开放，放入金币或未绑定物品即时进入托管并发起修订号递增，**任一方修改报价都会立即清除双方确认状态**；`confirm` 校验请求提交的 `revision` 与最新一致，双方确认在同一事务原子交割，取消则无损退还托管金币及物品（满包自动落入 `market_payouts` 退回附件）。
 
+## 其余合作内容、沉渊港首领与帮派（L4 接入）
+
+清单发布 `guilds`、`shenyuan_boss` 与新增合作副本规则后，契约扩展如下：
+- **其余合作副本与沉渊港公共首领**：[online_rules.json](../data/online_rules.json) 与迁移扩展 `shenyuan_port`（沉渊港）地图、传送门及 `ore_vein`（赤砂矿脉：`mine_rail_switch` 轨道机关 + `mon_siege`/`mon_mummy` + `mon_redsand_guard`）和 `stele_depths`（界碑深处：`resonance_ring` 共鸣环 + `mon_cultist`/`mon_triad_echo` + `mon_nameless_warden`）合作副本，产出可交易稀有材料与不可交易帮派建材 `mat_guild_timber`/`mat_guild_stone`；`GET /v1/world-boss/current` 支持多地区首领列表与 `?map_id=` 定向查询，`maple_road`（`mon_lost_beast`）与 `shenyuan_port`（`mon_salt_scale` 沉渊盐鳞王）均保持单账号同活动窗口领奖一次与独立阶段目标材料。
+- **帮派生命周期、共同据点、建材仓库与不可篡改审计**：迁移 `010_online_guilds.sql` 新增 6 张表（全库增至 **46 张表**），其中 `guild_audit_logs` 由触发器及数据库角色权限锁死只追加（无 `UPDATE`/`DELETE`）；提供 `GET /v1/guilds/state`、`POST /v1/guilds`、`POST /v1/guilds/invites`、`POST /v1/guilds/invites/{id}/respond`、`POST /v1/guilds/join-public`、`POST /v1/guilds/leave`、`POST /v1/guilds/permissions`、`POST /v1/guilds/warehouse/deposit`、`POST /v1/guilds/warehouse/withdraw`、`POST /v1/guilds/decorate`、`POST /v1/guilds/weekly-tasks/complete` 与 `POST /v1/guilds/takeover`。强制校验：帮派仓库只允许 `guild_building=true` 且非可交易建材（拒绝寄售装备/货币/普通可交易物）；离帮进入 `leave_cooldown_seconds`（600s）冷却期；成员上限由 `base_member_cap`（30）随协作周常提升至 `max_member_cap`（60）；会长离线超过 `leader_inactive_seconds`（14 天）由执事或最资深成员通过公开事务交接 `takeover`；未入帮玩家仍可通过个人周常与日常副本取得同等进度奖励。
+
 房间租约不授予战斗所有权；战斗接口每次仍重新验证账号、当前有效会话及选中在线角色。角色有未完成战斗或未确认结算时，不能切到别的角色或删除该角色。
 
 ## 战斗、结算与恢复

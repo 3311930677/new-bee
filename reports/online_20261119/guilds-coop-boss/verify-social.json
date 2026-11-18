@@ -1,0 +1,64 @@
+{
+  "verifier_version": 2,
+  "source_sha256": "7dda16102953308f73c5af4e7d017a395d7b352ae64928a8dbdd25c65f268f39",
+  "content_version": "f4d1d6e5f2b2c9144f73add469357e9070dd2bf9de3782b6dbd3511941938ea1",
+  "ruleset_version": "online-0.1",
+  "shared_combat_sources": [
+    "src\\combat\\BattleSim.gd",
+    "src\\combat\\Combatant.gd",
+    "src\\combat\\DamageCalc.gd",
+    "src\\combat\\MonsterAI.gd",
+    "src\\combat\\SkillSystem.gd",
+    "src\\combat\\TableCache.gd",
+    "src\\combat\\TraitSystem.gd",
+    "src\\world\\CampaignPressure.gd",
+    "src\\world\\CompanionService.gd",
+    "src\\online\\OnlineProfile.gd"
+  ],
+  "autoloads": []
+}
+{
+  "report": "E:\\new bee\\远征\\server\\.local\\verification\\social_l1_2a2381d9062246c8b8505a89401af19d\\report.json",
+  "run_id": "2a2381d9062246c8b8505a89401af19d",
+  "online_sources_sha256": "198740af3b96ade445692973de6b8f14a587a8d9a51866aa4b68dd33b5a02f81",
+  "gateway_binary_sha256": "300d72bf79003c31e73f698549fc7413de17f8686c3775c2ab69c27562063e6b",
+  "transport": "https-validating-debug-ca",
+  "scope": "L1-C two native Godot clients, friends, block, report, party/room chat, real party lifecycle, and 28-table backup/restore",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "7dda16102953308f73c5af4e7d017a395d7b352ae64928a8dbdd25c65f268f39",
+    "content_version": "f4d1d6e5f2b2c9144f73add469357e9070dd2bf9de3782b6dbd3511941938ea1",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "db_counts": [
+    "1",
+    "2",
+    "0",
+    "1",
+    "1",
+    "2"
+  ],
+  "tables_matched": 46,
+  "passed": true,
+  "cleanup_errors": [],
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  },
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true,
+  "errors": []
+}

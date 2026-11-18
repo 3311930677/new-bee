@@ -177,6 +177,18 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/trade/sessions/{id}/offer", s.authorized(s.updateTradeOffer))
 	s.mux.HandleFunc("POST /v1/trade/sessions/{id}/confirm", s.authorized(s.confirmTradeSession))
 	s.mux.HandleFunc("POST /v1/trade/sessions/{id}/cancel", s.authorized(s.cancelTradeSession))
+	s.mux.HandleFunc("GET /v1/guilds/state", s.authorized(s.guildState))
+	s.mux.HandleFunc("POST /v1/guilds", s.authorized(s.createGuild))
+	s.mux.HandleFunc("POST /v1/guilds/invite", s.authorized(s.inviteToGuild))
+	s.mux.HandleFunc("POST /v1/guilds/invites/{id}/respond", s.authorized(s.respondGuildInvite))
+	s.mux.HandleFunc("POST /v1/guilds/permissions", s.authorized(s.updateGuildPermissions))
+	s.mux.HandleFunc("POST /v1/guilds/announcement", s.authorized(s.updateGuildBanner))
+	s.mux.HandleFunc("POST /v1/guilds/warehouse/deposit", s.authorized(s.depositGuildWarehouse))
+	s.mux.HandleFunc("POST /v1/guilds/warehouse/withdraw", s.authorized(s.withdrawGuildWarehouse))
+	s.mux.HandleFunc("POST /v1/guilds/tasks/contribute", s.authorized(s.contributeGuildTask))
+	s.mux.HandleFunc("POST /v1/guilds/leave", s.authorized(s.leaveGuild))
+	s.mux.HandleFunc("POST /v1/guilds/leader", s.authorized(s.transferGuildLeader))
+	s.mux.HandleFunc("POST /v1/guilds/claim-leadership", s.authorized(s.claimInactiveGuildLeader))
 	return s, nil
 }
 
@@ -310,8 +322,14 @@ func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
 		if s.cfg.Rules.Coop != nil {
 			features = append(features, "coop_dungeons")
 		}
-		if s.cfg.Rules.WorldBoss != nil {
+		if s.cfg.Rules.WorldBoss != nil || len(s.cfg.Rules.WorldBosses) > 0 {
 			features = append(features, "world_boss")
+			if len(s.cfg.Rules.WorldBosses) > 1 {
+				features = append(features, "world_boss_shenyuan")
+			}
+		}
+		if s.cfg.Rules.Guilds != nil {
+			features = append(features, "guilds")
 		}
 		if s.cfg.Rules.Market != nil {
 			features = append(features, "market_sandbox", "npc_floor_market")

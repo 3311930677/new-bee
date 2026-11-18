@@ -26,10 +26,12 @@ type OnlineRules struct {
 	Portals    map[string]PortalRule    `json:"portals,omitempty"`
 	NPCs       map[string]NPCRule       `json:"npcs,omitempty"`
 	Encounters map[string]EncounterRule `json:"encounters"`
-	Journey    *JourneyRules            `json:"journey,omitempty"`
-	Coop       *CoopRules               `json:"coop,omitempty"`
-	WorldBoss  *WorldBossRules          `json:"world_boss,omitempty"`
-	Market     *MarketRules             `json:"market,omitempty"`
+	Journey     *JourneyRules            `json:"journey,omitempty"`
+	Coop        *CoopRules               `json:"coop,omitempty"`
+	WorldBoss   *WorldBossRules          `json:"world_boss,omitempty"`
+	WorldBosses map[string]WorldBossRules `json:"world_bosses,omitempty"`
+	Guilds      *GuildRules              `json:"guilds,omitempty"`
+	Market      *MarketRules             `json:"market,omitempty"`
 }
 type EncounterRule struct {
 	MapID        string     `json:"map_id,omitempty"`
@@ -66,6 +68,16 @@ func (r OnlineRules) Validate() error {
 		}
 		if r.WorldBoss != nil {
 			if err := r.WorldBoss.validate(r.Journey.Items, r.Maps); err != nil {
+				return err
+			}
+		}
+		for _, wb := range r.WorldBosses {
+			if err := wb.validate(r.Journey.Items, r.Maps); err != nil {
+				return err
+			}
+		}
+		if r.Guilds != nil {
+			if err := r.Guilds.validate(r.Journey.Items); err != nil {
 				return err
 			}
 		}

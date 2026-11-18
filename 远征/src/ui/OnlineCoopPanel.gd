@@ -28,6 +28,7 @@ func _ready() -> void:
 		margin.add_theme_constant_override("margin_" + side, 20)
 	add_child(margin)
 	var col := VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.add_theme_constant_override("separation", 10)
 	margin.add_child(col)
 	col.add_child(G.gold_label("合作副本与公共首领", G.FS_BIG))
@@ -46,6 +47,7 @@ func _ready() -> void:
 
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	col.add_child(scroll)
 	_list = VBoxContainer.new()
@@ -108,6 +110,7 @@ func _btn(parent: Control, label_text: String, cb: Callable) -> Control:
 
 func _card(title: String, body_lines: Array[String]) -> VBoxContainer:
 	var panel := PanelContainer.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.10, 0.09, 0.08, 0.92)
 	style.border_color = Color(0.76, 0.63, 0.34, 0.65)
@@ -117,16 +120,19 @@ func _card(title: String, body_lines: Array[String]) -> VBoxContainer:
 	panel.add_theme_stylebox_override("panel", style)
 	_list.add_child(panel)
 	var box := VBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	box.add_theme_constant_override("separation", 6)
 	panel.add_child(box)
 	if not title.is_empty():
 		var head := G.gold_label(title, G.FS_MD)
+		head.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		head.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		box.add_child(head)
 	for line in body_lines:
 		if line.is_empty():
 			continue
 		var lbl := G.gold_label(line, G.FS_SM, false)
+		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		box.add_child(lbl)
 	return box
@@ -340,25 +346,39 @@ func _build_drops() -> void:
 
 
 func _build_world_boss() -> void:
-	if _world_boss.is_empty():
-		_card("地区公共首领", ["当前暂无活跃公告，请点击刷新获取最新枫林古道首领动向。"])
+	var bosses: Array = _world_boss.get("bosses", [])
+	if bosses.is_empty() and not _world_boss.is_empty():
+		bosses = [_world_boss]
+	if bosses.is_empty():
+		_card("地区公共首领", ["当前暂无活跃公告，请点击刷新获取最新枫林古道 / 沉渊港首领动向。"])
 		return
-	var eid := String(_world_boss.get("id", ""))
-	var p: Dictionary = _world_boss.get("participation", {}) if _world_boss.get("participation") is Dictionary else {}
-	var lines: Array[String] = [
-		"地点：%s  状态：%s  阶段：%d" % [String(_world_boss.get("map_id", "maple_road")), String(_world_boss.get("state", "")), int(_world_boss.get("stage", 0))],
-		"首领生命：%d / %d" % [int(_world_boss.get("current_hp", 0)), int(_world_boss.get("max_hp", 0))],
-		"个人记录：阶段任务=%d  输出=%d  奖档=%s" % [int(p.get("objective_steps", 0)), int(p.get("damage_dealt", 0)), String(p.get("reward_tier", "none"))],
-		"每账号每次公共首领窗口仅领一次主奖励；迟到仍可做阶段目标领取基础材料。",
-	]
-	var box := _card(String(_world_boss.get("name", "枫林失路兽")), lines)
-	var row1 := HBoxContainer.new()
-	row1.add_theme_constant_override("separation", 6)
-	box.add_child(row1)
-	_btn(row1, "查探踪迹(目标)", func() -> void: action_requested.emit("wb_objective", {"event_id": eid, "objective_id": "inspect_trail"}))
-	_btn(row1, "打断悲鸣(目标)", func() -> void: action_requested.emit("wb_objective", {"event_id": eid, "objective_id": "disrupt_howl"}))
-	var row2 := HBoxContainer.new()
-	row2.add_theme_constant_override("separation", 6)
-	box.add_child(row2)
-	_btn(row2, "协同讨伐(权威)", func() -> void: action_requested.emit("wb_engage", {"event_id": eid}))
-	_btn(row2, "领取首领赏赐", func() -> void: action_requested.emit("wb_claim", {"event_id": eid}))
+	for bv in bosses:
+		if not bv is Dictionary:
+			continue
+		var boss := bv as Dictionary
+		var eid := String(boss.get("id", ""))
+		var map_id := String(boss.get("map_id", "maple_road"))
+		var objs: Array = boss.get("objectives", ["inspect_trail", "disrupt_howl"])
+		var p: Dictionary = boss.get("participation", {}) if boss.get("participation") is Dictionary else {}
+		var lines: Array[String] = [
+			"地点：%s  状态：%s  阶段：%d" % [map_id, String(boss.get("state", "")), int(boss.get("stage", 0))],
+			"首领生命：%d / %d" % [int(boss.get("current_hp", 0)), int(boss.get("max_hp", 0))],
+			"个人记录：阶段任务=%d  输出=%d  奖档=%s" % [int(p.get("objective_steps", 0)), int(p.get("damage_dealt", 0)), String(p.get("reward_tier", "none"))],
+			"每账号每次公共首领窗口仅领一次主奖励；迟到仍可做阶段目标领取基础材料。",
+		]
+		var box := _card(String(boss.get("name", "公共首领")), lines)
+		if eid.is_empty():
+			_btn(box, "切至 %s 激活事件" % map_id, func() -> void: action_requested.emit("wb_select_map", {"map_id": map_id}))
+			continue
+		var obj1 := String(objs[0]) if objs.size() > 0 else "inspect_trail"
+		var obj2 := String(objs[1]) if objs.size() > 1 else obj1
+		var row1 := HBoxContainer.new()
+		row1.add_theme_constant_override("separation", 6)
+		box.add_child(row1)
+		_btn(row1, "阶段目标一", func() -> void: action_requested.emit("wb_objective", {"event_id": eid, "objective_id": obj1}))
+		_btn(row1, "阶段目标二", func() -> void: action_requested.emit("wb_objective", {"event_id": eid, "objective_id": obj2}))
+		var row2 := HBoxContainer.new()
+		row2.add_theme_constant_override("separation", 6)
+		box.add_child(row2)
+		_btn(row2, "协同讨伐(权威)", func() -> void: action_requested.emit("wb_engage", {"event_id": eid}))
+		_btn(row2, "领取首领赏赐", func() -> void: action_requested.emit("wb_claim", {"event_id": eid}))
