@@ -110,9 +110,9 @@ def main():
         recovery.databases.append(recovery.target)
         restored = recovery.command("restore", database=recovery.target, folder=backup)
         (folder / "restore-report.json").write_text(json.dumps(restored, indent=2), encoding="utf8")
-        if len(manifest.get("tables", [])) != 40 or len(restored.get("tables_matched_before_session_invalidation", [])) != 40:
-            raise RuntimeError(f"expected 40 tables in backup/restore, got {len(manifest.get('tables', []))}")
-        report["tables_matched"] = 40
+        if len(manifest.get("tables", [])) != 46 or len(restored.get("tables_matched_before_session_invalidation", [])) != 46:
+            raise RuntimeError(f"expected 46 tables in backup/restore, got {len(manifest.get('tables', []))}")
+        report["tables_matched"] = 46
         report["passed"] = True
     except Exception as error:
         failures.append(str(error))

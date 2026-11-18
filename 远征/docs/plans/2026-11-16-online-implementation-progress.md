@@ -227,8 +227,20 @@
   - **L2 / L1 / L0 无回退复验**：`VerifyNav` 退出码 `0`；`verify_coop_l2.py`（`cf460691f3ed41dabb1eef2378bfc2b8`）、`verify_social_l1.py`（`208f8c4ea3c24e9794b20f3db6eef6d5`）、`verify_world_l1.py`（`5b31f7e1cc09408ca38a6ff33f3a51ab`）与 `verify_journey.py`（`b21cd3f2c1be401b8906b5ba0fb0526b` **6/6**）全部在 40 表架构上通过，客户端退出码均为 `0`。
   - **完整单机回归**：`online_full_20261119_l3_final` **79/79 PASS（`ALL GREEN`），退出码 `0`**（`runner_unchanged=true`、`load_screen_unchanged=true`、`VerifyPerf` 预算全部达标；19 项用例共记录 35 条 issue #43 引擎退出资源诊断）。
 
+### L4 其余合作副本、第二公共首领与帮派系统（11 月 19 日）
+
+- 规则、地图与其余合作内容：[online_rules.json](../../data/online_rules.json) 扩展 `shenyuan_port`（沉渊港）传送门与 NPC、第 3/4 个合作副本 `ore_vein`（赤砂矿脉，含 `mine_rail_switch` 轨道机关）与 `stele_depths`（界碑深处，含 `resonance_ring` 共鸣环）、`shenyuan_port` 第二公共首领 `mon_salt_scale`（沉渊盐鳞王），以及不可交易帮派建材（`mat_guild_timber` / `mat_guild_stone`）与未绑定副本掉落材料。
+- 帮派数据库与服务端闭环：迁移 `010_online_guilds.sql` 新增 `guilds`、`guild_members`、`guild_invites`、`guild_warehouse`、`guild_audit_logs`（只追加防篡改触发器与数据库最小权限禁止删改）与 `guild_member_cooldowns`（全库 **46 张表**，同步扩展 `dbops/roles.go`、`CheckRuntimePrivileges` 与只读备份恢复）；[guilds.go](../../server/internal/online/guilds.go) 与 [world_boss.go](../../server/internal/online/world_boss.go) 实现建帮（50 金）、执事权限委派、帮派共同据点装饰、周常扩容（30→60 人）与非帮派玩家同等周常获取、600s 退帮冷却、14 天离线会长执事/元老继任交接、及仅接纳不可交易建筑材料的帮派仓库存取守恒。
+- 客户端界面：新增 [OnlineGuildPanel.gd](../../src/ui/OnlineGuildPanel.gd)（总览/成员/仓库日志/据点招募 4 页签，`ui_cancel` 支持）并整合进 [OnlineWorld.gd](../../src/ui/OnlineWorld.gd) 与 [OnlineClient.gd](../../src/online/OnlineClient.gd)；同步修复 [OnlineCoopPanel.gd](../../src/ui/OnlineCoopPanel.gd) 首领页签 480×800 竖屏宽度裁剪并支持双地区首领展示与切换激活。
+- 实测与回归验证（脱敏证据见 `reports/online_20261119/guilds-coop-boss/` 与 `reports/online_20261119/l4-regression/`）：
+  - **Go / PostgreSQL 套件**：**72/72 通过，退出码 0**（含 `TestL4CoopRemainingDungeonsAndSecondWorldBossShenyuan` 与 `TestL4GuildLifecyclePermissionsWarehouseAuditAndInactiveHandoff`，覆盖 `ore_vein` / `stele_depths` 副本、双地区公共首领、`mat_guild_timber` 仓库不可交易校验与可交易品拦截、审计日志防篡改、执事授权、离帮冷却与 14 天不活跃会长公开交接，及 `dbops` **46 表** 权限/备份恢复）。
+  - **独立 Godot 权威检查**：`verify-room.json` **30/30 通过，退出码 0**。
+  - **双真实端 L4 验证**（`verify_guild_l4.py`）：`a6c38021d6d34f8c8a4cd8d84215814c`（截图复验运行 `81244bfefd54497f9bc9c790f7e00822`，已目检修正后 480×800 `shenyuan-boss.png` 与 `guild-hall.png`）全部通过，两端退出码 `0`、46 表一致。
+  - **L3 / L2 / L1 / L0 无回退复验**：`VerifyNav` 退出码 `0`；`verify_market_l3.py`（`0ca4db5d49ba4bc7822cd8e7b116d871`）、`verify_coop_l2.py`（`cf6becdacbe240eeb2c9eb82382337b2`）、`verify_social_l1.py`（`2a2381d9062246c8b8505a89401af19d`）、`verify_world_l1.py`（`7b50394425a342f6af61aa1d49be5b5f`）与 `verify_journey.py`（`d2708cdd88444a2e8f954ea05ddfef89` **6/6**）全部在 46 表架构上通过，客户端退出码均为 `0`。
+  - **完整单机回归**：`online_full_20261119_l4_final` **79/79 PASS（`ALL GREEN`），退出码 `0`**（`runner_unchanged=true`、`load_screen_unchanged=true`、`VerifyPerf` 预算全部达标：`GameHome` 70/260ms、`CityScene` 68/700ms；29 项用例共记录 48 条 issue #43 引擎退出资源诊断）。
+
 ### 未解决与下一批
 
-- **L3 全部本机功能与守恒/并发/双端验证已闭环**；接下来推进 **L4（其余合作内容矿脉/界碑深处、第二公共首领、帮派系统含招募/权限/共同据点/只收不可交易材料的帮派仓库及审计日志/会长交接）**。
+- **L4 全部本机功能与仓库守恒/权限审计/双端验证已闭环**；接下来立即推进 **L5（1v1 / 2v2 / 3v3 全模式切磋与独立排位竞技场：含预组/随机补位、三模式独立段位与赛季、15s 超时默认动作、90s 断线重连与权威战局回放）**。
 - 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、24 人频道/12 人野外与目标手机跨网络联机及正式经济事件周期长时观测仍待 L6 及真机阶段验收。issue #43 退出资源诊断继续跟踪。
-- L4–L6 按完整台账持续实施。**L0 外部部署阻塞待目标机验收，L1/L2/L3 本地闭环交付完毕，完整联机目标保持 active。**
+- L5–L6 按完整台账持续实施。**L0 外部部署阻塞待目标机验收，L1/L2/L3/L4 本地闭环交付完毕，完整联机目标保持 active。**

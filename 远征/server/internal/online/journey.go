@@ -34,6 +34,7 @@ type JourneyItem struct {
 	Health         int    `json:"health,omitempty"`
 	Tradeable      bool   `json:"tradeable,omitempty"`
 	MarketCategory string `json:"market_category,omitempty"`
+	GuildBuilding  bool   `json:"guild_building,omitempty"`
 	BasePrice      int64  `json:"base_price,omitempty"`
 	NpcBuyPrice    int64  `json:"npc_buy_price,omitempty"`
 	NpcSellPrice   int64  `json:"npc_sell_price,omitempty"`

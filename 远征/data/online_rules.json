@@ -3,20 +3,25 @@
   "town": {"map_id": "lorin_wilds", "capacity": 24, "spawn": [600, 1520], "speed": 192},
   "maps": {
     "lorin_wilds": {"name": "昭元边城", "capacity": 24, "spawn": [600, 1520], "speed": 192, "arrivals": {"from_maple_road": [600, 300]}},
-    "maple_road": {"name": "枫林古道", "capacity": 24, "spawn": [480, 1860], "speed": 192, "arrivals": {"from_city": [480, 1860]}}
+    "maple_road": {"name": "枫林古道", "capacity": 24, "spawn": [480, 1860], "speed": 192, "arrivals": {"from_city": [480, 1860], "from_shenyuan_port": [480, 320]}},
+    "shenyuan_port": {"name": "沉渊港", "capacity": 24, "spawn": [210, 660], "speed": 192, "arrivals": {"from_maple_road": [210, 660]}}
   },
   "portals": {
     "north_gate": {"from_map": "lorin_wilds", "position": [616, 140], "radius": 130, "to_map": "maple_road", "arrival": "from_city", "label": "北门 · 前往枫林古道"},
-    "south_gate": {"from_map": "maple_road", "position": [480, 1990], "radius": 130, "to_map": "lorin_wilds", "arrival": "from_maple_road", "label": "南口 · 返回昭元边城"}
+    "south_gate": {"from_map": "maple_road", "position": [480, 1990], "radius": 130, "to_map": "lorin_wilds", "arrival": "from_maple_road", "label": "南口 · 返回昭元边城"},
+    "harbor_gate": {"from_map": "maple_road", "position": [480, 140], "radius": 130, "to_map": "shenyuan_port", "arrival": "from_maple_road", "label": "北渡 · 前往沉渊港"},
+    "salt_return": {"from_map": "shenyuan_port", "position": [90, 660], "radius": 130, "to_map": "maple_road", "arrival": "from_shenyuan_port", "label": "旧盐道 · 返回枫林古道"}
   },
   "npcs": {
     "npc_warden": {"map_id": "lorin_wilds", "name": "守备官", "position": [698, 1580], "radius": 112, "greeting": "城防稳固，若要出城往北门去便是枫林古道。", "after_patrol_greeting": "听说你已取得碑窟通行印信，北门外的古道也有同伴在探路。"},
-    "npc_maple_scout": {"map_id": "maple_road", "name": "古道斥候", "position": [480, 1660], "radius": 112, "greeting": "前方野狼成群，切勿大意。若需休整可回南口入城。", "after_patrol_greeting": "你身上带着青姨签发的碑窟通行印信，失声碑窟日后就靠你们了。"}
+    "npc_maple_scout": {"map_id": "maple_road", "name": "古道斥候", "position": [480, 1660], "radius": 112, "greeting": "前方野狼成群，切勿大意。若需休整可回南口入城。", "after_patrol_greeting": "你身上带着青姨签发的碑窟通行印信，失声碑窟日后就靠你们了。"},
+    "npc_harbor_master": {"map_id": "shenyuan_port", "name": "港口总管", "position": [300, 620], "radius": 112, "greeting": "沉渊港外盐鳞巨兽出没，协力讨伐与帮派建材可来此登记。", "after_patrol_greeting": "已取得碑窟印信的旅人可在港内接应裂隙矿脉与界碑深处远征队。"}
   },
   "encounters": {
     "training_wolf": {"map_id": "lorin_wilds", "monster_id": "mon_wolf", "position": [600, 1740], "radius": 112, "gold": 10, "experience": 5, "reward_policy": "once"},
     "southern_patrol": {"map_id": "lorin_wilds", "monster_id": "mon_treant", "position": [752, 1850], "radius": 112, "gold": 15, "experience": 10, "reward_policy": "once", "journey_step": "patrol_trial"},
-    "maple_wolf": {"map_id": "maple_road", "monster_id": "mon_wolf", "position": [200, 1460], "radius": 112, "gold": 12, "experience": 8, "reward_policy": "per_battle"}
+    "maple_wolf": {"map_id": "maple_road", "monster_id": "mon_wolf", "position": [200, 1460], "radius": 112, "gold": 12, "experience": 8, "reward_policy": "per_battle"},
+    "port_crab": {"map_id": "shenyuan_port", "monster_id": "mon_salt_crab", "position": [460, 740], "radius": 112, "gold": 18, "experience": 12, "reward_policy": "per_battle"}
   },
   "journey": {
     "pack_slots": 32,
@@ -45,7 +50,12 @@
       "mat_stele_shard": {"name": "古碑碎纹", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 32},
       "mat_tidal_core": {"name": "潮蚀结晶", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 40},
       "mat_mentor_seal": {"name": "助战印信", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": false},
-      "mat_forest_crest": {"name": "失路兽徽记", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 35}
+      "mat_forest_crest": {"name": "失路兽徽记", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 35},
+      "mat_ore_crystal": {"name": "赤砂矿晶", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 45},
+      "mat_depths_relic": {"name": "深碑铭文", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 55},
+      "mat_salt_scale_crest": {"name": "盐鳞王印", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 42},
+      "mat_guild_timber": {"name": "帮派筑木", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": false, "guild_building": true},
+      "mat_guild_stone": {"name": "界碑石料", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": false, "guild_building": true}
     },
     "points": {
       "npc_steward": {"name": "闻叔", "position": [418, 1325], "radius": 112},
@@ -162,6 +172,92 @@
           "repeat": {"gold": 90, "experience": 65, "item_id": "mat_tidal_core", "quantity": 2},
           "mentor": {"gold": 50, "experience": 35, "item_id": "mat_mentor_seal", "quantity": 1}
         }
+      },
+      "ore_vein": {
+        "name": "裂隙矿脉",
+        "theme": "desert",
+        "min_level": 1,
+        "recommended_level": 12,
+        "requires_journey_unlock": false,
+        "pet_notice": "随行宠物将占用1个助战位并跟随主人出战",
+        "potion_notice": "每人携带个人治疗药剂（每场上限 6 瓶，救援倒地队友消耗 1 瓶）",
+        "first_clear_notice": "矿道机关需分别扳动南北轨道闸把；首通奖励按角色独立发放",
+        "stages": [
+          {
+            "id": "mine_rail_switch",
+            "name": "矿道岔轨区",
+            "kind": "puzzle",
+            "checkpoint": true,
+            "mechanics": ["rail_map", "north_lever", "south_switch"],
+            "hint": "先核对旧矿图，随后南北两侧同时拨转岔轨，清出矿车通道"
+          },
+          {
+            "id": "vein_ambush",
+            "name": "赤砂巷道",
+            "kind": "battle",
+            "checkpoint": true,
+            "monster_id": "mon_siege",
+            "add_monster_id": "mon_mummy",
+            "hint": "击退巷道傀儡与荒漠守卫"
+          },
+          {
+            "id": "redsand_boss",
+            "name": "赤砂炉心室",
+            "kind": "boss",
+            "checkpoint": false,
+            "monster_id": "mon_redsand_guard",
+            "add_monster_id": "mon_siege",
+            "hint": "赤砂械卫 55% 过载增攻露破绽，20% 熄炉眩晕"
+          }
+        ],
+        "rewards": {
+          "first_clear": {"gold": 210, "experience": 140, "item_id": "mat_guild_timber", "quantity": 4},
+          "repeat": {"gold": 100, "experience": 75, "item_id": "mat_ore_crystal", "quantity": 2},
+          "mentor": {"gold": 55, "experience": 40, "item_id": "mat_mentor_seal", "quantity": 1}
+        }
+      },
+      "stele_depths": {
+        "name": "界碑深处",
+        "theme": "abyss",
+        "min_level": 1,
+        "recommended_level": 14,
+        "requires_journey_unlock": true,
+        "pet_notice": "随行宠物将占用1个助战位并跟随主人出战",
+        "potion_notice": "每人携带个人治疗药剂（每场上限 6 瓶，救援倒地队友消耗 1 瓶）",
+        "first_clear_notice": "内外环共鸣柱需顺次校音；首通与协助建材独立入个人行囊",
+        "stages": [
+          {
+            "id": "resonance_ring",
+            "name": "碑心共鸣环",
+            "kind": "puzzle",
+            "checkpoint": true,
+            "mechanics": ["echo_glyph", "outer_pillar", "inner_pillar"],
+            "hint": "读取深碑古文后先校外环柱、再合内环共鸣锁"
+          },
+          {
+            "id": "abyss_watch",
+            "name": "巡界走廊",
+            "kind": "battle",
+            "checkpoint": true,
+            "monster_id": "mon_cultist",
+            "add_monster_id": "mon_triad_echo",
+            "hint": "瓦解深渊教徒与三地余响伏兵"
+          },
+          {
+            "id": "abyss_heart",
+            "name": "古碑沉殿",
+            "kind": "boss",
+            "checkpoint": false,
+            "monster_id": "mon_nameless_warden",
+            "add_monster_id": "mon_cultist",
+            "hint": "无名巡界者 50% 进入最后一岗，20% 交岗眩晕破防"
+          }
+        ],
+        "rewards": {
+          "first_clear": {"gold": 240, "experience": 160, "item_id": "mat_guild_stone", "quantity": 4},
+          "repeat": {"gold": 115, "experience": 85, "item_id": "mat_depths_relic", "quantity": 2},
+          "mentor": {"gold": 60, "experience": 45, "item_id": "mat_mentor_seal", "quantity": 1}
+        }
       }
     }
   },
@@ -182,6 +278,53 @@
       "defeat": {"gold": 150, "experience": 100, "item_id": "mat_forest_crest", "quantity": 3}
     }
   },
+  "world_bosses": {
+    "maple_road": {
+      "event_key_prefix": "maple_lost_beast",
+      "map_id": "maple_road",
+      "boss_id": "mon_lost_beast",
+      "name": "枫林失路兽",
+      "position": [480, 1180],
+      "radius": 160,
+      "max_hp": 1200,
+      "duration_seconds": 900,
+      "min_level": 1,
+      "objectives": ["inspect_trail", "disrupt_howl"],
+      "rewards": {
+        "assist": {"gold": 45, "experience": 30, "item_id": "mat_forest_crest", "quantity": 1},
+        "stage": {"gold": 90, "experience": 60, "item_id": "mat_forest_crest", "quantity": 2},
+        "defeat": {"gold": 150, "experience": 100, "item_id": "mat_forest_crest", "quantity": 3}
+      }
+    },
+    "shenyuan_port": {
+      "event_key_prefix": "shenyuan_salt_scale",
+      "map_id": "shenyuan_port",
+      "boss_id": "mon_salt_scale",
+      "name": "沉渊盐鳞王",
+      "position": [520, 660],
+      "radius": 160,
+      "max_hp": 1500,
+      "duration_seconds": 900,
+      "min_level": 1,
+      "objectives": ["anchor_barricade", "shatter_scale"],
+      "rewards": {
+        "assist": {"gold": 55, "experience": 35, "item_id": "mat_salt_scale_crest", "quantity": 1},
+        "stage": {"gold": 110, "experience": 75, "item_id": "mat_salt_scale_crest", "quantity": 2},
+        "defeat": {"gold": 180, "experience": 120, "item_id": "mat_salt_scale_crest", "quantity": 3}
+      }
+    }
+  },
+  "guilds": {
+    "create_cost_gold": 50,
+    "min_level": 1,
+    "require_act2_complete": true,
+    "base_member_cap": 30,
+    "max_member_cap": 60,
+    "weekly_points_per_slot": 50,
+    "leave_cooldown_seconds": 600,
+    "leader_inactive_seconds": 1209600,
+    "warehouse_materials": ["mat_guild_timber", "mat_guild_stone"]
+  },
   "market": {
     "stage": "M3",
     "sandbox_only": false,
@@ -197,7 +340,8 @@
     "daily_npc_trade_cap": 30,
     "npc_regions": {
       "lorin_wilds": {"label": "昭元集市", "buy_mult_bps": 10000, "sell_mult_bps": 10000, "event": "春耕余粮充足，行商正常收购"},
-      "maple_road": {"label": "古道驿商", "buy_mult_bps": 11500, "sell_mult_bps": 10800, "event": "北门货运加价，外围矿药需求偏高"}
+      "maple_road": {"label": "古道驿商", "buy_mult_bps": 11500, "sell_mult_bps": 10800, "event": "北门货运加价，外围矿药需求偏高"},
+      "shenyuan_port": {"label": "沉渊海市", "buy_mult_bps": 11200, "sell_mult_bps": 10600, "event": "海运补给紧俏，矿石草药溢价收购"}
     },
     "npc_floor_goods": ["mat_grain", "mat_salt", "mat_herbs", "mat_iron"]
   }

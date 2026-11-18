@@ -9,6 +9,7 @@ const JourneyPanel := preload("res://src/ui/OnlineJourneyPanel.gd")
 const SocialPanel := preload("res://src/ui/OnlineSocialPanel.gd")
 const CoopPanel := preload("res://src/ui/OnlineCoopPanel.gd")
 const MarketPanel := preload("res://src/ui/OnlineMarketPanel.gd")
+const GuildPanel := preload("res://src/ui/OnlineGuildPanel.gd")
 const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 
 var auto_connect := true
@@ -28,6 +29,7 @@ var _channels_panel: Control
 var _social_panel: Control
 var _coop_panel: Control
 var _market_panel: Control
+var _guild_panel: Control
 var _coop_instance_id := ""
 var _world := Node2D.new()
 var _actors: Dictionary = {}
@@ -115,6 +117,8 @@ func _ready() -> void:
 	bottom.add_child(actions2)
 	if Online.manifest.get("features", []).has("market_sandbox"):
 		_button(actions2, "集市", open_market)
+	if Online.manifest.get("features", []).has("guilds"):
+		_button(actions2, "帮派", open_guild)
 	if Online.manifest.get("features", []).has("town_journey"):
 		_button(actions2, "行囊与任务", open_journey)
 	_button(actions2, "返回角色", _back)
@@ -669,6 +673,7 @@ func _present_battle(value: Variant) -> void:
 		_close_social()
 		_close_coop()
 		_close_market()
+		_close_guild()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -754,6 +759,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_coop()
 		elif is_instance_valid(_market_panel):
 			_close_market()
+		elif is_instance_valid(_guild_panel):
+			_close_guild()
 		else:
 			_back()
 
@@ -766,6 +773,7 @@ func open_social() -> void:
 	_close_channels()
 	_close_coop()
 	_close_market()
+	_close_guild()
 	_held = Vector2.ZERO
 	_social_panel = SocialPanel.new()
 	_hud.add_child(_social_panel)
@@ -854,6 +862,7 @@ func open_coop(tab_id := "dungeons") -> void:
 	_close_coop()
 	_close_social()
 	_close_market()
+	_close_guild()
 	_held = Vector2.ZERO
 	_coop_panel = CoopPanel.new()
 	_hud.add_child(_coop_panel)
@@ -942,6 +951,16 @@ func _on_coop_action(kind: String, payload: Dictionary) -> void:
 			res = await Online.world_boss_engage(String(payload.get("event_id", "")), "attack")
 		"wb_claim":
 			res = await Online.world_boss_claim(String(payload.get("event_id", "")))
+		"wb_select_map":
+			res = await Online.world_boss_current(String(payload.get("map_id", "shenyuan_port")))
+			if bool(res.get("ok", false)) and is_instance_valid(_coop_panel):
+				var ov2: Dictionary = await Online.coop_dungeons()
+				var ov_d: Dictionary = ov2.data if bool(ov2.get("ok", false)) else {}
+				_coop_panel.apply_state(ov_d, {}, res.data, String(Online.selected_character.get("id", "")))
+				_coop_panel.set_status("已切至 %s 激活公共首领" % String(payload.get("map_id", "")))
+				_busy = false
+				_coop_panel.set_busy(false)
+				return
 	_busy = false
 	if not is_instance_valid(_coop_panel):
 		return
@@ -966,6 +985,7 @@ func open_market(tab_id := "market") -> void:
 	_close_channels()
 	_close_coop()
 	_close_social()
+	_close_guild()
 	_held = Vector2.ZERO
 	_market_panel = MarketPanel.new()
 	_hud.add_child(_market_panel)
@@ -1052,6 +1072,93 @@ func _close_market() -> void:
 	_market_panel = null
 
 
+func open_guild(tab_id := "overview") -> void:
+	if _busy or not battle.is_empty() or is_instance_valid(_guild_panel):
+		return
+	_close_profiles()
+	_close_journey()
+	_close_channels()
+	_close_coop()
+	_close_social()
+	_close_market()
+	_held = Vector2.ZERO
+	_guild_panel = GuildPanel.new()
+	_hud.add_child(_guild_panel)
+	_guild_panel.closed.connect(_close_guild)
+	_guild_panel.action_requested.connect(_on_guild_action)
+	if not tab_id.is_empty():
+		_guild_panel.set_tab(tab_id)
+	await _refresh_guild()
+
+
+func _refresh_guild() -> void:
+	if not is_instance_valid(_guild_panel):
+		return
+	_busy = true
+	_guild_panel.set_busy(true)
+	var st: Dictionary = await Online.guild_state()
+	var jrn: Dictionary = await Online.journey_state()
+	var soc: Dictionary = await Online.social_state()
+	_busy = false
+	if not is_instance_valid(_guild_panel):
+		return
+	_guild_panel.set_busy(false)
+	if bool(st.get("ok", false)):
+		var pack_items: Array = jrn.data.get("pack", {}).get("items", []) if bool(jrn.get("ok", false)) else []
+		var friends: Array = soc.data.get("friends", []) if bool(soc.get("ok", false)) else []
+		_guild_panel.apply_state(st.data, pack_items, friends, String(Online.selected_character.get("id", "")))
+		_guild_panel.set_status("帮派与共同据点同步成功")
+	else:
+		_guild_panel.set_status(String(st.get("error", "帮派状态同步失败")))
+
+
+func _on_guild_action(kind: String, payload: Dictionary) -> void:
+	if _busy or not is_instance_valid(_guild_panel):
+		return
+	_busy = true
+	_guild_panel.set_busy(true)
+	var res := {"ok": false}
+	match kind:
+		"refresh":
+			res = {"ok": true}
+		"create":
+			res = await Online.create_guild(String(payload.get("name", "")), String(payload.get("motto", "")))
+		"invite":
+			res = await Online.invite_guild(String(payload.get("target_character_id", "")))
+		"respond_invite":
+			res = await Online.respond_guild_invite(String(payload.get("id", "")), bool(payload.get("accept", false)))
+		"permission":
+			res = await Online.update_guild_permissions(String(payload.get("target_character_id", "")), String(payload.get("rank", "member")), bool(payload.get("can_invite", false)), bool(payload.get("can_manage_warehouse", false)), bool(payload.get("can_edit_announcement", false)))
+		"announcement":
+			res = await Online.update_guild_banner(String(payload.get("announcement", "")), String(payload.get("decor_banner", "")), String(payload.get("decor_monument", "")))
+		"deposit":
+			res = await Online.deposit_guild_warehouse(String(payload.get("item_uid", "")), int(payload.get("quantity", 1)))
+		"withdraw":
+			res = await Online.withdraw_guild_warehouse(String(payload.get("template_id", "")), int(payload.get("quantity", 1)))
+		"task_contribute":
+			res = await Online.contribute_guild_task(String(payload.get("template_id", "")), int(payload.get("quantity", 1)))
+		"leave":
+			res = await Online.leave_guild()
+		"leader":
+			res = await Online.transfer_guild_leader(String(payload.get("target_character_id", "")))
+		"claim_inactive":
+			res = await Online.claim_inactive_guild_leader()
+	_busy = false
+	if not is_instance_valid(_guild_panel):
+		return
+	_guild_panel.set_busy(false)
+	if not bool(res.get("ok", false)):
+		_guild_panel.set_status(String(res.get("error", "帮派操作未完成")))
+		return
+	await _refresh_guild()
+
+
+func _close_guild() -> void:
+	if is_instance_valid(_guild_panel):
+		_guild_panel.queue_free()
+	_guild_panel = null
+
+
 func _open_channels() -> void:
 	if is_instance_valid(_channels_panel) or not battle.is_empty():
 		return
@@ -1060,6 +1167,7 @@ func _open_channels() -> void:
 	_close_social()
 	_close_coop()
 	_close_market()
+	_close_guild()
 	_held = Vector2.ZERO
 	_channels_panel = Control.new()
 	_channels_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

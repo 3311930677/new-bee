@@ -1,4 +1,4 @@
-"""Verify L2 2-player co-op dungeon, RoomHost multi-role BattleSim, World Boss, and 40-table DB restore."""
+"""Verify L2 2-player co-op dungeon, RoomHost multi-role BattleSim, World Boss, and 46-table DB restore."""
 import argparse
 import hashlib
 import json
@@ -40,7 +40,7 @@ def main():
         "online_sources_sha256": fingerprint,
         "gateway_binary_sha256": hashlib.sha256(GATEWAY.read_bytes()).hexdigest(),
         "transport": "https-validating-debug-ca",
-        "scope": "L2 two native Godot clients, queue match, tidal_gate co-op puzzle + RoomHost BattleSim + disconnect/rejoin + personal drops + world boss + 40-table backup/restore",
+        "scope": "L2 two native Godot clients, queue match, tidal_gate co-op puzzle + RoomHost BattleSim + disconnect/rejoin + personal drops + world boss + 46-table backup/restore",
     }
 
     try:
@@ -80,7 +80,7 @@ def main():
                 )
 
         promoted = False
-        deadline = time.monotonic() + 240
+        deadline = time.monotonic() + 246
         while any(process.poll() is None for process in clients.values()):
             if not promoted and (barriers / "joined-a").is_file() and (barriers / "joined-b").is_file():
                 # Set recommended trial level 10 cleanly in DB for the Lv.10 tidal_gate encounter.
@@ -120,9 +120,9 @@ def main():
         recovery.databases.append(recovery.target)
         restored = recovery.command("restore", database=recovery.target, folder=backup)
         (folder / "restore-report.json").write_text(json.dumps(restored, indent=2), encoding="utf8")
-        if len(manifest.get("tables", [])) != 40 or len(restored.get("tables_matched_before_session_invalidation", [])) != 40:
-            raise RuntimeError(f"expected 40 tables in backup/restore, got {len(manifest.get('tables', []))}")
-        report["tables_matched"] = 40
+        if len(manifest.get("tables", [])) != 46 or len(restored.get("tables_matched_before_session_invalidation", [])) != 46:
+            raise RuntimeError(f"expected 46 tables in backup/restore, got {len(manifest.get('tables', []))}")
+        report["tables_matched"] = 46
         report["passed"] = True
     except Exception as error:
         failures.append(str(error))

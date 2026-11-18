@@ -1,0 +1,208 @@
+{
+  "verifier_version": 2,
+  "source_sha256": "7dda16102953308f73c5af4e7d017a395d7b352ae64928a8dbdd25c65f268f39",
+  "content_version": "f4d1d6e5f2b2c9144f73add469357e9070dd2bf9de3782b6dbd3511941938ea1",
+  "ruleset_version": "online-0.1",
+  "shared_combat_sources": [
+    "src\\combat\\BattleSim.gd",
+    "src\\combat\\Combatant.gd",
+    "src\\combat\\DamageCalc.gd",
+    "src\\combat\\MonsterAI.gd",
+    "src\\combat\\SkillSystem.gd",
+    "src\\combat\\TableCache.gd",
+    "src\\combat\\TraitSystem.gd",
+    "src\\world\\CampaignPressure.gd",
+    "src\\world\\CompanionService.gd",
+    "src\\online\\OnlineProfile.gd"
+  ],
+  "autoloads": []
+}
+{
+  "scope": "isolated shared BattleSim + private signed RPC; not public multiplayer acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "7dda16102953308f73c5af4e7d017a395d7b352ae64928a8dbdd25c65f268f39",
+    "content_version": "f4d1d6e5f2b2c9144f73add469357e9070dd2bf9de3782b6dbd3511941938ea1",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "go_health": {
+    "epoch": "0150e3aa2ab4155a45935ef914c8bbf1",
+    "ok": true,
+    "content_version": "f4d1d6e5f2b2c9144f73add469357e9070dd2bf9de3782b6dbd3511941938ea1",
+    "ruleset_version": "online-0.1",
+    "engine": "4.7.2-stable (official)",
+    "battles": 0
+  },
+  "passed": true,
+  "final_state_hash": "3f87191ce2f8edaadeaa5ee2d82485b89e02acea80e61ee6389236f4ee22fde6",
+  "ticks": 73,
+  "inputs": [
+    {
+      "accepted": true,
+      "action": {
+        "action": "attack"
+      },
+      "reason": "attacked",
+      "sequence": 1,
+      "tick": 70
+    },
+    {
+      "accepted": false,
+      "action": {
+        "action": "skill",
+        "skill_id": "gm_kill_all"
+      },
+      "reason": "unavailable",
+      "sequence": 2,
+      "tick": 72
+    },
+    {
+      "accepted": true,
+      "action": {
+        "action": "flee"
+      },
+      "reason": "fled",
+      "sequence": 3,
+      "tick": 73
+    }
+  ],
+  "coop_members_tested": 4,
+  "checks": [
+    {
+      "name": "authority refuses inherited database credentials without logging their values",
+      "passed": true
+    },
+    {
+      "name": "authority refuses inherited management credentials without logging their values",
+      "passed": true
+    },
+    {
+      "name": "private worker starts with exact content version",
+      "passed": true
+    },
+    {
+      "name": "production Go RPC client authenticates a real Godot process",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated private request rejected",
+      "passed": true
+    },
+    {
+      "name": "replayed private nonce rejected",
+      "passed": true
+    },
+    {
+      "name": "shared BattleSim starts only on authority process",
+      "passed": true
+    },
+    {
+      "name": "authority advances by its own monotonic clock",
+      "passed": true
+    },
+    {
+      "name": "authority validates and executes manual attack",
+      "passed": true
+    },
+    {
+      "name": "duplicate command returns original receipt without a second attack",
+      "passed": true
+    },
+    {
+      "name": "same sequence cannot change action",
+      "passed": true
+    },
+    {
+      "name": "out of order input rejected",
+      "passed": true
+    },
+    {
+      "name": "unowned skill cannot execute",
+      "passed": true
+    },
+    {
+      "name": "authority controls final battle result",
+      "passed": true
+    },
+    {
+      "name": "seed and exact input log reproduce final authority state",
+      "passed": true
+    },
+    {
+      "name": "finished simulation can be explicitly released",
+      "passed": true
+    },
+    {
+      "name": "persistent journal uses gateway clock without autonomous advancement",
+      "passed": true
+    },
+    {
+      "name": "provisional command executes before database outcome is known",
+      "passed": true
+    },
+    {
+      "name": "rolled back command is removed by rebuilding committed checkpoint",
+      "passed": true
+    },
+    {
+      "name": "uncommitted clock advancement also rolls back exactly",
+      "passed": true
+    },
+    {
+      "name": "cache miss rebuilds committed actions and validates state hash",
+      "passed": true
+    },
+    {
+      "name": "committed input outcome cannot silently change during recovery",
+      "passed": true
+    },
+    {
+      "name": "divergent committed checkpoint fails closed",
+      "passed": true
+    },
+    {
+      "name": "shared world validates an ordinary city movement",
+      "passed": true
+    },
+    {
+      "name": "shared world rejects a client teleport",
+      "passed": true
+    },
+    {
+      "name": "authority accepts valid equipment, potions and pet_rockturtle loadout",
+      "passed": true
+    },
+    {
+      "name": "loadout simulation can flee before release",
+      "passed": true
+    },
+    {
+      "name": "loadout simulation can be released",
+      "passed": true
+    },
+    {
+      "name": "authority rejects unapproved companion loadout",
+      "passed": true
+    },
+    {
+      "name": "authority simulates 4-class co-op party with scaled enemies and per-member actions",
+      "passed": true
+    }
+  ],
+  "player_data_unchanged": true,
+  "script_errors": [],
+  "log": "E:\\new bee\\远征\\server\\.local\\verification\\room_7cb6513a69ca4db6ac2db7eb85ce2d62\\room.log"
+}
