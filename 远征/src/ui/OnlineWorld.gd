@@ -5,6 +5,7 @@ const Art := preload("res://src/world/ReferenceWorldArt.gd")
 const Field := preload("res://src/ui/FieldUI.gd")
 const BattlePage := preload("res://src/ui/OnlineBattle.tscn")
 const Profile := preload("res://src/online/OnlineProfile.gd")
+const JourneyPanel := preload("res://src/ui/OnlineJourneyPanel.gd")
 
 var auto_connect := true
 var automatic_poll := true
@@ -26,6 +27,10 @@ var _move_elapsed := 0.0
 var _held := Vector2.ZERO
 var _connected := false
 var _profiles: Control
+var _journey_panel: Control
+var _journey: Dictionary = {}
+var _journey_marker: Node2D
+var _marker_key := ""
 
 
 func _ready() -> void:
@@ -66,7 +71,7 @@ func _ready() -> void:
 	bottom.offset_bottom = -16
 	bottom.add_theme_constant_override("separation", 8)
 	_hud.add_child(bottom)
-	_challenge_button = _button(bottom, "城南试炼 · 靠近野狼后挑战", func() -> void: challenge("training_wolf"))
+	_challenge_button = _button(bottom, "城南试炼 · 靠近野狼后挑战", _perform_journey_action)
 	var arrows := HBoxContainer.new()
 	arrows.add_theme_constant_override("separation", 8)
 	bottom.add_child(arrows)
@@ -82,6 +87,8 @@ func _ready() -> void:
 	actions.add_theme_constant_override("separation", 8)
 	bottom.add_child(actions)
 	_button(actions, "同行名片", _open_profiles)
+	if Online.manifest.get("features", []).has("town_journey"):
+		_button(actions, "行囊与任务", open_journey)
 	_button(actions, "返回在线角色", _back)
 	if auto_connect:
 		call_deferred("enter_world")
@@ -136,7 +143,6 @@ func _apply_world(data: Dictionary) -> void:
 	entities = (data.get("entities", []) as Array).duplicate(true)
 	_encounters = (data.get("encounters", {}) as Dictionary).duplicate(true)
 	_town_label.text = "昭元边城 · 同行 %d 人" % entities.size()
-	_status.text = "%s · 方向键或下方按钮移动\n城南试炼：首胜金币 10、阅历 5" % Online.selected_character.get("nickname", "旅人")
 	var live_ids: Array[String] = []
 	for entity_value in entities:
 		if not entity_value is Dictionary:
@@ -155,6 +161,7 @@ func _apply_world(data: Dictionary) -> void:
 			(_actors[id] as Node2D).queue_free()
 			_actors.erase(id)
 	_camera.position = Vector2(float(lease.get("x", 600)), float(lease.get("y", 1520)))
+	_update_journey(data.get("journey", {}))
 	if not _world.has_node("TrainingWolf") and _encounters.has("training_wolf"):
 		var target := Node2D.new()
 		target.name = "TrainingWolf"
@@ -170,6 +177,144 @@ func _apply_world(data: Dictionary) -> void:
 		caption.position = Vector2(-90, -112)
 		caption.size = Vector2(180, 30)
 		target.add_child(caption)
+
+
+func _update_journey(value: Dictionary) -> void:
+	if int(value.get("version", 0)) >= int(_journey.get("version", 0)):
+		_journey = value.duplicate(true)
+	var event := String(_journey.get("event", ""))
+	var target := String(_journey.get("target_id", ""))
+	var goal := String(_journey.get("goal", "城南试炼：首胜金币 10、阅历 5"))
+	var action := "城南试炼 · 挑战野狼"
+	var point: Dictionary = _journey.get("point", {})
+	match event:
+		"interact":
+			action = "查看城南路标" if target == "south_signpost" else "与%s交谈" % String(point.get("name", "旅人"))
+		"gear", "companion":
+			action = "打开行囊 · %s" % String(_journey.get("title", "整备"))
+		"victory":
+			action = "碑影巡查 · 挑战树妖" if target == "southern_patrol" else "城南试炼 · 挑战野狼"
+		"complete":
+			action = "查看碑窟通行资格"
+	(_challenge_button.get_child(0) as Label).text = action
+	_status.text = "%s\n%s" % [String(_journey.get("title", Online.selected_character.get("nickname", "旅人"))), goal]
+	_update_journey_marker(target, point)
+
+
+func _update_journey_marker(target: String, point: Dictionary) -> void:
+	var at: Array = point.get("position", [])
+	var caption := String(point.get("name", ""))
+	var icon := ""
+	match target:
+		"npc_steward", "npc_scribe":
+			icon = "res://assets/world/reference_complete_20261011/ready/%s.png" % target
+		"southern_patrol":
+			var encounter: Dictionary = _encounters.get(target, {})
+			at = encounter.get("position", [])
+			caption = "碑影巡查 · 树妖"
+			icon = "res://image/generated_101_200/ready/map/mon_treant.png"
+	var key := target if at.size() == 2 else ""
+	if key == _marker_key:
+		return
+	if is_instance_valid(_journey_marker):
+		_journey_marker.queue_free()
+		_journey_marker = null
+	_marker_key = key
+	if key.is_empty():
+		return
+	_journey_marker = Node2D.new()
+	_journey_marker.position = Vector2(float(at[0]), float(at[1]))
+	_world.add_child(_journey_marker)
+	if not icon.is_empty():
+		var picture := Sprite2D.new()
+		picture.texture = load(icon) as Texture2D
+		if picture.texture != null:
+			picture.scale = Vector2.ONE * (96.0 / maxf(1.0, picture.texture.get_height()))
+		picture.position.y = -46
+		_journey_marker.add_child(picture)
+	var tag := Field.surface(Vector2(-72, -138 if not icon.is_empty() else -48), Vector2(144, 30))
+	var words := Field.label("◆ " + caption, Vector2.ZERO, Vector2(144, 30), G.FS_SM, G.GOLD_BRIGHT, true)
+	_journey_marker.add_child(tag)
+	tag.add_child(words)
+
+
+func _perform_journey_action() -> void:
+	var target := String(_journey.get("target_id", ""))
+	match String(_journey.get("event", "")):
+		"interact":
+			interact_with_journey()
+		"gear", "companion", "complete":
+			open_journey()
+		"victory":
+			challenge(target)
+		_:
+			challenge("training_wolf")
+
+
+func interact_with_journey(request_id := "") -> Dictionary:
+	if _busy or not battle.is_empty() or String(_journey.get("event", "")) != "interact":
+		return {"ok": false, "code": "busy"}
+	_busy = true
+	var result: Dictionary = await Online.interact_journey(String(_journey.id), String(_journey.target_id), request_id)
+	_busy = false
+	if bool(result.get("ok", false)):
+		_update_journey(result.data.journey)
+		_open_journey_panel(result.data)
+	else:
+		_show_error(result)
+	return result
+
+
+func open_journey() -> void:
+	if _busy or not battle.is_empty() or is_instance_valid(_journey_panel):
+		return
+	_close_profiles()
+	_open_journey_panel()
+	_busy = true
+	var result: Dictionary = await Online.journey_state()
+	_busy = false
+	if not is_instance_valid(_journey_panel):
+		return
+	if bool(result.get("ok", false)):
+		_update_journey(result.data.journey)
+		_journey_panel.present(result.data)
+	else:
+		_journey_panel.show_message(String(result.get("error", "暂时无法查看行囊")))
+
+
+func _open_journey_panel(data: Dictionary = {}) -> void:
+	if not is_instance_valid(_journey_panel):
+		_held = Vector2.ZERO
+		_journey_panel = JourneyPanel.new()
+		_hud.add_child(_journey_panel)
+		_journey_panel.closed.connect(_close_journey)
+		_journey_panel.equipment_requested.connect(_equip_from_journey)
+	if not data.is_empty():
+		_journey_panel.present(data)
+
+
+func _equip_from_journey(id: String, equipped: bool) -> void:
+	if _busy or not is_instance_valid(_journey_panel):
+		return
+	_busy = true
+	_journey_panel.set_busy(true)
+	var result: Dictionary = await Online.equip_journey_item(id, equipped)
+	_busy = false
+	if bool(result.get("ok", false)):
+		_update_journey(result.data.journey)
+	if not is_instance_valid(_journey_panel):
+		return
+	_journey_panel.set_busy(false)
+	if bool(result.get("ok", false)):
+		_journey_panel.present(result.data, true)
+	else:
+		_journey_panel.show_message(String(result.get("error", "暂时无法操作这件物品")))
+
+
+func _close_journey() -> void:
+	if is_instance_valid(_journey_panel):
+		_journey_panel.queue_free()
+	_journey_panel = null
 
 
 func move_by(direction: Vector2) -> Dictionary:
@@ -245,6 +390,7 @@ func _present_battle(value: Variant) -> void:
 	battle = value.duplicate(true) if value is Dictionary else {}
 	if not battle.is_empty():
 		_close_profiles()
+		_close_journey()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -289,7 +435,7 @@ func _process(delta: float) -> void:
 		else:
 			refresh_world()
 		return
-	if battle.is_empty() and not is_instance_valid(_profiles) and _move_elapsed >= 0.15:
+	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and _move_elapsed >= 0.15:
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		if direction.is_zero_approx():
 			direction = _held
@@ -308,6 +454,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		if is_instance_valid(_profiles):
 			_close_profiles()
+		elif is_instance_valid(_journey_panel):
+			_close_journey()
 		else:
 			_back()
 

@@ -158,6 +158,17 @@ def main():
         move = {"map_id": "lorin_wilds", "from_x": 600, "from_y": 1520, "x": 600, "y": 1540, "elapsed": 0.2, "speed": 192}
         check(rpc.call("world.validate_move", move).get("ok"), "shared world validates an ordinary city movement")
         check(rpc.call("world.validate_move", move | {"y": 1900}).get("error") == "invalid_speed", "shared world rejects a client teleport")
+        loadout_id = str(uuid.uuid4())
+        loadout_battle = rpc.call("battle.start", config | {"battle_id": loadout_id, "monster_id": "mon_treant", "loadout": {"attack": 10, "defense": 6, "health": 50, "potions": 3, "active_pet": "pet_rockturtle"}})
+        loadout_units = loadout_battle.get("state", {}).get("units", [])
+        check(loadout_battle.get("ok") and loadout_battle["state"].get("potions") == 3
+              and any(u.get("template_id") == "pet_rockturtle" and u.get("side") == "ally" for u in loadout_units),
+              "authority accepts valid equipment, potions and pet_rockturtle loadout")
+        check(rpc.call("battle.command", {"battle_id": loadout_id, "sequence": 1, "action": {"action": "flee"}}).get("accepted"),
+              "loadout simulation can flee before release")
+        check(rpc.call("battle.release", {"battle_id": loadout_id}).get("released"), "loadout simulation can be released")
+        invalid_loadout = rpc.call("battle.start", config | {"battle_id": str(uuid.uuid4()), "loadout": {"active_pet": "pet_illegal"}})
+        check(not invalid_loadout.get("ok"), "authority rejects unapproved companion loadout")
         report |= {"passed": True, "final_state_hash": final["state"]["state_hash"], "ticks": final["state"]["tick"], "inputs": final["inputs"]}
     except Exception as error:
         report |= {"passed": False, "error": str(error)}

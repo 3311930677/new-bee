@@ -1,0 +1,74 @@
+{
+  "run_id": "e2ee9b84334540fa98662de0343f24a5",
+  "scope": "L0 desktop two-client same town, authority combat, atomic rewards and restart recovery; not mobile/WAN/PvP acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "8387264cdefbfdc509d1d96e2706eccc79316cb9a8771ffde2af417b6376bc55",
+    "content_version": "43fbd8b7bf345676bf6a99109d69a5c0472dbd676e5886211946ceb16e88d79c",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "online_sources_sha256": "98ded236fbacabf84b94233b0e5d455d4dbd39460e8781aeeb53169f5d4073fe",
+  "gateway_binary_sha256": "282087823bbd248fcdbd877b129520f9eaca7e8fe0c8a381f48087c8c2aef84b",
+  "supervision": {
+    "scope": "real foreground Windows role hosts; distinct OS identities and native OS manager restart are not accepted by this drill",
+    "host_binary_sha256": "2feae9bcdfdc6558f174df90a6803af2d441700344049d0b8ce8f73f528efc99",
+    "events": [
+      {
+        "kind": "host_death",
+        "role": "gateway",
+        "child_reaped": true,
+        "host_manager_restart": "verifier explicit restart; OS service-manager restart not accepted here",
+        "old_child_pid": 42504,
+        "new_child_pid": 63092
+      }
+    ],
+    "planned_stops": [
+      {
+        "role": "gateway",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      },
+      {
+        "role": "worker",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      }
+    ]
+  },
+  "passed": false,
+  "error": "both failures are independently identified as the injected PostgreSQL exception",
+  "cleanup_errors": [],
+  "worker_errors": [],
+  "player_data_unchanged": true,
+  "checks": [
+    {
+      "name": "actual supervisor death closes its job and reaps only its owned gateway",
+      "passed": true
+    },
+    {
+      "name": "two real clients hold exclusive leases in one town",
+      "passed": true
+    },
+    {
+      "name": "both failures are independently identified as the injected PostgreSQL exception",
+      "passed": false
+    }
+  ],
+  "online_sources_unchanged": true
+}

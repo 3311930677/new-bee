@@ -171,9 +171,9 @@ func GrantRuntime(ctx context.Context, db *pgxpool.Pool, roles Roles) error {
 		"ALTER DEFAULT PRIVILEGES FOR ROLE " + quote(roles.Migrator) + " IN SCHEMA game GRANT SELECT ON SEQUENCES TO " + quote(roles.Backup),
 		"ALTER DEFAULT PRIVILEGES FOR ROLE " + quote(roles.Migrator) + " IN SCHEMA game REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC",
 	}
-	selectTables := "accounts,characters,sessions,wallets,wallet_ledger,inventory_items,character_progress,command_receipts,audit_events,room_instances,room_leases,battles,battle_inputs,battle_results,battle_reward_claims,security_notifications,schema_migrations"
-	insertTables := "accounts,characters,sessions,wallets,wallet_ledger,character_progress,command_receipts,audit_events,room_instances,room_leases,battles,battle_inputs,battle_results,battle_reward_claims,security_notifications"
-	updateTables := "accounts,characters,sessions,wallets,room_leases,battles,battle_inputs,security_notifications"
+	selectTables := "accounts,characters,sessions,wallets,wallet_ledger,inventory_items,inventory_ledger,character_progress,quest_events,command_receipts,audit_events,room_instances,room_leases,battles,battle_inputs,battle_results,battle_reward_claims,security_notifications,schema_migrations"
+	insertTables := "accounts,characters,sessions,wallets,wallet_ledger,inventory_items,inventory_ledger,character_progress,quest_events,command_receipts,audit_events,room_instances,room_leases,battles,battle_inputs,battle_results,battle_reward_claims,security_notifications"
+	updateTables := "accounts,characters,sessions,wallets,character_progress,room_leases,battles,battle_inputs,security_notifications"
 	for _, grant := range []struct{ privilege, tables string }{{"SELECT", selectTables}, {"INSERT", insertTables}, {"UPDATE", updateTables}} {
 		var tables []string
 		for _, table := range strings.Split(grant.tables, ",") {
@@ -182,6 +182,7 @@ func GrantRuntime(ctx context.Context, db *pgxpool.Pool, roles Roles) error {
 		statements = append(statements, "GRANT "+grant.privilege+" ON "+strings.Join(tables, ",")+" TO "+quote(roles.Runtime))
 	}
 	statements = append(statements, "GRANT USAGE ON SEQUENCE game.audit_events_id_seq TO "+quote(roles.Runtime))
+	statements = append(statements, "GRANT UPDATE (quantity,equipped_slot,version,updated_at) ON game.inventory_items TO "+quote(roles.Runtime))
 	for _, role := range []string{roles.Migrator, roles.Runtime, roles.Backup} {
 		statements = append(statements, "ALTER ROLE "+quote(role)+" IN DATABASE "+quote(database)+" SET search_path=game")
 	}

@@ -7,7 +7,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"io"
 	"log/slog"
 	"net"
 	"net/http"
@@ -84,25 +83,19 @@ func newFixture(t *testing.T) *databaseFixture {
 		for _, pool := range f.pools {
 			pool.Close()
 		}
-		// DROP DATABASE can wait for a cluster checkpoint while other packages
-		// run real transaction tests. This is cleanup, not an API latency budget.
-		end, endCancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer endCancel()
+		// DROP DATABASE can wait for a cluster checkpoint. Use a fresh deadline
+		// for each resource so the next drop can still run after a slow one.
 		for index := len(f.databases) - 1; index >= 0; index-- {
 			name := f.databases[index]
 			if !strings.HasPrefix(name, "yz_ops_") && !restoreName.MatchString(name) {
 				t.Error("refused unsafe disposable database cleanup")
 				continue
 			}
-			if _, err := f.cluster.Exec(end, "DROP DATABASE IF EXISTS "+quote(name)+" WITH (FORCE)"); err != nil {
-				t.Error("disposable test database cleanup failed")
-			}
+			f.dropFixtureResource(t, "DATABASE", name, 2*time.Minute)
 		}
 		if rolesCreated {
 			for _, role := range append([]string{f.roles.Migrator, f.roles.Runtime, f.roles.Backup}, f.extraRoles...) {
-				if _, err := f.cluster.Exec(end, "DROP ROLE IF EXISTS "+quote(role)); err != nil {
-					t.Error("disposable test role cleanup failed")
-				}
+				f.dropFixtureResource(t, "ROLE", role, 30*time.Second)
 			}
 		}
 		f.cluster.Close()
@@ -133,6 +126,27 @@ func newFixture(t *testing.T) *databaseFixture {
 		t.Fatal(err)
 	}
 	return f
+}
+
+func (f *databaseFixture) dropFixtureResource(t *testing.T, resource, name string, timeout time.Duration) {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	statement := "DROP " + resource + " IF EXISTS " + quote(name)
+	if resource == "DATABASE" {
+		statement += " WITH (FORCE)"
+	}
+	if _, err := f.cluster.Exec(ctx, statement); err != nil {
+		var postgresError *pgconn.PgError
+		switch {
+		case errors.As(err, &postgresError):
+			t.Errorf("disposable %s %s cleanup failed (SQLSTATE %s)", resource, name, postgresError.Code)
+		case ctx.Err() != nil:
+			t.Errorf("disposable %s %s cleanup timed out after %s", resource, name, timeout)
+		default:
+			t.Errorf("disposable %s %s cleanup connection failed", resource, name)
+		}
+	}
 }
 
 func TestProvisionRefusesEnumOnlyAndLargeObjectDatabases(t *testing.T) {
@@ -228,6 +242,9 @@ func TestRuntimeAndBackupCannotOwnMigrateOrRewriteLedger(t *testing.T) {
 		"CREATE TABLE game.unauthorized(id int)", "CREATE SCHEMA unauthorized", "CREATE TEMP TABLE unauthorized(id int)",
 		"DROP TABLE game.wallets", "ALTER TABLE game.wallet_ledger DISABLE TRIGGER ALL", "TRUNCATE game.wallet_ledger",
 		"UPDATE game.wallet_ledger SET delta=delta", "DELETE FROM game.wallet_ledger", "UPDATE game.schema_migrations SET sha256=sha256",
+		"UPDATE game.inventory_ledger SET delta=delta", "DELETE FROM game.inventory_ledger", "TRUNCATE game.inventory_ledger",
+		"UPDATE game.quest_events SET target_id='changed'", "DELETE FROM game.quest_events", "TRUNCATE game.quest_events",
+		"DELETE FROM game.inventory_items", "UPDATE game.inventory_items SET template_id=template_id", "UPDATE game.inventory_items SET bound=bound",
 		"SET ROLE " + quote(f.roles.Migrator),
 		"CREATE ROLE yz_unauthorized", "SELECT pg_read_file('postgresql.conf')",
 	} {
@@ -286,12 +303,18 @@ type testAPI struct {
 
 func newAPI(t *testing.T, db *pgxpool.Pool) *testAPI {
 	t.Helper()
-	app, err := online.NewServer(db, online.Config{ContentVersion: "dbops-v1", PasswordCost: bcrypt.MinCost, Logger: slog.New(slog.NewTextHandler(io.Discard, nil))})
+	var logs bytes.Buffer
+	app, err := online.NewServer(db, online.Config{ContentVersion: "dbops-v1", PasswordCost: bcrypt.MinCost, Logger: slog.New(slog.NewTextHandler(&logs, nil))})
 	if err != nil {
 		t.Fatal(err)
 	}
 	server := httptest.NewServer(app)
-	t.Cleanup(server.Close)
+	t.Cleanup(func() {
+		server.Close()
+		if t.Failed() && logs.Len() > 0 {
+			t.Log(logs.String())
+		}
+	})
 	return &testAPI{t, server}
 }
 

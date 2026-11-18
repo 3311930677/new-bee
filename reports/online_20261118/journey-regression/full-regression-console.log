@@ -1,0 +1,90 @@
+Godot  : E:\new bee\tools\godot-4.7.2\Godot_v4.7.2-stable_win64.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: E:\new bee\远征
+UserDir: E:/new bee/远征/tools/_logs/user_sandbox_6d2842feedf2415a8cdce16a3e5fc393/Godot/app_userdata/远征/
+Cases  : 79  (timeout 240s, quit-after 6000 frames)
+Logs   : E:\new bee\远征\tools\_logs\online_full_20261119_l0h_final
+Commit : c371210d
+
+PASS  VerifyOnlineBoundary
+PASS  VerifyAssets
+PASS  VerifyBattleScene
+PASS  VerifyPlayJourney
+PASS  VerifySave
+PASS  VerifyUiLayout
+PASS  VerifyVisualRefresh
+PASS  VerifyFieldUI
+PASS  VerifySweep
+PASS  VerifyCity
+PASS  VerifyGameHome
+PASS  VerifyMapScene
+PASS  VerifyMainWorld
+PASS  VerifyReferenceComplete
+PASS  VerifyWorldSession
+PASS  VerifyStory
+PASS  VerifyEconomy
+PASS  VerifyTradeWorld
+PASS  VerifySecondAct
+PASS  VerifyThirdAct
+PASS  VerifyThirdBack
+PASS  VerifyFourthFront
+PASS  VerifyFourthBack
+PASS  VerifyReturnJobs
+PASS  VerifyThirdSide
+PASS  VerifyCompanions
+PASS  VerifyCampaignGrowth
+PASS  VerifyCampaignGear
+PASS  VerifyWorkshop
+PASS  VerifyCurriculum
+PASS  VerifyFrostArt
+PASS  VerifyPortGrowth
+PASS  VerifyShipping
+PASS  VerifyFrostHerbOrder
+PASS  VerifyRoadMail
+PASS  VerifyStelePuzzle
+PASS  VerifyBossPuzzles
+PASS  VerifyAftermath
+PASS  VerifyAftermathResume
+PASS  VerifyFishing
+PASS  VerifyRouteScene
+PASS  VerifyRunResume
+PASS  VerifyRunResumeRead
+PASS  VerifyRunImmediate
+PASS  VerifyRunEvents
+PASS  VerifyRunEventsRead
+PASS  VerifyTradeContracts
+PASS  VerifyTradeContractsRead
+PASS  VerifyOathWalk
+PASS  VerifyCampGathering
+PASS  VerifySafeArea
+PASS  VerifyAftermathPaths
+PASS  VerifyWorldCommissions
+PASS  VerifyWorldCommissionsRead
+PASS  VerifyDungeonTrials
+PASS  VerifyDungeonTrialsRead
+PASS  VerifyGacha
+PASS  VerifyPanels
+PASS  VerifyGrowth
+PASS  VerifyPerf
+PASS  VerifyLore
+PASS  VerifyQuests
+PASS  VerifyAudio
+PASS  VerifyTransit
+PASS  VerifyDrops
+PASS  VerifyArena
+PASS  VerifyAvatar
+PASS  VerifySignpostEntry
+PASS  VerifyNav
+PASS  verify_data
+PASS  verify_battle
+PASS  VerifyGameplayBalance
+PASS  VerifyJourneyRelics
+PASS  VerifySpecialEvents
+PASS  VerifySpecialEventsRead
+PASS  VerifyCurrencyBalance
+PASS  verify_route
+PASS  verify_trait
+PASS  verify_walk_assets
+
+NOTE: 16 case(s) emitted 31 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+ALL GREEN  (79 cases, every case: exit 0 + own _OK line + no error pattern)

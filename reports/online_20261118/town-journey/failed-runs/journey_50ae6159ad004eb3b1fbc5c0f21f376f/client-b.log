@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: ONLINE_JOURNEY_FAIL 真实攻击指令 [status=500 code=internal_error]
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyOnlineJourney.gd:15)
+       [1] _ok (res://tools/VerifyOnlineJourney.gd:20)
+       [2] _win (res://tools/VerifyOnlineJourney.gd:131)
+       [3] send_action (res://src/ui/OnlineWorld.gd:372)
+       [4] battle_command (res://src/online/OnlineClient.gd:234)
+       [5] _send_command (res://src/online/OnlineClient.gd:344)
+       [6] _request (res://src/online/OnlineClient.gd:330)
+       [7] _raw_request (res://src/online/OnlineClient.gd:408)
+ONLINE_JOURNEY_FAIL

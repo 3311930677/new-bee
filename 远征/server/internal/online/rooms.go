@@ -23,6 +23,7 @@ type OnlineRules struct {
 		Speed    float64    `json:"speed"`
 	} `json:"town"`
 	Encounters map[string]EncounterRule `json:"encounters"`
+	Journey    *JourneyRules            `json:"journey,omitempty"`
 }
 type EncounterRule struct {
 	MonsterID    string     `json:"monster_id"`
@@ -31,6 +32,7 @@ type EncounterRule struct {
 	Gold         int64      `json:"gold"`
 	Experience   int64      `json:"experience"`
 	RewardPolicy string     `json:"reward_policy"`
+	JourneyStep  string     `json:"journey_step,omitempty"`
 }
 
 func (r OnlineRules) Validate() error {
@@ -42,6 +44,9 @@ func (r OnlineRules) Validate() error {
 		if e.MonsterID == "" || !finite(e.Radius) || e.Radius <= 0 || !finite(e.Position[0]) || !finite(e.Position[1]) || e.Gold < 0 || e.Experience < 0 || (e.RewardPolicy != "once" && e.RewardPolicy != "per_battle") {
 			return errors.New("invalid encounter rules")
 		}
+	}
+	if r.Journey != nil {
+		return r.Journey.validate(r.Encounters)
 	}
 	return nil
 }
@@ -200,6 +205,22 @@ func (s *Server) roomSnapshot(w http.ResponseWriter, r *http.Request, who identi
 		s.fail(w, rows.Err())
 		return
 	}
+	encounters := s.cfg.Rules.Encounters
+	var journey map[string]any
+	if rules := s.cfg.Rules.Journey; rules != nil {
+		progress, readErr := readJourney(r.Context(), tx, c.ID)
+		if readErr != nil {
+			s.fail(w, readErr)
+			return
+		}
+		journey = rules.view(progress)
+		encounters = make(map[string]EncounterRule)
+		for id, rule := range s.cfg.Rules.Encounters {
+			if rule.JourneyStep == "" || rule.JourneyStep == progress.Step {
+				encounters[id] = rule
+			}
+		}
+	}
 	_, err = tx.Exec(r.Context(), `UPDATE room_leases SET expires_at=now()+interval '90 seconds',updated_at=now() WHERE account_id=$1`, who.AccountID)
 	if err == nil {
 		err = tx.Commit(r.Context())
@@ -208,7 +229,11 @@ func (s *Server) roomSnapshot(w http.ResponseWriter, r *http.Request, who identi
 		s.fail(w, err)
 		return
 	}
-	respond(w, 200, map[string]any{"lease": l, "entities": entities, "encounters": s.cfg.Rules.Encounters, "speed": s.cfg.Rules.Town.Speed})
+	reply := map[string]any{"lease": l, "entities": entities, "encounters": encounters, "speed": s.cfg.Rules.Town.Speed}
+	if journey != nil {
+		reply["journey"] = journey
+	}
+	respond(w, 200, reply)
 }
 
 type moveBody struct {

@@ -1,0 +1,80 @@
+{
+  "run_id": "50ae6159ad004eb3b1fbc5c0f21f376f",
+  "scope": "two native Godot clients, distinct roles, real town journey, owned items, pet battle, re-login and offline restore",
+  "online_sources_sha256": "7c54549e1343e8fc098ea2e985e022f855dea63021239ef33431e668d73dcf3e",
+  "gateway_binary_sha256": "282087823bbd248fcdbd877b129520f9eaca7e8fe0c8a381f48087c8c2aef84b",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "8387264cdefbfdc509d1d96e2706eccc79316cb9a8771ffde2af417b6376bc55",
+    "content_version": "43fbd8b7bf345676bf6a99109d69a5c0472dbd676e5886211946ceb16e88d79c",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "client_exit_codes": {
+    "a": null,
+    "b": 1
+  },
+  "passed": false,
+  "error": "native journey completed by client a",
+  "checks": [
+    {
+      "name": "native journey completed by client a",
+      "passed": false
+    }
+  ],
+  "offline_actions": [
+    {
+      "action": "provision",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "migrate",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "grant",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "gateway-reject-offline-credential",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-owner-role",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-future-schema",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "migrate",
+      "exit_code": 1,
+      "expected_success": false
+    }
+  ],
+  "cleanup_errors": [],
+  "worker_errors": [],
+  "private_values_in_logs": false,
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true
+}

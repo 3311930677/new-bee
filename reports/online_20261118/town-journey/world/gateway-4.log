@@ -1,0 +1,13 @@
+{"time":"2026-11-18T23:53:14.4968981+08:00","level":"INFO","msg":"database migrations ready","mode":"check","restricted_role":true,"duration_ms":10}
+{"time":"2026-11-18T23:53:14.576068+08:00","level":"INFO","msg":"read-only admin listening","address":"127.0.0.1:61116"}
+{"time":"2026-11-18T23:53:14.576068+08:00","level":"INFO","msg":"gateway listening","address":"127.0.0.1:61115","tls":true,"behind_tls_proxy":false,"protocol":1,"content_version":"43fbd8b7bf345676bf6a99109d69a5c0472dbd676e5886211946ceb16e88d79c"}
+{"time":"2026-11-18T23:53:15.2072636+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":68}
+{"time":"2026-11-18T23:53:15.2881419+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":102}
+{"time":"2026-11-18T23:53:15.4742042+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":59}
+{"time":"2026-11-18T23:53:15.5166025+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":1}
+{"time":"2026-11-18T23:53:15.55358+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":0}
+{"time":"2026-11-18T23:53:15.5870352+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":5}
+{"time":"2026-11-18T23:53:15.626571+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":53}
+{"time":"2026-11-18T23:53:15.7589226+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":1}
+{"time":"2026-11-18T23:53:15.8832413+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":1}
+{"time":"2026-11-18T23:53:16.0081661+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":1}

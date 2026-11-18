@@ -145,7 +145,7 @@ def main():
         command([GO, "mod", "tidy"], env=env)
     elif args.action == "test":
         path = LOCAL / "verification" / "go-integration.jsonl"
-        command([GO, "test", "./...", "-count=1", "-v", "-json"], env=env, logfile=path)
+        command([GO, "test", "-p=1", "./...", "-count=1", "-v", "-json"], env=env, logfile=path)
         completed_go_tests(path)
     elif args.action == "build":
         (SERVER / "bin").mkdir(exist_ok=True)

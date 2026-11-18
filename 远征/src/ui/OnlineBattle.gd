@@ -13,6 +13,7 @@ var _units: VBoxContainer
 var _skills: OptionButton
 var _actions: GridContainer
 var _ack: Control
+var _potion_button: Control
 var _cards: Dictionary = {}
 var _busy := false
 
@@ -63,7 +64,7 @@ func _ready() -> void:
 	column.add_child(_actions)
 	_button(_actions, "攻 · 普通攻击", _emit_action.bind("attack"))
 	_button(_actions, "技 · 选中技能", _emit_action.bind("skill"))
-	_button(_actions, "物 · 使用药品", _emit_action.bind("potion"))
+	_potion_button = _button(_actions, "物 · 治疗药剂", _emit_action.bind("potion"))
 	_button(_actions, "逃 · 退出战斗", _emit_action.bind("flee"))
 	_ack = _button(column, "确认结算 · 返回城镇", func() -> void: acknowledge_requested.emit())
 	_ack.hide()
@@ -117,27 +118,38 @@ func present(value: Dictionary) -> void:
 	_actions.visible = not settled
 	_skills.visible = not settled
 	_ack.visible = settled
-	_title.text = {"victory": "试炼告捷", "defeat": "暂且休整", "flee": "平安撤离", "draw": "试炼结束"}.get(String(battle.get("result", "")), "城南试炼")
+	var title := "碑影巡查" if String(battle.get("encounter_id", "")) == "southern_patrol" else "城南试炼"
+	_title.text = {"victory": "试炼告捷", "defeat": "暂且休整", "flee": "平安撤离", "draw": "试炼结束"}.get(String(battle.get("result", "")), title)
 	_summary.text = "%s · %.1f 秒" % [Online.selected_character.get("nickname", "旅人"), float(state.get("tick", 0)) / 30.0]
+	(_potion_button.get_child(0) as Label).text = "物 · 药剂 %d" % int(state.get("potions", 0))
+	_potion_button.modulate.a = 1.0 if int(state.get("potions", 0)) > 0 and int(state.get("potion_cd", 0)) == 0 else 0.65
+	var live_cards: Array[int] = []
 	for value_unit in state.get("units", []):
 		if not value_unit is Dictionary:
 			continue
 		var unit := value_unit as Dictionary
 		var uid := int(unit.get("uid", -1))
+		live_cards.append(uid)
+		var unit_kind := String(unit.get("kind", ""))
+		var template := String(unit.get("template_id", ""))
 		if not _cards.has(uid):
 			var row := HBoxContainer.new()
-			row.custom_minimum_size.y = 112
+			row.custom_minimum_size.y = 96
 			row.add_theme_constant_override("separation", 12)
 			var portrait: Control
-			if String(unit.get("kind", "")) == "role":
-				portrait = preload("res://src/ui/FieldUI.gd").portrait(String(Online.selected_character.get("role_id", "zs")), Vector2.ZERO, Vector2(100, 112))
+			if unit_kind == "role":
+				portrait = preload("res://src/ui/FieldUI.gd").portrait(String(Online.selected_character.get("role_id", "zs")), Vector2.ZERO, Vector2(92, 96))
 			else:
 				var picture := TextureRect.new()
-				picture.texture = load("res://image/generated_101_200/ready/map/mon_wolf.png")
+				if template == "pet_rockturtle":
+					picture.texture = G.res_tex("pet_rockturtle")
+				else:
+					var path := "mon_treant" if template == "mon_treant" else "mon_wolf"
+					picture.texture = load("res://image/generated_101_200/ready/map/%s.png" % path) as Texture2D
 				picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 				picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 				portrait = picture
-			portrait.custom_minimum_size = Vector2(100, 112)
+			portrait.custom_minimum_size = Vector2(92, 96)
 			row.add_child(portrait)
 			var card := VBoxContainer.new()
 			card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -162,13 +174,13 @@ func present(value: Dictionary) -> void:
 			var note := G.gold_label("", G.FS_SM, false)
 			card.add_child(note)
 			_units.add_child(row)
-			_cards[uid] = {"caption": caption, "health": health, "note": note}
+			_cards[uid] = {"row": row, "caption": caption, "health": health, "note": note}
 		var card: Dictionary = _cards[uid]
-		(card.caption as Label).text = String(Online.selected_character.get("nickname", "旅人")) if String(unit.get("side", "")) == "ally" else String(unit.get("name", "野狼"))
+		(card.caption as Label).text = String(Online.selected_character.get("nickname", "旅人")) if unit_kind == "role" else String(unit.get("name", "对手"))
 		(card.health as ProgressBar).max_value = maxi(1, int(unit.get("max_hp", 1)))
 		(card.health as ProgressBar).value = int(unit.get("hp", 0))
 		(card.note as Label).text = "气血 %d/%d · 能量 %d" % [int(unit.get("hp", 0)), int(unit.get("max_hp", 0)), int(unit.get("energy", 0))]
-		if String(unit.get("kind", "")) == "role":
+		if unit_kind == "role":
 			var selected := _skills.selected
 			_skills.clear()
 			for skill_value in unit.get("skills", []):
@@ -180,6 +192,10 @@ func present(value: Dictionary) -> void:
 				_skills.set_item_metadata(_skills.item_count - 1, skill.get("id", ""))
 			if _skills.item_count > 0:
 				_skills.select(clampi(selected, 0, _skills.item_count - 1))
+	for uid in _cards.keys():
+		if not live_cards.has(uid):
+			(_cards[uid].row as Control).queue_free()
+			_cards.erase(uid)
 	var last: Dictionary = battle.get("last_input", {})
 	if not last.is_empty():
 		_feedback.text = {"attacked": "攻击命中", "cast": "技能已施放", "used": "已使用药品", "fled": "已离开战斗", "unavailable": "条件尚未满足，试试其他行动。", "cooldown": "正在准备下一次攻击。", "controlled": "暂时受控，稍候再行动。", "finished": "战斗已经结束。"}.get(String(last.get("reason", "")), "行动已记录")

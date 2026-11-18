@@ -109,6 +109,9 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/characters/{id}/select", s.authorized(s.selectCharacter))
 	s.mux.HandleFunc("DELETE /v1/characters/{id}", s.authorized(s.deleteCharacter))
 	s.mux.HandleFunc("POST /v1/characters/{id}/restore", s.authorized(s.restoreCharacter))
+	s.mux.HandleFunc("GET /v1/characters/{id}/journey", s.authorized(s.characterJourney))
+	s.mux.HandleFunc("POST /v1/characters/{id}/journey/interact", s.authorized(s.interactJourney))
+	s.mux.HandleFunc("POST /v1/characters/{id}/pack/equipment", s.authorized(s.equipJourneyItem))
 	s.mux.HandleFunc("POST /v1/rooms/join", s.authorized(s.joinRoom))
 	s.mux.HandleFunc("POST /v1/rooms/move", s.authorized(s.moveRoom))
 	s.mux.HandleFunc("GET /v1/rooms/current", s.authorized(s.roomSnapshot))
@@ -244,6 +247,9 @@ func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
 	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery", "character_identity"}
 	if s.cfg.Authority != nil {
 		features = append(features, "town_rooms", "authority_battles")
+		if s.cfg.Rules.Journey != nil {
+			features = append(features, "town_journey")
+		}
 	}
 	respond(w, 200, map[string]any{"protocol_version": ProtocolVersion, "content_version": s.cfg.ContentVersion, "ruleset_version": RulesetVersion, "character_limit": 3, "roles": []string{"zs", "ck", "fs", "fz"}, "appearance_ids": []string{"default"}, "gender_ids": genderIDs, "avatar_ids": avatarIDs, "features": features, "starting_gold": 100})
 }

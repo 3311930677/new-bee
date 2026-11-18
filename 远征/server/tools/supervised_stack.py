@@ -98,13 +98,16 @@ class SupervisedStack(LocalStack):
     def stop(self, name):
         process = self.processes.get(name)
         if process is not None and process.poll() is None:
-            result = subprocess.run([str(self.host), '--request-stop', str(self.states[name])], cwd=SERVER,
-                                    env=client_environment(self.env, {}), capture_output=True, timeout=15,
-                                    creationflags=subprocess.CREATE_NO_WINDOW)
-            if result.returncode:
+            try:
+                result = subprocess.run([str(self.host), '--request-stop', str(self.states[name])], cwd=SERVER,
+                                        env=client_environment(self.env, {}), capture_output=True, timeout=15,
+                                        creationflags=subprocess.CREATE_NO_WINDOW)
+                if result.returncode:
+                    raise RuntimeError(f'Private supervised stop request exited {result.returncode}')
+            except (OSError, subprocess.TimeoutExpired, RuntimeError) as error:
                 process.kill()
                 process.wait(timeout=10)
-                raise RuntimeError('Private supervised stop request failed')
+                raise RuntimeError('Private supervised stop request failed') from error
             try:
                 code = process.wait(timeout=15)
             except subprocess.TimeoutExpired:
