@@ -494,6 +494,78 @@ func world_boss_claim(event_id: String, request_id := "") -> Dictionary:
 	return await _send_command("/v1/world-boss/%s/claim" % event_id, {}, request_id)
 
 
+func market_summary() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/market/summary", {}, "", true)
+
+
+func market_orders(category := "") -> Dictionary:
+	var q := "?category=" + category.uri_encode() if not category.is_empty() else ""
+	return await _request(HTTPClient.METHOD_GET, "/v1/market/orders" + q, {}, "", true)
+
+
+func create_market_order(item_uid: String, quantity: int, unit_price: int, request_id := "") -> Dictionary:
+	if not _valid_id(item_uid):
+		return _failure("行囊物品标识无效。", "invalid_item")
+	return await _send_command("/v1/market/orders", {"item_uid": item_uid, "quantity": quantity, "unit_price": unit_price}, request_id)
+
+
+func buy_market_order(order_id: String, quantity: int, request_id := "") -> Dictionary:
+	if not _valid_id(order_id):
+		return _failure("寄售挂单标识无效。", "invalid_order")
+	return await _send_command("/v1/market/orders/%s/buy" % order_id, {"quantity": quantity}, request_id)
+
+
+func cancel_market_order(order_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(order_id):
+		return _failure("寄售挂单标识无效。", "invalid_order")
+	return await _send_command("/v1/market/orders/%s/cancel" % order_id, {}, request_id)
+
+
+func market_payouts() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/market/payouts", {}, "", true)
+
+
+func claim_market_payout(payout_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(payout_id):
+		return _failure("交易附件标识无效。", "invalid_payout")
+	return await _send_command("/v1/market/payouts/%s/claim" % payout_id, {}, request_id)
+
+
+func npc_market_trade(action: String, template_id: String, quantity: int, item_uid := "", request_id := "") -> Dictionary:
+	var payload := {"action": action, "template_id": template_id, "quantity": quantity}
+	if not item_uid.is_empty():
+		payload["item_uid"] = item_uid
+	return await _send_command("/v1/market/npc/trade", payload, request_id)
+
+
+func trade_sessions() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/trade/sessions", {}, "", true)
+
+
+func start_trade_session(target_character_id: String) -> Dictionary:
+	if not _valid_id(target_character_id):
+		return _failure("交易对象角色无效。", "invalid_character")
+	return await _request(HTTPClient.METHOD_POST, "/v1/trade/sessions", {"target_character_id": target_character_id}, "", true)
+
+
+func update_trade_offer(trade_id: String, payload: Dictionary) -> Dictionary:
+	if not _valid_id(trade_id):
+		return _failure("面对面交易标识无效。", "invalid_trade")
+	return await _request(HTTPClient.METHOD_POST, "/v1/trade/sessions/%s/offer" % trade_id, payload, "", true)
+
+
+func confirm_trade_session(trade_id: String, revision: int, request_id := "") -> Dictionary:
+	if not _valid_id(trade_id):
+		return _failure("面对面交易标识无效。", "invalid_trade")
+	return await _send_command("/v1/trade/sessions/%s/confirm" % trade_id, {"revision": revision}, request_id)
+
+
+func cancel_trade_session(trade_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(trade_id):
+		return _failure("面对面交易标识无效。", "invalid_trade")
+	return await _send_command("/v1/trade/sessions/%s/cancel" % trade_id, {}, request_id)
+
+
 func logout() -> void:
 	if is_authenticated():
 		await _request(HTTPClient.METHOD_POST, "/v1/auth/logout", {}, "", true)

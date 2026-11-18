@@ -111,6 +111,13 @@
 - **个人掉落与防丢包**：通关由服务端幂等写入每名存活参与者独立的 `coop_instance_drops` 不可篡改掉落记录（含首通徽记、副本装备/碎片与导师印记）；`POST /v1/coop/drops/{id}/claim` 将掉落发入个人行囊，行囊满位（`pack_full`）时保留在待领箱并拒绝吞道具。
 - **枫林公共首领**：`GET /v1/world-boss/current`、`POST /v1/world-boss/objective`（阶段目标 `track` / `interrupt`）、`POST /v1/world-boss/engage`（经 `RoomHost` 权威演算输出与首领扣血）与 `POST /v1/world-boss/claim`（`UNIQUE (event_id, account_id)` 保障同账号每次公共首领窗口仅领一次主奖，支持故障关窗/超时结算后补领与迟到玩家阶段目标基础材料）。
 
+## 经济市场与玩家交易（L3 接入，M0 → M1 → M2 → M3）
+
+清单按配置 `market.stage`（`M0` 内部沙盒 / `M1` 材料寄售 / `M2` 可交易装备寄售 / `M3` 面对面交换）发布 `market_sandbox`、`npc_floor_market`、`market_consignment` 与 `direct_trade` 功能位；所有货币与库存变动在同一数据库事务写入 `wallets`/`wallet_ledger` 与 `inventory_items`/`inventory_ledger`，并受全服金币/物品严格守恒校验：
+- **NPC 保底价格带与首页看板**：`GET /v1/market/summary` 与 `POST /v1/market/npc/trade` 公布所在地图（`lorin_wilds` / `maple_road`）经运输价差加权的保底买卖价、近 24 小时成交高低区间、当前挂单总量、地区事件与每日行商次数上限；市场暂停开关开启后可继续查询与撤单/领奖，阻止新增买单与挂单。
+- **寄售托管、税费与邮件领奖（M1 / M2）**：`GET /v1/market/orders`、`POST /v1/market/orders`、`POST /v1/market/orders/{id}/buy`、`POST /v1/market/orders/{id}/cancel`、`GET /v1/market/payouts` 与 `POST /v1/market/payouts/{id}/claim` 实现最多 20 单上限、1%（最低 1 金）不可退上架费、4% 成交税、行囊物品消费转托管（挂牌期卖家不可穿戴、不可重复交易）、部分成交、`FOR UPDATE` 互斥购买与撤单、同账号自买拦截并触发 `economy_alerts`（`self_trade_attempt` / `price_outlier` / `wash_volume`），以及基于 `market_payouts` 邮箱附件领钱领物与满包（`pack_full`）防吞保护；M2 `equipment` 保留 `item_properties` 词条强化与 `item_origin` 来源，强制 `initial_qty = 1` 且仅允许 `tradeable=true` 且 `bound=false` 实例。
+- **好友面对面交换（M3）**：`GET /v1/trade/sessions`、`POST /v1/trade/sessions`、`POST /v1/trade/sessions/{id}/offer`、`POST /v1/trade/sessions/{id}/confirm` 与 `POST /v1/trade/sessions/{id}/cancel` 限制仅对非屏蔽且同图好友开放，放入金币或未绑定物品即时进入托管并发起修订号递增，**任一方修改报价都会立即清除双方确认状态**；`confirm` 校验请求提交的 `revision` 与最新一致，双方确认在同一事务原子交割，取消则无损退还托管金币及物品（满包自动落入 `market_payouts` 退回附件）。
+
 房间租约不授予战斗所有权；战斗接口每次仍重新验证账号、当前有效会话及选中在线角色。角色有未完成战斗或未确认结算时，不能切到别的角色或删除该角色。
 
 ## 战斗、结算与恢复

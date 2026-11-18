@@ -250,6 +250,8 @@ func TestRuntimeAndBackupCannotOwnMigrateOrRewriteLedger(t *testing.T) {
 		"UPDATE game.chat_messages SET content='changed'", "DELETE FROM game.chat_messages", "TRUNCATE game.chat_messages",
 		"DELETE FROM game.friend_requests", "DELETE FROM game.party_invites",
 		"DELETE FROM game.coop_instance_drops", "DELETE FROM game.world_boss_participations",
+		"UPDATE game.market_fills SET unit_price=1", "DELETE FROM game.market_fills", "TRUNCATE game.market_fills",
+		"DELETE FROM game.market_orders", "DELETE FROM game.market_payouts", "DELETE FROM game.trade_sessions", "DELETE FROM game.economy_alerts",
 		"SET ROLE " + quote(f.roles.Migrator),
 		"CREATE ROLE yz_unauthorized", "SELECT pg_read_file('postgresql.conf')",
 	} {

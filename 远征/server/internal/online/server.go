@@ -13,6 +13,7 @@ import (
 	"regexp"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 	"unicode"
 	"unicode/utf8"
@@ -47,6 +48,7 @@ type Server struct {
 	metrics       runtimeMetrics
 	startedAt     time.Time
 	positionFeeds positionFeeds
+	marketPaused  atomic.Bool
 }
 
 type apiError struct {
@@ -162,6 +164,19 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/world-boss/{id}/objective", s.authorized(s.worldBossObjective))
 	s.mux.HandleFunc("POST /v1/world-boss/{id}/engage", s.authorized(s.worldBossEngage))
 	s.mux.HandleFunc("POST /v1/world-boss/{id}/claim", s.authorized(s.claimWorldBossReward))
+	s.mux.HandleFunc("GET /v1/market/summary", s.authorized(s.marketSummary))
+	s.mux.HandleFunc("GET /v1/market/orders", s.authorized(s.listMarketOrders))
+	s.mux.HandleFunc("POST /v1/market/orders", s.authorized(s.createMarketOrder))
+	s.mux.HandleFunc("POST /v1/market/orders/{id}/buy", s.authorized(s.buyMarketOrder))
+	s.mux.HandleFunc("POST /v1/market/orders/{id}/cancel", s.authorized(s.cancelMarketOrder))
+	s.mux.HandleFunc("GET /v1/market/payouts", s.authorized(s.listMarketPayouts))
+	s.mux.HandleFunc("POST /v1/market/payouts/{id}/claim", s.authorized(s.claimMarketPayout))
+	s.mux.HandleFunc("POST /v1/market/npc/trade", s.authorized(s.npcMarketTrade))
+	s.mux.HandleFunc("GET /v1/trade/sessions", s.authorized(s.listTradeSessions))
+	s.mux.HandleFunc("POST /v1/trade/sessions", s.authorized(s.startTradeSession))
+	s.mux.HandleFunc("POST /v1/trade/sessions/{id}/offer", s.authorized(s.updateTradeOffer))
+	s.mux.HandleFunc("POST /v1/trade/sessions/{id}/confirm", s.authorized(s.confirmTradeSession))
+	s.mux.HandleFunc("POST /v1/trade/sessions/{id}/cancel", s.authorized(s.cancelTradeSession))
 	return s, nil
 }
 
@@ -297,6 +312,15 @@ func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
 		}
 		if s.cfg.Rules.WorldBoss != nil {
 			features = append(features, "world_boss")
+		}
+		if s.cfg.Rules.Market != nil {
+			features = append(features, "market_sandbox", "npc_floor_market")
+			if s.cfg.Rules.Market.allowsStage("M1") && !s.cfg.Rules.Market.SandboxOnly {
+				features = append(features, "market_consignment")
+			}
+			if s.cfg.Rules.Market.allowsStage("M3") && !s.cfg.Rules.Market.SandboxOnly {
+				features = append(features, "direct_trade")
+			}
 		}
 	}
 	respond(w, 200, map[string]any{"protocol_version": ProtocolVersion, "content_version": s.cfg.ContentVersion, "ruleset_version": RulesetVersion, "character_limit": 3, "roles": []string{"zs", "ck", "fs", "fz"}, "appearance_ids": []string{"default"}, "gender_ids": genderIDs, "avatar_ids": avatarIDs, "features": features, "starting_gold": 100})

@@ -1,0 +1,400 @@
+{
+  "verdict_rules_changed": false,
+  "cases": [
+    {
+      "case": "verify_battle",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "verify_data",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "verify_route",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "verify_trait",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "verify_walk_assets",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyAftermath",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyAftermathPaths",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyAftermathResume",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyArena",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyAssets",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyAudio",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyAvatar",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyBattleScene",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 1
+    },
+    {
+      "case": "VerifyBossPuzzles",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyCampaignGear",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyCampaignGrowth",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyCampGathering",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyCity",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyCompanions",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyCurrencyBalance",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyCurriculum",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 1
+    },
+    {
+      "case": "VerifyDrops",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyDungeonTrials",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyDungeonTrialsRead",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyEconomy",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyFieldUI",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyFishing",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyFourthBack",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyFourthFront",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyFrostArt",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyFrostHerbOrder",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyGacha",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyGameHome",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyGameplayBalance",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyGrowth",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyJourneyRelics",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 1
+    },
+    {
+      "case": "VerifyLore",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyMainWorld",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyMapScene",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyNav",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyOathWalk",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyOnlineBoundary",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyPanels",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyPerf",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyPlayJourney",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyPortGrowth",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyQuests",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyReferenceComplete",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyReturnJobs",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyRoadMail",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyRouteScene",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyRunEvents",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 1
+    },
+    {
+      "case": "VerifyRunEventsRead",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyRunImmediate",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyRunResume",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 1
+    },
+    {
+      "case": "VerifyRunResumeRead",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifySafeArea",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifySave",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifySecondAct",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyShipping",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifySignpostEntry",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifySpecialEvents",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifySpecialEventsRead",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyStelePuzzle",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyStory",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 1
+    },
+    {
+      "case": "VerifySweep",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyThirdAct",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyThirdBack",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyThirdSide",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 1
+    },
+    {
+      "case": "VerifyTradeContracts",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyTradeContractsRead",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyTradeWorld",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyTransit",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyUiLayout",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyVisualRefresh",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyWorkshop",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyWorldCommissions",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyWorldCommissionsRead",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    },
+    {
+      "case": "VerifyWorldSession",
+      "host_certificate_store_lines": 0,
+      "engine_shutdown_lines": 0
+    }
+  ]
+}
