@@ -35,13 +35,13 @@ class DatabaseRecovery:
         password = self.passwords[kind] if kind else self.cfg["password"]
         return f"postgres://{user}:{urllib.parse.quote(password, safe='')}@127.0.0.1:{self.cfg['port']}/{database}?sslmode=disable"
 
-    def sql(self, database, statement):
+    def sql(self, database, statement, *, timeout=45):
         # Every identifier comes from this object's generated names; secret SQL
         # is never constructed here. SQL goes through stdin, not process args.
         result = subprocess.run([str(PG / "psql.exe"), "-h", "127.0.0.1", "-p", str(self.cfg["port"]),
                                  "-U", "yuanzheng", "-d", database, "-v", "ON_ERROR_STOP=1", "-At", "-q"],
                                 input=statement, env=environment() | {"PGPASSWORD": self.cfg["password"], "PGOPTIONS": "-c search_path=game", "PGCLIENTENCODING": "UTF8"},
-                                capture_output=True, text=True, encoding="utf-8", timeout=45, creationflags=subprocess.CREATE_NO_WINDOW)
+                                capture_output=True, text=True, encoding="utf-8", timeout=timeout, creationflags=subprocess.CREATE_NO_WINDOW)
         if result.returncode:
             raise RuntimeError("Disposable database drill SQL failed; credentials and query data were not logged")
         return result.stdout.strip()
@@ -123,7 +123,7 @@ class DatabaseRecovery:
             raise RuntimeError("Real pre-backup victories or active sessions are incomplete")
         backup = self.folder / "backup-private"
         manifest = self.command("backup", folder=backup)
-        if len(manifest.get("tables", [])) != 17:
+        if len(manifest.get("tables", [])) != 19:
             raise RuntimeError("Backup did not include every migrated game table")
         (self.folder / "backup-manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         stack.sql("INSERT INTO audit_events(action) VALUES('restore.drill.after_backup')")
@@ -163,9 +163,9 @@ class DatabaseRecovery:
         for database in reversed(self.databases):
             if not re.fullmatch(r"yz_(drill|restore)_[0-9a-f]{20}", database):
                 raise RuntimeError("Refused unsafe disposable database cleanup")
-            self.sql("postgres", f'DROP DATABASE IF EXISTS "{database}" WITH (FORCE);')
+            self.sql("postgres", f'DROP DATABASE IF EXISTS "{database}" WITH (FORCE);', timeout=120)
         if self.roles_created:
             for role in self.roles.values():
                 if not re.fullmatch(r"yz_[0-9a-f]{20}_[mrb]", role):
                     raise RuntimeError("Refused unsafe disposable role cleanup")
-                self.sql("postgres", f'DROP ROLE "{role}";')
+                self.sql("postgres", f'DROP ROLE "{role}";', timeout=120)

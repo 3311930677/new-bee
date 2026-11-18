@@ -2,6 +2,41 @@
   "version": "online-0.1",
   "town": {"map_id": "lorin_wilds", "capacity": 24, "spawn": [600, 1520], "speed": 192},
   "encounters": {
-    "training_wolf": {"monster_id": "mon_wolf", "position": [600, 1740], "radius": 112, "gold": 10, "experience": 5, "reward_policy": "once"}
+    "training_wolf": {"monster_id": "mon_wolf", "position": [600, 1740], "radius": 112, "gold": 10, "experience": 5, "reward_policy": "once"},
+    "southern_patrol": {"monster_id": "mon_treant", "position": [752, 1850], "radius": 112, "gold": 15, "experience": 10, "reward_policy": "once", "journey_step": "patrol_trial"}
+  },
+  "journey": {
+    "pack_slots": 32,
+    "potions_per_battle": 6,
+    "starter_potions": 3,
+    "potion_template": "itm_potion_hp_s",
+    "armor_template": "tpl_armor_basic",
+    "companion_template": "pet_rockturtle",
+    "weapons": {"zs": "tpl_sword_basic", "ck": "tpl_spear_basic", "fs": "tpl_staff_basic", "fz": "tpl_hammer_basic"},
+    "items": {
+      "tpl_sword_basic": {"name": "生铁大剑", "icon": "slot_sword", "kind": "weapon", "role_id": "zs", "attack": 10},
+      "tpl_spear_basic": {"name": "生铁长枪", "icon": "slot_spear", "kind": "weapon", "role_id": "ck", "attack": 10},
+      "tpl_staff_basic": {"name": "生铁法杖", "icon": "slot_staff", "kind": "weapon", "role_id": "fs", "attack": 11},
+      "tpl_hammer_basic": {"name": "生铁圣锤", "icon": "slot_hammer", "kind": "weapon", "role_id": "fz", "attack": 9, "health": 30},
+      "tpl_armor_basic": {"name": "皮甲", "icon": "slot_armor", "kind": "armor", "defense": 6, "health": 50},
+      "itm_potion_hp_s": {"name": "治疗药剂", "icon": "itm_potion_hp_s", "kind": "potion"},
+      "pet_rockturtle": {"name": "岩龟", "icon": "pet_rockturtle", "kind": "companion"}
+    },
+    "points": {
+      "npc_steward": {"name": "闻叔", "position": [418, 1325], "radius": 112},
+      "south_signpost": {"name": "城南路标", "position": [600, 1588], "radius": 96},
+      "npc_scribe": {"name": "青姨", "position": [418, 1740], "radius": 112}
+    },
+    "steps": [
+      {"id": "s01", "title": "城门来信", "goal": "去城中找闻叔，领取出行装备。", "event": "interact", "target_id": "npc_steward", "dialogue": "北门古道的界碑忽然失了声。先穿好护甲、备好兵刃，再去城南看看。", "reward": "supplies"},
+      {"id": "gear_up", "title": "整备行囊", "goal": "在行囊装备职业武器和皮甲。", "event": "gear"},
+      {"id": "south_check", "title": "城南暗记", "goal": "靠近城南路标，查看刻痕。", "event": "interact", "target_id": "south_signpost", "dialogue": "路标上的划痕刚留下不久。再往南，有一头野狼徘徊。"},
+      {"id": "wolf_trial", "title": "路旁敌影", "goal": "击败城南试炼的野狼。", "event": "victory", "target_id": "training_wolf"},
+      {"id": "report_back", "title": "带回线索", "goal": "回到闻叔身边，交代路标和野狼的事。", "event": "interact", "target_id": "npc_steward", "dialogue": "你带回了古道的线索。这只岩龟熟悉城南，下一趟让它随行。", "reward": "companion"},
+      {"id": "choose_companion", "title": "岩龟同行", "goal": "在行囊让岩龟出战。", "event": "companion"},
+      {"id": "patrol_trial", "title": "碑影巡查", "goal": "带岩龟到城南东侧，击败拦路树妖。", "event": "victory", "target_id": "southern_patrol"},
+      {"id": "old_rubbing", "title": "旧卷中的名字", "goal": "去城南西侧找青姨，对照碑文拓片。", "event": "interact", "target_id": "npc_scribe", "dialogue": "拓片描着失声碑窟的旧门。我已给你记下通行资格，日后可和队友一道进窟。"},
+      {"id": "complete", "title": "碑窟旧门", "goal": "已取得失声碑窟通行资格。组队副本开放后可集结进入。", "event": "complete"}
+    ]
   }
 }

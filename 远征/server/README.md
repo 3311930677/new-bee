@@ -61,6 +61,7 @@ python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --databas
 python 远征/server/tools/verify_world.py --godot <Godot-4.7.2路径> --database-recovery --supervision --capture
 python 远征/server/tools/verify_accounts.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_identity.py --godot <Godot-4.7.2路径> --capture
+python 远征/server/tools/verify_journey.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/bootstrap_monitoring.py --proxy <本机实际代理>
 python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
 ```
@@ -80,6 +81,8 @@ python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
 账号页面脚本用真实按钮及 Go/PostgreSQL 验证注册恢复码遮挡、重名建议、删除确认/取消、恢复原角色、旧恢复码拒绝、新密码找回、站内记录确认和单机隔离。截图只保存遮挡状态，脚本扫描日志中的恢复码模式并拒绝把泄漏样本算作通过。客户端联测工具均过滤服务端数据库连接/私有密钥等环境变量，Godot 客户端还在运行时检查这些变量不存在。
 
 身份页面脚本使用独立测试库、受限网关、真实 HTTPS 和两个 Godot 客户端：经实际创建页选择不同性别与批准头像，检查本机图片回退提示、删除/恢复后的身份与资产，以及双方在“同行名片”中看到对方的头像和身份。数据库独立核对两份初始资产，没有额外发奖；截图、日志凭据扫描、单机文件与在线源码前后摘要另行留证。Go 测试还用真实旧版 schema 和旧创建回执验证新增迁移不改资产与幂等摘要，拒绝自定义路径/URL，检查并发创建和默认身份归一。
+
+边城任务从选择角色进入昭元边城后开始。按任务提示靠近闻叔、路标、两处敌人和青姨。行囊可穿戴装备及选择岩龟出战，战斗页显示药剂余量。任务脚本使用两位实际 Godot 旅人各自推进全部八个阶段，验证装备加成、一次扣药、岩龟参战和重新登录。查询两份独立库存与任务历史，再用只读数据库身份生成备份、恢复到新库并二次核对。碑窟资格为后续合作入场保留了独立进度；合作战斗由 L2 档期交付。
 
 最后一条使用真实 Godot HTTPS 客户端、网关、数据库、权威进程和本机 Prometheus：检查有效证书、不受信任根、错误主机名及过期证书；实际抓取私有指标、观察依赖告警触发/恢复，并中断仅此网关的数据库连接检查无半笔资产。测试 CA 不进入系统信任库，私钥和管理令牌不传给客户端，不向外部接收人发送通知。正式监控模板在 `deploy/monitoring`，实际工具校验和告警状态另行留证。
 

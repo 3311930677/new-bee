@@ -170,7 +170,7 @@ func _dispatch(payload: Dictionary) -> Dictionary:
 	if method == "battle.start":
 		if _battles.has(id):
 			var existing: RefCounted = _battles[id]
-			var config := {"role_id": args.get("role_id"), "monster_id": args.get("monster_id"), "level": args.get("level"), "seed": args.get("seed")}
+			var config := Battle.battle_config(args)
 			if JSON.stringify(existing.initial, "", true) != JSON.stringify(config, "", true):
 				return {"ok": false, "error": "battle_id_conflict"}
 			return {"ok": true, "state": existing.snapshot()}

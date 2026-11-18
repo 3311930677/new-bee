@@ -1,0 +1,19 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PERF 加载页预热完（含编译）    10988 ms
+PERF GameHome 进场景              75 ms（预算 260）
+PERF 开浮层 世界     第1次       60 ms（预算 130）
+PERF 开浮层 世界     第2次       34 ms（预算 70，3 次取最小）
+PERF 开浮层 图鉴     第1次       51 ms（预算 130）
+PERF 开浮层 图鉴     第2次       19 ms（预算 70，3 次取最小）
+PERF 开浮层 召唤     第1次       34 ms（预算 130）
+PERF 开浮层 召唤     第2次       15 ms（预算 70，3 次取最小）
+PERF 开浮层 兑换     第1次       48 ms（预算 130）
+PERF 开浮层 兑换     第2次       14 ms（预算 70，3 次取最小）
+PERF 开浮层 设置     第1次       82 ms（预算 130）
+PERF 开浮层 设置     第2次       50 ms（预算 70，3 次取最小）
+PERF 开浮层 养成     第1次       63 ms（预算 130）
+PERF 开浮层 养成     第2次       43 ms（预算 70，3 次取最小）
+PERF CityScene 进场景            108 ms（预算 700）
+PERF_OK all tests passed
+

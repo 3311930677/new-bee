@@ -158,8 +158,12 @@ class LocalStack:
                 process.wait(timeout=5)
 
     def close(self):
+        stop_errors = []
         for name in ("gateway", "worker"):
-            self.stop(name)
+            try:
+                self.stop(name)
+            except Exception as error:
+                stop_errors.append(f"{name}: {error}")
         for log in self.logs:
             log.close()
         if self.schema_created:
@@ -167,3 +171,5 @@ class LocalStack:
                 raise RuntimeError("Unsafe generated test schema")
             self.schema_created = False
             self.sql(f'DROP SCHEMA "{self.schema}" CASCADE')
+        if stop_errors:
+            raise RuntimeError("; ".join(stop_errors))

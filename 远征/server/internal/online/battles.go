@@ -36,6 +36,7 @@ type persistedBattle struct {
 	Acknowledged      bool
 	Result            string
 	Started           time.Time
+	Loadout           battleLoadout
 }
 type battleInput struct {
 	Sequence    int          `json:"sequence"`
@@ -56,11 +57,12 @@ type authorityState struct {
 	Result    string            `json:"result"`
 	StateHash string            `json:"state_hash"`
 	Units     []json.RawMessage `json:"units"`
+	Potions   *int              `json:"potions"`
 }
 
 func loadBattle(ctx context.Context, tx pgx.Tx, id, account, charID string) (persistedBattle, error) {
 	var b persistedBattle
-	err := tx.QueryRow(ctx, `SELECT id::text,character_id::text,room_id::text,encounter_id,role_id,level,monster_id,seed,content_version,ruleset_version,authority_epoch,reward_gold,reward_experience,reward_policy,status,snapshot,simulation_tick,confirmed_sequence,acknowledged_at IS NOT NULL,result,started_at FROM battles WHERE id=$1 AND account_id=$2 AND character_id=$3 FOR UPDATE`, id, account, charID).Scan(&b.ID, &b.CharacterID, &b.RoomID, &b.EncounterID, &b.RoleID, &b.Level, &b.MonsterID, &b.Seed, &b.ContentVersion, &b.RulesetVersion, &b.AuthorityEpoch, &b.Gold, &b.Experience, &b.RewardPolicy, &b.Status, &b.Snapshot, &b.Tick, &b.ConfirmedSequence, &b.Acknowledged, &b.Result, &b.Started)
+	err := tx.QueryRow(ctx, `SELECT id::text,character_id::text,room_id::text,encounter_id,role_id,level,monster_id,seed,content_version,ruleset_version,authority_epoch,reward_gold,reward_experience,reward_policy,status,snapshot,simulation_tick,confirmed_sequence,acknowledged_at IS NOT NULL,result,started_at,loadout FROM battles WHERE id=$1 AND account_id=$2 AND character_id=$3 FOR UPDATE`, id, account, charID).Scan(&b.ID, &b.CharacterID, &b.RoomID, &b.EncounterID, &b.RoleID, &b.Level, &b.MonsterID, &b.Seed, &b.ContentVersion, &b.RulesetVersion, &b.AuthorityEpoch, &b.Gold, &b.Experience, &b.RewardPolicy, &b.Status, &b.Snapshot, &b.Tick, &b.ConfirmedSequence, &b.Acknowledged, &b.Result, &b.Started, &b.Loadout)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return b, &apiError{404, "battle_not_found", "找不到这场战斗"}
 	}
@@ -95,12 +97,25 @@ func (s *Server) startBattle(w http.ResponseWriter, r *http.Request, who identit
 		if math.Hypot(l.X-e.Position[0], l.Y-e.Position[1]) > e.Radius {
 			return nil, bad("too_far", "请先靠近挑战目标")
 		}
-		var exists bool
-		if err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM battles WHERE character_id=$1 AND (status='active' OR (status='settled' AND acknowledged_at IS NULL)))`, c.ID).Scan(&exists); err != nil {
+		if err = requireOutsideBattle(ctx, tx, c.ID); err != nil {
 			return nil, err
 		}
-		if exists {
-			return nil, &apiError{409, "battle_active", "请先完成当前战斗并确认结算"}
+		rules := s.cfg.Rules.Journey
+		loadout, err := loadoutForBattle(ctx, tx, c, rules)
+		if err != nil {
+			return nil, err
+		}
+		if e.JourneyStep != "" {
+			progress, err := readJourney(ctx, tx, c.ID)
+			if err != nil {
+				return nil, err
+			}
+			if rules == nil || progress.Step != e.JourneyStep {
+				return nil, &apiError{409, "encounter_locked", "当前任务尚未开启这场巡查"}
+			}
+			if loadout.ActivePet != rules.Companion {
+				return nil, &apiError{409, "companion_required", "请先在行囊让岩龟出战"}
+			}
 		}
 		var seedBytes [8]byte
 		if _, err = rand.Read(seedBytes[:]); err != nil {
@@ -108,7 +123,7 @@ func (s *Server) startBattle(w http.ResponseWriter, r *http.Request, who identit
 		}
 		id := newID()
 		seed := int64(binary.BigEndian.Uint64(seedBytes[:]) & ((1 << 53) - 1))
-		_, err = tx.Exec(ctx, `INSERT INTO battles(id,account_id,character_id,room_id,encounter_id,role_id,level,monster_id,seed,content_version,ruleset_version,reward_gold,reward_experience,reward_policy) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`, id, who.AccountID, c.ID, l.RoomID, body.EncounterID, c.RoleID, c.Level, e.MonsterID, seed, s.cfg.ContentVersion, RulesetVersion, e.Gold, e.Experience, e.RewardPolicy)
+		_, err = tx.Exec(ctx, `INSERT INTO battles(id,account_id,character_id,room_id,encounter_id,role_id,level,monster_id,seed,content_version,ruleset_version,reward_gold,reward_experience,reward_policy,loadout) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)`, id, who.AccountID, c.ID, l.RoomID, body.EncounterID, c.RoleID, c.Level, e.MonsterID, seed, s.cfg.ContentVersion, RulesetVersion, e.Gold, e.Experience, e.RewardPolicy, loadout)
 		if err != nil {
 			return nil, err
 		}
@@ -348,7 +363,7 @@ func (s *Server) syncBattle(ctx context.Context, tx pgx.Tx, b *persistedBattle) 
 	if json.Unmarshal(b.Snapshot, &checkpoint) != nil {
 		return errAuthority
 	}
-	err = s.cfg.Authority.Call(ctx, "battle.sync", map[string]any{"battle_id": b.ID, "role_id": b.RoleID, "level": b.Level, "monster_id": b.MonsterID, "seed": b.Seed, "inputs": inputs, "target_tick": target, "confirmed_sequence": b.ConfirmedSequence, "confirmed_tick": b.Tick, "expected_state_hash": checkpoint.StateHash}, &response)
+	err = s.cfg.Authority.Call(ctx, "battle.sync", map[string]any{"battle_id": b.ID, "role_id": b.RoleID, "level": b.Level, "monster_id": b.MonsterID, "seed": b.Seed, "loadout": b.Loadout, "inputs": inputs, "target_tick": target, "confirmed_sequence": b.ConfirmedSequence, "confirmed_tick": b.Tick, "expected_state_hash": checkpoint.StateHash}, &response)
 	if err != nil || response.Epoch != b.AuthorityEpoch {
 		return errAuthority
 	}
@@ -368,6 +383,7 @@ func (s *Server) syncBattle(ctx context.Context, tx pgx.Tx, b *persistedBattle) 
 	if len(response.Inputs) != len(inputs) || b.ConfirmedSequence > len(inputs) {
 		return errAuthority
 	}
+	potionsUsed := 0
 	for i, received := range response.Inputs {
 		original := inputs[i]
 		if received.Sequence != i+1 || received.Tick != original.Tick || received.Action != original.Action || received.Accepted == nil || received.AppliedTick == nil || *received.AppliedTick < 0 || *received.AppliedTick > received.Tick || *received.AppliedTick > state.Tick || len(received.Reason) > 80 {
@@ -380,6 +396,20 @@ func (s *Server) syncBattle(ctx context.Context, tx pgx.Tx, b *persistedBattle) 
 		} else if _, err = tx.Exec(ctx, `UPDATE battle_inputs SET accepted=$1,reason=$2,applied_tick=$3 WHERE battle_id=$4 AND sequence=$5`, *received.Accepted, received.Reason, *received.AppliedTick, b.ID, received.Sequence); err != nil {
 			return err
 		}
+		if received.Action.Action == "potion" && *received.Accepted {
+			potionsUsed++
+			if potionsUsed > b.Loadout.Potions || b.Loadout.PotionTemplate == "" {
+				return errAuthority
+			}
+			if i >= b.ConfirmedSequence {
+				if err = consumeBattlePotion(ctx, tx, *b, received.Sequence); err != nil {
+					return err
+				}
+			}
+		}
+	}
+	if state.Potions == nil && b.Loadout.Potions > 0 || state.Potions != nil && *state.Potions != b.Loadout.Potions-potionsUsed {
+		return errAuthority
 	}
 	b.Snapshot = response.State
 	b.Tick = state.Tick
@@ -454,6 +484,11 @@ func (s *Server) settleBattle(ctx context.Context, tx pgx.Tx, b *persistedBattle
 	}
 	if _, err = tx.Exec(ctx, `UPDATE battles SET status='settled',settled_at=now(),updated_at=now() WHERE id=$1`, b.ID); err != nil {
 		return err
+	}
+	if state.Result == "victory" {
+		if err = s.journeyVictory(ctx, tx, *b); err != nil {
+			return err
+		}
 	}
 	b.Status = "settled"
 	return nil

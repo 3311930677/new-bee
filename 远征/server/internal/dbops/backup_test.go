@@ -107,8 +107,8 @@ func TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase(t *testing
 	if result.err != nil {
 		t.Fatal(result.err)
 	}
-	if len(result.manifest.Tables) != 17 {
-		t.Fatalf("expected all 17 application tables, got %d", len(result.manifest.Tables))
+	if len(result.manifest.Tables) != 19 {
+		t.Fatalf("expected all 19 application tables, got %d", len(result.manifest.Tables))
 	}
 	target := "yz_restore_" + randomHex()[:20]
 	f.databases = append(f.databases, target)
@@ -116,7 +116,7 @@ func TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase(t *testing
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !restored.ReadyForReview || restored.SessionsRevoked != 1 || restored.LeasesInvalidated != 1 || len(restored.TablesMatched) != 17 {
+	if !restored.ReadyForReview || restored.SessionsRevoked != 1 || restored.LeasesInvalidated != 1 || len(restored.TablesMatched) != 19 {
 		t.Fatal("restore did not validate all tables or invalidate sessions")
 	}
 	db := f.pool(t, target, "", "")
@@ -172,7 +172,7 @@ func TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase(t *testing
 	if _, err = Restore(f.ctx, f.cluster, f.dsn, pgBin(t), folder, target, f.roles); err == nil {
 		t.Fatal("restore overwrote an existing target")
 	}
-	t.Log("actual pg_dump/pg_restore matched all 17 tables at exported snapshot despite concurrent 110->117 commit; old tokens rejected; receipt, pending settlement, one reward and audit sequence survived")
+	t.Logf("actual pg_dump/pg_restore matched all %d tables at exported snapshot despite concurrent 110->117 commit; old tokens rejected; receipt, pending settlement, one reward and audit sequence survived", len(restored.TablesMatched))
 }
 
 func TestRestoreRejectsCorruptionBeforeCreatingDatabase(t *testing.T) {

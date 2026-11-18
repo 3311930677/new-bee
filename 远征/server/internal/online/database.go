@@ -69,6 +69,14 @@ func CheckRuntimePrivileges(ctx context.Context, db *pgxpool.Pool) error {
           WHERE n.nspname=current_schema() AND pg_has_role(current_user,c.relowner,'MEMBER'))
         OR has_table_privilege('schema_migrations','INSERT,UPDATE,DELETE,TRUNCATE')
         OR has_table_privilege('wallet_ledger','UPDATE,DELETE,TRUNCATE,TRIGGER')
+        OR has_table_privilege('inventory_ledger','DELETE,TRUNCATE,TRIGGER')
+        OR has_any_column_privilege('inventory_ledger','UPDATE')
+        OR has_table_privilege('quest_events','DELETE,TRUNCATE,TRIGGER')
+        OR has_any_column_privilege('quest_events','UPDATE')
+        OR has_table_privilege('inventory_items','DELETE,TRUNCATE,TRIGGER')
+        OR EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema=current_schema()
+          AND table_name='inventory_items' AND column_name NOT IN ('quantity','equipped_slot','version','updated_at')
+          AND has_column_privilege('inventory_items',column_name::text,'UPDATE'))
         OR EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
           WHERE n.nspname=current_schema() AND c.relkind IN ('r','p') AND
           has_table_privilege(c.oid,'TRUNCATE,TRIGGER,REFERENCES'))`).Scan(&unsafe)

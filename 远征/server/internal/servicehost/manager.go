@@ -61,13 +61,38 @@ func saveStatus(directory string, status Status) error {
 		return ErrState
 	}
 	defer os.Remove(temporary)
-	for attempt := 0; attempt < 5; attempt++ {
-		if os.Rename(temporary, filepath.Join(directory, "status.json")) == nil {
+	return replaceStateFile(temporary, filepath.Join(directory, "status.json"))
+}
+
+func replaceStateFile(source, target string) error {
+	for attempt := 0; attempt < 15; attempt++ {
+		if os.Rename(source, target) == nil {
 			return nil
 		}
-		time.Sleep(20 * time.Millisecond)
+		if attempt < 14 {
+			time.Sleep(20 * time.Millisecond)
+		}
 	}
 	return ErrState
+}
+
+func readStatus(directory string) (Status, error) {
+	path := filepath.Join(directory, "status.json")
+	for attempt := 0; attempt < 10; attempt++ {
+		data, err := os.ReadFile(path)
+		if err == nil && len(data) <= 8192 {
+			var status Status
+			if json.Unmarshal(data, &status) == nil && len(status.RunID) == 32 {
+				if _, decodeErr := hex.DecodeString(status.RunID); decodeErr == nil {
+					return status, nil
+				}
+			}
+		}
+		if attempt < 9 {
+			time.Sleep(20 * time.Millisecond)
+		}
+	}
+	return Status{}, ErrState
 }
 
 func stopRequested(directory, runID string) bool {
@@ -87,16 +112,9 @@ func RequestStop(directory string) error {
 	if !filepath.IsAbs(directory) {
 		return ErrState
 	}
-	data, err := os.ReadFile(filepath.Join(directory, "status.json"))
-	if err != nil || len(data) > 8192 {
-		return ErrState
-	}
-	var status Status
-	if json.Unmarshal(data, &status) != nil || len(status.RunID) != 32 {
-		return ErrState
-	}
-	if _, err = hex.DecodeString(status.RunID); err != nil {
-		return ErrState
+	status, err := readStatus(directory)
+	if err != nil {
+		return err
 	}
 	path := filepath.Join(directory, ".stop-"+status.RunID+".tmp")
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
@@ -106,10 +124,12 @@ func RequestStop(directory string) error {
 	defer os.Remove(path)
 	_, writeErr := file.WriteString(status.RunID)
 	closeErr := file.Close()
-	if writeErr != nil || closeErr != nil || os.Rename(path, filepath.Join(directory, "stop.request")) != nil {
+	if writeErr != nil || closeErr != nil {
 		return ErrState
 	}
-	return nil
+	// The receiver can briefly hold the previous request open on Windows.
+	// Publish by replacement so neither readers nor hard links see a partial write.
+	return replaceStateFile(path, filepath.Join(directory, "stop.request"))
 }
 
 type child struct {

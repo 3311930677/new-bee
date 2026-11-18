@@ -1,0 +1,15 @@
+{"time":"2026-11-18T21:57:45.3566031+08:00","level":"INFO","msg":"database migrations ready","mode":"check","restricted_role":true,"duration_ms":26}
+{"time":"2026-11-18T21:57:45.4493817+08:00","level":"INFO","msg":"read-only admin listening","address":"127.0.0.1:50331"}
+{"time":"2026-11-18T21:57:45.4493817+08:00","level":"INFO","msg":"gateway listening","address":"127.0.0.1:50330","tls":true,"behind_tls_proxy":false,"protocol":1,"content_version":"43fbd8b7bf345676bf6a99109d69a5c0472dbd676e5886211946ceb16e88d79c"}
+{"time":"2026-11-18T21:57:46.5818242+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":308}
+{"time":"2026-11-18T21:57:46.6005228+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":261}
+{"time":"2026-11-18T21:57:46.8649551+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":64}
+{"time":"2026-11-18T21:57:46.8981347+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":100}
+{"time":"2026-11-18T21:57:46.9362388+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":3}
+{"time":"2026-11-18T21:57:46.9751414+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":3}
+{"time":"2026-11-18T21:57:47.0094199+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":1}
+{"time":"2026-11-18T21:57:47.1588577+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":83}
+{"time":"2026-11-18T21:57:47.6904997+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":323}
+{"time":"2026-11-18T21:57:47.7552488+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":3}
+{"time":"2026-11-18T21:57:47.7985362+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":1}
+{"time":"2026-11-18T21:57:47.8320071+08:00","level":"INFO","msg":"request","route":"POST /v1/battles/{id}/commands","method":"POST","status":200,"duration_ms":3}

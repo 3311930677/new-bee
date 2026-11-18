@@ -10,7 +10,37 @@ var initial_tick := 0
 var external_clock := false
 
 
+static func battle_config(config: Dictionary) -> Dictionary:
+	var result := {"role_id": config.get("role_id"), "monster_id": config.get("monster_id"),
+		"level": config.get("level"), "seed": config.get("seed")}
+	var raw: Variant = config.get("loadout", {})
+	if not raw is Dictionary:
+		return {}
+	var gear: Dictionary = raw
+	var limits := {"attack": 200, "defense": 200, "health": 1000, "potions": 20}
+	var loadout := {}
+	for field in limits:
+		var amount: Variant = gear.get(field, 0)
+		if not (amount is int or amount is float) or not is_finite(float(amount)):
+			return {}
+		if float(amount) < 0.0 or float(amount) > float(limits[field]) or float(amount) != floor(float(amount)):
+			return {}
+		if int(amount) != 0:
+			loadout[field] = int(amount)
+	var companion := String(gear.get("active_pet", ""))
+	if not companion.is_empty():
+		if companion != "pet_rockturtle" or TableCache.get_pet(companion).is_empty():
+			return {}
+		loadout["active_pet"] = companion
+	if not loadout.is_empty():
+		result["loadout"] = loadout
+	return result
+
+
 func setup(config: Dictionary) -> bool:
+	var normalized := battle_config(config)
+	if normalized.is_empty():
+		return false
 	var role_id := String(config.get("role_id", ""))
 	var monster_id := String(config.get("monster_id", ""))
 	if not ["zs", "ck", "fs", "fz"].has(role_id) or TableCache.get_monster(monster_id).is_empty():
@@ -19,9 +49,13 @@ func setup(config: Dictionary) -> bool:
 	var seed := int(config.get("seed", -1))
 	if level < 1 or level > 60 or seed < 0 or seed > 9007199254740991:
 		return false
-	initial = {"role_id": role_id, "monster_id": monster_id, "level": level, "seed": seed}
+	initial = normalized
+	var loadout: Dictionary = initial.get("loadout", {})
+	var growth := {"atk_add": int(loadout.get("attack", 0)), "def_add": int(loadout.get("defense", 0)),
+		"hp_add": int(loadout.get("health", 0))}
 	sim = BattleSim.new()
-	sim.setup(seed, {"role_id": role_id, "level": level, "traits": [], "active_pet": "", "potions": 0},
+	sim.setup(seed, {"role_id": role_id, "level": level, "traits": [], "growth": growth,
+		"active_pet": String(loadout.get("active_pet", "")), "potions": int(loadout.get("potions", 0))},
 		{"theme": "forest", "custom_mon": TableCache.get_monster(monster_id).duplicate(true)})
 	sim.manual_basic_attack = true
 	sim.auto_mode = false
@@ -45,7 +79,9 @@ func advance(now_msec: int) -> void:
 func synchronize(config: Dictionary, intentions: Array, target_tick: int) -> Dictionary:
 	if target_tick < 0 or target_tick > BattleSim.MAX_TICKS or intentions.size() > 6000:
 		return {"ok": false, "error": "invalid_journal"}
-	var expected_config := {"role_id": config.get("role_id"), "monster_id": config.get("monster_id"), "level": config.get("level"), "seed": config.get("seed")}
+	var expected_config := battle_config(config)
+	if expected_config.is_empty():
+		return {"ok": false, "error": "invalid_loadout"}
 	var confirmed_sequence := int(config.get("confirmed_sequence", 0))
 	var confirmed_tick := int(config.get("confirmed_tick", 0))
 	var expected_hash := String(config.get("expected_state_hash", ""))

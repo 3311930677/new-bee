@@ -1,0 +1,116 @@
+{
+  "run_id": "370b384c9a514410a99602b8d821d1cd",
+  "scope": "L0 desktop two-client same town, authority combat, atomic rewards and restart recovery; not mobile/WAN/PvP acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "8387264cdefbfdc509d1d96e2706eccc79316cb9a8771ffde2af417b6376bc55",
+    "content_version": "43fbd8b7bf345676bf6a99109d69a5c0472dbd676e5886211946ceb16e88d79c",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "online_sources_sha256": "7c54549e1343e8fc098ea2e985e022f855dea63021239ef33431e668d73dcf3e",
+  "gateway_binary_sha256": "282087823bbd248fcdbd877b129520f9eaca7e8fe0c8a381f48087c8c2aef84b",
+  "supervision": {
+    "scope": "real foreground Windows role hosts; distinct OS identities and native OS manager restart are not accepted by this drill",
+    "host_binary_sha256": "e8da154067a7b5a16e22367e7024913f0e497386eac745b3e571e613c6d790aa",
+    "events": [
+      {
+        "kind": "host_death",
+        "role": "gateway",
+        "child_reaped": true,
+        "host_manager_restart": "verifier explicit restart; OS service-manager restart not accepted here",
+        "old_child_pid": 34648,
+        "new_child_pid": 41920
+      },
+      {
+        "kind": "hang",
+        "role": "worker",
+        "old_child_pid": 12320,
+        "new_child_pid": 28396,
+        "host_pid_unchanged": true,
+        "generation_before": 1,
+        "generation_after": 2,
+        "suspended_threads": 24,
+        "gateway_dependency_failure_without_restart": true,
+        "recovery_seconds": 9.968
+      },
+      {
+        "kind": "exit",
+        "role": "gateway",
+        "old_child_pid": 41920,
+        "new_child_pid": 67300,
+        "host_pid_unchanged": true,
+        "generation_before": 1,
+        "generation_after": 2,
+        "suspended_threads": 0,
+        "gateway_dependency_failure_without_restart": null,
+        "recovery_seconds": 3.032
+      }
+    ],
+    "planned_stops": [
+      {
+        "role": "gateway",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      }
+    ]
+  },
+  "injected_database_failures": 2,
+  "fault_database_counts": [
+    "0",
+    "0",
+    "0",
+    "200",
+    "0"
+  ],
+  "passed": false,
+  "error": "Private supervised stop request failed",
+  "cleanup_errors": [],
+  "worker_errors": [],
+  "player_data_unchanged": true,
+  "checks": [
+    {
+      "name": "actual supervisor death closes its job and reaps only its owned gateway",
+      "passed": true
+    },
+    {
+      "name": "two real clients hold exclusive leases in one town",
+      "passed": true
+    },
+    {
+      "name": "both failures are independently identified as the injected PostgreSQL exception",
+      "passed": true
+    },
+    {
+      "name": "failed real victory transactions leave no partial reward, claim or input",
+      "passed": true
+    },
+    {
+      "name": "real hung authority recovers automatically while the live gateway only becomes unready",
+      "passed": true
+    },
+    {
+      "name": "a killed real gateway automatically restarts under the same role host",
+      "passed": true
+    },
+    {
+      "name": "gateway and real authority process restart before reward retry",
+      "passed": true
+    }
+  ],
+  "online_sources_unchanged": true
+}

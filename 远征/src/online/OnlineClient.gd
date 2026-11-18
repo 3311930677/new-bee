@@ -240,6 +240,29 @@ func acknowledge_battle(id: String, request_id := "") -> Dictionary:
 	return await _send_command("/v1/battles/%s/acknowledge" % id, {}, request_id)
 
 
+func journey_state() -> Dictionary:
+	var id := String(selected_character.get("id", ""))
+	if id.is_empty():
+		return _failure("请先选择在线角色。", "character_required")
+	return await _request(HTTPClient.METHOD_GET, "/v1/characters/%s/journey" % id, {}, "", true)
+
+
+func interact_journey(step: String, target: String, request_id := "") -> Dictionary:
+	var id := String(selected_character.get("id", ""))
+	if id.is_empty():
+		return _failure("请先选择在线角色。", "character_required")
+	return await _send_command("/v1/characters/%s/journey/interact" % id,
+		{"step_id": step, "target_id": target}, request_id)
+
+
+func equip_journey_item(item_id: String, equipped: bool, request_id := "") -> Dictionary:
+	var id := String(selected_character.get("id", ""))
+	if id.is_empty():
+		return _failure("请先选择在线角色。", "character_required")
+	return await _send_command("/v1/characters/%s/pack/equipment" % id,
+		{"item_uid": item_id, "equipped": equipped}, request_id)
+
+
 func logout() -> void:
 	if is_authenticated():
 		await _request(HTTPClient.METHOD_POST, "/v1/auth/logout", {}, "", true)

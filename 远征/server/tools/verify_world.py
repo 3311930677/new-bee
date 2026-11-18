@@ -20,6 +20,7 @@ def source_fingerprint():
     for directory in (SERVER / "cmd", SERVER / "internal", SERVER / "room", SERVER / "tools", SERVER / "deploy", SERVER.parent / "src/online"):
         paths.extend(path for path in directory.rglob("*") if path.suffix in (".go", ".sql", ".gd", ".py", ".godot", ".yml", ".yaml", ".example", ".service", ".conf"))
     paths.extend((SERVER / "go.mod", SERVER / "go.sum"))
+    paths.append(SERVER.parent / "data/online_rules.json")
     paths.extend((SERVER.parent / "src/ui").glob("Online*.*"))
     paths.extend((SERVER.parent / "tools").glob("VerifyOnline*.*"))
     digest = hashlib.sha256()
@@ -173,22 +174,38 @@ def main():
     except Exception as error:
         report |= {"passed": False, "error": str(error)}
     finally:
-        for process in clients.values():
-            if process.poll() is None:
-                process.terminate()
-                process.wait(timeout=10)
+        cleanup_errors = []
+        for tag, process in clients.items():
+            try:
+                if process.poll() is None:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait(timeout=5)
+            except (OSError, subprocess.TimeoutExpired) as error:
+                cleanup_errors.append({"resource": "client-" + tag, "error": type(error).__name__})
         for log in logs:
             log.close()
-        stack.close()
+        try:
+            stack.close()
+        except Exception as error:
+            cleanup_errors.append({"resource": "stack", "error": str(error)})
         if recovery:
-            recovery.close()
+            try:
+                recovery.close()
+            except Exception as error:
+                cleanup_errors.append({"resource": "database", "error": type(error).__name__})
+        report["cleanup_errors"] = cleanup_errors
         report["worker_errors"] = [line for path in folder.glob("worker-*.log")
                                    for line in path.read_text(encoding="utf-8", errors="replace").splitlines()
                                    if any(marker in line for marker in ("SCRIPT ERROR", "Parse Error", "Compile Error", "ERROR:"))]
         report["player_data_unchanged"] = player_snapshot() == before
         report["checks"] = checks
         report["online_sources_unchanged"] = source_fingerprint() == fingerprint
-        report["passed"] = bool(report.get("passed")) and all(c["passed"] for c in checks) and report["player_data_unchanged"] and report["online_sources_unchanged"] and not report["worker_errors"]
+        report["passed"] = (bool(report.get("passed")) and all(c["passed"] for c in checks) and report["player_data_unchanged"]
+                            and report["online_sources_unchanged"] and not report["worker_errors"] and not cleanup_errors)
         (folder / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"report": str(folder / "report.json"), **report}, ensure_ascii=False, indent=2))
     raise SystemExit(0 if report["passed"] else 1)

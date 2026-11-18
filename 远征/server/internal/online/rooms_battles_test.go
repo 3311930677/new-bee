@@ -45,10 +45,13 @@ func (a *scriptedAuthority) Call(_ context.Context, method string, args, out any
 		var inputs []battleInput
 		var tick, checkpointTick int
 		var seed int64
+		var loadout battleLoadout
 		_ = json.Unmarshal(v["inputs"], &inputs)
 		_ = json.Unmarshal(v["target_tick"], &tick)
 		_ = json.Unmarshal(v["confirmed_tick"], &checkpointTick)
 		_ = json.Unmarshal(v["seed"], &seed)
+		_ = json.Unmarshal(v["loadout"], &loadout)
+		potions := loadout.Potions
 		result := ""
 		for i := range inputs {
 			accepted := true
@@ -61,6 +64,9 @@ func (a *scriptedAuthority) Call(_ context.Context, method string, args, out any
 				reason = "fled"
 			} else if inputs[i].Action.Action == "attack" {
 				result = "victory"
+			} else if inputs[i].Action.Action == "potion" && potions > 0 {
+				potions--
+				reason = "used"
 			} else {
 				accepted = false
 				reason = "unavailable"
@@ -78,7 +84,7 @@ func (a *scriptedAuthority) Call(_ context.Context, method string, args, out any
 		}
 		journal, _ := json.Marshal(inputs)
 		digest := sha256.Sum256([]byte(fmt.Sprintf("%d:%d:%s", seed, tick, journal)))
-		reply = map[string]any{"epoch": a.epoch, "inputs": inputs, "state": map[string]any{"tick": tick, "finished": result != "", "result": result, "state_hash": hex.EncodeToString(digest[:]), "units": []any{map[string]any{"hp": 100}}}}
+		reply = map[string]any{"epoch": a.epoch, "inputs": inputs, "state": map[string]any{"tick": tick, "finished": result != "", "result": result, "state_hash": hex.EncodeToString(digest[:]), "units": []any{map[string]any{"hp": 100}}, "potions": potions}}
 	default:
 		return fmt.Errorf("unsupported scripted method")
 	}
