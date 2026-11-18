@@ -6,6 +6,7 @@ const Field := preload("res://src/ui/FieldUI.gd")
 const BattlePage := preload("res://src/ui/OnlineBattle.tscn")
 const Profile := preload("res://src/online/OnlineProfile.gd")
 const JourneyPanel := preload("res://src/ui/OnlineJourneyPanel.gd")
+const SocialPanel := preload("res://src/ui/OnlineSocialPanel.gd")
 const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 
 var auto_connect := true
@@ -22,6 +23,7 @@ var _channels: Array = []
 var _map_name := "昭元边城"
 var _current_channel := 1
 var _channels_panel: Control
+var _social_panel: Control
 var _world := Node2D.new()
 var _actors: Dictionary = {}
 var _camera := Camera2D.new()
@@ -99,6 +101,8 @@ func _ready() -> void:
 	_button(actions, "同行名片", _open_profiles)
 	if Online.manifest.get("features", []).has("world_channels"):
 		_button(actions, "分线", _open_channels)
+	if Online.manifest.get("features", []).has("social_chat"):
+		_button(actions, "社交", open_social)
 	if Online.manifest.get("features", []).has("town_journey"):
 		_button(actions, "行囊与任务", open_journey)
 	_button(actions, "返回角色", _back)
@@ -650,6 +654,7 @@ func _present_battle(value: Variant) -> void:
 		_close_profiles()
 		_close_journey()
 		_close_channels()
+		_close_social()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -701,7 +706,7 @@ func _process(delta: float) -> void:
 		else:
 			refresh_world()
 		return
-	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and not is_instance_valid(_channels_panel) and _move_elapsed >= 0.15:
+	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and not is_instance_valid(_channels_panel) and not is_instance_valid(_social_panel) and _move_elapsed >= 0.15:
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		if direction.is_zero_approx():
 			direction = _held
@@ -729,8 +734,95 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_journey()
 		elif is_instance_valid(_channels_panel):
 			_close_channels()
+		elif is_instance_valid(_social_panel):
+			_close_social()
 		else:
 			_back()
+
+
+func open_social() -> void:
+	if _busy or not battle.is_empty() or is_instance_valid(_social_panel):
+		return
+	_close_profiles()
+	_close_journey()
+	_close_channels()
+	_held = Vector2.ZERO
+	_social_panel = SocialPanel.new()
+	_hud.add_child(_social_panel)
+	_social_panel.closed.connect(_close_social)
+	_social_panel.action_requested.connect(_on_social_action)
+	await _refresh_social()
+
+
+func _refresh_social() -> void:
+	if not is_instance_valid(_social_panel):
+		return
+	_busy = true
+	_social_panel.set_busy(true)
+	var st: Dictionary = await Online.social_state()
+	var ch: Dictionary = await Online.chat_messages(0)
+	_busy = false
+	if not is_instance_valid(_social_panel):
+		return
+	_social_panel.set_busy(false)
+	if bool(st.get("ok", false)) and bool(ch.get("ok", false)):
+		_social_panel.present(st.data, ch.data.get("messages", []), entities)
+	else:
+		var err_res: Dictionary = st if not bool(st.get("ok", false)) else ch
+		_social_panel.show_message(String(err_res.get("error", "社交状态暂时不可用")))
+
+
+func _on_social_action(kind: String, payload: Dictionary) -> void:
+	if _busy or not is_instance_valid(_social_panel):
+		return
+	_busy = true
+	_social_panel.set_busy(true)
+	var result := {"ok": false}
+	match kind:
+		"refresh":
+			result = {"ok": true}
+		"party_create":
+			result = await Online.create_party()
+		"party_invite":
+			result = await Online.invite_party(String(payload.get("target_id", "")))
+		"party_respond":
+			result = await Online.respond_party_invite(String(payload.get("id", "")), bool(payload.get("accept", false)))
+		"party_ready":
+			result = await Online.set_party_ready(bool(payload.get("ready", false)))
+		"party_kick":
+			result = await Online.kick_party_member(String(payload.get("target_id", "")))
+		"party_leader":
+			result = await Online.promote_party_leader(String(payload.get("target_id", "")))
+		"party_leave":
+			result = await Online.leave_party()
+		"friend_request":
+			result = await Online.request_friend(String(payload.get("target_id", "")))
+		"friend_respond":
+			result = await Online.respond_friend(String(payload.get("id", "")), bool(payload.get("accept", false)))
+		"friend_remove":
+			result = await Online.remove_friend(String(payload.get("target_id", "")))
+		"block_add":
+			result = await Online.block_player(String(payload.get("target_id", "")))
+		"block_remove":
+			result = await Online.unblock_player(String(payload.get("account_id", "")))
+		"report_send":
+			result = await Online.report_player(String(payload.get("target_id", "")), "harassment", "玩家在面板举报不当行为")
+		"chat_send":
+			result = await Online.send_chat(String(payload.get("channel_kind", "room")), String(payload.get("content", "")))
+	_busy = false
+	if not is_instance_valid(_social_panel):
+		return
+	_social_panel.set_busy(false)
+	if not bool(result.get("ok", false)):
+		_social_panel.show_message(String(result.get("error", "操作未完成")))
+		return
+	await _refresh_social()
+
+
+func _close_social() -> void:
+	if is_instance_valid(_social_panel):
+		_social_panel.queue_free()
+	_social_panel = null
 
 
 func _open_channels() -> void:

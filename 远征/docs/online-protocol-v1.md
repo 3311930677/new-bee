@@ -96,7 +96,12 @@
 - `POST /v1/rooms/travel` 按权威位置与出口半径执行 `lorin_wilds` ↔ `maple_road` 跨图迁移，落点写入目标地图出生/抵达坐标；战斗开战与任务交互严格核对当前地图匹配。
 - `POST /v1/npcs/{id}/interact` 按当前地图、距离与角色个人任务进度更新并记录 `npc_interactions`，不同角色的 NPC 对话、交互计数与地图分布彼此完全隔离。
 
-社交（好友/屏蔽/举报/聊天）与真正组队属于后续 L1-C 切片。
+## 社交、聊天与组队（L1-C 接入）
+
+清单公布 `social_chat` 与 `parties` 功能位后，网关开放角色级社交与最多 4 人小队契约：
+- **好友、屏蔽与举报**：`GET /v1/social/state` 汇总当前好友列表、待处理申请、账号屏蔽名单、当前小队与待响应邀请。`POST /v1/social/friends/request`、`POST /v1/social/friends/{id}/respond` 与 `DELETE /v1/social/friends/{id}` 管理好友关系。`POST /v1/social/blocks`（及 `DELETE /v1/social/blocks/{account_id}`）以账号为粒度生效，双向拦截好友申请、组队邀请与私聊，并清理已有好友与待处理申请/邀请。`POST /v1/social/reports` 将分类与正文持久化到不可改写的 `player_reports` 审计表并写入 `audit_events`。
+- **分域聊天**：`POST /v1/chat/messages`（限流、控制字符过滤、1–120 字校验）与 `GET /v1/chat/messages?after_id=` 支持 `room`（同频道）、`nearby`（同频道 480px AOI）、`party`（同队跨图）与 `whisper`（双方角色私聊），查询与发送端均由服务端过滤屏蔽关系。
+- **真正组队**：`GET /v1/parties/current`、`POST /v1/parties`、`POST /v1/parties/invite`、`POST /v1/parties/invites/{id}/respond`、`POST /v1/parties/ready`、`POST /v1/parties/kick`、`POST /v1/parties/leader` 与 `POST /v1/parties/leave` 管控 4 人上限、队长权限、成员准备校验、离队顺位继任及空队解散（角色删除同步离队）；多人副本匹配与共战由后续 L2 接入。
 
 房间租约不授予战斗所有权；战斗接口每次仍重新验证账号、当前有效会话及选中在线角色。角色有未完成战斗或未确认结算时，不能切到别的角色或删除该角色。
 

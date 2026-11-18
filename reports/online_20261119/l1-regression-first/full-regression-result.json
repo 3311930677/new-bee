@@ -1,0 +1,17 @@
+{
+  "started_at_utc": "2026-11-18T17:19:21.777540+00:00",
+  "finished_at_utc": "2026-11-18T17:31:31.376307+00:00",
+  "expected_cases": 79,
+  "exit_code": 1,
+  "console_encoding": "UTF-8",
+  "runner_sha256": "235f15b43bbe3f3227ef24af01a942948001db98e3848dda6abe4a01bcaa9ade",
+  "runner_unchanged": true,
+  "load_screen_sha256": "d3a35ebd4e6c04d8bf634e5f5584dd02be164fa79a66d3f7176cdef03c3d6f60",
+  "load_screen_unchanged": true,
+  "second_act_sha256": "5a52b032c2cc580f630ed9cb5d998726eb72d397595d4f1838bb4fad86de233a",
+  "second_act_unchanged": true,
+  "online_sources_sha256": "919e32d44a451b8fc4b385ebd75ec4fd73e783a3fc957ca73b34f14e9f36ec72",
+  "online_sources_unchanged": true,
+  "console": "tools/_logs/online_full_20261119_l1_complete_console.log",
+  "logs": "tools/_logs/online_full_20261119_l1_complete"
+}

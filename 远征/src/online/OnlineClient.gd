@@ -293,6 +293,97 @@ func equip_journey_item(item_id: String, equipped: bool, request_id := "") -> Di
 		{"item_uid": item_id, "equipped": equipped}, request_id)
 
 
+func social_state() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/social/state", {}, "", true)
+
+
+func request_friend(target_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("找不到目标旅人。", "invalid_target")
+	return await _send_command("/v1/social/friends/request", {"target_character_id": target_id}, request_id)
+
+
+func respond_friend(req_id: String, accept: bool, request_id := "") -> Dictionary:
+	if not _valid_id(req_id):
+		return _failure("找不到该好友申请。", "invalid_request")
+	return await _send_command("/v1/social/friends/%s/respond" % req_id, {"accept": accept}, request_id)
+
+
+func remove_friend(target_id: String) -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("找不到该好友。", "invalid_target")
+	return await _request(HTTPClient.METHOD_DELETE, "/v1/social/friends/%s" % target_id, {}, "", true)
+
+
+func block_player(target_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("找不到目标旅人。", "invalid_target")
+	return await _send_command("/v1/social/blocks", {"target_character_id": target_id}, request_id)
+
+
+func unblock_player(account_id: String) -> Dictionary:
+	if not _valid_id(account_id):
+		return _failure("找不到该屏蔽记录。", "invalid_target")
+	return await _request(HTTPClient.METHOD_DELETE, "/v1/social/blocks/%s" % account_id, {}, "", true)
+
+
+func report_player(target_id: String, category: String, reason: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("找不到举报对象。", "invalid_target")
+	return await _send_command("/v1/social/reports", {"target_character_id": target_id, "category": category, "reason": reason}, request_id)
+
+
+func chat_messages(after_id := 0) -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/chat/messages?after_id=%d" % maxi(0, after_id), {}, "", true)
+
+
+func send_chat(channel_kind: String, content: String, recipient_id := "", request_id := "") -> Dictionary:
+	var payload := {"channel_kind": channel_kind, "content": content}
+	if not recipient_id.is_empty():
+		payload["recipient_character_id"] = recipient_id
+	return await _send_command("/v1/chat/messages", payload, request_id)
+
+
+func party_state() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/parties/current", {}, "", true)
+
+
+func create_party(request_id := "") -> Dictionary:
+	return await _send_command("/v1/parties", {}, request_id)
+
+
+func invite_party(target_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("找不到目标旅人。", "invalid_target")
+	return await _send_command("/v1/parties/invite", {"target_character_id": target_id}, request_id)
+
+
+func respond_party_invite(invite_id: String, accept: bool, request_id := "") -> Dictionary:
+	if not _valid_id(invite_id):
+		return _failure("找不到该组队邀请。", "invalid_invite")
+	return await _send_command("/v1/parties/invites/%s/respond" % invite_id, {"accept": accept}, request_id)
+
+
+func set_party_ready(ready: bool, request_id := "") -> Dictionary:
+	return await _send_command("/v1/parties/ready", {"ready": ready}, request_id)
+
+
+func kick_party_member(target_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("找不到该队友。", "invalid_target")
+	return await _send_command("/v1/parties/kick", {"target_character_id": target_id}, request_id)
+
+
+func promote_party_leader(target_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_id):
+		return _failure("找不到该队友。", "invalid_target")
+	return await _send_command("/v1/parties/leader", {"target_character_id": target_id}, request_id)
+
+
+func leave_party(request_id := "") -> Dictionary:
+	return await _send_command("/v1/parties/leave", {}, request_id)
+
+
 func logout() -> void:
 	if is_authenticated():
 		await _request(HTTPClient.METHOD_POST, "/v1/auth/logout", {}, "", true)

@@ -121,6 +121,23 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/rooms/channels/switch", s.authorized(s.switchChannel))
 	s.mux.HandleFunc("POST /v1/rooms/travel", s.authorized(s.travelPortal))
 	s.mux.HandleFunc("POST /v1/npcs/{id}/interact", s.authorized(s.interactNPC))
+	s.mux.HandleFunc("GET /v1/social/state", s.authorized(s.socialState))
+	s.mux.HandleFunc("POST /v1/social/friends/request", s.authorized(s.requestFriend))
+	s.mux.HandleFunc("POST /v1/social/friends/{id}/respond", s.authorized(s.respondFriendRequest))
+	s.mux.HandleFunc("DELETE /v1/social/friends/{id}", s.authorized(s.removeFriend))
+	s.mux.HandleFunc("POST /v1/social/blocks", s.authorized(s.blockPlayer))
+	s.mux.HandleFunc("DELETE /v1/social/blocks/{account_id}", s.authorized(s.unblockPlayer))
+	s.mux.HandleFunc("POST /v1/social/reports", s.authorized(s.reportPlayer))
+	s.mux.HandleFunc("GET /v1/chat/messages", s.authorized(s.listChatMessages))
+	s.mux.HandleFunc("POST /v1/chat/messages", s.authorized(s.sendChatMessage))
+	s.mux.HandleFunc("GET /v1/parties/current", s.authorized(s.currentParty))
+	s.mux.HandleFunc("POST /v1/parties", s.authorized(s.createParty))
+	s.mux.HandleFunc("POST /v1/parties/invite", s.authorized(s.inviteToParty))
+	s.mux.HandleFunc("POST /v1/parties/invites/{id}/respond", s.authorized(s.respondPartyInvite))
+	s.mux.HandleFunc("POST /v1/parties/ready", s.authorized(s.setPartyReady))
+	s.mux.HandleFunc("POST /v1/parties/kick", s.authorized(s.kickPartyMember))
+	s.mux.HandleFunc("POST /v1/parties/leader", s.authorized(s.promotePartyLeader))
+	s.mux.HandleFunc("POST /v1/parties/leave", s.authorized(s.leaveParty))
 	s.mux.HandleFunc("POST /v1/battles", s.authorized(s.startBattle))
 	s.mux.HandleFunc("GET /v1/battles/active", s.authorized(s.activeBattle))
 	s.mux.HandleFunc("GET /v1/battles/{id}", s.authorized(s.battleSnapshot))
@@ -252,7 +269,7 @@ func (s *Server) health(w http.ResponseWriter, r *http.Request) {
 func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
 	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery", "character_identity"}
 	if s.cfg.Authority != nil {
-		features = append(features, "town_rooms", "authority_battles", "town_positions", "world_channels", "cross_map", "npc_isolation")
+		features = append(features, "town_rooms", "authority_battles", "town_positions", "world_channels", "cross_map", "npc_isolation", "social_chat", "parties")
 		if s.cfg.Rules.Journey != nil {
 			features = append(features, "town_journey")
 		}

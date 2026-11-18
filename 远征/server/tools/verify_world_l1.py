@@ -108,11 +108,11 @@ def main():
         restored = recovery.command("restore", database=recovery.target, folder=backup)
         (folder / "restore-report.json").write_text(json.dumps(restored, indent=2), encoding="utf8")
         tables = {row["name"]: row["rows"] for row in manifest["tables"]}
-        if len(manifest.get("tables", [])) != 20 or len(restored.get("tables_matched_before_session_invalidation", [])) != 20:
-            raise RuntimeError(f"expected 20 tables in backup/restore, got {len(manifest.get('tables', []))}")
+        if len(manifest.get("tables", [])) != 28 or len(restored.get("tables_matched_before_session_invalidation", [])) != 28:
+            raise RuntimeError(f"expected 28 tables in backup/restore, got {len(manifest.get('tables', []))}")
         if tables.get("npc_interactions") != 2:
             raise RuntimeError("backup did not preserve npc_interactions")
-        report["tables_matched"] = 20
+        report["tables_matched"] = 28
         report["passed"] = True
     except Exception as error:
         failures.append(str(error))

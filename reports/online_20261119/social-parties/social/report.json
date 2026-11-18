@@ -1,0 +1,44 @@
+{
+  "run_id": "3d0bb4230ff94b8c855c5423de016abf",
+  "online_sources_sha256": "c99c5b35a84b96b78edc5c98104a85d7301dfa3fa9840d3cb6b2a91b0119894a",
+  "gateway_binary_sha256": "868455445186ff12f1d77d9f71ef65edca42b3d24b9e3eb4521cbc4289d4b4a5",
+  "transport": "https-validating-debug-ca",
+  "scope": "L1-C two native Godot clients, friends, block, report, party/room chat, real party lifecycle, and 28-table backup/restore",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "620c11fd352a0bb7e0f1207ef0cff0e26bd874937294b71d73353736e93f9dea",
+    "content_version": "0b4631213b5f9c41625c76de818e7d893fa43f3a6b915602c11c01e5e14a642f",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "db_counts": [
+    "1",
+    "2",
+    "0",
+    "1",
+    "1",
+    "2"
+  ],
+  "tables_matched": 28,
+  "passed": true,
+  "cleanup_errors": [],
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  },
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true,
+  "errors": []
+}
