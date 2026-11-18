@@ -72,10 +72,12 @@ func _run_alpha(_char_id: String) -> void:
 		if get_viewport().get_texture().get_image().save_png(output.path_join("social-party.png")) != OK:
 			_fail("capturing social-party screenshot")
 			return
+	await get_tree().process_frame
 	var esc := InputEventAction.new()
 	esc.action = "ui_cancel"
 	esc.pressed = true
 	Input.parse_input_event(esc)
+	await get_tree().process_frame
 	await get_tree().process_frame
 	if is_instance_valid(_world._social_panel) or _world.lease.is_empty():
 		_fail("esc did not close social panel while keeping town lease")

@@ -1,0 +1,455 @@
+{
+  "date": "2026-11-19",
+  "milestone": "L2",
+  "runs": {
+    "coop": {
+      "run_id": "b94fcfe7e6ea430b948fb03c4ba871cb",
+      "online_sources_sha256": "42de6cc714d9a444f48adde7ad96a1a4054e1745325073943c1ac813e2c456a9",
+      "gateway_binary_sha256": "e20497c4d6eceefacb57bfdd40a8c8055718e893cd6f3f6a3428ae22461a065a",
+      "transport": "https-validating-debug-ca",
+      "scope": "L2 two native Godot clients, queue match, tidal_gate co-op puzzle + RoomHost BattleSim + disconnect/rejoin + personal drops + world boss + 34-table backup/restore",
+      "manifest": {
+        "verifier_version": 2,
+        "source_sha256": "1a6fb7a1c6c94c1f0cce1883856227066efeda02e600fa32416494ee5cf37bf9",
+        "content_version": "5eccb2400755e2a4ede43369554b69c50ac7ba87a44bbf7967a40cd484b24817",
+        "ruleset_version": "online-0.1",
+        "shared_combat_sources": [
+          "src\\combat\\BattleSim.gd",
+          "src\\combat\\Combatant.gd",
+          "src\\combat\\DamageCalc.gd",
+          "src\\combat\\MonsterAI.gd",
+          "src\\combat\\SkillSystem.gd",
+          "src\\combat\\TableCache.gd",
+          "src\\combat\\TraitSystem.gd",
+          "src\\world\\CampaignPressure.gd",
+          "src\\world\\CompanionService.gd",
+          "src\\online\\OnlineProfile.gd"
+        ],
+        "autoloads": []
+      },
+      "db_counts": [
+        "1",
+        "2",
+        "2",
+        "1",
+        "1"
+      ],
+      "tables_matched": 34,
+      "passed": true,
+      "cleanup_errors": [],
+      "failures": [],
+      "player_data_unchanged": true,
+      "online_sources_unchanged": true,
+      "client_exit_codes": {
+        "a": 0,
+        "b": 0
+      }
+    },
+    "room": {
+      "scope": "isolated shared BattleSim + private signed RPC; not public multiplayer acceptance",
+      "manifest": {
+        "verifier_version": 2,
+        "source_sha256": "1a6fb7a1c6c94c1f0cce1883856227066efeda02e600fa32416494ee5cf37bf9",
+        "content_version": "5eccb2400755e2a4ede43369554b69c50ac7ba87a44bbf7967a40cd484b24817",
+        "ruleset_version": "online-0.1",
+        "shared_combat_sources": [
+          "src\\combat\\BattleSim.gd",
+          "src\\combat\\Combatant.gd",
+          "src\\combat\\DamageCalc.gd",
+          "src\\combat\\MonsterAI.gd",
+          "src\\combat\\SkillSystem.gd",
+          "src\\combat\\TableCache.gd",
+          "src\\combat\\TraitSystem.gd",
+          "src\\world\\CampaignPressure.gd",
+          "src\\world\\CompanionService.gd",
+          "src\\online\\OnlineProfile.gd"
+        ],
+        "autoloads": []
+      },
+      "go_health": {
+        "epoch": "a3f109b1d982d1cc3103bb6d37ec4b45",
+        "ok": true,
+        "content_version": "5eccb2400755e2a4ede43369554b69c50ac7ba87a44bbf7967a40cd484b24817",
+        "ruleset_version": "online-0.1",
+        "engine": "4.7.2-stable (official)",
+        "battles": 0
+      },
+      "passed": true,
+      "final_state_hash": "56b80f2de6412b902aac9c1884b4043ac36cc34c9ecebeac319607b3145d0194",
+      "ticks": 72,
+      "inputs": [
+        {
+          "accepted": true,
+          "action": {
+            "action": "attack"
+          },
+          "reason": "attacked",
+          "sequence": 1,
+          "tick": 69
+        },
+        {
+          "accepted": false,
+          "action": {
+            "action": "skill",
+            "skill_id": "gm_kill_all"
+          },
+          "reason": "unavailable",
+          "sequence": 2,
+          "tick": 71
+        },
+        {
+          "accepted": true,
+          "action": {
+            "action": "flee"
+          },
+          "reason": "fled",
+          "sequence": 3,
+          "tick": 72
+        }
+      ],
+      "coop_members_tested": 4,
+      "checks": [
+        {
+          "name": "authority refuses inherited database credentials without logging their values",
+          "passed": true
+        },
+        {
+          "name": "authority refuses inherited management credentials without logging their values",
+          "passed": true
+        },
+        {
+          "name": "private worker starts with exact content version",
+          "passed": true
+        },
+        {
+          "name": "production Go RPC client authenticates a real Godot process",
+          "passed": true
+        },
+        {
+          "name": "unauthenticated private request rejected",
+          "passed": true
+        },
+        {
+          "name": "replayed private nonce rejected",
+          "passed": true
+        },
+        {
+          "name": "shared BattleSim starts only on authority process",
+          "passed": true
+        },
+        {
+          "name": "authority advances by its own monotonic clock",
+          "passed": true
+        },
+        {
+          "name": "authority validates and executes manual attack",
+          "passed": true
+        },
+        {
+          "name": "duplicate command returns original receipt without a second attack",
+          "passed": true
+        },
+        {
+          "name": "same sequence cannot change action",
+          "passed": true
+        },
+        {
+          "name": "out of order input rejected",
+          "passed": true
+        },
+        {
+          "name": "unowned skill cannot execute",
+          "passed": true
+        },
+        {
+          "name": "authority controls final battle result",
+          "passed": true
+        },
+        {
+          "name": "seed and exact input log reproduce final authority state",
+          "passed": true
+        },
+        {
+          "name": "finished simulation can be explicitly released",
+          "passed": true
+        },
+        {
+          "name": "persistent journal uses gateway clock without autonomous advancement",
+          "passed": true
+        },
+        {
+          "name": "provisional command executes before database outcome is known",
+          "passed": true
+        },
+        {
+          "name": "rolled back command is removed by rebuilding committed checkpoint",
+          "passed": true
+        },
+        {
+          "name": "uncommitted clock advancement also rolls back exactly",
+          "passed": true
+        },
+        {
+          "name": "cache miss rebuilds committed actions and validates state hash",
+          "passed": true
+        },
+        {
+          "name": "committed input outcome cannot silently change during recovery",
+          "passed": true
+        },
+        {
+          "name": "divergent committed checkpoint fails closed",
+          "passed": true
+        },
+        {
+          "name": "shared world validates an ordinary city movement",
+          "passed": true
+        },
+        {
+          "name": "shared world rejects a client teleport",
+          "passed": true
+        },
+        {
+          "name": "authority accepts valid equipment, potions and pet_rockturtle loadout",
+          "passed": true
+        },
+        {
+          "name": "loadout simulation can flee before release",
+          "passed": true
+        },
+        {
+          "name": "loadout simulation can be released",
+          "passed": true
+        },
+        {
+          "name": "authority rejects unapproved companion loadout",
+          "passed": true
+        },
+        {
+          "name": "authority simulates 4-class co-op party with scaled enemies and per-member actions",
+          "passed": true
+        }
+      ],
+      "player_data_unchanged": true,
+      "script_errors": [],
+      "log": "E:\\new bee\\远征\\server\\.local\\verification\\room_72c4ebfe594d460094734274c62d8c02\\room.log"
+    },
+    "social": {
+      "run_id": "4fea27d2ee6e4abf8380c5cebedddab4",
+      "online_sources_sha256": "42de6cc714d9a444f48adde7ad96a1a4054e1745325073943c1ac813e2c456a9",
+      "gateway_binary_sha256": "e20497c4d6eceefacb57bfdd40a8c8055718e893cd6f3f6a3428ae22461a065a",
+      "transport": "https-validating-debug-ca",
+      "scope": "L1-C two native Godot clients, friends, block, report, party/room chat, real party lifecycle, and 28-table backup/restore",
+      "manifest": {
+        "verifier_version": 2,
+        "source_sha256": "1a6fb7a1c6c94c1f0cce1883856227066efeda02e600fa32416494ee5cf37bf9",
+        "content_version": "5eccb2400755e2a4ede43369554b69c50ac7ba87a44bbf7967a40cd484b24817",
+        "ruleset_version": "online-0.1",
+        "shared_combat_sources": [
+          "src\\combat\\BattleSim.gd",
+          "src\\combat\\Combatant.gd",
+          "src\\combat\\DamageCalc.gd",
+          "src\\combat\\MonsterAI.gd",
+          "src\\combat\\SkillSystem.gd",
+          "src\\combat\\TableCache.gd",
+          "src\\combat\\TraitSystem.gd",
+          "src\\world\\CampaignPressure.gd",
+          "src\\world\\CompanionService.gd",
+          "src\\online\\OnlineProfile.gd"
+        ],
+        "autoloads": []
+      },
+      "db_counts": [
+        "1",
+        "2",
+        "0",
+        "1",
+        "1",
+        "2"
+      ],
+      "tables_matched": 34,
+      "passed": true,
+      "cleanup_errors": [],
+      "client_exit_codes": {
+        "a": 0,
+        "b": 0
+      },
+      "player_data_unchanged": true,
+      "online_sources_unchanged": true,
+      "errors": []
+    },
+    "world": {
+      "run_id": "8d0783a183d645bf9f231e24d1503e77",
+      "online_sources_sha256": "42de6cc714d9a444f48adde7ad96a1a4054e1745325073943c1ac813e2c456a9",
+      "gateway_binary_sha256": "e20497c4d6eceefacb57bfdd40a8c8055718e893cd6f3f6a3428ae22461a065a",
+      "transport": "https-validating-debug-ca",
+      "scope": "L1-B two native Godot clients, cross-map lorin_wilds<->maple_road, per-character NPC isolation, maple_wolf battle, relog resume, and 20-table backup/restore",
+      "manifest": {
+        "verifier_version": 2,
+        "source_sha256": "1a6fb7a1c6c94c1f0cce1883856227066efeda02e600fa32416494ee5cf37bf9",
+        "content_version": "5eccb2400755e2a4ede43369554b69c50ac7ba87a44bbf7967a40cd484b24817",
+        "ruleset_version": "online-0.1",
+        "shared_combat_sources": [
+          "src\\combat\\BattleSim.gd",
+          "src\\combat\\Combatant.gd",
+          "src\\combat\\DamageCalc.gd",
+          "src\\combat\\MonsterAI.gd",
+          "src\\combat\\SkillSystem.gd",
+          "src\\combat\\TableCache.gd",
+          "src\\combat\\TraitSystem.gd",
+          "src\\world\\CampaignPressure.gd",
+          "src\\world\\CompanionService.gd",
+          "src\\online\\OnlineProfile.gd"
+        ],
+        "autoloads": []
+      },
+      "db_npc_interactions": 2,
+      "db_rooms": "lorin_wilds:1,maple_road:1",
+      "tables_matched": 34,
+      "passed": true,
+      "cleanup_errors": [],
+      "client_exit_codes": {
+        "a": 0,
+        "b": 0
+      },
+      "player_data_unchanged": true,
+      "online_sources_unchanged": true,
+      "errors": []
+    },
+    "journey": {
+      "run_id": "bd9c8d791c634bdba23fd72e014717f5",
+      "scope": "two native Godot clients, distinct roles, real town journey, owned items, pet battle, re-login and offline restore",
+      "online_sources_sha256": "42de6cc714d9a444f48adde7ad96a1a4054e1745325073943c1ac813e2c456a9",
+      "gateway_binary_sha256": "e20497c4d6eceefacb57bfdd40a8c8055718e893cd6f3f6a3428ae22461a065a",
+      "manifest": {
+        "verifier_version": 2,
+        "source_sha256": "1a6fb7a1c6c94c1f0cce1883856227066efeda02e600fa32416494ee5cf37bf9",
+        "content_version": "5eccb2400755e2a4ede43369554b69c50ac7ba87a44bbf7967a40cd484b24817",
+        "ruleset_version": "online-0.1",
+        "shared_combat_sources": [
+          "src\\combat\\BattleSim.gd",
+          "src\\combat\\Combatant.gd",
+          "src\\combat\\DamageCalc.gd",
+          "src\\combat\\MonsterAI.gd",
+          "src\\combat\\SkillSystem.gd",
+          "src\\combat\\TableCache.gd",
+          "src\\combat\\TraitSystem.gd",
+          "src\\world\\CampaignPressure.gd",
+          "src\\world\\CompanionService.gd",
+          "src\\online\\OnlineProfile.gd"
+        ],
+        "autoloads": []
+      },
+      "transport": "https-validating-debug-ca",
+      "client_exit_codes": {
+        "a": 0,
+        "b": 0
+      },
+      "clients": [
+        {
+          "character_id": "42abf2f2-f665-48c5-87cd-97d1df9cea67",
+          "role_id": "zs",
+          "step": "complete"
+        },
+        {
+          "character_id": "d324f014-6ec5-4e9f-bf1c-d860a082728a",
+          "role_id": "fz",
+          "step": "complete"
+        }
+      ],
+      "characters": [
+        "fz|complete|125|15|8|4|3|2|4|1|3|2",
+        "zs|complete|125|15|8|4|3|2|4|1|3|2"
+      ],
+      "session_counts": [
+        "2",
+        "1",
+        "0"
+      ],
+      "database_restore": {
+        "tables_matched": 34,
+        "restored_characters": [
+          "fz|complete|125|15|8|4|3|2|4|1|3|2",
+          "zs|complete|125|15|8|4|3|2|4|1|3|2"
+        ],
+        "inventory_history_rows": 16,
+        "quest_history_rows": 16
+      },
+      "passed": true,
+      "checks": [
+        {
+          "name": "native journey completed by client a",
+          "passed": true
+        },
+        {
+          "name": "native journey completed by client b",
+          "passed": true
+        },
+        {
+          "name": "each owner has eight quest events, correct gear, two medicines, one real consumption and two victories",
+          "passed": true
+        },
+        {
+          "name": "independent SQL confirms two accounts, one town and no active sessions",
+          "passed": true
+        },
+        {
+          "name": "new database restore preserves both actual inventories and completed quest history",
+          "passed": true
+        }
+      ],
+      "offline_actions": [
+        {
+          "action": "provision",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "action": "migrate",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "action": "grant",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "action": "gateway-reject-offline-credential",
+          "exit_code": 1,
+          "expected_success": false
+        },
+        {
+          "action": "gateway-reject-owner-role",
+          "exit_code": 1,
+          "expected_success": false
+        },
+        {
+          "action": "gateway-reject-future-schema",
+          "exit_code": 1,
+          "expected_success": false
+        },
+        {
+          "action": "migrate",
+          "exit_code": 1,
+          "expected_success": false
+        },
+        {
+          "action": "backup",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "action": "restore",
+          "exit_code": 0,
+          "expected_success": true
+        }
+      ],
+      "cleanup_errors": [],
+      "worker_errors": [],
+      "private_values_in_logs": false,
+      "player_data_unchanged": true,
+      "online_sources_unchanged": true
+    }
+  }
+}

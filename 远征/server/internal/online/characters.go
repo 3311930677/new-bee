@@ -306,6 +306,9 @@ func (s *Server) deleteCharacter(w http.ResponseWriter, r *http.Request, who ide
 		if err = removePartyMemberIfPresent(ctx, tx, id); err != nil {
 			return nil, err
 		}
+		if _, err = tx.Exec(ctx, `DELETE FROM coop_queues WHERE character_id=$1`, id); err != nil {
+			return nil, err
+		}
 		if _, err = tx.Exec(ctx, `INSERT INTO audit_events(account_id,character_id,action) VALUES($1,$2,'character.delete')`, who.AccountID, id); err != nil {
 			return nil, err
 		}

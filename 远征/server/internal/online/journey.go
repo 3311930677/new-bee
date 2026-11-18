@@ -76,7 +76,7 @@ func (j JourneyRules) validate(encounters map[string]EncounterRule) error {
 			if item.RoleID != "zs" && item.RoleID != "ck" && item.RoleID != "fs" && item.RoleID != "fz" {
 				return invalid
 			}
-		case "armor", "potion", "companion":
+		case "armor", "potion", "companion", "material":
 			if item.RoleID != "" || (item.Kind != "armor" && (item.Attack != 0 || item.Defense != 0 || item.Health != 0)) {
 				return invalid
 			}

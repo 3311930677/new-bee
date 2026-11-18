@@ -49,6 +49,16 @@ var role_uid: int = 0
 var companion_used: Dictionary = {} # 物种/特性 -> 一次标记或冷却截止 tick
 var companion_participants: Array = []
 
+var coop_mode := false
+var coop_downed_window_ticks := 450
+var member_uids: Dictionary = {}       # character_id -> role_uid
+var role_potions: Dictionary = {}      # uid -> potions_left
+var role_potion_cd: Dictionary = {}    # uid -> cd_ticks
+var role_focus_targets: Dictionary = {} # uid -> enemy_uid
+var rescue_counts: Dictionary = {}     # uid -> count
+var action_counts: Dictionary = {}     # uid -> count
+var safe_defend_uids: Dictionary = {}  # uid -> bool
+
 
 # ---------- 组建 ----------
 ## ally_cfg: {role_id, level, traits[], active_pet, bench_pet, hp_override, potions}
@@ -64,6 +74,15 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	events.clear()
 	companion_used.clear()
 	companion_participants.clear()
+	coop_mode = false
+	coop_downed_window_ticks = 450
+	member_uids.clear()
+	role_potions.clear()
+	role_potion_cd.clear()
+	role_focus_targets.clear()
+	rescue_counts.clear()
+	action_counts.clear()
+	safe_defend_uids.clear()
 	_next_uid = 1
 	role_uid = 0
 	tick_count = 0
@@ -94,13 +113,41 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	enemy_scale *= maxf(0.1, float(enemy_cfg.get("enemy_mult", 1.0)))
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
 	pet_stats = (ally_cfg.get("pet_stats", {}) as Dictionary).duplicate(true)
-	_build_role(ally_cfg)
-	if String(ally_cfg.get("active_pet", "")) != "":
-		_build_pet(String(ally_cfg.active_pet), false)
-	if String(ally_cfg.get("bench_pet", "")) != "":
-		pet_bench_id = String(ally_cfg.bench_pet)
-	potions_left = int(ally_cfg.get("potions", 0))
-	potion_effect_mult = clampf(float(ally_cfg.get("potion_effect_mult",1.0)),0.9,1.1)
+	var members_v: Variant = ally_cfg.get("members", [])
+	if members_v is Array and not (members_v as Array).is_empty():
+		coop_mode = true
+		coop_downed_window_ticks = clampi(int(ally_cfg.get("downed_window_ticks", 450)), 0, 1800)
+		var members := members_v as Array
+		var cols := [2, 1, 3, 0]
+		for i in mini(4, members.size()):
+			var m_val: Variant = members[i]
+			if not (m_val is Dictionary):
+				continue
+			var m := m_val as Dictionary
+			var built := _build_role_unit(m, int(cols[i % cols.size()]))
+			if built != null:
+				var cid := String(m.get("character_id", "member_%d" % i))
+				built.coop_slot = cid
+				member_uids[cid] = built.uid
+				if role_uid == 0:
+					role_uid = built.uid
+				role_potions[built.uid] = maxi(0, int(m.get("potions", 0)))
+				role_potion_cd[built.uid] = 0
+				role_focus_targets[built.uid] = -1
+				rescue_counts[built.uid] = 0
+				action_counts[built.uid] = 0
+				var pet_id := String(m.get("active_pet", ""))
+				if not pet_id.is_empty():
+					_build_pet(pet_id, false, built.uid, int(cols[i % cols.size()]))
+		potions_left = int(role_potions.get(role_uid, 0))
+	else:
+		_build_role(ally_cfg)
+		if String(ally_cfg.get("active_pet", "")) != "":
+			_build_pet(String(ally_cfg.active_pet), false)
+		if String(ally_cfg.get("bench_pet", "")) != "":
+			pet_bench_id = String(ally_cfg.bench_pet)
+		potions_left = int(ally_cfg.get("potions", 0))
+		potion_effect_mult = clampf(float(ally_cfg.get("potion_effect_mult",1.0)),0.9,1.1)
 	var cm: Variant = enemy_cfg.get("custom_mon", null)
 	if cm is Dictionary and not (cm as Dictionary).is_empty():
 		_build_custom_mon(cm as Dictionary)   # 演武场等：不走怪物池，直接给对手数据
@@ -108,6 +155,26 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 		_build_enemies(String(enemy_cfg.get("theme", "forest")),
 			String(enemy_cfg.get("node_type", "normal")),
 			String(enemy_cfg.get("lead_mon", "")), bool(enemy_cfg.get("solo", false)))
+	var coop_scale_v: Variant = enemy_cfg.get("coop_scaling", {})
+	if coop_mode and coop_scale_v is Dictionary and not (coop_scale_v as Dictionary).is_empty():
+		var cs := coop_scale_v as Dictionary
+		var extra_adds := clampi(int(cs.get("extra_adds", 0)), 0, 4)
+		var add_mon := String(cs.get("add_monster_id", ""))
+		if extra_adds > 0 and not add_mon.is_empty():
+			var slots := [[Combatant.ROW_FRONT, 1], [Combatant.ROW_BACK, 2],
+				[Combatant.ROW_BACK, 1], [Combatant.ROW_BACK, 3]]
+			for ai in extra_adds:
+				var sp: Array = slots[ai % slots.size()]
+				_spawn_monster(add_mon, int(sp[0]), int(sp[1]))
+		var hp_mult := clampf(float(cs.get("hp_mult", 1.0)), 0.25, 10.0)
+		var atk_mult := clampf(float(cs.get("atk_mult", 1.0)), 0.25, 5.0)
+		var def_mult := clampf(float(cs.get("def_mult", 1.0)), 0.25, 5.0)
+		for u in units:
+			if u.side == "enemy":
+				u.base_max_hp = maxi(1, int(float(u.base_max_hp) * hp_mult))
+				u.base_atk = maxi(1, int(float(u.base_atk) * atk_mult))
+				u.base_def = maxi(0, int(float(u.base_def) * def_mult))
+				u.hp = u.base_max_hp
 	if role_unit() == null or alive_units("enemy").is_empty():
 		if setup_error.is_empty(): setup_error = "战斗配置无有效角色或敌人"
 	if not setup_error.is_empty():
@@ -139,10 +206,16 @@ func new_uid() -> int:
 
 
 func _build_role(cfg: Dictionary) -> void:
+	var u := _build_role_unit(cfg, 2)
+	if u != null:
+		role_uid = u.uid
+
+
+func _build_role_unit(cfg: Dictionary, p_col := 2) -> Combatant:
 	var role := TableCache.get_role(String(cfg.get("role_id", "zs")))
 	if role.is_empty():
 		push_error("BattleSim 角色不存在：%s" % String(cfg.get("role_id", "")))
-		return
+		return null
 	var stats := TableCache.role_stats(String(cfg.role_id), int(cfg.get("level", 1)))
 	var ts := TraitSystem.new(cfg.get("traits", []))
 	var gb0: Dictionary = cfg.get("growth", {}) if cfg.get("growth") is Dictionary else {}
@@ -168,6 +241,9 @@ func _build_role(cfg: Dictionary) -> void:
 		stats.crit += float(gb.get("crit_add", 0.0))
 	role = role.duplicate(true)
 	role["relic_break_damage_pct"] = float(gb.get("relic_break_damage_pct",0.0))
+	var custom_name := String(cfg.get("name", ""))
+	if not custom_name.is_empty():
+		role["name"] = custom_name
 	var u := Combatant.new(new_uid(), "role", "ally", role)
 	u.traits = ts
 	u.base_max_hp = maxi(1, int(stats.max_hp))
@@ -180,7 +256,7 @@ func _build_role(cfg: Dictionary) -> void:
 	u.cc_resist = clampf(ts.passive_cc_resist(), 0.0, 0.9)
 	u.attack_range = String(role.get("attack_range", "melee"))
 	u.row = Combatant.ROW_FRONT if u.attack_range == "melee" else Combatant.ROW_BACK
-	u.col = 2
+	u.col = p_col
 	u.hp = u.base_max_hp
 	# HP 跨节点延续。哨兵口径：-1 = 无续血（满血开局）；>= 0 一律有效。
 	# 0 必须钳到 1（濒危续战）：人物阵亡但宠物清场时，0 血开局等于必死——
@@ -190,7 +266,6 @@ func _build_role(cfg: Dictionary) -> void:
 		u.hp = clampi(hp_override, 1, u.base_max_hp)
 	var shield_pct := float(gb.get("relic_shield_pct",0.0))
 	if shield_pct > 0.0: u.add_buff("shield", -1, {"pool":int(u.get_max_hp()*shield_pct)})
-	role_uid = u.uid
 	var allowed_v: Variant = cfg.get("unlocked_skills")
 	var allowed: Array = allowed_v if allowed_v is Array else []
 	var variants_v: Variant = cfg.get("skill_variants", {})
@@ -208,6 +283,7 @@ func _build_role(cfg: Dictionary) -> void:
 			sd = SkillSystem.study_skill(sd, slv)
 			u.skills.append({"id": String(sid), "def": sd, "cd_left": 0})
 	_add_unit(u)
+	return u
 
 
 ## 导师分支只改技能表副本。数值项集中在这里，按钮、AI 与真正结算读取同一份 def。
@@ -226,7 +302,7 @@ func _apply_skill_variant(base: Dictionary, mod: Dictionary) -> Dictionary:
 	return out
 
 
-func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
+func _build_pet(pet_id: String, is_bench_swap: bool, p_owner_uid := 0, p_col := 1) -> void:
 	var pet := TableCache.get_pet(pet_id)
 	if pet.is_empty():
 		push_warning("宠物不存在：%s" % pet_id)
@@ -238,12 +314,14 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 	if not companion_participants.has(pet_id): companion_participants.append(pet_id)
 	var gl := float(int(ps.get("level", pet_level)) - 1)
 	var gmult := float(ps.get("growth_mult", 1.0))
-	var owner := unit_by_uid(role_uid)
+	var resolved_owner_uid := p_owner_uid if p_owner_uid > 0 else role_uid
+	var owner := unit_by_uid(resolved_owner_uid)
 	var stat_pct := 0.0
 	if owner != null and owner.traits != null:
 		stat_pct = owner.traits.pet_stat_pct()
 	var mult := (1.0 + stat_pct) * float(ps.get("stat_mult", 1.0))
 	var u := Combatant.new(new_uid(), "pet", "ally", pet)
+	u.owner_uid = resolved_owner_uid
 	u.companion_traits = (ps.get("companion_traits",{}) as Dictionary).duplicate(true)
 	u.base_max_hp = maxi(1, int((float(int(base.get("hp", 50))) + float(growth.get("hp", 0)) * gl * gmult) * mult))
 	u.base_atk = maxi(1, int((float(int(base.get("atk", 10))) + float(growth.get("atk", 0)) * gl * gmult) * mult))
@@ -252,7 +330,7 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 	u.base_crit = 0.05
 	u.attack_range = String(pet.get("attack_range", "melee"))
 	u.row = Combatant.ROW_FRONT if u.attack_range == "melee" else Combatant.ROW_BACK
-	u.col = 1
+	u.col = p_col
 	u.hp = u.base_max_hp
 	if is_bench_swap:
 		u.deathproof_buff = true  # 换上获免死 1 次
@@ -298,8 +376,16 @@ func _build_enemies(theme: String, node_type: String, lead_mon := "", solo := fa
 		return String(pool[rng.randi_range(0, pool.size() - 1)])
 	# 主世界明雷是一只具体的地图怪：接触谁就与谁交战；历练编成保持原样。
 	if solo and node_type in ["normal", "elite", "boss"]:
-		_spawn_monster(lead_mon if lead_mon != "" else pick.call(),
-			Combatant.ROW_FRONT, 2, 1.0, 1.0, node_type)
+		var hp_atk := 1.0
+		var def_m := 1.0
+		if node_type == "elite":
+			var ec: Dictionary = TableCache.nodes_config().get("enemy", {})
+			hp_atk = float(ec.get("elite_hp_atk_mult", 1.8))
+			def_m = float(ec.get("elite_def_mult", 1.3))
+		var monster := _spawn_monster(lead_mon if lead_mon != "" else pick.call(),
+			Combatant.ROW_FRONT, 2, hp_atk, def_m, node_type)
+		if monster != null and node_type == "elite":
+			_apply_elite_affix(monster)
 		return
 	match node_type:
 		"elite":
@@ -432,10 +518,16 @@ func alive_units(side: String) -> Array[Combatant]:
 
 ## 经典“攻”指令只改玩家普攻的选敌优先级，不另写伤害或攻速规则。
 func set_role_focus_target(uid: int) -> bool:
-	var target := unit_by_uid(uid)
+	return set_role_focus_target_for(role_uid, uid)
+
+
+func set_role_focus_target_for(actor_uid: int, target_uid: int) -> bool:
+	var target := unit_by_uid(target_uid)
 	if target == null or not target.alive or target.side != "enemy":
 		return false
-	role_focus_target_uid = uid
+	if actor_uid == role_uid:
+		role_focus_target_uid = target_uid
+	role_focus_targets[actor_uid] = target_uid
 	return true
 
 
@@ -447,20 +539,74 @@ func role_attack_ready() -> bool:
 
 
 func trigger_manual_attack() -> String:
+	return trigger_manual_attack_for(role_uid)
+
+
+func trigger_manual_attack_for(actor_uid: int) -> String:
 	if finished:
 		return "finished"
-	var role := role_unit()
-	if role == null or not role.alive:
+	var role := unit_by_uid(actor_uid)
+	if role == null or role.kind != "role" or not role.alive:
 		return "dead"
 	if not role.can_act():
 		return "controlled"
 	if role.attack_timer < role.basic_threshold():
 		# 手动模式不再预输入排队：冷却结束后「自己补一刀」会被误认成自动攻击。
 		return "cooldown"
-	manual_attack_queued = false
+	if actor_uid == role_uid:
+		manual_attack_queued = false
 	role.attack_timer = 0
 	role.do_basic_attack(self)
+	if coop_mode:
+		action_counts[actor_uid] = int(action_counts.get(actor_uid, 0)) + 1
 	return "attacked"
+
+
+func set_safe_defend(actor_uid: int, enabled: bool) -> bool:
+	var u := unit_by_uid(actor_uid)
+	if u == null or u.kind != "role":
+		return false
+	if enabled:
+		safe_defend_uids[actor_uid] = true
+		if u.alive and not u.has_buff("def_up"):
+			u.add_buff("def_up", 15 * TICK_RATE, {"pct": 0.25})
+	else:
+		safe_defend_uids.erase(actor_uid)
+	return true
+
+
+func rescue_ally(actor_uid: int, target_uid: int) -> Dictionary:
+	if not coop_mode or finished:
+		return {"accepted": false, "reason": "unavailable"}
+	var actor := unit_by_uid(actor_uid)
+	var target := unit_by_uid(target_uid)
+	if actor == null or target == null or actor.kind != "role" or target.kind != "role" or actor == target:
+		return {"accepted": false, "reason": "invalid_target"}
+	if not actor.alive or not actor.can_act():
+		return {"accepted": false, "reason": "actor_unavailable"}
+	if target.alive or not target.downed:
+		return {"accepted": false, "reason": "not_downed"}
+	if target.downed_ticks <= 0:
+		return {"accepted": false, "reason": "rescue_expired"}
+	var cd := int(role_potion_cd.get(actor_uid, 0))
+	var pots := int(role_potions.get(actor_uid, 0))
+	if cd > 0 or pots <= 0:
+		return {"accepted": false, "reason": "no_rescue_supply"}
+	role_potions[actor_uid] = pots - 1
+	role_potion_cd[actor_uid] = POTION_CD
+	if actor_uid == role_uid:
+		potions_left = int(role_potions[actor_uid])
+		potion_cd_ticks = POTION_CD
+	target.alive = true
+	target.downed = false
+	target.downed_ticks = 0
+	target.hp = maxi(1, int(float(target.get_max_hp()) * 0.30))
+	target.attack_timer = 0
+	rescue_counts[actor_uid] = int(rescue_counts.get(actor_uid, 0)) + 1
+	action_counts[actor_uid] = int(action_counts.get(actor_uid, 0)) + 1
+	actor.healing_done += target.hp
+	emit({"t": "rescue", "src": actor_uid, "uid": target_uid, "hp": target.hp})
+	return {"accepted": true, "reason": "rescued"}
 
 
 func has_boss() -> bool:
@@ -497,20 +643,39 @@ func cast_skill(uid: int, skill_id: String, target_uid := -1) -> bool:
 	if not SkillSystem.can_cast(self, u, sd):
 		return false
 	SkillSystem.enqueue_cast(self, u, sd, target_uid)
+	if coop_mode and u.kind == "role":
+		action_counts[uid] = int(action_counts.get(uid, 0)) + 1
 	return true
 
 
 func use_potion() -> bool:
-	if potions_left <= 0 or finished or potion_cd_ticks > 0:
+	return use_potion_for(role_uid)
+
+
+func use_potion_for(actor_uid: int) -> bool:
+	if finished:
 		return false
-	var role := role_unit()
-	if role == null or not role.alive:
+	var role := unit_by_uid(actor_uid)
+	if role == null or role.kind != "role" or not role.alive:
 		return false
-	# 满血喝药：直接拒绝，不扣瓶也不进 CD（地图侧早有拦截，战斗内漏了这条）
 	if role.hp >= role.get_max_hp():
 		return false
-	potions_left -= 1
-	potion_cd_ticks = POTION_CD
+	if coop_mode:
+		var pots := int(role_potions.get(actor_uid, 0))
+		var cd := int(role_potion_cd.get(actor_uid, 0))
+		if pots <= 0 or cd > 0:
+			return false
+		role_potions[actor_uid] = pots - 1
+		role_potion_cd[actor_uid] = POTION_CD
+		if actor_uid == role_uid:
+			potions_left = int(role_potions[actor_uid])
+			potion_cd_ticks = POTION_CD
+		action_counts[actor_uid] = int(action_counts.get(actor_uid, 0)) + 1
+	else:
+		if potions_left <= 0 or potion_cd_ticks > 0:
+			return false
+		potions_left -= 1
+		potion_cd_ticks = POTION_CD
 	var amt := DamageCalc.heal_amount(role.get_max_hp(), 0, POTION_HEAL_PCT * potion_effect_mult, 0.0)
 	role.heal(amt, role, self)
 	return true
@@ -535,9 +700,20 @@ func swap_pet() -> bool:
 func step() -> void:
 	if finished:
 		return
-	# 0. 药剂 CD 计时（防连点误用）
+	# 0. 药剂 CD 计时（防连点误用）与合作倒地救援窗倒计时
 	if potion_cd_ticks > 0:
 		potion_cd_ticks -= 1
+	if coop_mode:
+		for uid_key in role_potion_cd.keys():
+			var cd_val := int(role_potion_cd[uid_key])
+			if cd_val > 0:
+				role_potion_cd[uid_key] = cd_val - 1
+		for u in units:
+			if u.kind == "role" and u.downed and u.downed_ticks > 0:
+				u.downed_ticks -= 1
+				if u.downed_ticks <= 0:
+					u.downed = false
+					emit({"t": "downed_expired", "uid": u.uid})
 	# 1. BuffSystem.tick
 	for u in units:
 		if u.alive:
@@ -570,15 +746,15 @@ func step() -> void:
 			var threshold := u.basic_threshold()
 			if u.attack_timer < threshold:
 				u.attack_timer += 1
-			var hold_manual := u.kind == "role" and manual_basic_attack and not auto_mode
+			var hold_manual := u.kind == "role" and manual_basic_attack and not auto_mode and not bool(safe_defend_uids.get(u.uid, false))
 			if u.attack_timer >= threshold and (not hold_manual or manual_attack_queued):
-				if u.kind == "role":
+				if u.kind == "role" and u.uid == role_uid:
 					manual_attack_queued = false
 				u.attack_timer = 0
 				u.do_basic_attack(self)
 				# 宠物攻击触发主人共鸣词条
 				if u.kind == "pet":
-					var owner := role_unit()
+					var owner := unit_by_uid(u.owner_uid) if u.owner_uid > 0 else role_unit()
 					if owner != null and owner.traits != null:
 						owner.traits.on_pet_hit(self, owner, u, 10)
 	# 5. AI/托管指令
@@ -587,7 +763,7 @@ func step() -> void:
 			continue
 		if u.side == "enemy" or u.kind == "pet":
 			MonsterAI.decide(self, u)
-		elif auto_mode:
+		elif auto_mode or bool(safe_defend_uids.get(u.uid, false)):
 			MonsterAI.decide_auto(self, u)
 	# 6. 世界主题规则（C 批）：周期类规则在这里 tick；揭示半径那条在 MapScene 侧生效
 	_apply_theme_rule()

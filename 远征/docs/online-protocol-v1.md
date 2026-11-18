@@ -101,7 +101,15 @@
 清单公布 `social_chat` 与 `parties` 功能位后，网关开放角色级社交与最多 4 人小队契约：
 - **好友、屏蔽与举报**：`GET /v1/social/state` 汇总当前好友列表、待处理申请、账号屏蔽名单、当前小队与待响应邀请。`POST /v1/social/friends/request`、`POST /v1/social/friends/{id}/respond` 与 `DELETE /v1/social/friends/{id}` 管理好友关系。`POST /v1/social/blocks`（及 `DELETE /v1/social/blocks/{account_id}`）以账号为粒度生效，双向拦截好友申请、组队邀请与私聊，并清理已有好友与待处理申请/邀请。`POST /v1/social/reports` 将分类与正文持久化到不可改写的 `player_reports` 审计表并写入 `audit_events`。
 - **分域聊天**：`POST /v1/chat/messages`（限流、控制字符过滤、1–120 字校验）与 `GET /v1/chat/messages?after_id=` 支持 `room`（同频道）、`nearby`（同频道 480px AOI）、`party`（同队跨图）与 `whisper`（双方角色私聊），查询与发送端均由服务端过滤屏蔽关系。
-- **真正组队**：`GET /v1/parties/current`、`POST /v1/parties`、`POST /v1/parties/invite`、`POST /v1/parties/invites/{id}/respond`、`POST /v1/parties/ready`、`POST /v1/parties/kick`、`POST /v1/parties/leader` 与 `POST /v1/parties/leave` 管控 4 人上限、队长权限、成员准备校验、离队顺位继任及空队解散（角色删除同步离队）；多人副本匹配与共战由后续 L2 接入。
+- **真正组队**：`GET /v1/parties/current`、`POST /v1/parties`、`POST /v1/parties/invite`、`POST /v1/parties/invites/{id}/respond`、`POST /v1/parties/ready`、`POST /v1/parties/kick`、`POST /v1/parties/leader` 与 `POST /v1/parties/leave` 管控 4 人上限、队长权限、成员准备校验、离队顺位继任及空队解散（角色删除同步离队）；多人副本匹配与共战由下述 L2 接入。
+
+## 合作副本与公共首领（L2 接入）
+
+清单公布 `coop_dungeons` 与 `world_boss` 功能位后，网关与权威战斗进程支持 1–4 人合作副本（`stele_cavern` 失声碑窟、`tidal_gate` 退潮水闸）及古道公共首领（`maple_road` 枫林失路兽 `mon_lost_beast`）：
+- **组队与匹配**：`GET /v1/coop/dungeons` 与 `GET /v1/coop/state` 返回副本规则、缩放表（1/2/3/4 人倍率与增援）、当前队列及所在实例。`POST /v1/coop/queue` 与 `DELETE /v1/coop/queue` 支持自选人数、`friends_only` 及跨队组批匹配，匹配器在事务锁内执行全配对双向账号屏蔽检查，排除互屏玩家经第三人拼成一队；队列确认开本通过 `POST /v1/coop/ready` 与 `POST /v1/coop/instances/{id}/start`（当前队伍一键开本，支持 1–4 人与四职业任意组合及高等级成员导师等级同步 `mentor_sync`）。
+- **多房机关、协同共战与救援**：`POST /v1/coop/instances/{id}/action` 处理多房间顺序/并行机关（失声碑窟先左/中后右柱；退潮水闸先旧渠泄水、再侧闸、可选队友救回堤边货箱 `cargo_rescue`）、多数派安全撤退至检查点、队长移交与离开重算缩容（remaining 成员数重新缩放未死亡/下阶段战斗难度）、以及 `disconnect` / `reconnect`（90 秒重连宽限窗口内掉线队友在 `RoomHost` 内切换 `safe_defend`，90 秒内可无损重连恢复战斗站位）。`RoomHost` 与 `BattleSim` 在 `coop_mode=true` 下支持最多 4 名玩家 + 各自出战伙伴同场作战、独立 `owner_uid` 分职目标选择、倒地救援窗口（队友主动 `rescue`）与结算贡献统计。
+- **个人掉落与防丢包**：通关由服务端幂等写入每名存活参与者独立的 `coop_instance_drops` 不可篡改掉落记录（含首通徽记、副本装备/碎片与导师印记）；`POST /v1/coop/drops/{id}/claim` 将掉落发入个人行囊，行囊满位（`pack_full`）时保留在待领箱并拒绝吞道具。
+- **枫林公共首领**：`GET /v1/world-boss/current`、`POST /v1/world-boss/objective`（阶段目标 `track` / `interrupt`）、`POST /v1/world-boss/engage`（经 `RoomHost` 权威演算输出与首领扣血）与 `POST /v1/world-boss/claim`（`UNIQUE (event_id, account_id)` 保障同账号每次公共首领窗口仅领一次主奖，支持故障关窗/超时结算后补领与迟到玩家阶段目标基础材料）。
 
 房间租约不授予战斗所有权；战斗接口每次仍重新验证账号、当前有效会话及选中在线角色。角色有未完成战斗或未确认结算时，不能切到别的角色或删除该角色。
 

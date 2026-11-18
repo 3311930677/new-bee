@@ -1,0 +1,23 @@
+{
+  "expected_cases": 79,
+  "passed_cases": 79,
+  "exit_code": 0,
+  "runner_sha256": "235f15b43bbe3f3227ef24af01a942948001db98e3848dda6abe4a01bcaa9ade",
+  "load_screen_sha256": "d3a35ebd4e6c04d8bf634e5f5584dd02be164fa79a66d3f7176cdef03c3d6f60",
+  "runner_unchanged": true,
+  "load_screen_unchanged": true,
+  "performance_thresholds_changed": false,
+  "goal_status": "active",
+  "L2_complete": true,
+  "engine_shutdown_diagnostics": {
+    "cases": 9,
+    "lines": 9,
+    "tracked_issue": 43
+  },
+  "host_certificate_store_diagnostics": {
+    "cases": 0,
+    "lines": 0,
+    "scope": "exact preexisting sandbox allowance; real TLS verified separately"
+  },
+  "scope": "strict full singleplayer regression after L2 final edit; online end-to-end evidence archived under reports/online_20261119/coop-dungeons"
+}

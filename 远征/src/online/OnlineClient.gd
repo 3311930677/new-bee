@@ -384,6 +384,116 @@ func leave_party(request_id := "") -> Dictionary:
 	return await _send_command("/v1/parties/leave", {}, request_id)
 
 
+func coop_dungeons() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/coop/dungeons", {}, "", true)
+
+
+func create_coop_instance(dungeon_id: String, difficulty := "standard", goal := "first_clear", allow_solo := false, request_id := "") -> Dictionary:
+	return await _send_command("/v1/coop/instances", {"dungeon_id": dungeon_id, "difficulty": difficulty, "goal": goal, "allow_solo": allow_solo}, request_id)
+
+
+func join_coop_queue(dungeon_id: String, difficulty := "standard", goal := "first_clear", friends_only := false, request_id := "") -> Dictionary:
+	return await _send_command("/v1/coop/queue/join", {"dungeon_id": dungeon_id, "difficulty": difficulty, "goal": goal, "friends_only": friends_only}, request_id)
+
+
+func leave_coop_queue(request_id := "") -> Dictionary:
+	return await _send_command("/v1/coop/queue/leave", {}, request_id)
+
+
+func get_coop_instance(instance_id: String) -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	return await _request(HTTPClient.METHOD_GET, "/v1/coop/instances/%s" % instance_id, {}, "", true)
+
+
+func set_coop_ready(instance_id: String, ready: bool, request_id := "") -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	return await _send_command("/v1/coop/instances/%s/ready" % instance_id, {"ready": ready}, request_id)
+
+
+func interact_coop_stage(instance_id: String, mechanic_id: String, choice := "", request_id := "") -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	var payload := {"mechanic_id": mechanic_id}
+	if not choice.is_empty():
+		payload["choice"] = choice
+	return await _send_command("/v1/coop/instances/%s/interact" % instance_id, payload, request_id)
+
+
+func start_coop_battle(instance_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	return await _send_command("/v1/coop/instances/%s/battle/start" % instance_id, {}, request_id)
+
+
+func coop_battle_command(instance_id: String, sequence: int, action: String, skill_id := "", target_uid := 0, advance_ticks := 45, request_id := "") -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	var payload := {"sequence": sequence, "action": action, "advance_ticks": advance_ticks}
+	if not skill_id.is_empty():
+		payload["skill_id"] = skill_id
+	if target_uid > 0:
+		payload["target_uid"] = target_uid
+	return await _send_command("/v1/coop/instances/%s/battle/command" % instance_id, payload, request_id)
+
+
+func tick_coop_battle(instance_id: String, advance_ticks := 30) -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	return await _request(HTTPClient.METHOD_POST, "/v1/coop/instances/%s/battle/tick" % instance_id, {"advance_ticks": advance_ticks}, "", true)
+
+
+func disconnect_coop_instance(instance_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	return await _send_command("/v1/coop/instances/%s/disconnect" % instance_id, {}, request_id)
+
+
+func leave_coop_instance(instance_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	return await _send_command("/v1/coop/instances/%s/leave" % instance_id, {}, request_id)
+
+
+func retreat_coop_instance(instance_id: String, vote: bool, request_id := "") -> Dictionary:
+	if not _valid_id(instance_id):
+		return _failure("副本实例标识无效。", "invalid_instance")
+	return await _send_command("/v1/coop/instances/%s/retreat" % instance_id, {"vote": vote}, request_id)
+
+
+func coop_drops() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/coop/drops", {}, "", true)
+
+
+func claim_coop_drop(drop_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(drop_id):
+		return _failure("战利品标识无效。", "invalid_drop")
+	return await _send_command("/v1/coop/drops/%s/claim" % drop_id, {}, request_id)
+
+
+func world_boss_current() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/world-boss/current", {}, "", true)
+
+
+func world_boss_objective(event_id: String, objective_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(event_id):
+		return _failure("公共首领事件无效。", "invalid_event")
+	return await _send_command("/v1/world-boss/%s/objective" % event_id, {"objective_id": objective_id}, request_id)
+
+
+func world_boss_engage(event_id: String, action := "attack", request_id := "") -> Dictionary:
+	if not _valid_id(event_id):
+		return _failure("公共首领事件无效。", "invalid_event")
+	return await _send_command("/v1/world-boss/%s/engage" % event_id, {"action": action}, request_id)
+
+
+func world_boss_claim(event_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(event_id):
+		return _failure("公共首领事件无效。", "invalid_event")
+	return await _send_command("/v1/world-boss/%s/claim" % event_id, {}, request_id)
+
+
 func logout() -> void:
 	if is_authenticated():
 		await _request(HTTPClient.METHOD_POST, "/v1/auth/logout", {}, "", true)

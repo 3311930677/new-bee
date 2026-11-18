@@ -403,7 +403,7 @@ static func _pick_targets(sim: BattleSim, caster: Combatant, target_type: String
 		"ally_single":
 			out.append(_heal_target(caster, allies))
 		"ally_role":
-			var role := sim.role_unit()
+			var role := sim.unit_by_uid(caster.owner_uid) if caster.owner_uid > 0 else sim.role_unit()
 			if role != null and role.alive and role.side == caster.side:
 				out.append(role)
 		"ally_all":

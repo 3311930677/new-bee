@@ -169,7 +169,40 @@ def main():
         check(rpc.call("battle.release", {"battle_id": loadout_id}).get("released"), "loadout simulation can be released")
         invalid_loadout = rpc.call("battle.start", config | {"battle_id": str(uuid.uuid4()), "loadout": {"active_pet": "pet_illegal"}})
         check(not invalid_loadout.get("ok"), "authority rejects unapproved companion loadout")
-        report |= {"passed": True, "final_state_hash": final["state"]["state_hash"], "ticks": final["state"]["tick"], "inputs": final["inputs"]}
+        coop_id = str(uuid.uuid4())
+        coop_cfg = {
+            "battle_id": coop_id,
+            "monster_id": "mon_stele_warden",
+            "seed": 515253,
+            "downed_window_ticks": 450,
+            "coop_scaling": {"hp_mult": 2.35, "atk_mult": 1.12, "def_mult": 1.1, "extra_adds": 1, "add_monster_id": "mon_ghost"},
+            "members": [
+                {"character_id": "char-zs", "name": "破军", "role_id": "zs", "level": 8, "loadout": {"attack": 10, "defense": 6, "health": 50, "potions": 3, "active_pet": "pet_rockturtle"}},
+                {"character_id": "char-ck", "name": "穿杨", "role_id": "ck", "level": 8, "loadout": {"attack": 10, "potions": 3}},
+                {"character_id": "char-fs", "name": "霜语", "role_id": "fs", "level": 8, "loadout": {"attack": 11, "potions": 3}},
+                {"character_id": "char-fz", "name": "晨星", "role_id": "fz", "level": 8, "loadout": {"attack": 9, "health": 30, "potions": 3}},
+            ],
+            "inputs": [
+                {"sequence": 1, "tick": 65, "action": {"character_id": "char-zs", "action": "attack"}},
+                {"sequence": 2, "tick": 70, "action": {"character_id": "char-ck", "action": "attack"}},
+                {"sequence": 3, "tick": 75, "action": {"character_id": "char-fs", "action": "attack"}},
+                {"sequence": 4, "tick": 80, "action": {"character_id": "char-fz", "action": "safe_defend", "enabled": True}},
+            ],
+            "target_tick": 90,
+        }
+        coop_sync = rpc.call("battle.sync", coop_cfg)
+        coop_units = coop_sync.get("state", {}).get("units", [])
+        coop_members = coop_sync.get("state", {}).get("coop_members", {})
+        check(
+            coop_sync.get("ok")
+            and len(coop_members) == 4
+            and sum(1 for u in coop_units if u.get("kind") == "role" and u.get("side") == "ally") == 4
+            and sum(1 for u in coop_units if u.get("side") == "enemy") == 2
+            and coop_members.get("char-zs", {}).get("actions") == 1
+            and coop_members.get("char-fz", {}).get("safe_defend") is True,
+            "authority simulates 4-class co-op party with scaled enemies and per-member actions",
+        )
+        report |= {"passed": True, "final_state_hash": final["state"]["state_hash"], "ticks": final["state"]["tick"], "inputs": final["inputs"], "coop_members_tested": len(coop_members)}
     except Exception as error:
         report |= {"passed": False, "error": str(error)}
     finally:

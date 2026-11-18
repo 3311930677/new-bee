@@ -33,7 +33,13 @@
       "tpl_hammer_basic": {"name": "生铁圣锤", "icon": "slot_hammer", "kind": "weapon", "role_id": "fz", "attack": 9, "health": 30},
       "tpl_armor_basic": {"name": "皮甲", "icon": "slot_armor", "kind": "armor", "defense": 6, "health": 50},
       "itm_potion_hp_s": {"name": "治疗药剂", "icon": "itm_potion_hp_s", "kind": "potion"},
-      "pet_rockturtle": {"name": "岩龟", "icon": "pet_rockturtle", "kind": "companion"}
+      "pet_rockturtle": {"name": "岩龟", "icon": "pet_rockturtle", "kind": "companion"},
+      "tpl_armor_stele": {"name": "拓碑铁甲", "icon": "slot_armor", "kind": "armor", "defense": 10, "health": 90},
+      "tpl_armor_tide": {"name": "潮汐护甲", "icon": "slot_armor", "kind": "armor", "defense": 13, "health": 120},
+      "mat_stele_shard": {"name": "古碑碎纹", "icon": "itm_potion_hp_s", "kind": "material"},
+      "mat_tidal_core": {"name": "潮蚀结晶", "icon": "itm_potion_hp_s", "kind": "material"},
+      "mat_mentor_seal": {"name": "助战印信", "icon": "itm_potion_hp_s", "kind": "material"},
+      "mat_forest_crest": {"name": "失路兽徽记", "icon": "itm_potion_hp_s", "kind": "material"}
     },
     "points": {
       "npc_steward": {"name": "闻叔", "position": [418, 1325], "radius": 112},
@@ -51,5 +57,123 @@
       {"id": "old_rubbing", "title": "旧卷中的名字", "goal": "去城南西侧找青姨，对照碑文拓片。", "event": "interact", "target_id": "npc_scribe", "dialogue": "拓片描着失声碑窟的旧门。我已给你记下通行资格，日后可和队友一道进窟。"},
       {"id": "complete", "title": "碑窟旧门", "goal": "已取得失声碑窟通行资格。组队副本开放后可集结进入。", "event": "complete"}
     ]
+  },
+  "coop": {
+    "disconnect_grace_seconds": 90,
+    "afk_warn_seconds": 45,
+    "downed_window_ticks": 450,
+    "mentor_level_delta": 5,
+    "drop_expiry_hours": 168,
+    "scaling": {
+      "1": {"hp_mult": 1.0, "atk_mult": 1.0, "def_mult": 1.0, "extra_adds": 0, "gold_bonus_pct": 0},
+      "2": {"hp_mult": 1.65, "atk_mult": 1.06, "def_mult": 1.05, "extra_adds": 1, "gold_bonus_pct": 10},
+      "3": {"hp_mult": 2.35, "atk_mult": 1.12, "def_mult": 1.10, "extra_adds": 1, "gold_bonus_pct": 20},
+      "4": {"hp_mult": 3.10, "atk_mult": 1.18, "def_mult": 1.15, "extra_adds": 2, "gold_bonus_pct": 30}
+    },
+    "dungeons": {
+      "stele_cavern": {
+        "name": "失声碑窟",
+        "theme": "tomb",
+        "min_level": 1,
+        "recommended_level": 5,
+        "requires_journey_unlock": true,
+        "pet_notice": "随行宠物将占用1个助战位并跟随主人出战",
+        "potion_notice": "每人携带个人治疗药剂（每场上限 6 瓶，救援倒地队友消耗 1 瓶）",
+        "first_clear_notice": "首通奖励按角色独立发放，未通关成员同享首通礼",
+        "stages": [
+          {
+            "id": "echo_chamber",
+            "name": "石缝回声厅",
+            "kind": "puzzle",
+            "checkpoint": true,
+            "mechanics": ["echo_clue", "west_stele", "east_stele"],
+            "hint": "团队读取拓片线索并合力校准东西两枚碑座（西：两声轻响，东：缺口朝碑心）"
+          },
+          {
+            "id": "corridor_guard",
+            "name": "碑廊守影",
+            "kind": "battle",
+            "checkpoint": true,
+            "monster_id": "mon_ghost",
+            "add_monster_id": "mon_cryptspider",
+            "hint": "击退中廊怨灵，稳固通往祭坛的石路"
+          },
+          {
+            "id": "warden_sanctum",
+            "name": "失声祭坛",
+            "kind": "boss",
+            "checkpoint": false,
+            "monster_id": "mon_stele_warden",
+            "add_monster_id": "mon_ghost",
+            "hint": "失声碑灵 50% 血量会触发悲鸣加速，22% 血量护壁崩解露破绽"
+          }
+        ],
+        "rewards": {
+          "first_clear": {"gold": 120, "experience": 80, "item_id": "tpl_armor_stele", "quantity": 1},
+          "repeat": {"gold": 65, "experience": 45, "item_id": "mat_stele_shard", "quantity": 2},
+          "mentor": {"gold": 40, "experience": 25, "item_id": "mat_mentor_seal", "quantity": 1}
+        }
+      },
+      "tidal_gate": {
+        "name": "退潮水闸",
+        "theme": "tomb",
+        "min_level": 1,
+        "recommended_level": 10,
+        "requires_journey_unlock": false,
+        "pet_notice": "随行宠物将占用1个助战位并跟随主人出战",
+        "potion_notice": "每人携带个人治疗药剂（每场上限 6 瓶，救援倒地队友消耗 1 瓶）",
+        "first_clear_notice": "首通奖励按角色独立发放，双路协作可额外救回货箱补给",
+        "stages": [
+          {
+            "id": "sluice_hall",
+            "name": "上闸观测台",
+            "kind": "puzzle",
+            "checkpoint": true,
+            "mechanics": ["tide_record", "upper_sluice", "bridge_sluice"],
+            "hint": "核对水痕记录：上闸先向旧渠泄水，栈桥侧闸先通步道，同时安排队友救回堤边货箱"
+          },
+          {
+            "id": "floodway_patrol",
+            "name": "栈桥潮道",
+            "kind": "battle",
+            "checkpoint": true,
+            "monster_id": "mon_tidal_guard",
+            "add_monster_id": "mon_salt_crab",
+            "hint": "清理水闸守卫与盐甲蟹，开启通往主闸的栈桥"
+          },
+          {
+            "id": "priest_altar",
+            "name": "退潮主闸",
+            "kind": "boss",
+            "checkpoint": false,
+            "monster_id": "mon_tide_priest",
+            "add_monster_id": "mon_tidal_guard",
+            "hint": "潮蚀司祭 55% 血量涨潮减速，22% 血量退潮破防"
+          }
+        ],
+        "rewards": {
+          "first_clear": {"gold": 180, "experience": 120, "item_id": "tpl_armor_tide", "quantity": 1},
+          "repeat": {"gold": 90, "experience": 65, "item_id": "mat_tidal_core", "quantity": 2},
+          "mentor": {"gold": 50, "experience": 35, "item_id": "mat_mentor_seal", "quantity": 1}
+        }
+      }
+    }
+  },
+  "world_boss": {
+    "event_key_prefix": "maple_lost_beast",
+    "map_id": "maple_road",
+    "boss_id": "mon_lost_beast",
+    "name": "枫林失路兽",
+    "position": [480, 1180],
+    "radius": 160,
+    "max_hp": 1200,
+    "duration_seconds": 900,
+    "min_level": 1,
+    "objectives": ["inspect_trail", "disrupt_howl"],
+    "rewards": {
+      "assist": {"gold": 45, "experience": 30, "item_id": "mat_forest_crest", "quantity": 1},
+      "stage": {"gold": 90, "experience": 60, "item_id": "mat_forest_crest", "quantity": 2},
+      "defeat": {"gold": 150, "experience": 100, "item_id": "mat_forest_crest", "quantity": 3}
+    }
   }
 }
