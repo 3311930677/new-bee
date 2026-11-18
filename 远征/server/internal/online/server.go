@@ -39,13 +39,14 @@ type Config struct {
 }
 
 type Server struct {
-	db        *pgxpool.Pool
-	cfg       Config
-	mux       *http.ServeMux
-	limiter   rateLimiter
-	dummyHash []byte
-	metrics   runtimeMetrics
-	startedAt time.Time
+	db            *pgxpool.Pool
+	cfg           Config
+	mux           *http.ServeMux
+	limiter       rateLimiter
+	dummyHash     []byte
+	metrics       runtimeMetrics
+	startedAt     time.Time
+	positionFeeds positionFeeds
 }
 
 type apiError struct {
@@ -115,6 +116,7 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/rooms/join", s.authorized(s.joinRoom))
 	s.mux.HandleFunc("POST /v1/rooms/move", s.authorized(s.moveRoom))
 	s.mux.HandleFunc("GET /v1/rooms/current", s.authorized(s.roomSnapshot))
+	s.mux.HandleFunc("GET /v1/rooms/positions", s.authorized(s.roomPositionStream))
 	s.mux.HandleFunc("POST /v1/battles", s.authorized(s.startBattle))
 	s.mux.HandleFunc("GET /v1/battles/active", s.authorized(s.activeBattle))
 	s.mux.HandleFunc("GET /v1/battles/{id}", s.authorized(s.battleSnapshot))
@@ -246,7 +248,7 @@ func (s *Server) health(w http.ResponseWriter, r *http.Request) {
 func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
 	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery", "character_identity"}
 	if s.cfg.Authority != nil {
-		features = append(features, "town_rooms", "authority_battles")
+		features = append(features, "town_rooms", "authority_battles", "town_positions")
 		if s.cfg.Rules.Journey != nil {
 			features = append(features, "town_journey")
 		}

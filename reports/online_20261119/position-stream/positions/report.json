@@ -1,0 +1,39 @@
+{
+  "run_id": "a239e75527c2478b96ee9b7e36ebe7a5",
+  "online_sources_sha256": "2e0601026c86a5ef6beae933ded368e6d34a044dbe8fcf554fe6f0933431d556",
+  "transport": "https-validating-debug-ca",
+  "gateway_binary_sha256": "dd9eff32f1005ee7d8d172e09ec3628a110d62cbd22f272a27256b022d9f5723",
+  "scope": "two native Godot clients, rendering, input prediction, AOI exit and return, logout",
+  "world_observations": {
+    "observed-a": {
+      "tick": 12
+    },
+    "observed-b": {
+      "tick": 12
+    },
+    "away": {
+      "confirmed_y": 2048.0,
+      "local_prediction_seen": true
+    },
+    "hidden": {
+      "tween_seen": true
+    },
+    "returned": {
+      "confirmed_y": 1592.0
+    },
+    "logged-out": {}
+  },
+  "database_counts": [
+    "2",
+    "1",
+    "0"
+  ],
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  },
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true,
+  "errors": [],
+  "passed": true
+}

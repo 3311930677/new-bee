@@ -1,0 +1,272 @@
+{
+  "run_id": "22ac6d267c284537810494b1e7231025",
+  "scope": "L0 desktop two-client same town, authority combat, atomic rewards and restart recovery; not mobile/WAN/PvP acceptance",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "8387264cdefbfdc509d1d96e2706eccc79316cb9a8771ffde2af417b6376bc55",
+    "content_version": "43fbd8b7bf345676bf6a99109d69a5c0472dbd676e5886211946ceb16e88d79c",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "online_sources_sha256": "2e0601026c86a5ef6beae933ded368e6d34a044dbe8fcf554fe6f0933431d556",
+  "gateway_binary_sha256": "dd9eff32f1005ee7d8d172e09ec3628a110d62cbd22f272a27256b022d9f5723",
+  "supervision": {
+    "scope": "real foreground Windows role hosts; distinct OS identities and native OS manager restart are not accepted by this drill",
+    "host_binary_sha256": "8de32bc78b661d9dd42f0bcdcfedb0760e2222e0676703f08f0fd723b283a86e",
+    "events": [
+      {
+        "kind": "host_death",
+        "role": "gateway",
+        "child_reaped": true,
+        "host_manager_restart": "verifier explicit restart; OS service-manager restart not accepted here",
+        "old_child_pid": 63636,
+        "new_child_pid": 16472
+      },
+      {
+        "kind": "hang",
+        "role": "worker",
+        "old_child_pid": 26684,
+        "new_child_pid": 25752,
+        "host_pid_unchanged": true,
+        "generation_before": 1,
+        "generation_after": 2,
+        "suspended_threads": 22,
+        "gateway_dependency_failure_without_restart": true,
+        "recovery_seconds": 9.296
+      },
+      {
+        "kind": "exit",
+        "role": "gateway",
+        "old_child_pid": 16472,
+        "new_child_pid": 64976,
+        "host_pid_unchanged": true,
+        "generation_before": 1,
+        "generation_after": 2,
+        "suspended_threads": 0,
+        "gateway_dependency_failure_without_restart": null,
+        "recovery_seconds": 2.547
+      }
+    ],
+    "planned_stops": [
+      {
+        "role": "gateway",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      },
+      {
+        "role": "worker",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      },
+      {
+        "role": "gateway",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      },
+      {
+        "role": "worker",
+        "exit_code": 0,
+        "phase": "stopped",
+        "child_pid": 0
+      }
+    ]
+  },
+  "injected_database_failures": 2,
+  "fault_database_counts": [
+    "0",
+    "0",
+    "0",
+    "200",
+    "0"
+  ],
+  "database_recovery": {
+    "passed": true,
+    "scope": "actual read-only-role pg_dump, new-database restore, two real unconfirmed Godot victories; no live endpoint promotion",
+    "tables_matched": 19,
+    "before_counts": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2"
+    ],
+    "restored_counts": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "2",
+      "0"
+    ],
+    "expired_leases": 2,
+    "revoked_sessions": 2,
+    "post_backup_source_audit_retained": true,
+    "post_backup_audit_absent_from_restored_snapshot": true,
+    "gateway_restricted_starts": 4,
+    "backup_started_utc": "2026-11-18T16:32:32.7078029Z",
+    "backup_finished_utc": "2026-11-18T16:32:33.2468443Z",
+    "restore_started_utc": "2026-11-18T16:32:34.1961123Z",
+    "restore_finished_utc": "2026-11-18T16:32:46.1155875Z",
+    "dump_sha256": "10a1e98961b2adc862a20b0f508d2e79e218bf743a4b84489c9c99f5f487cd48",
+    "dbops_binary_sha256": "4ca95829706cf14ec790d3cfb76cd5beee0e01db7f8e7eaae34cc804a05f0989",
+    "offline_actions": [
+      {
+        "action": "provision",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "migrate",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "grant",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "gateway-reject-offline-credential",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "gateway-reject-owner-role",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "gateway-reject-future-schema",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "migrate",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "action": "backup",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "restore",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "action": "restore",
+        "exit_code": 1,
+        "expected_success": false
+      }
+    ]
+  },
+  "passed": true,
+  "final_database_counts": [
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "0"
+  ],
+  "clients": [
+    {
+      "battle_id": "952a6eca-d11a-48d9-8ca0-67a9fa4de3c3",
+      "character_id": "0e0a13fe-b003-4864-acef-3ed766651e39",
+      "commands": 32,
+      "receipt": {
+        "experience": 5.0,
+        "gold": 10.0,
+        "result_id": "ad8f4dd7-9bb8-48e9-aad1-9ad7a934b388",
+        "wallet_balance": 110.0
+      }
+    },
+    {
+      "battle_id": "eff0410c-7e0d-4c25-b6f5-7d112faf7b8e",
+      "character_id": "c50a367a-8bf0-424a-91a8-56b12989c8f7",
+      "commands": 27,
+      "receipt": {
+        "experience": 5.0,
+        "gold": 10.0,
+        "result_id": "1e1880b9-ddf9-4eec-801d-3925f51483dd",
+        "wallet_balance": 110.0
+      }
+    }
+  ],
+  "cleanup_errors": [],
+  "worker_errors": [],
+  "player_data_unchanged": true,
+  "checks": [
+    {
+      "name": "actual supervisor death closes its job and reaps only its owned gateway",
+      "passed": true
+    },
+    {
+      "name": "two real clients hold exclusive leases in one town",
+      "passed": true
+    },
+    {
+      "name": "both failures are independently identified as the injected PostgreSQL exception",
+      "passed": true
+    },
+    {
+      "name": "failed real victory transactions leave no partial reward, claim or input",
+      "passed": true
+    },
+    {
+      "name": "real hung authority recovers automatically while the live gateway only becomes unready",
+      "passed": true
+    },
+    {
+      "name": "a killed real gateway automatically restarts under the same role host",
+      "passed": true
+    },
+    {
+      "name": "gateway and real authority process restart before reward retry",
+      "passed": true
+    },
+    {
+      "name": "a real read-only backup restores both unconfirmed victories with revoked old sessions",
+      "passed": true
+    },
+    {
+      "name": "client a completes real movement, combat, reward retry and reconnect",
+      "passed": true
+    },
+    {
+      "name": "client b completes real movement, combat, reward retry and reconnect",
+      "passed": true
+    },
+    {
+      "name": "database independently confirms two victories, exactly one reward each and revoked sessions",
+      "passed": true
+    },
+    {
+      "name": "actual 480x800 world, battle and result screenshots exist",
+      "passed": true
+    }
+  ],
+  "online_sources_unchanged": true
+}

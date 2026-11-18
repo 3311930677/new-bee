@@ -5,6 +5,7 @@ signal state_changed
 signal refresh_finished(result: Dictionary)
 
 const Profile := preload("res://src/online/OnlineProfile.gd")
+const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 const REQUEST_TIMEOUT := 20.0
 const RESPONSE_LIMIT := 256 * 1024
 
@@ -208,6 +209,16 @@ func join_world(request_id := "") -> Dictionary:
 
 func world_snapshot() -> Dictionary:
 	return await _request(HTTPClient.METHOD_GET, "/v1/rooms/current", {}, "", true)
+
+
+func open_world_positions() -> PositionStream:
+	var features: Variant = manifest.get("features", [])
+	if not is_authenticated() or not features is Array or not features.has("town_positions"):
+		return null
+	var stream := PositionStream.new()
+	if not stream.open(base_url, access_token, _local_content_version, _debug_tls_options):
+		return null
+	return stream
 
 
 func move_world(lease: Dictionary, target: Vector2, request_id := "") -> Dictionary:
