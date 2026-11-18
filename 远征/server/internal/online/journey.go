@@ -25,13 +25,18 @@ type JourneyRules struct {
 }
 
 type JourneyItem struct {
-	Name    string `json:"name"`
-	Icon    string `json:"icon"`
-	Kind    string `json:"kind"`
-	RoleID  string `json:"role_id,omitempty"`
-	Attack  int    `json:"attack,omitempty"`
-	Defense int    `json:"defense,omitempty"`
-	Health  int    `json:"health,omitempty"`
+	Name           string `json:"name"`
+	Icon           string `json:"icon"`
+	Kind           string `json:"kind"`
+	RoleID         string `json:"role_id,omitempty"`
+	Attack         int    `json:"attack,omitempty"`
+	Defense        int    `json:"defense,omitempty"`
+	Health         int    `json:"health,omitempty"`
+	Tradeable      bool   `json:"tradeable,omitempty"`
+	MarketCategory string `json:"market_category,omitempty"`
+	BasePrice      int64  `json:"base_price,omitempty"`
+	NpcBuyPrice    int64  `json:"npc_buy_price,omitempty"`
+	NpcSellPrice   int64  `json:"npc_sell_price,omitempty"`
 }
 
 type JourneyPoint struct {
@@ -81,6 +86,15 @@ func (j JourneyRules) validate(encounters map[string]EncounterRule) error {
 				return invalid
 			}
 		default:
+			return invalid
+		}
+		if item.BasePrice < 0 || item.NpcBuyPrice < 0 || item.NpcSellPrice < 0 {
+			return invalid
+		}
+		if item.Tradeable && item.MarketCategory != "commodity" && item.MarketCategory != "equipment" {
+			return invalid
+		}
+		if item.MarketCategory != "" && item.MarketCategory != "commodity" && item.MarketCategory != "equipment" {
 			return invalid
 		}
 	}

@@ -34,12 +34,18 @@
       "tpl_armor_basic": {"name": "皮甲", "icon": "slot_armor", "kind": "armor", "defense": 6, "health": 50},
       "itm_potion_hp_s": {"name": "治疗药剂", "icon": "itm_potion_hp_s", "kind": "potion"},
       "pet_rockturtle": {"name": "岩龟", "icon": "pet_rockturtle", "kind": "companion"},
-      "tpl_armor_stele": {"name": "拓碑铁甲", "icon": "slot_armor", "kind": "armor", "defense": 10, "health": 90},
-      "tpl_armor_tide": {"name": "潮汐护甲", "icon": "slot_armor", "kind": "armor", "defense": 13, "health": 120},
-      "mat_stele_shard": {"name": "古碑碎纹", "icon": "itm_potion_hp_s", "kind": "material"},
-      "mat_tidal_core": {"name": "潮蚀结晶", "icon": "itm_potion_hp_s", "kind": "material"},
-      "mat_mentor_seal": {"name": "助战印信", "icon": "itm_potion_hp_s", "kind": "material"},
-      "mat_forest_crest": {"name": "失路兽徽记", "icon": "itm_potion_hp_s", "kind": "material"}
+      "tpl_armor_stele": {"name": "拓碑铁甲", "icon": "slot_armor", "kind": "armor", "defense": 10, "health": 90, "tradeable": false},
+      "tpl_armor_tide": {"name": "潮汐护甲", "icon": "slot_armor", "kind": "armor", "defense": 13, "health": 120, "tradeable": false},
+      "tpl_sword_forged": {"name": "百炼长剑", "icon": "slot_sword", "kind": "weapon", "role_id": "zs", "attack": 16, "tradeable": true, "market_category": "equipment", "base_price": 120},
+      "tpl_armor_forged": {"name": "精工胸甲", "icon": "slot_armor", "kind": "armor", "defense": 11, "health": 100, "tradeable": true, "market_category": "equipment", "base_price": 110},
+      "mat_grain": {"name": "边城粟米", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 12, "npc_buy_price": 14, "npc_sell_price": 9},
+      "mat_salt": {"name": "古道粗盐", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 15, "npc_buy_price": 18, "npc_sell_price": 11},
+      "mat_herbs": {"name": "石缝药草", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 18, "npc_buy_price": 22, "npc_sell_price": 14},
+      "mat_iron": {"name": "生铁矿石", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 24, "npc_buy_price": 28, "npc_sell_price": 19},
+      "mat_stele_shard": {"name": "古碑碎纹", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 32},
+      "mat_tidal_core": {"name": "潮蚀结晶", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 40},
+      "mat_mentor_seal": {"name": "助战印信", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": false},
+      "mat_forest_crest": {"name": "失路兽徽记", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": true, "market_category": "commodity", "base_price": 35}
     },
     "points": {
       "npc_steward": {"name": "闻叔", "position": [418, 1325], "radius": 112},
@@ -175,5 +181,24 @@
       "stage": {"gold": 90, "experience": 60, "item_id": "mat_forest_crest", "quantity": 2},
       "defeat": {"gold": 150, "experience": 100, "item_id": "mat_forest_crest", "quantity": 3}
     }
+  },
+  "market": {
+    "stage": "M3",
+    "sandbox_only": false,
+    "max_active_orders": 20,
+    "listing_fee_bps": 100,
+    "tax_bps": 400,
+    "order_ttl_hours": 48,
+    "payout_ttl_hours": 168,
+    "trade_ttl_seconds": 300,
+    "price_floor_ratio_bps": 5000,
+    "price_ceiling_ratio_bps": 40000,
+    "anomaly_ratio_bps": 25000,
+    "daily_npc_trade_cap": 30,
+    "npc_regions": {
+      "lorin_wilds": {"label": "昭元集市", "buy_mult_bps": 10000, "sell_mult_bps": 10000, "event": "春耕余粮充足，行商正常收购"},
+      "maple_road": {"label": "古道驿商", "buy_mult_bps": 11500, "sell_mult_bps": 10800, "event": "北门货运加价，外围矿药需求偏高"}
+    },
+    "npc_floor_goods": ["mat_grain", "mat_salt", "mat_herbs", "mat_iron"]
   }
 }

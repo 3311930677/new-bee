@@ -123,7 +123,7 @@ class DatabaseRecovery:
             raise RuntimeError("Real pre-backup victories or active sessions are incomplete")
         backup = self.folder / "backup-private"
         manifest = self.command("backup", folder=backup)
-        if len(manifest.get("tables", [])) != 34:
+        if len(manifest.get("tables", [])) != 40:
             raise RuntimeError("Backup did not include every migrated game table")
         (self.folder / "backup-manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         stack.sql("INSERT INTO audit_events(action) VALUES('restore.drill.after_backup')")

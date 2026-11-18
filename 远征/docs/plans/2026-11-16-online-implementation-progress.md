@@ -19,7 +19,7 @@
 | L0 | 版本化协议、账号/可撤销会话、最多三角色、导入预览、独立资产账本、房间租约、Godot 权威战斗、一次性奖励、部署/监控 | 双设备/双客户端登录同城和测试战斗；伪造本地资产无效；重复请求/并发/崩溃不重复发奖；离线可玩 | 开发中 |
 | L1 | 昭元/沉渊频道、移动预测/插值/AOI、NPC隔离、好友/屏蔽/举报、附近/队伍聊天、组队/准备/队长交接、重连 | 24 人频道、12 人野外、8–12 人视野手机可读；低网速与邀请/聊天滥用测试 | 本地闭环完成（待真机/广域网补充） |
 | L2 | 2–4 人碑窟/水闸、多房机制、职业配合/救援、个人掉落、组队匹配、参与判定、公共首领一个 | 四职业任意组合；1/2/3/4 人缩放；任务进度不同、队长退出、90秒内断线重连与有效领奖 | 本地闭环完成（待真机/广域网补充） |
-| L3 | M0 沙盒→M1材料→M2装备寄售、NPC保底、托管、税/手续费、成交记录、异常监控；后续M3面对面交易 | 并发购买/撤单、部分成交、事务中断、恢复、满包与金币/物品守恒；完整事件周期经济观察 | 待开发，不对玩家开放 |
+| L3 | M0 沙盒→M1材料→M2装备寄售、NPC保底、托管、税/手续费、成交记录、异常监控；后续M3面对面交易 | 并发购买/撤单、部分成交、事务中断、恢复、满包与金币/物品守恒；完整事件周期经济观察 | 本地闭环完成（沙盒与守恒测试已通过，公开开放待运营窗口） |
 | L4 | 矿脉/界碑合作、第二公共首领、帮派权限/据点/协作/仓库日志、退出与会长交接 | 完整招募/退出/协作链；权限与每笔变更可追溯；不加帮派正常成长 | 待开发 |
 | L5 | 1v1/2v2/3v3 各有好友切磋和独立排位；归一规则、队伍/目标/群攻/治疗控制衰减、赛季/回放 | 三种人数真实匹配/准备/战斗/结算/重连；六角色手机可读；独立段位、默认动作、平局、服务故障不错误扣分 | 待开发，三种均验收才完成 |
 | L6 | 压测、分区、备份恢复、告警、配置审核、举报/客服、隐私/账号找回/删除恢复、发布回退、安装包 | 100并发封测→1000并发准备的实际容量/成本；恢复演练；目标机型移动交互P95<300ms、战斗回执P95<500ms、城镇30fps | 待开发 |
@@ -215,8 +215,20 @@
   - **L1 / L0 无回退复验**：`VerifyNav` 退出码 `0`；`verify_social_l1.py`（`4fea27d2ee6e4abf8380c5cebedddab4`）、`verify_world_l1.py`（`8d0783a183d645bf9f231e24d1503e77`）、`verify_positions.py` 与 `verify_journey.py`（`bd9c8d791c634bdba23fd72e014717f5` **6/6**）全部在 34 表架构上通过，客户端退出码均为 `0`。
   - **完整单机回归**：`online_full_20261119_l2_final` **79/79 PASS（`ALL GREEN`），退出码 `0`**（`runner_unchanged=true`、`load_screen_unchanged=true`、`VerifyPerf` 预算全部达标；21 项用例共记录 39 条 issue #43 引擎退出资源诊断）。
 
+### L3 经济沙盒、材料与装备寄售及面对面交易（11 月 19 日）
+
+- 迁移与规则体系：迁移 `009_online_market_trade.sql` 新增 `market_orders`、`market_fills`（只追加防篡改触发器，网关角色无 `UPDATE`/`DELETE` 权限）、`market_payouts`（关键金额与物品数量锁死触发器）、`trade_sessions`、`trade_offers`、`economy_alerts`（总计 **40 张表**，同步扩展 `dbops/roles.go` 最小权限、`CheckRuntimePrivileges` 与只读备份/新库恢复）；[online_rules.json](../../data/online_rules.json) 扩展可交易物品标志、引导价带、1% 上架费、4% 成交税、地区 NPC 价差与 `market` 配置段。
+- 服务端交易内核与守恒：[market.go](../../server/internal/online/market.go) 与 [trade.go](../../server/internal/online/trade.go) 完整落地 M0 阶段闸门与维护暂停、NPC 保底买卖、M1 材料部分成交与 `FOR UPDATE` 买卖撤单互斥、M2 未绑定可交易装备词条传承及托管禁穿戴、同账号自买拦截告警与高价/对敲异常监测、交易邮箱 `market_payouts` `pack_full` 保护，以及 M3 好友面对面改价清双方确认与原子交割；[coop.go](../../server/internal/online/coop.go) 与 [world_boss.go](../../server/internal/online/world_boss.go) 对标表可交易材料改按未绑定发放。
+- 客户端入口：新增 [OnlineMarketPanel.gd](../../src/ui/OnlineMarketPanel.gd)（集市/寄售/收件箱/面对面四页签及 `ui_cancel` 关窗），并整合进 [OnlineClient.gd](../../src/online/OnlineClient.gd) 与 [OnlineWorld.gd](../../src/ui/OnlineWorld.gd) 的两行紧凑动作栏。
+- 实测与回归验证（源码指纹 `69a24ad9e127bcddcf94b9ae5c35bfa2f48d2160812c595fc296d3a9eb22f666`，脱敏证据见 `reports/online_20261119/market-trade/` 与 `reports/online_20261119/l3-regression/`）：
+  - **Go / PostgreSQL 套件**：**70/70 通过，退出码 0**（含 `TestMarketM0SandboxGating`、`TestMarketM1M2ConsignmentConcurrencyCancelAndPayouts` 与 `TestMarketM3FaceToFaceTradeReconfirmCancelAndConservation`，验证并发购买/撤单互斥、故障暂停与全服金币/物品严格守恒，及 `dbops` **40 表** 权限/备份恢复）。
+  - **独立 Godot 权威检查**：`room_f76726a86a414dfa975420951e7cf33d` **30/30 通过，退出码 0**。
+  - **双真实端 L3 验证**（`verify_market_l3.py --capture`）：`market_l3_52ff28df1de941299f14a4f28ceb170f` 通过，两端退出码 `0`、40 表一致，已目检 480×800 `market-board.png` 与 `face-trade.png`。
+  - **L2 / L1 / L0 无回退复验**：`VerifyNav` 退出码 `0`；`verify_coop_l2.py`（`cf460691f3ed41dabb1eef2378bfc2b8`）、`verify_social_l1.py`（`208f8c4ea3c24e9794b20f3db6eef6d5`）、`verify_world_l1.py`（`5b31f7e1cc09408ca38a6ff33f3a51ab`）与 `verify_journey.py`（`b21cd3f2c1be401b8906b5ba0fb0526b` **6/6**）全部在 40 表架构上通过，客户端退出码均为 `0`。
+  - **完整单机回归**：`online_full_20261119_l3_final` **79/79 PASS（`ALL GREEN`），退出码 `0`**（`runner_unchanged=true`、`load_screen_unchanged=true`、`VerifyPerf` 预算全部达标；19 项用例共记录 35 条 issue #43 引擎退出资源诊断）。
+
 ### 未解决与下一批
 
-- **L2 全部本机功能与验证切片已完成闭环**；接下来进入 **L3（经济沙盒 M0 → 材料寄售 M1 → 可交易装备寄售 M2 → 面对面交换 M3，含托管、税费、成交账本、并发购买/撤单、事务恢复与全服金币/物品守恒测试，不对外部玩家开放）**。
-- 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、24 人频道/12 人野外与目标手机跨网络联机仍待后续 L6 及真机阶段验收。issue #43 退出资源诊断继续跟踪。
-- L3–L6 按完整台账持续实施。**L0 外部部署阻塞待目标机验收，L1 与 L2 本地闭环交付完毕，完整联机目标保持 active。**
+- **L3 全部本机功能与守恒/并发/双端验证已闭环**；接下来推进 **L4（其余合作内容矿脉/界碑深处、第二公共首领、帮派系统含招募/权限/共同据点/只收不可交易材料的帮派仓库及审计日志/会长交接）**。
+- 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、24 人频道/12 人野外与目标手机跨网络联机及正式经济事件周期长时观测仍待 L6 及真机阶段验收。issue #43 退出资源诊断继续跟踪。
+- L4–L6 按完整台账持续实施。**L0 外部部署阻塞待目标机验收，L1/L2/L3 本地闭环交付完毕，完整联机目标保持 active。**

@@ -700,7 +700,11 @@ func (s *Server) claimCoopDrop(w http.ResponseWriter, r *http.Request, who ident
 		if claimedAt != nil || !expiresAt.After(time.Now()) {
 			return nil, errCoopDropClaimed
 		}
-		if err = grantPackItems(ctx, tx, c.ID, "coop_drop:"+dropID, journey.PackSlots, []itemGrant{{itemID, qty}}); err != nil {
+		if journey.Items[itemID].Tradeable {
+			if _, err = grantCustomPackItemTx(ctx, tx, c.ID, "coop_drop:"+dropID, journey.PackSlots, itemID, qty, false, []byte(`{"origin":"coop_repeat"}`)); err != nil {
+				return nil, err
+			}
+		} else if err = grantPackItems(ctx, tx, c.ID, "coop_drop:"+dropID, journey.PackSlots, []itemGrant{{itemID, qty}}); err != nil {
 			return nil, err
 		}
 		var newGold int64

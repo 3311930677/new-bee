@@ -8,6 +8,7 @@ const Profile := preload("res://src/online/OnlineProfile.gd")
 const JourneyPanel := preload("res://src/ui/OnlineJourneyPanel.gd")
 const SocialPanel := preload("res://src/ui/OnlineSocialPanel.gd")
 const CoopPanel := preload("res://src/ui/OnlineCoopPanel.gd")
+const MarketPanel := preload("res://src/ui/OnlineMarketPanel.gd")
 const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 
 var auto_connect := true
@@ -26,6 +27,7 @@ var _current_channel := 1
 var _channels_panel: Control
 var _social_panel: Control
 var _coop_panel: Control
+var _market_panel: Control
 var _coop_instance_id := ""
 var _world := Node2D.new()
 var _actors: Dictionary = {}
@@ -82,9 +84,9 @@ func _ready() -> void:
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	bottom.offset_left = 16
 	bottom.offset_right = -16
-	bottom.offset_top = -194
+	bottom.offset_top = -236
 	bottom.offset_bottom = -16
-	bottom.add_theme_constant_override("separation", 8)
+	bottom.add_theme_constant_override("separation", 6)
 	_hud.add_child(bottom)
 	_challenge_button = _button(bottom, "城南试炼 · 靠近野狼后挑战", _perform_journey_action)
 	var arrows := HBoxContainer.new()
@@ -99,7 +101,7 @@ func _ready() -> void:
 				arrow.accept_event())
 		arrow.mouse_exited.connect(func() -> void: _held = Vector2.ZERO)
 	var actions := HBoxContainer.new()
-	actions.add_theme_constant_override("separation", 8)
+	actions.add_theme_constant_override("separation", 6)
 	bottom.add_child(actions)
 	_button(actions, "同行名片", _open_profiles)
 	if Online.manifest.get("features", []).has("world_channels"):
@@ -108,9 +110,14 @@ func _ready() -> void:
 		_button(actions, "社交", open_social)
 	if Online.manifest.get("features", []).has("coop_dungeons"):
 		_button(actions, "副本", open_coop)
+	var actions2 := HBoxContainer.new()
+	actions2.add_theme_constant_override("separation", 6)
+	bottom.add_child(actions2)
+	if Online.manifest.get("features", []).has("market_sandbox"):
+		_button(actions2, "集市", open_market)
 	if Online.manifest.get("features", []).has("town_journey"):
-		_button(actions, "行囊与任务", open_journey)
-	_button(actions, "返回角色", _back)
+		_button(actions2, "行囊与任务", open_journey)
+	_button(actions2, "返回角色", _back)
 	if auto_connect:
 		call_deferred("enter_world")
 
@@ -661,6 +668,7 @@ func _present_battle(value: Variant) -> void:
 		_close_channels()
 		_close_social()
 		_close_coop()
+		_close_market()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -744,6 +752,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_social()
 		elif is_instance_valid(_coop_panel):
 			_close_coop()
+		elif is_instance_valid(_market_panel):
+			_close_market()
 		else:
 			_back()
 
@@ -755,6 +765,7 @@ func open_social() -> void:
 	_close_journey()
 	_close_channels()
 	_close_coop()
+	_close_market()
 	_held = Vector2.ZERO
 	_social_panel = SocialPanel.new()
 	_hud.add_child(_social_panel)
@@ -842,6 +853,7 @@ func open_coop(tab_id := "dungeons") -> void:
 	_close_channels()
 	_close_coop()
 	_close_social()
+	_close_market()
 	_held = Vector2.ZERO
 	_coop_panel = CoopPanel.new()
 	_hud.add_child(_coop_panel)
@@ -946,6 +958,100 @@ func _close_coop() -> void:
 	_coop_panel = null
 
 
+func open_market(tab_id := "market") -> void:
+	if _busy or not battle.is_empty() or is_instance_valid(_market_panel):
+		return
+	_close_profiles()
+	_close_journey()
+	_close_channels()
+	_close_coop()
+	_close_social()
+	_held = Vector2.ZERO
+	_market_panel = MarketPanel.new()
+	_hud.add_child(_market_panel)
+	_market_panel.closed.connect(_close_market)
+	_market_panel.action_requested.connect(_on_market_action)
+	if not tab_id.is_empty():
+		_market_panel.set_tab(tab_id)
+	await _refresh_market()
+
+
+func _refresh_market() -> void:
+	if not is_instance_valid(_market_panel):
+		return
+	_busy = true
+	_market_panel.set_busy(true)
+	var sum_res: Dictionary = await Online.market_summary()
+	var ord_res: Dictionary = await Online.market_orders()
+	var pay_res: Dictionary = await Online.market_payouts()
+	var trd_res: Dictionary = await Online.trade_sessions()
+	var soc_res: Dictionary = await Online.social_state()
+	var jrn_res: Dictionary = await Online.journey_state()
+	_busy = false
+	if not is_instance_valid(_market_panel):
+		return
+	_market_panel.set_busy(false)
+	if bool(sum_res.get("ok", false)):
+		var orders: Array = ord_res.data.get("orders", []) if bool(ord_res.get("ok", false)) else []
+		var payouts: Array = pay_res.data.get("payouts", []) if bool(pay_res.get("ok", false)) else []
+		var sessions: Array = trd_res.data.get("sessions", []) if bool(trd_res.get("ok", false)) else []
+		var friends: Array = soc_res.data.get("friends", []) if bool(soc_res.get("ok", false)) else []
+		var pack_items: Array = jrn_res.data.get("pack", {}).get("items", []) if bool(jrn_res.get("ok", false)) else []
+		_market_panel.apply_state(sum_res.data, orders, payouts, sessions, friends, pack_items, String(Online.selected_character.get("id", "")))
+		_market_panel.set_status("在线集市与面对面交易同步成功")
+	else:
+		_market_panel.set_status(String(sum_res.get("error", "集市状态同步失败")))
+
+
+func _on_market_action(kind: String, payload: Dictionary) -> void:
+	if _busy or not is_instance_valid(_market_panel):
+		return
+	_busy = true
+	_market_panel.set_busy(true)
+	var res := {"ok": false}
+	match kind:
+		"refresh":
+			res = {"ok": true}
+		"npc_buy":
+			res = await Online.npc_market_trade("buy", String(payload.get("template_id", "")), int(payload.get("quantity", 1)))
+		"create_order":
+			res = await Online.create_market_order(String(payload.get("item_uid", "")), int(payload.get("quantity", 1)), int(payload.get("unit_price", 15)))
+		"buy_order":
+			res = await Online.buy_market_order(String(payload.get("order_id", "")), int(payload.get("quantity", 1)))
+		"cancel_order":
+			res = await Online.cancel_market_order(String(payload.get("order_id", "")))
+		"claim_payout":
+			res = await Online.claim_market_payout(String(payload.get("payout_id", "")))
+		"trade_start":
+			res = await Online.start_trade_session(String(payload.get("target_character_id", "")))
+		"trade_offer":
+			var offer_payload := {}
+			if payload.has("gold"):
+				offer_payload["gold"] = int(payload.get("gold", 0))
+			if payload.has("add_item_uid"):
+				offer_payload["add_item_uid"] = String(payload.get("add_item_uid", ""))
+				offer_payload["add_quantity"] = int(payload.get("add_quantity", 1))
+			res = await Online.update_trade_offer(String(payload.get("trade_id", "")), offer_payload)
+		"trade_confirm":
+			res = await Online.confirm_trade_session(String(payload.get("trade_id", "")), int(payload.get("revision", 1)))
+		"trade_cancel":
+			res = await Online.cancel_trade_session(String(payload.get("trade_id", "")))
+	_busy = false
+	if not is_instance_valid(_market_panel):
+		return
+	_market_panel.set_busy(false)
+	if not bool(res.get("ok", false)):
+		_market_panel.set_status(String(res.get("error", "集市操作未完成")))
+		return
+	await _refresh_market()
+
+
+func _close_market() -> void:
+	if is_instance_valid(_market_panel):
+		_market_panel.queue_free()
+	_market_panel = null
+
+
 func _open_channels() -> void:
 	if is_instance_valid(_channels_panel) or not battle.is_empty():
 		return
@@ -953,6 +1059,7 @@ func _open_channels() -> void:
 	_close_journey()
 	_close_social()
 	_close_coop()
+	_close_market()
 	_held = Vector2.ZERO
 	_channels_panel = Control.new()
 	_channels_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

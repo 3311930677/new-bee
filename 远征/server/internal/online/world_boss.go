@@ -414,7 +414,11 @@ func (s *Server) claimWorldBossReward(w http.ResponseWriter, r *http.Request, wh
 			bundle = rules.Rewards["defeat"]
 		}
 		txID := "worldboss:" + eventID + ":" + who.AccountID
-		if err = grantPackItems(ctx, tx, c.ID, txID, journey.PackSlots, []itemGrant{{bundle.ItemID, bundle.Quantity}}); err != nil {
+		if journey.Items[bundle.ItemID].Tradeable {
+			if _, err = grantCustomPackItemTx(ctx, tx, c.ID, txID, journey.PackSlots, bundle.ItemID, bundle.Quantity, false, []byte(`{"origin":"world_boss"}`)); err != nil {
+				return nil, err
+			}
+		} else if err = grantPackItems(ctx, tx, c.ID, txID, journey.PackSlots, []itemGrant{{bundle.ItemID, bundle.Quantity}}); err != nil {
 			return nil, err
 		}
 		var goldBalance int64

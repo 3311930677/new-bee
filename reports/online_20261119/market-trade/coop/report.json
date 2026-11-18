@@ -1,0 +1,43 @@
+{
+  "run_id": "cf460691f3ed41dabb1eef2378bfc2b8",
+  "online_sources_sha256": "69a24ad9e127bcddcf94b9ae5c35bfa2f48d2160812c595fc296d3a9eb22f666",
+  "gateway_binary_sha256": "068528fb0baa173d733a200fc490c0385a0e27b6d2de85cca6250475a50c942c",
+  "transport": "https-validating-debug-ca",
+  "scope": "L2 two native Godot clients, queue match, tidal_gate co-op puzzle + RoomHost BattleSim + disconnect/rejoin + personal drops + world boss + 40-table backup/restore",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "9ec253810b1539ec8fb5d707b219fea71f73a8cff1e1b0c70ebd5eae9bd85c7c",
+    "content_version": "7c54863ed667740712275ecbab6481699c7e1d75029268372be7c30a01f305cb",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "db_counts": [
+    "1",
+    "2",
+    "2",
+    "1",
+    "1"
+  ],
+  "tables_matched": 40,
+  "passed": true,
+  "cleanup_errors": [],
+  "failures": [],
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true,
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  }
+}
