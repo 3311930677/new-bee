@@ -22,10 +22,14 @@ type OnlineRules struct {
 		Spawn    [2]float64 `json:"spawn"`
 		Speed    float64    `json:"speed"`
 	} `json:"town"`
+	Maps       map[string]MapRule       `json:"maps,omitempty"`
+	Portals    map[string]PortalRule    `json:"portals,omitempty"`
+	NPCs       map[string]NPCRule       `json:"npcs,omitempty"`
 	Encounters map[string]EncounterRule `json:"encounters"`
 	Journey    *JourneyRules            `json:"journey,omitempty"`
 }
 type EncounterRule struct {
+	MapID        string     `json:"map_id,omitempty"`
 	MonsterID    string     `json:"monster_id"`
 	Position     [2]float64 `json:"position"`
 	Radius       float64    `json:"radius"`
@@ -44,6 +48,9 @@ func (r OnlineRules) Validate() error {
 		if e.MonsterID == "" || !finite(e.Radius) || e.Radius <= 0 || !finite(e.Position[0]) || !finite(e.Position[1]) || e.Gold < 0 || e.Experience < 0 || (e.RewardPolicy != "once" && e.RewardPolicy != "per_battle") {
 			return errors.New("invalid encounter rules")
 		}
+	}
+	if err := r.validateWorldL1(); err != nil {
+		return err
 	}
 	if r.Journey != nil {
 		return r.Journey.validate(r.Encounters)
@@ -114,9 +121,15 @@ func (s *Server) joinRoom(w http.ResponseWriter, r *http.Request, who identity) 
 		s.fail(w, errAuthority)
 		return
 	}
-	var body struct{}
+	var body struct {
+		Channel int `json:"channel,omitempty"`
+	}
 	if err := decode(r, &body); err != nil {
 		s.fail(w, err)
+		return
+	}
+	if body.Channel < 0 {
+		s.fail(w, bad("invalid_channel", "频道编号无效"))
 		return
 	}
 	data, err := s.command(r, who, "room.join", body, func(ctx context.Context, tx pgx.Tx) (any, error) {
@@ -125,32 +138,54 @@ func (s *Server) joinRoom(w http.ResponseWriter, r *http.Request, who identity) 
 			return nil, err
 		}
 		if l, err := s.lease(ctx, tx, who, c.ID); err == nil {
-			_, err = tx.Exec(ctx, `UPDATE room_leases SET expires_at=now()+interval '90 seconds',updated_at=now() WHERE account_id=$1`, who.AccountID)
-			return map[string]any{"lease": l}, err
+			if body.Channel == 0 {
+				_, err = tx.Exec(ctx, `UPDATE room_leases SET expires_at=now()+interval '90 seconds',updated_at=now() WHERE account_id=$1`, who.AccountID)
+				return map[string]any{"lease": l}, err
+			}
 		} else if err != errRoom {
 			return nil, err
 		}
-		if _, err = tx.Exec(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1,0))`, "town:"+s.cfg.Rules.Town.MapID); err != nil {
-			return nil, err
-		}
-		// A new session rotates the lease but keeps this character's last trusted
-		// position. Different characters start at the configured town spawn.
-		x, y := s.cfg.Rules.Town.Spawn[0], s.cfg.Rules.Town.Spawn[1]
+		targetMap := s.cfg.Rules.Town.MapID
+		rule, _ := s.cfg.Rules.mapRule(targetMap)
+		x, y := rule.Spawn[0], rule.Spawn[1]
+		var prevMap string
 		var previousX, previousY float64
-		err = tx.QueryRow(ctx, `SELECT l.x,l.y FROM room_leases l JOIN room_instances i ON i.id=l.room_id WHERE l.account_id=$1 AND l.character_id=$2 AND i.map_id=$3`, who.AccountID, c.ID, s.cfg.Rules.Town.MapID).Scan(&previousX, &previousY)
+		err = tx.QueryRow(ctx, `SELECT i.map_id,l.x,l.y FROM room_leases l JOIN room_instances i ON i.id=l.room_id WHERE l.account_id=$1 AND l.character_id=$2`, who.AccountID, c.ID).Scan(&prevMap, &previousX, &previousY)
 		if err == nil {
-			x, y = previousX, previousY
+			if prevRule, ok := s.cfg.Rules.mapRule(prevMap); ok {
+				targetMap = prevMap
+				rule = prevRule
+				x, y = previousX, previousY
+			}
 		} else if !errors.Is(err, pgx.ErrNoRows) {
 			return nil, err
 		}
-		var room string
-		err = tx.QueryRow(ctx, `SELECT i.id::text FROM room_instances i WHERE i.map_id=$1 AND (SELECT count(*) FROM room_leases l JOIN sessions s ON s.id=l.session_id WHERE l.room_id=i.id AND l.expires_at>now() AND s.revoked_at IS NULL AND s.access_expires_at>now() AND s.active_character_id=l.character_id)<i.capacity ORDER BY i.channel LIMIT 1`, s.cfg.Rules.Town.MapID).Scan(&room)
-		if errors.Is(err, pgx.ErrNoRows) {
-			room = newID()
-			_, err = tx.Exec(ctx, `INSERT INTO room_instances(id,map_id,channel,capacity) SELECT $1,$2,coalesce(max(channel),0)+1,$3 FROM room_instances WHERE map_id=$2`, room, s.cfg.Rules.Town.MapID, s.cfg.Rules.Town.Capacity)
-		}
-		if err != nil {
+		if _, err = tx.Exec(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1,0))`, "town:"+targetMap); err != nil {
 			return nil, err
+		}
+		var room string
+		if body.Channel > 0 {
+			var count int64
+			var cap int
+			err = tx.QueryRow(ctx, `SELECT i.id::text,(SELECT count(*) FROM room_leases l JOIN sessions s ON s.id=l.session_id WHERE l.room_id=i.id AND l.expires_at>now() AND s.revoked_at IS NULL AND s.access_expires_at>now() AND s.active_character_id=l.character_id),i.capacity FROM room_instances i WHERE i.map_id=$1 AND i.channel=$2`, targetMap, body.Channel).Scan(&room, &count, &cap)
+			if errors.Is(err, pgx.ErrNoRows) {
+				return nil, &apiError{404, "channel_not_found", "找不到指定的频道"}
+			}
+			if err != nil {
+				return nil, err
+			}
+			if count >= int64(cap) {
+				return nil, &apiError{409, "channel_full", "目标频道已满，请选择其他频道"}
+			}
+		} else {
+			err = tx.QueryRow(ctx, `SELECT i.id::text FROM room_instances i WHERE i.map_id=$1 AND (SELECT count(*) FROM room_leases l JOIN sessions s ON s.id=l.session_id WHERE l.room_id=i.id AND l.expires_at>now() AND s.revoked_at IS NULL AND s.access_expires_at>now() AND s.active_character_id=l.character_id)<i.capacity ORDER BY i.channel LIMIT 1`, targetMap).Scan(&room)
+			if errors.Is(err, pgx.ErrNoRows) {
+				room = newID()
+				_, err = tx.Exec(ctx, `INSERT INTO room_instances(id,map_id,channel,capacity) SELECT $1,$2,coalesce(max(channel),0)+1,$3 FROM room_instances WHERE map_id=$2`, room, targetMap, rule.Capacity)
+			}
+			if err != nil {
+				return nil, err
+			}
 		}
 		_, err = tx.Exec(ctx, `INSERT INTO room_leases(account_id,character_id,session_id,room_id,token,generation,x,y,expires_at) VALUES($1,$2,$3,$4,$5,1,$6,$7,now()+interval '90 seconds') ON CONFLICT(account_id) DO UPDATE SET character_id=excluded.character_id,session_id=excluded.session_id,room_id=excluded.room_id,token=excluded.token,generation=room_leases.generation+1,x=excluded.x,y=excluded.y,move_sequence=0,position_updated_at=now(),expires_at=excluded.expires_at,updated_at=now()`, who.AccountID, c.ID, who.SessionID, room, newID(), x, y)
 		if err != nil {
@@ -181,27 +216,10 @@ func (s *Server) roomSnapshot(w http.ResponseWriter, r *http.Request, who identi
 		s.fail(w, err)
 		return
 	}
-	all, err := readWorldEntities(r.Context(), tx, l.RoomID)
+	reply, err := s.buildRoomSnapshot(r.Context(), tx, c, l)
 	if err != nil {
 		s.fail(w, err)
 		return
-	}
-	entities := worldNeighbors(worldEntity{X: l.X, Y: l.Y}, all)
-	encounters := s.cfg.Rules.Encounters
-	var journey map[string]any
-	if rules := s.cfg.Rules.Journey; rules != nil {
-		progress, readErr := readJourney(r.Context(), tx, c.ID)
-		if readErr != nil {
-			s.fail(w, readErr)
-			return
-		}
-		journey = rules.view(progress)
-		encounters = make(map[string]EncounterRule)
-		for id, rule := range s.cfg.Rules.Encounters {
-			if rule.JourneyStep == "" || rule.JourneyStep == progress.Step {
-				encounters[id] = rule
-			}
-		}
 	}
 	_, err = tx.Exec(r.Context(), `UPDATE room_leases SET expires_at=now()+interval '90 seconds',updated_at=now() WHERE account_id=$1`, who.AccountID)
 	if err == nil {
@@ -210,10 +228,6 @@ func (s *Server) roomSnapshot(w http.ResponseWriter, r *http.Request, who identi
 	if err != nil {
 		s.fail(w, err)
 		return
-	}
-	reply := map[string]any{"lease": l, "entities": entities, "encounters": encounters, "speed": s.cfg.Rules.Town.Speed}
-	if journey != nil {
-		reply["journey"] = journey
 	}
 	respond(w, 200, reply)
 }
@@ -267,7 +281,8 @@ func (s *Server) moveRoom(w http.ResponseWriter, r *http.Request, who identity) 
 			X float64 `json:"x"`
 			Y float64 `json:"y"`
 		}
-		err = s.cfg.Authority.Call(ctx, "world.validate_move", map[string]any{"map_id": l.MapID, "from_x": l.X, "from_y": l.Y, "x": body.X, "y": body.Y, "elapsed": time.Since(l.PositionUpdated).Seconds(), "speed": s.cfg.Rules.Town.Speed}, &result)
+		mapRule, _ := s.cfg.Rules.mapRule(l.MapID)
+		err = s.cfg.Authority.Call(ctx, "world.validate_move", map[string]any{"map_id": l.MapID, "from_x": l.X, "from_y": l.Y, "x": body.X, "y": body.Y, "elapsed": time.Since(l.PositionUpdated).Seconds(), "speed": mapRule.Speed}, &result)
 		if err != nil {
 			var rejected *authority.RPCError
 			if errors.As(err, &rejected) && (rejected.Code == "invalid_speed" || rejected.Code == "outside_map" || rejected.Code == "blocked" || rejected.Code == "invalid_position") {

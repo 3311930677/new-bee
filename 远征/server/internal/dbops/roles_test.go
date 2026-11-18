@@ -245,6 +245,7 @@ func TestRuntimeAndBackupCannotOwnMigrateOrRewriteLedger(t *testing.T) {
 		"UPDATE game.inventory_ledger SET delta=delta", "DELETE FROM game.inventory_ledger", "TRUNCATE game.inventory_ledger",
 		"UPDATE game.quest_events SET target_id='changed'", "DELETE FROM game.quest_events", "TRUNCATE game.quest_events",
 		"DELETE FROM game.inventory_items", "UPDATE game.inventory_items SET template_id=template_id", "UPDATE game.inventory_items SET bound=bound",
+		"DELETE FROM game.npc_interactions", "TRUNCATE game.npc_interactions",
 		"SET ROLE " + quote(f.roles.Migrator),
 		"CREATE ROLE yz_unauthorized", "SELECT pg_read_file('postgresql.conf')",
 	} {

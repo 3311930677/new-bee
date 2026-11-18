@@ -1,10 +1,28 @@
 extends RefCounted
 ## Go 提供已持久化的起点与会话；客户端不能为起点、时间或速度背书。
 
+static var _allowed_maps_cache: Dictionary = {}
+
+
+static func _allowed_map(map_id: String) -> bool:
+	if _allowed_maps_cache.is_empty():
+		var file := FileAccess.open("res://data/online_rules.json", FileAccess.READ)
+		if file != null:
+			var parsed: Variant = JSON.parse_string(file.get_as_text())
+			if parsed is Dictionary:
+				var rules := parsed as Dictionary
+				var town_id := String((rules.get("town", {}) as Dictionary).get("map_id", ""))
+				if not town_id.is_empty():
+					_allowed_maps_cache[town_id] = true
+				for key in (rules.get("maps", {}) as Dictionary).keys():
+					_allowed_maps_cache[String(key)] = true
+	return _allowed_maps_cache.has(map_id)
+
+
 static func validate_move(args: Dictionary) -> Dictionary:
 	var map_id := String(args.get("map_id", ""))
 	var cfg: Dictionary = TableCache.main_world_map(map_id)
-	if cfg.is_empty() or not bool(cfg.get("city", false)):
+	if cfg.is_empty() or (not bool(cfg.get("city", false)) and not _allowed_map(map_id)):
 		return {"ok": false, "error": "map_unavailable"}
 	var start := Vector2(float(args.get("from_x", -1)), float(args.get("from_y", -1)))
 	var target := Vector2(float(args.get("x", -1)), float(args.get("y", -1)))

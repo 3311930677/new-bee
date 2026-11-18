@@ -182,8 +182,18 @@
   - **双真实端位置流验证**（`verify_positions.py`）：`positions_a239e75527c2443a99f73ea990e7ef3c` 通过，两端退出码 `0`，实测 `local_prediction_seen: true`、`tween_seen: true`、离开 AOI 退订（`y=2048`）与重回视野恢复订阅（`y=1592`）、登出清理 `database_counts: ["2","1","0"]`，已目检 `position-together.png`。
   - **L0 关键项回归复验**：`verify_journey.py` **6/6 通过**（`journey_49c6c60c613f4c50b64368e9495cf551`，19 表恢复、16 条行囊与任务历史）、`verify_world.py --database-recovery --supervision` **12/12 通过**（`world_22ac6d267c284537810494b1e7231025`，权威恢复 9.296s / 网关恢复 2.547s、19 表恢复）、`VerifyOnlineBoundary` 退出码 `0`。
 
+### L1-B 频道切换、跨图与 NPC 隔离（11 月 19 日）
+
+- 迁移 `006_online_world_l1.sql` 新增角色级 `npc_interactions` 状态表（数据库最小权限与只读备份恢复扩展至 **20 张表**）；`data/online_rules.json` 表驱动配置多图规则（`lorin_wilds` ↔ `maple_road`）、出口（`north_gate` / `south_gate`）、地图孤立 NPC（`npc_warden` / `npc_maple_scout`）与古道野狼遭遇（`maple_wolf`）；`WorldAuthority.gd` 改为读取配置核验多图移动边界。
+- 网关新增 `world_channels`（`GET /v1/rooms/channels`、`POST /v1/rooms/channels/switch`、可选分线入图）、`cross_map`（`POST /v1/rooms/travel` 核对地图/半径/战斗状态，重登恢复上次所在地图与位置，开战核对地图匹配）与 `npc_isolation`（`POST /v1/npcs/{id}/interact` 按角色隔离交互次数与剧情分支对话）。[OnlineWorld.gd](../../src/ui/OnlineWorld.gd) 动态重绘切换后的地图贴图、门点、NPC 标记与分线切换弹窗（Esc 可关闭）。
+- 实测与回归验证（源码指纹 `3bf8eb9f87372aa094538b648c7ecfec6bae02e3f4fbdbee24ff04153ca73486`，脱敏证据见 `reports/online_20261119/cross-map-channels-npc/`）：
+  - **Go / PostgreSQL 套件**：**62/62 通过，退出码 0**（含 `TestChannelsListSwitchAndOverflowIsolation`、`TestCrossMapTravelPortalDistanceAndBattleIsolation`、`TestNPCIsolationPerCharacterAndMap` 与 `dbops` 20 表检查）。
+  - **独立 Godot 权威检查**：`room_a4c7962ce31840fda19cd7b6c2933880` **29/29 通过，退出码 0**。
+  - **双真实端 L1-B 验证**（`verify_world_l1.py`）：`world_l1_ca32c1f27ac240928b233bf23f02f5c8` 通过，两端退出码 `0`（NPC 对话按角色隔离、北门跨图至枫林古道后城内玩家立即退订、古道斥候与 `maple_wolf` 权威战斗结算、重登仍位于 `maple_road`、南口返回边城 `[600, 300]`、20 表备份恢复一致、已目检 `maple-road.png`）。
+  - **L1-A / L0-H 无回退复验**：`verify_positions.py`（`positions_650c26eb82b04aaea689d5629871318b`）通过、`verify_journey.py`（`journey_0e2da7d87a1a4a75a66c91d9df27df4b` **6/6**，20 表恢复）通过、`VerifyOnlineBoundary` 退出码 `0`。
+
 ### 未解决与下一批
 
 - 首条任务路线已可玩。仍需完整的新手内容及 20–30 分钟实测、碑窟可进入的多人副本和完整合作战斗。
 - 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、目标手机及跨网络联机仍需验收。此前的偶发客户端超时和单机退出资源诊断继续跟踪。
-- 接下来继续推进 L1 其余切片：**L1-B**（频道列表与切线、按角色隔离的 NPC 状态与对话、`lorin_wilds` ↔ `maple_road` 跨图迁移）与 **L1-C**（好友、屏蔽、举报、聊天与真正组队入队/大厅控制）。L2–L6 仍按完整台账验收，经济活动开放前保留既定测试门槛。**L0 整体部署仍受外部环境阻塞，L1 正在开发，完整目标保持 active。**
+- 接下来继续推进 L1 最终纵向切片 **L1-C**（好友、屏蔽、举报、聊天与真正组队入队/准备/踢人/队长转移及服务端屏蔽过滤），随后按计划进入 L2 多人副本。L2–L6 仍按完整台账验收，经济活动开放前保留既定测试门槛。**L0 部署受外部环境阻塞，L1 正在持续交付，完整目标保持 active。**

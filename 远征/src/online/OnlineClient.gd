@@ -203,8 +203,27 @@ func character_detail(id: String) -> Dictionary:
 	return await _request(HTTPClient.METHOD_GET, "/v1/characters/%s" % id, {}, "", true)
 
 
-func join_world(request_id := "") -> Dictionary:
-	return await _send_command("/v1/rooms/join", {}, request_id)
+func join_world(request_id := "", channel := 0) -> Dictionary:
+	var payload := {}
+	if channel > 0:
+		payload["channel"] = channel
+	return await _send_command("/v1/rooms/join", payload, request_id)
+
+
+func world_channels() -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/rooms/channels", {}, "", true)
+
+
+func switch_channel(channel: int, request_id := "") -> Dictionary:
+	return await _send_command("/v1/rooms/channels/switch", {"channel": channel}, request_id)
+
+
+func travel_portal(portal_id: String, request_id := "") -> Dictionary:
+	return await _send_command("/v1/rooms/travel", {"portal_id": portal_id}, request_id)
+
+
+func interact_npc(npc_id: String, request_id := "") -> Dictionary:
+	return await _send_command("/v1/npcs/%s/interact" % npc_id, {}, request_id)
 
 
 func world_snapshot() -> Dictionary:

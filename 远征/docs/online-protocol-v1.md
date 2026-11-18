@@ -90,7 +90,13 @@
 
 每账号只有一条租约。新会话、过期后重入或切换角色均轮换随机 token 并增加 generation；旧会话已撤销，旧 token、旧 generation 和非连续移动序号拒绝执行。有效会话重复入城复用租约。重新登录同一角色保留数据库记录的位置，切换其他角色从配置出生点开始。频道容量分配由数据库事务锁串行化，已撤销会话和过期租约不占在线容量。
 
-移动只接受目标位置，起点、移动速度与时间间隔取自服务器。Godot 使用共享地图表检查边界、速度和建筑脚部阻挡；战斗中拒绝地图移动。清单新增 `town_positions` 功能位后，网关开放 `GET /v1/rooms/positions`（`application/x-ndjson`、10Hz、单连接 8 秒生命周期、每频道共享采集），按玩家权威坐标裁剪 **480px** 半径视野（AOI）内同频道在线角色；`/v1/rooms/current` 同样只返回 480px 视野内邻近实体，并严格排除跨频道与已撤销会话。客户端立即对本地输入做移动预测并在响应后对齐权威坐标，对附近旅人位置帧做 100ms 线性插值、离开 480px 后注销节点并在重新靠近后恢复；完整多图出口、频道手动切换、社交、NPC 对话隔离与组队仍属于后续 L1 切片。
+移动只接受目标位置，起点、移动速度与时间间隔取自服务器。Godot 使用共享地图表与 `data/online_rules.json` 核验所有已发布联机地图（当前为 `lorin_wilds` 与 `maple_road`）的边界、速度和建筑阻挡；战斗中拒绝地图移动。清单公布 `town_positions`、`world_channels`、`cross_map` 与 `npc_isolation` 功能位：
+- `GET /v1/rooms/positions`（`application/x-ndjson`、10Hz、单连接 8 秒生命周期、每频道共享采集）按玩家权威坐标裁剪 **480px** 半径视野（AOI）内同频道同图在线角色；`/v1/rooms/current` 返回同口径邻近实体、当前地图（`map`）、可用频道摘要（`channels`）、当前地图出口（`portals`）、按当前角色状态水合的当前地图 NPC（`npcs`）及当前地图可见遭遇（`encounters`）。
+- `GET /v1/rooms/channels` 与 `POST /v1/rooms/channels/switch` 允许在同图不同分线间幂等切线（受频道容量约束，拒绝满员切入，切换后轮换 `lease_token` 与 `generation`）。
+- `POST /v1/rooms/travel` 按权威位置与出口半径执行 `lorin_wilds` ↔ `maple_road` 跨图迁移，落点写入目标地图出生/抵达坐标；战斗开战与任务交互严格核对当前地图匹配。
+- `POST /v1/npcs/{id}/interact` 按当前地图、距离与角色个人任务进度更新并记录 `npc_interactions`，不同角色的 NPC 对话、交互计数与地图分布彼此完全隔离。
+
+社交（好友/屏蔽/举报/聊天）与真正组队属于后续 L1-C 切片。
 
 房间租约不授予战斗所有权；战斗接口每次仍重新验证账号、当前有效会话及选中在线角色。角色有未完成战斗或未确认结算时，不能切到别的角色或删除该角色。
 

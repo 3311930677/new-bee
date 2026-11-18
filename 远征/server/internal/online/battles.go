@@ -94,6 +94,9 @@ func (s *Server) startBattle(w http.ResponseWriter, r *http.Request, who identit
 		if err != nil {
 			return nil, err
 		}
+		if l.MapID != s.cfg.Rules.effectiveEncounterMap(e) {
+			return nil, &apiError{409, "wrong_map", "该目标不在当前地图"}
+		}
 		if math.Hypot(l.X-e.Position[0], l.Y-e.Position[1]) > e.Radius {
 			return nil, bad("too_far", "请先靠近挑战目标")
 		}

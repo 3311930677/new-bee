@@ -13,6 +13,15 @@ var automatic_poll := true
 var lease: Dictionary = {}
 var entities: Array = []
 var battle: Dictionary = {}
+var _floor: Sprite2D
+var _rendered_map_id := ""
+var _map_props: Array[Node] = []
+var _portals: Array = []
+var _npcs: Array = []
+var _channels: Array = []
+var _map_name := "昭元边城"
+var _current_channel := 1
+var _channels_panel: Control
 var _world := Node2D.new()
 var _actors: Dictionary = {}
 var _camera := Camera2D.new()
@@ -43,17 +52,11 @@ var _player_draw_ready := false
 func _ready() -> void:
 	_world.y_sort_enabled = true
 	add_child(_world)
-	var cfg := TableCache.main_world_map("lorin_wilds")
-	var floor := Sprite2D.new()
-	floor.texture = load(String(cfg.get("background", ""))) as Texture2D
-	floor.centered = false
-	floor.z_index = -10
-	if floor.texture != null:
-		floor.scale = Vector2(float(cfg.get("map_cols", 25)) * 48, float(cfg.get("map_rows", 44)) * 48) / floor.texture.get_size()
-	add_child(floor)
-	for id in cfg.get("city_building_positions", {}):
-		var at: Array = cfg.city_building_positions[id]
-		Art.add_prop(_world, "ledger" if id == "gate" else String(id), Vector2(at[0], at[1]), "props" if id == "gate" else "buildings")
+	_floor = Sprite2D.new()
+	_floor.centered = false
+	_floor.z_index = -10
+	add_child(_floor)
+	_render_map("lorin_wilds")
 	_camera.position = Vector2(600, 1520)
 	_camera.enabled = true
 	add_child(_camera)
@@ -94,9 +97,11 @@ func _ready() -> void:
 	actions.add_theme_constant_override("separation", 8)
 	bottom.add_child(actions)
 	_button(actions, "同行名片", _open_profiles)
+	if Online.manifest.get("features", []).has("world_channels"):
+		_button(actions, "分线", _open_channels)
 	if Online.manifest.get("features", []).has("town_journey"):
 		_button(actions, "行囊与任务", open_journey)
-	_button(actions, "返回在线角色", _back)
+	_button(actions, "返回角色", _back)
 	if auto_connect:
 		call_deferred("enter_world")
 
@@ -151,31 +156,142 @@ func _apply_world(data: Dictionary) -> void:
 	if new_lease:
 		_close_positions()
 	lease = current.duplicate(true)
+	var map_info: Dictionary = data.get("map", {}) as Dictionary
+	var map_id := String(lease.get("map_id", "lorin_wilds"))
+	if not String(map_info.get("name", "")).is_empty():
+		_map_name = String(map_info.get("name"))
+	else:
+		var cfg_map := TableCache.main_world_map(map_id)
+		_map_name = String(cfg_map.get("name", "昭元边城"))
+	_channels = (data.get("channels", []) as Array).duplicate(true)
+	for ch in _channels:
+		if ch is Dictionary and bool(ch.get("current", false)):
+			_current_channel = int(ch.get("channel", 1))
+			break
+	_portals = (data.get("portals", []) as Array).duplicate(true)
+	_npcs = (data.get("npcs", []) as Array).duplicate(true)
 	_encounters = (data.get("encounters", {}) as Dictionary).duplicate(true)
+	_render_map(map_id)
+	_sync_world_markers()
 	if not _positions_recent():
 		_apply_people(data.get("entities", []), false)
 	_show_player(Vector2(float(lease.get("x", 600)), float(lease.get("y", 1520))), new_lease or not automatic_poll)
-	_update_journey(data.get("journey", {}))
-	if not _world.has_node("TrainingWolf") and _encounters.has("training_wolf"):
+	if map_id == "lorin_wilds" and data.has("journey"):
+		_update_journey(data.get("journey", {}))
+	else:
+		_update_field_prompt()
+
+
+func _render_map(map_id: String) -> void:
+	if _rendered_map_id == map_id:
+		return
+	_rendered_map_id = map_id
+	for node in _map_props:
+		if is_instance_valid(node):
+			if node.get_parent() != null:
+				node.get_parent().remove_child(node)
+			node.queue_free()
+	_map_props.clear()
+	if is_instance_valid(_journey_marker):
+		if _journey_marker.get_parent() != null:
+			_journey_marker.get_parent().remove_child(_journey_marker)
+		_journey_marker.queue_free()
+		_journey_marker = null
+	_marker_key = ""
+	var cfg := TableCache.main_world_map(map_id)
+	if _floor != null and not cfg.is_empty():
+		_floor.texture = load(String(cfg.get("background", ""))) as Texture2D
+		if _floor.texture != null:
+			_floor.scale = Vector2(float(cfg.get("map_cols", 25)) * 48, float(cfg.get("map_rows", 44)) * 48) / _floor.texture.get_size()
+	var before_count := _world.get_child_count()
+	for id in cfg.get("city_building_positions", {}):
+		var at: Array = cfg.city_building_positions[id]
+		Art.add_prop(_world, "ledger" if id == "gate" else String(id), Vector2(at[0], at[1]), "props" if id == "gate" else "buildings")
+	for idx in range(before_count, _world.get_child_count()):
+		_map_props.append(_world.get_child(idx))
+
+
+func _sync_world_markers() -> void:
+	var has_wolf := _encounters.has("training_wolf") or _encounters.has("maple_wolf")
+	if not _world.has_node("TrainingWolf") and has_wolf:
+		var enc_id := "training_wolf" if _encounters.has("training_wolf") else "maple_wolf"
+		var enc: Dictionary = _encounters[enc_id]
 		var target := Node2D.new()
 		target.name = "TrainingWolf"
-		var at: Array = _encounters.training_wolf.position
+		var at: Array = enc.position
 		target.position = Vector2(at[0], at[1])
 		_world.add_child(target)
+		_map_props.append(target)
 		var picture := Sprite2D.new()
 		picture.texture = load("res://image/generated_101_200/ready/map/mon_wolf.png")
 		picture.position.y = -36
 		picture.scale = Vector2.ONE * 0.75
 		target.add_child(picture)
-		var caption := G.gold_label("城南试炼 · 野狼", G.FS_SM)
+		var caption := G.gold_label("城南试炼 · 野狼" if enc_id == "training_wolf" else "古道野狼", G.FS_SM)
 		caption.position = Vector2(-90, -112)
 		caption.size = Vector2(180, 30)
 		target.add_child(caption)
+	for npc_value in _npcs:
+		if not npc_value is Dictionary:
+			continue
+		var npc := npc_value as Dictionary
+		var nid := String(npc.get("id", ""))
+		var node_name := "NPCMarker_" + nid
+		if nid.is_empty() or _world.has_node(node_name):
+			continue
+		var at: Array = npc.get("position", [])
+		if at.size() != 2:
+			continue
+		var marker := Node2D.new()
+		marker.name = node_name
+		marker.position = Vector2(float(at[0]), float(at[1]))
+		_world.add_child(marker)
+		_map_props.append(marker)
+		var tag := Field.surface(Vector2(-72, -62), Vector2(144, 30))
+		tag.add_child(Field.label("◇ " + String(npc.get("name", "旅人")), Vector2.ZERO, Vector2(144, 30), G.FS_SM, G.PARCHMENT, true))
+		marker.add_child(tag)
+	for portal_value in _portals:
+		if not portal_value is Dictionary:
+			continue
+		var portal := portal_value as Dictionary
+		var pid := String(portal.get("id", ""))
+		var node_name := "PortalMarker_" + pid
+		if pid.is_empty() or _world.has_node(node_name):
+			continue
+		var at: Array = portal.get("position", [])
+		if at.size() != 2:
+			continue
+		var pnode := Node2D.new()
+		pnode.name = node_name
+		pnode.position = Vector2(float(at[0]), float(at[1]))
+		_world.add_child(pnode)
+		_map_props.append(pnode)
+		var tag := Field.surface(Vector2(-92, -46), Vector2(184, 32))
+		tag.add_child(Field.label("◈ " + String(portal.get("label", "传送门")), Vector2.ZERO, Vector2(184, 32), G.FS_SM, G.GOLD_BRIGHT, true))
+		pnode.add_child(tag)
+
+
+func _update_field_prompt() -> void:
+	var action := "古道斥候 · 查看周围"
+	var here := Vector2(float(lease.get("x", 0)), float(lease.get("y", 0)))
+	for p in _portals:
+		if p is Dictionary:
+			var at: Array = p.get("position", [])
+			if at.size() == 2 and here.distance_to(Vector2(float(at[0]), float(at[1]))) <= float(p.get("radius", 120)):
+				action = String(p.get("label", "前往下一地图"))
+				break
+	if _encounters.has("maple_wolf"):
+		var enc: Dictionary = _encounters.maple_wolf
+		var at: Array = enc.get("position", [])
+		if at.size() == 2 and here.distance_to(Vector2(float(at[0]), float(at[1]))) <= float(enc.get("radius", 112)):
+			action = "迎战古道野狼"
+	(_challenge_button.get_child(0) as Label).text = action
+	_status.text = "%s（%d线）\n沿着古道探索，靠近斥候或出口可交互。" % [_map_name, _current_channel]
 
 
 func _apply_people(people: Array, interpolate: bool) -> void:
 	entities = people.duplicate(true)
-	_town_label.text = "昭元边城 · 附近 %d 人" % entities.size()
+	_town_label.text = "%s · %d线 · 附近 %d 人" % [_map_name, _current_channel, entities.size()]
 	var live_ids: Array[String] = []
 	var own_id := String(lease.get("character_id", ""))
 	for entity_value in entities:
@@ -312,6 +428,25 @@ func _update_journey_marker(target: String, point: Dictionary) -> void:
 
 
 func _perform_journey_action() -> void:
+	if String(lease.get("map_id", "lorin_wilds")) != "lorin_wilds":
+		var here := Vector2(float(lease.get("x", 0)), float(lease.get("y", 0)))
+		for p in _portals:
+			if p is Dictionary:
+				var at: Array = p.get("position", [])
+				if at.size() == 2 and here.distance_to(Vector2(float(at[0]), float(at[1]))) <= float(p.get("radius", 120)):
+					travel_portal(String(p.get("id", "")))
+					return
+		if _encounters.has("maple_wolf"):
+			var enc: Dictionary = _encounters.maple_wolf
+			var at: Array = enc.get("position", [])
+			if at.size() == 2 and here.distance_to(Vector2(float(at[0]), float(at[1]))) <= float(enc.get("radius", 112)):
+				challenge("maple_wolf")
+				return
+		for npc in _npcs:
+			if npc is Dictionary:
+				interact_npc(String(npc.get("id", "")))
+				return
+		return
 	var target := String(_journey.get("target_id", ""))
 	match String(_journey.get("event", "")):
 		"interact":
@@ -322,6 +457,52 @@ func _perform_journey_action() -> void:
 			challenge(target)
 		_:
 			challenge("training_wolf")
+
+
+func switch_channel(channel: int, request_id := "") -> Dictionary:
+	if _busy or not battle.is_empty():
+		return {"ok": false, "code": "busy"}
+	_busy = true
+	var result: Dictionary = await Online.switch_channel(channel, request_id)
+	_busy = false
+	if bool(result.get("ok", false)):
+		_close_channels()
+		_apply_world(result.data)
+	else:
+		_show_error(result)
+	return result
+
+
+func travel_portal(portal_id: String, request_id := "") -> Dictionary:
+	if _busy or not battle.is_empty():
+		return {"ok": false, "code": "busy"}
+	_busy = true
+	var result: Dictionary = await Online.travel_portal(portal_id, request_id)
+	_busy = false
+	if bool(result.get("ok", false)):
+		_close_channels()
+		_close_profiles()
+		_close_journey()
+		_apply_world(result.data)
+	else:
+		_show_error(result)
+	return result
+
+
+func interact_npc(npc_id: String, request_id := "") -> Dictionary:
+	if _busy or not battle.is_empty():
+		return {"ok": false, "code": "busy"}
+	_busy = true
+	var result: Dictionary = await Online.interact_npc(npc_id, request_id)
+	_busy = false
+	if bool(result.get("ok", false)):
+		if result.data.get("npcs") is Array:
+			_npcs = (result.data.npcs as Array).duplicate(true)
+		var npc: Dictionary = result.data.get("npc", {}) as Dictionary
+		_status.text = "%s：%s" % [String(npc.get("name", "旅人")), String(npc.get("dialogue", ""))]
+	else:
+		_show_error(result)
+	return result
 
 
 func interact_with_journey(request_id := "") -> Dictionary:
@@ -402,6 +583,8 @@ func move_by(direction: Vector2) -> Dictionary:
 	if bool(result.get("ok", false)):
 		lease = (result.data.lease as Dictionary).duplicate(true)
 		confirmed = Vector2(float(lease.x), float(lease.y))
+		if String(lease.get("map_id", "lorin_wilds")) != "lorin_wilds":
+			_update_field_prompt()
 	_show_player(confirmed, not automatic_poll)
 	_show_error(result)
 	_busy = false
@@ -466,6 +649,7 @@ func _present_battle(value: Variant) -> void:
 		_close_positions()
 		_close_profiles()
 		_close_journey()
+		_close_channels()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -517,7 +701,7 @@ func _process(delta: float) -> void:
 		else:
 			refresh_world()
 		return
-	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and _move_elapsed >= 0.15:
+	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and not is_instance_valid(_channels_panel) and _move_elapsed >= 0.15:
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		if direction.is_zero_approx():
 			direction = _held
@@ -543,8 +727,50 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_profiles()
 		elif is_instance_valid(_journey_panel):
 			_close_journey()
+		elif is_instance_valid(_channels_panel):
+			_close_channels()
 		else:
 			_back()
+
+
+func _open_channels() -> void:
+	if is_instance_valid(_channels_panel) or not battle.is_empty():
+		return
+	_close_profiles()
+	_close_journey()
+	_held = Vector2.ZERO
+	_channels_panel = Control.new()
+	_channels_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_hud.add_child(_channels_panel)
+	G.veil(_channels_panel, 0.9, true)
+	var margin := MarginContainer.new()
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right", "top", "bottom"]:
+		margin.add_theme_constant_override("margin_" + side, 24)
+	_channels_panel.add_child(margin)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 12)
+	margin.add_child(column)
+	column.add_child(G.gold_label("地图分线", G.FS_BIG))
+	column.add_child(G.gold_label("%s · 当前 %d线" % [_map_name, _current_channel], G.FS_SM, false))
+	var list := VBoxContainer.new()
+	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	list.add_theme_constant_override("separation", 10)
+	column.add_child(list)
+	for ch_value in _channels:
+		if not ch_value is Dictionary:
+			continue
+		var ch := ch_value as Dictionary
+		var ch_no := int(ch.get("channel", 1))
+		var caption := "%d线 · %d/%d 人%s" % [ch_no, int(ch.get("player_count", 0)), int(ch.get("capacity", 24)), "（当前）" if bool(ch.get("current", false)) else ""]
+		_button(list, caption, func() -> void: switch_channel(ch_no))
+	_button(column, "关闭分线", _close_channels)
+
+
+func _close_channels() -> void:
+	if is_instance_valid(_channels_panel):
+		_channels_panel.queue_free()
+	_channels_panel = null
 
 
 func _open_profiles() -> void:

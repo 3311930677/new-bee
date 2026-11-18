@@ -1,0 +1,38 @@
+{
+  "run_id": "ca32c1f27ac240928b233bf23f02f5c8",
+  "online_sources_sha256": "3bf8eb9f87372aa094538b648c7ecfec6bae02e3f4fbdbee24ff04153ca73486",
+  "gateway_binary_sha256": "a078afb20c71ff0dd158016f153c088d79a7802d993b00c6ae990528681766df",
+  "transport": "https-validating-debug-ca",
+  "scope": "L1-B two native Godot clients, cross-map lorin_wilds<->maple_road, per-character NPC isolation, maple_wolf battle, relog resume, and 20-table backup/restore",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "620c11fd352a0bb7e0f1207ef0cff0e26bd874937294b71d73353736e93f9dea",
+    "content_version": "0b4631213b5f9c41625c76de818e7d893fa43f3a6b915602c11c01e5e14a642f",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "db_npc_interactions": 2,
+  "db_rooms": "lorin_wilds:1,maple_road:1",
+  "tables_matched": 20,
+  "passed": true,
+  "cleanup_errors": [],
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  },
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true,
+  "errors": []
+}
