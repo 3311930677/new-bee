@@ -143,6 +143,25 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("GET /v1/battles/{id}", s.authorized(s.battleSnapshot))
 	s.mux.HandleFunc("POST /v1/battles/{id}/commands", s.authorized(s.battleCommand))
 	s.mux.HandleFunc("POST /v1/battles/{id}/acknowledge", s.authorized(s.acknowledgeBattle))
+	s.mux.HandleFunc("GET /v1/coop/dungeons", s.authorized(s.coopDungeons))
+	s.mux.HandleFunc("POST /v1/coop/instances", s.authorized(s.createCoopInstance))
+	s.mux.HandleFunc("POST /v1/coop/queue/join", s.authorized(s.joinCoopQueue))
+	s.mux.HandleFunc("POST /v1/coop/queue/leave", s.authorized(s.leaveCoopQueue))
+	s.mux.HandleFunc("GET /v1/coop/instances/{id}", s.authorized(s.getCoopInstance))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/ready", s.authorized(s.setCoopReady))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/interact", s.authorized(s.interactCoopStage))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/battle/start", s.authorized(s.startCoopBattle))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/battle/command", s.authorized(s.coopBattleCommand))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/battle/tick", s.authorized(s.tickCoopBattle))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/disconnect", s.authorized(s.disconnectCoopInstance))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/leave", s.authorized(s.leaveCoopInstance))
+	s.mux.HandleFunc("POST /v1/coop/instances/{id}/retreat", s.authorized(s.retreatCoopInstance))
+	s.mux.HandleFunc("GET /v1/coop/drops", s.authorized(s.listCoopDrops))
+	s.mux.HandleFunc("POST /v1/coop/drops/{id}/claim", s.authorized(s.claimCoopDrop))
+	s.mux.HandleFunc("GET /v1/world-boss/current", s.authorized(s.currentWorldBoss))
+	s.mux.HandleFunc("POST /v1/world-boss/{id}/objective", s.authorized(s.worldBossObjective))
+	s.mux.HandleFunc("POST /v1/world-boss/{id}/engage", s.authorized(s.worldBossEngage))
+	s.mux.HandleFunc("POST /v1/world-boss/{id}/claim", s.authorized(s.claimWorldBossReward))
 	return s, nil
 }
 
@@ -272,6 +291,12 @@ func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
 		features = append(features, "town_rooms", "authority_battles", "town_positions", "world_channels", "cross_map", "npc_isolation", "social_chat", "parties")
 		if s.cfg.Rules.Journey != nil {
 			features = append(features, "town_journey")
+		}
+		if s.cfg.Rules.Coop != nil {
+			features = append(features, "coop_dungeons")
+		}
+		if s.cfg.Rules.WorldBoss != nil {
+			features = append(features, "world_boss")
 		}
 	}
 	respond(w, 200, map[string]any{"protocol_version": ProtocolVersion, "content_version": s.cfg.ContentVersion, "ruleset_version": RulesetVersion, "character_limit": 3, "roles": []string{"zs", "ck", "fs", "fz"}, "appearance_ids": []string{"default"}, "gender_ids": genderIDs, "avatar_ids": avatarIDs, "features": features, "starting_gold": 100})

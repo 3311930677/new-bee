@@ -65,6 +65,7 @@ python 远征/server/tools/verify_journey.py --godot <Godot-4.7.2路径> --captu
 python 远征/server/tools/verify_positions.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_world_l1.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/verify_social_l1.py --godot <Godot-4.7.2路径> --capture
+python 远征/server/tools/verify_coop_l2.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/bootstrap_monitoring.py --proxy <本机实际代理>
 python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
 ```

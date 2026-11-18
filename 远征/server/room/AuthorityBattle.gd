@@ -11,6 +11,8 @@ var external_clock := false
 
 
 static func battle_config(config: Dictionary) -> Dictionary:
+	if config.get("members") is Array and not (config.get("members") as Array).is_empty():
+		return _coop_battle_config(config)
 	var result := {"role_id": config.get("role_id"), "monster_id": config.get("monster_id"),
 		"level": config.get("level"), "seed": config.get("seed")}
 	var raw: Variant = config.get("loadout", {})
@@ -37,10 +39,93 @@ static func battle_config(config: Dictionary) -> Dictionary:
 	return result
 
 
+static func _clean_loadout(raw: Variant) -> Dictionary:
+	if not raw is Dictionary:
+		return {}
+	var gear: Dictionary = raw
+	var limits := {"attack": 200, "defense": 200, "health": 1000, "potions": 20}
+	var loadout := {}
+	for field in limits:
+		var amount: Variant = gear.get(field, 0)
+		if not (amount is int or amount is float) or not is_finite(float(amount)):
+			return {"_invalid": true}
+		if float(amount) < 0.0 or float(amount) > float(limits[field]) or float(amount) != floor(float(amount)):
+			return {"_invalid": true}
+		if int(amount) != 0:
+			loadout[field] = int(amount)
+	var companion := String(gear.get("active_pet", ""))
+	if not companion.is_empty():
+		if companion != "pet_rockturtle" or TableCache.get_pet(companion).is_empty():
+			return {"_invalid": true}
+		loadout["active_pet"] = companion
+	return loadout
+
+
+static func _coop_battle_config(config: Dictionary) -> Dictionary:
+	var raw_members := config.get("members") as Array
+	if raw_members.size() < 1 or raw_members.size() > 4:
+		return {}
+	var seed := int(config.get("seed", -1))
+	var monster_id := String(config.get("monster_id", ""))
+	if seed < 0 or seed > 9007199254740991 or TableCache.get_monster(monster_id).is_empty():
+		return {}
+	var members: Array = []
+	for mv in raw_members:
+		if not mv is Dictionary:
+			return {}
+		var m := mv as Dictionary
+		var cid := String(m.get("character_id", ""))
+		var role_id := String(m.get("role_id", ""))
+		var level := int(m.get("level", 0))
+		if cid.is_empty() or not ["zs", "ck", "fs", "fz"].has(role_id) or level < 1 or level > 60:
+			return {}
+		var lo := _clean_loadout(m.get("loadout", {}))
+		if lo.has("_invalid"):
+			return {}
+		var entry := {"character_id": cid, "role_id": role_id, "level": level}
+		if not String(m.get("name", "")).is_empty():
+			entry["name"] = String(m.get("name", ""))
+		if not lo.is_empty():
+			entry["loadout"] = lo
+		members.append(entry)
+	var result := {"mode": "coop", "monster_id": monster_id, "seed": seed, "members": members,
+		"downed_window_ticks": clampi(int(config.get("downed_window_ticks", 450)), 0, 1800)}
+	if config.get("coop_scaling") is Dictionary:
+		var cs := config.get("coop_scaling") as Dictionary
+		var clean_cs := {"hp_mult": float(cs.get("hp_mult", 1.0)), "atk_mult": float(cs.get("atk_mult", 1.0)),
+			"def_mult": float(cs.get("def_mult", 1.0)), "extra_adds": clampi(int(cs.get("extra_adds", 0)), 0, 4)}
+		if not String(cs.get("add_monster_id", "")).is_empty():
+			clean_cs["add_monster_id"] = String(cs.get("add_monster_id", ""))
+		result["coop_scaling"] = clean_cs
+	return result
+
+
 func setup(config: Dictionary) -> bool:
 	var normalized := battle_config(config)
 	if normalized.is_empty():
 		return false
+	if String(normalized.get("mode", "")) == "coop":
+		initial = normalized
+		var member_cfgs: Array = []
+		for mv in normalized.get("members", []):
+			var m := mv as Dictionary
+			var lo: Dictionary = m.get("loadout", {})
+			var g := {"atk_add": int(lo.get("attack", 0)), "def_add": int(lo.get("defense", 0)),
+				"hp_add": int(lo.get("health", 0))}
+			member_cfgs.append({"character_id": String(m.get("character_id", "")),
+				"role_id": String(m.get("role_id", "zs")), "level": int(m.get("level", 1)),
+				"name": String(m.get("name", "")), "traits": [], "growth": g,
+				"active_pet": String(lo.get("active_pet", "")), "potions": int(lo.get("potions", 0))})
+		var enemy_cfg := {"theme": "tomb", "custom_mon": TableCache.get_monster(String(normalized.get("monster_id", ""))).duplicate(true)}
+		if normalized.has("coop_scaling"):
+			enemy_cfg["coop_scaling"] = (normalized.get("coop_scaling") as Dictionary).duplicate(true)
+		sim = BattleSim.new()
+		sim.setup(int(normalized.get("seed", 0)), {"members": member_cfgs,
+			"downed_window_ticks": int(normalized.get("downed_window_ticks", 450))}, enemy_cfg)
+		sim.manual_basic_attack = true
+		sim.auto_mode = false
+		opened_msec = Time.get_ticks_msec()
+		return sim.setup_error.is_empty()
 	var role_id := String(config.get("role_id", ""))
 	var monster_id := String(config.get("monster_id", ""))
 	if not ["zs", "ck", "fs", "fz"].has(role_id) or TableCache.get_monster(monster_id).is_empty():
@@ -173,16 +258,32 @@ func command(sequence: int, action: Dictionary) -> Dictionary:
 func apply_action(action: Dictionary) -> Dictionary:
 	if sim.finished:
 		return {"accepted": false, "reason": "finished"}
+	var actor_uid := sim.role_uid
+	var cid := String(action.get("character_id", ""))
+	if sim.coop_mode:
+		if cid.is_empty() or not sim.member_uids.has(cid):
+			if String(action.get("action", "")) != "flee":
+				return {"accepted": false, "reason": "unknown_actor"}
+		else:
+			actor_uid = int(sim.member_uids[cid])
 	match String(action.get("action", "")):
 		"attack":
-			var reason := sim.trigger_manual_attack()
+			var reason := sim.trigger_manual_attack_for(actor_uid) if sim.coop_mode else sim.trigger_manual_attack()
 			return {"accepted": reason == "attacked", "reason": reason}
 		"skill":
-			var ok := sim.cast_skill(sim.role_uid, String(action.get("skill_id", "")), int(action.get("target_uid", -1)))
+			var ok := sim.cast_skill(actor_uid, String(action.get("skill_id", "")), int(action.get("target_uid", -1)))
 			return {"accepted": ok, "reason": "cast" if ok else "unavailable"}
 		"potion":
-			var ok := sim.use_potion()
+			var ok := sim.use_potion_for(actor_uid) if sim.coop_mode else sim.use_potion()
 			return {"accepted": ok, "reason": "used" if ok else "unavailable"}
+		"rescue":
+			return sim.rescue_ally(actor_uid, int(action.get("target_uid", -1)))
+		"focus":
+			var ok := sim.set_role_focus_target_for(actor_uid, int(action.get("target_uid", -1)))
+			return {"accepted": ok, "reason": "focused" if ok else "invalid_target"}
+		"safe_defend":
+			var ok := sim.set_safe_defend(actor_uid, bool(action.get("enabled", true)))
+			return {"accepted": ok, "reason": "updated" if ok else "invalid_actor"}
 		"flee":
 			sim.finished = true
 			sim.result = "flee"
@@ -193,17 +294,46 @@ func apply_action(action: Dictionary) -> Dictionary:
 func snapshot() -> Dictionary:
 	var units: Array = []
 	for unit in sim.units:
-		units.append({"uid": unit.uid, "kind": unit.kind, "side": unit.side,
+		var u_row := {"uid": unit.uid, "kind": unit.kind, "side": unit.side,
 			"template_id": String(unit.data.get("id", "")), "name": unit.name,
 			"hp": unit.hp, "max_hp": unit.get_max_hp(), "alive": unit.alive,
 			"energy": unit.energy, "attack_timer": unit.attack_timer,
 			"row": unit.row, "col": unit.col, "atk": unit.get_atk(), "def": unit.get_def(),
 			"speed": unit.get_spd(), "buffs": unit.buffs.duplicate(true),
-			"skills": unit.skills.duplicate(true), "once_flags": unit.once_flags.duplicate(true)})
+			"skills": unit.skills.duplicate(true), "once_flags": unit.once_flags.duplicate(true)}
+		if sim.coop_mode:
+			u_row["coop_slot"] = unit.coop_slot
+			u_row["downed"] = unit.downed
+			u_row["downed_ticks"] = unit.downed_ticks
+		units.append(u_row)
 	var state := {"tick": sim.tick_count, "finished": sim.finished, "result": sim.result,
 		"role_uid": sim.role_uid, "units": units, "potions": sim.potions_left,
 		"potion_cd": sim.potion_cd_ticks, "cast_queue": sim.cast_queue.duplicate(true),
 		"last_cast": sim.last_cast.duplicate(true), "rng_state": str(sim.rng.state)}
+	if sim.coop_mode:
+		var member_stats: Dictionary = {}
+		for cid_key in sim.member_uids.keys():
+			var uid := int(sim.member_uids[cid_key])
+			var u := sim.unit_by_uid(uid)
+			if u == null:
+				continue
+			member_stats[String(cid_key)] = {
+				"uid": uid,
+				"hp": u.hp,
+				"max_hp": u.get_max_hp(),
+				"alive": u.alive,
+				"downed": u.downed,
+				"downed_ticks": u.downed_ticks,
+				"energy": u.energy,
+				"potions": int(sim.role_potions.get(uid, 0)),
+				"potion_cd": int(sim.role_potion_cd.get(uid, 0)),
+				"damage_dealt": u.damage_dealt,
+				"healing_done": u.healing_done,
+				"rescues": int(sim.rescue_counts.get(uid, 0)),
+				"actions": int(sim.action_counts.get(uid, 0)),
+				"safe_defend": bool(sim.safe_defend_uids.get(uid, false)),
+			}
+		state["coop_members"] = member_stats
 	state["state_hash"] = JSON.stringify(state, "", true, true).sha256_text()
 	return state
 

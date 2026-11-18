@@ -27,6 +27,8 @@ type OnlineRules struct {
 	NPCs       map[string]NPCRule       `json:"npcs,omitempty"`
 	Encounters map[string]EncounterRule `json:"encounters"`
 	Journey    *JourneyRules            `json:"journey,omitempty"`
+	Coop       *CoopRules               `json:"coop,omitempty"`
+	WorldBoss  *WorldBossRules          `json:"world_boss,omitempty"`
 }
 type EncounterRule struct {
 	MapID        string     `json:"map_id,omitempty"`
@@ -53,7 +55,19 @@ func (r OnlineRules) Validate() error {
 		return err
 	}
 	if r.Journey != nil {
-		return r.Journey.validate(r.Encounters)
+		if err := r.Journey.validate(r.Encounters); err != nil {
+			return err
+		}
+		if r.Coop != nil {
+			if err := r.Coop.validate(r.Journey.Items); err != nil {
+				return err
+			}
+		}
+		if r.WorldBoss != nil {
+			if err := r.WorldBoss.validate(r.Journey.Items, r.Maps); err != nil {
+				return err
+			}
+		}
 	}
 	return nil
 }

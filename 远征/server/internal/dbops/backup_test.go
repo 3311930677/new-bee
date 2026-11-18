@@ -107,8 +107,8 @@ func TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase(t *testing
 	if result.err != nil {
 		t.Fatal(result.err)
 	}
-	if len(result.manifest.Tables) != 28 {
-		t.Fatalf("expected all 28 application tables, got %d", len(result.manifest.Tables))
+	if len(result.manifest.Tables) != 34 {
+		t.Fatalf("expected all 34 application tables, got %d", len(result.manifest.Tables))
 	}
 	target := "yz_restore_" + randomHex()[:20]
 	f.databases = append(f.databases, target)
@@ -116,7 +116,7 @@ func TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase(t *testing
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !restored.ReadyForReview || restored.SessionsRevoked != 1 || restored.LeasesInvalidated != 1 || len(restored.TablesMatched) != 28 {
+	if !restored.ReadyForReview || restored.SessionsRevoked != 1 || restored.LeasesInvalidated != 1 || len(restored.TablesMatched) != 34 {
 		t.Fatal("restore did not validate all tables or invalidate sessions")
 	}
 	db := f.pool(t, target, "", "")

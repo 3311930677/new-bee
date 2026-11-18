@@ -1,0 +1,182 @@
+{
+  "format": 1,
+  "database": "yz_drill_c053e7a989d74c1785c2",
+  "schema": "game",
+  "server_version": 180007,
+  "started_utc": "2026-11-18T19:06:27.8784621Z",
+  "finished_utc": "2026-11-18T19:06:28.3710448Z",
+  "dump_sha256": "88f7d391675ec7714532b8ab783fdab4bae5b72fb20bc857a187bbc999bd9e28",
+  "dump_bytes": 112949,
+  "tables": [
+    {
+      "name": "accounts",
+      "rows": 2,
+      "sha256": "0efb4917ca541754a0acf8d1934d1d24518a39ed53e08532407feffb5b4bf210"
+    },
+    {
+      "name": "audit_events",
+      "rows": 3,
+      "sha256": "f0b4f143d6d3b8fe0856a2448758d885d6fc09928552bfb510f1cfd6cbd3eac9"
+    },
+    {
+      "name": "battle_inputs",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "battle_results",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "battle_reward_claims",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "battles",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "character_progress",
+      "rows": 2,
+      "sha256": "603f9d019992dc40d86324122f72bd7f1e117a26cfdf00bb902520f5f111edc1"
+    },
+    {
+      "name": "characters",
+      "rows": 2,
+      "sha256": "5eea4090c3e81cda669e63bfa8ee06e61d4cb13a284ced22ec9df99a5b0f7501"
+    },
+    {
+      "name": "chat_messages",
+      "rows": 2,
+      "sha256": "963914cd2090c52700eaae25ae59a8b4612f916bcc90adbcccbf48275d85f39f"
+    },
+    {
+      "name": "command_receipts",
+      "rows": 16,
+      "sha256": "55ef597449d0f6252f4bcac6b726394f712235046f21d830bedca2fcf1548814"
+    },
+    {
+      "name": "coop_instance_drops",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "coop_instance_members",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "coop_instances",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "coop_queues",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "friend_requests",
+      "rows": 1,
+      "sha256": "a9a9815c522b99fb71ccfdacc0bcf7e862013f456cc1b04bdade4e5f3b12e5bf"
+    },
+    {
+      "name": "friendships",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "inventory_items",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "inventory_ledger",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "npc_interactions",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "parties",
+      "rows": 1,
+      "sha256": "a4095c546d7b1708050cd40a50a5caf662fcad373b7222ab3a2b34f82f8299ca"
+    },
+    {
+      "name": "party_invites",
+      "rows": 1,
+      "sha256": "4d66a47d2c6b1e1c78f838c710a80115050ddf125c937597225895a1cc0d3aae"
+    },
+    {
+      "name": "party_members",
+      "rows": 2,
+      "sha256": "899a4fe3dbf726f83ea9a580426d46f0b2f892d936e64435131830487b7d851b"
+    },
+    {
+      "name": "player_blocks",
+      "rows": 1,
+      "sha256": "d8012800ed1dccfb90518404e122918365c3d776dde544e3299d8eb9c825d726"
+    },
+    {
+      "name": "player_reports",
+      "rows": 1,
+      "sha256": "e31531d702030cb5ab711cd82309ba6483bb8deff0c20e8390e81c05d2163f8b"
+    },
+    {
+      "name": "quest_events",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "room_instances",
+      "rows": 1,
+      "sha256": "8e2532fdaeecd514fd9551c3db8b56cb43f76f8dcee3acff4ef8c113ec572ec7"
+    },
+    {
+      "name": "room_leases",
+      "rows": 2,
+      "sha256": "0f7fb7410397571c11c7de0d247fc55e0d6576386f038ca21f3292e7d55147fb"
+    },
+    {
+      "name": "schema_migrations",
+      "rows": 8,
+      "sha256": "b3581f29f27b4d9b159d69a7f1bdb2f5575f761940a11cbbd8150ff61c6be5d9"
+    },
+    {
+      "name": "security_notifications",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "sessions",
+      "rows": 2,
+      "sha256": "45eb8bf6c2895cce378689824d8479d023103320e9a21a73fb6edf3fb5795175"
+    },
+    {
+      "name": "wallet_ledger",
+      "rows": 2,
+      "sha256": "03fca8bb548096627aa5e7d2f89fb4790d1edb3622d470d413b584ab0246ec28"
+    },
+    {
+      "name": "wallets",
+      "rows": 2,
+      "sha256": "339c9daac745fc87340dbf1393c154c928d7df98416b597f7b8d54344384b19c"
+    },
+    {
+      "name": "world_boss_events",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "world_boss_participations",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

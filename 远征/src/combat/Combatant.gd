@@ -40,6 +40,13 @@ var deathproof_buff: bool = false  # 换宠免死
 var traits: TraitSystem = null     # 仅我方 role 持有
 var companion_traits: Dictionary = {} # 已训练特性的入场快照；老档为空
 
+var owner_uid: int = 0             # 宠物所属主角 uid（多人合作记账）
+var coop_slot: String = ""         # 合作角色 character_id
+var downed: bool = false           # 合作副本倒地等待救援
+var downed_ticks: int = 0
+var damage_dealt: int = 0
+var healing_done: int = 0
+
 var buffs: Array[Dictionary] = []  # {type, dur(ticks, -1 永久), stacks, val}
 var skills: Array[Dictionary] = [] # {id, def, cd_left(ticks)}
 
@@ -236,6 +243,8 @@ func _direct_damage(dmg: int, src: Combatant, sim: BattleSim, is_dot := false) -
 		return 0
 	var dealt := mini(hp, dmg)
 	hp = maxi(0, hp - dmg)
+	if src != null:
+		src.damage_dealt += dealt
 	sim.emit({"t": "dmg", "src": src.uid if src != null else -1, "uid": uid,
 		"amount": dealt, "crit": false, "dot": is_dot})
 	if hp == 0:
@@ -281,6 +290,8 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 	# 吸血、反伤与实效统计只认真正扣掉的生命，不能靠残血目标放大收益。
 	final = mini(hp, final)
 	hp = maxi(0, hp - final)
+	if src != null:
+		src.damage_dealt += final
 	sim.emit({"t": "dmg", "src": src.uid if src != null else -1, "uid": uid,
 		"amount": final, "crit": is_crit, "dot": false})
 	# 反伤（buff 与词条共用路径；反伤不再触发受击钩子）
@@ -316,13 +327,18 @@ func _on_lethal(sim: BattleSim, killer: Combatant) -> void:
 		return
 	alive = false
 	hp = 0
-	sim.emit({"t": "death", "uid": uid})
+	if sim.coop_mode and kind == "role" and sim.coop_downed_window_ticks > 0:
+		downed = true
+		downed_ticks = sim.coop_downed_window_ticks
+		sim.emit({"t": "death", "uid": uid, "downed": true})
+	else:
+		sim.emit({"t": "death", "uid": uid})
 	# 死亡钩子（P05-C）：首领阶段表里的 on_death 以「死后反应」形式挂着（如影狼先死 → 首领破绽）。
 	# 必须排在本单位的死亡事件之后：表现层先播倒地，再收阶段横幅。
 	sim.notify_death(self)
 	var k := killer
 	if k != null and k.kind == "pet":
-		k = sim.role_unit()      # 宠物击杀算主人的（主人流派的击杀收益才成立）
+		k = sim.unit_by_uid(k.owner_uid) if k.owner_uid > 0 else sim.role_unit()      # 宠物击杀算主人的（主人流派的击杀收益才成立）
 	if k == null or k == self or not k.alive or k.traits == null:
 		return
 	k.traits.on_kill(sim, k, self)
@@ -340,6 +356,8 @@ func heal(amount: int, src: Combatant, sim: BattleSim) -> int:
 	if amt <= 0:
 		return 0
 	hp += amt
+	if src != null:
+		src.healing_done += amt
 	sim.emit({"t": "heal", "src": src.uid if src != null else -1, "uid": uid, "amount": amt})
 	return amt
 
@@ -371,8 +389,9 @@ func pick_basic_target(sim: BattleSim) -> Combatant:
 			return null
 		return all[sim.rng.randi_range(0, all.size() - 1)]
 	# 玩家可以用经典“攻”指令集火；强控状态与原近战前排规则仍优先。
-	if side == "ally" and kind == "role" and sim.role_focus_target_uid >= 0:
-		var focus := sim.unit_by_uid(sim.role_focus_target_uid)
+	var focus_uid := int(sim.role_focus_targets.get(uid, sim.role_focus_target_uid)) if sim.coop_mode else sim.role_focus_target_uid
+	if side == "ally" and kind == "role" and focus_uid >= 0:
+		var focus := sim.unit_by_uid(focus_uid)
 		if focus != null and focus.alive and focus.side == "enemy":
 			var front_alive := _filter_row(enemies, ROW_FRONT)
 			if attack_range != "melee" or focus.row == ROW_FRONT or front_alive.is_empty():

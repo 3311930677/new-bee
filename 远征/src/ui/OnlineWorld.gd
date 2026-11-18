@@ -7,6 +7,7 @@ const BattlePage := preload("res://src/ui/OnlineBattle.tscn")
 const Profile := preload("res://src/online/OnlineProfile.gd")
 const JourneyPanel := preload("res://src/ui/OnlineJourneyPanel.gd")
 const SocialPanel := preload("res://src/ui/OnlineSocialPanel.gd")
+const CoopPanel := preload("res://src/ui/OnlineCoopPanel.gd")
 const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 
 var auto_connect := true
@@ -24,6 +25,8 @@ var _map_name := "昭元边城"
 var _current_channel := 1
 var _channels_panel: Control
 var _social_panel: Control
+var _coop_panel: Control
+var _coop_instance_id := ""
 var _world := Node2D.new()
 var _actors: Dictionary = {}
 var _camera := Camera2D.new()
@@ -103,6 +106,8 @@ func _ready() -> void:
 		_button(actions, "分线", _open_channels)
 	if Online.manifest.get("features", []).has("social_chat"):
 		_button(actions, "社交", open_social)
+	if Online.manifest.get("features", []).has("coop_dungeons"):
+		_button(actions, "副本", open_coop)
 	if Online.manifest.get("features", []).has("town_journey"):
 		_button(actions, "行囊与任务", open_journey)
 	_button(actions, "返回角色", _back)
@@ -655,6 +660,7 @@ func _present_battle(value: Variant) -> void:
 		_close_journey()
 		_close_channels()
 		_close_social()
+		_close_coop()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -706,7 +712,7 @@ func _process(delta: float) -> void:
 		else:
 			refresh_world()
 		return
-	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and not is_instance_valid(_channels_panel) and not is_instance_valid(_social_panel) and _move_elapsed >= 0.15:
+	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and not is_instance_valid(_channels_panel) and not is_instance_valid(_social_panel) and not is_instance_valid(_coop_panel) and _move_elapsed >= 0.15:
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		if direction.is_zero_approx():
 			direction = _held
@@ -736,6 +742,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_channels()
 		elif is_instance_valid(_social_panel):
 			_close_social()
+		elif is_instance_valid(_coop_panel):
+			_close_coop()
 		else:
 			_back()
 
@@ -746,6 +754,7 @@ func open_social() -> void:
 	_close_profiles()
 	_close_journey()
 	_close_channels()
+	_close_coop()
 	_held = Vector2.ZERO
 	_social_panel = SocialPanel.new()
 	_hud.add_child(_social_panel)
@@ -825,11 +834,125 @@ func _close_social() -> void:
 	_social_panel = null
 
 
+func open_coop(tab_id := "dungeons") -> void:
+	if _busy or not battle.is_empty() or is_instance_valid(_coop_panel):
+		return
+	_close_profiles()
+	_close_journey()
+	_close_channels()
+	_close_coop()
+	_close_social()
+	_held = Vector2.ZERO
+	_coop_panel = CoopPanel.new()
+	_hud.add_child(_coop_panel)
+	_coop_panel.closed.connect(_close_coop)
+	_coop_panel.action_requested.connect(_on_coop_action)
+	if not tab_id.is_empty():
+		_coop_panel.set_tab(tab_id)
+	await _refresh_coop()
+
+
+func _refresh_coop() -> void:
+	if not is_instance_valid(_coop_panel):
+		return
+	_busy = true
+	_coop_panel.set_busy(true)
+	var ov: Dictionary = await Online.coop_dungeons()
+	var inst := {}
+	if bool(ov.get("ok", false)):
+		var aid := String(ov.data.get("active_instance_id", ""))
+		if aid.is_empty() and not _coop_instance_id.is_empty():
+			aid = _coop_instance_id
+		if not aid.is_empty():
+			var ir: Dictionary = await Online.get_coop_instance(aid)
+			if bool(ir.get("ok", false)):
+				inst = ir.data
+				_coop_instance_id = aid
+	var wb: Dictionary = await Online.world_boss_current()
+	var wb_data: Dictionary = wb.data if bool(wb.get("ok", false)) else {}
+	_busy = false
+	if not is_instance_valid(_coop_panel):
+		return
+	_coop_panel.set_busy(false)
+	if bool(ov.get("ok", false)):
+		_coop_panel.apply_state(ov.data, inst, wb_data, String(Online.selected_character.get("id", "")))
+		_coop_panel.set_status("在线合作副本与公共首领同步成功")
+	else:
+		_coop_panel.set_status(String(ov.get("error", "合作副本状态同步失败")))
+
+
+func _on_coop_action(kind: String, payload: Dictionary) -> void:
+	if _busy or not is_instance_valid(_coop_panel):
+		return
+	_busy = true
+	_coop_panel.set_busy(true)
+	var res := {"ok": false}
+	match kind:
+		"refresh":
+			res = {"ok": true}
+		"open_instance":
+			_coop_instance_id = String(payload.get("instance_id", ""))
+			res = await Online.get_coop_instance(_coop_instance_id)
+		"create_instance":
+			res = await Online.create_coop_instance(String(payload.get("dungeon_id", "stele_cavern")), String(payload.get("difficulty", "standard")), String(payload.get("goal", "first_clear")), bool(payload.get("allow_solo", false)))
+			if bool(res.get("ok", false)):
+				_coop_instance_id = String(res.data.get("id", ""))
+				_coop_panel.set_tab("instance")
+		"queue_join":
+			res = await Online.join_coop_queue(String(payload.get("dungeon_id", "stele_cavern")), String(payload.get("difficulty", "standard")), String(payload.get("goal", "first_clear")), bool(payload.get("friends_only", false)))
+			if bool(res.get("ok", false)) and res.data.has("instance"):
+				var inst_d: Dictionary = res.data.get("instance", {})
+				_coop_instance_id = String(inst_d.get("id", ""))
+				_coop_panel.set_tab("instance")
+		"queue_leave":
+			res = await Online.leave_coop_queue()
+		"instance_ready":
+			res = await Online.set_coop_ready(String(payload.get("instance_id", "")), bool(payload.get("ready", true)))
+		"interact":
+			res = await Online.interact_coop_stage(String(payload.get("instance_id", "")), String(payload.get("mechanic_id", "")), String(payload.get("choice", "")))
+		"battle_start":
+			res = await Online.start_coop_battle(String(payload.get("instance_id", "")))
+		"battle_cmd":
+			res = await Online.coop_battle_command(String(payload.get("instance_id", "")), int(payload.get("sequence", 1)), String(payload.get("action", "attack")), String(payload.get("skill_id", "")), int(payload.get("target_uid", 0)))
+		"battle_tick":
+			res = await Online.tick_coop_battle(String(payload.get("instance_id", "")), int(payload.get("advance_ticks", 60)))
+		"leave_instance":
+			res = await Online.leave_coop_instance(String(payload.get("instance_id", "")))
+			if bool(res.get("ok", false)):
+				_coop_instance_id = ""
+		"retreat":
+			res = await Online.retreat_coop_instance(String(payload.get("instance_id", "")), bool(payload.get("vote", true)))
+		"claim_drop":
+			res = await Online.claim_coop_drop(String(payload.get("drop_id", "")))
+		"wb_objective":
+			res = await Online.world_boss_objective(String(payload.get("event_id", "")), String(payload.get("objective_id", "")))
+		"wb_engage":
+			res = await Online.world_boss_engage(String(payload.get("event_id", "")), "attack")
+		"wb_claim":
+			res = await Online.world_boss_claim(String(payload.get("event_id", "")))
+	_busy = false
+	if not is_instance_valid(_coop_panel):
+		return
+	_coop_panel.set_busy(false)
+	if not bool(res.get("ok", false)):
+		_coop_panel.set_status(String(res.get("error", "合作副本操作失败")))
+		return
+	await _refresh_coop()
+
+
+func _close_coop() -> void:
+	if is_instance_valid(_coop_panel):
+		_coop_panel.queue_free()
+	_coop_panel = null
+
+
 func _open_channels() -> void:
 	if is_instance_valid(_channels_panel) or not battle.is_empty():
 		return
 	_close_profiles()
 	_close_journey()
+	_close_social()
+	_close_coop()
 	_held = Vector2.ZERO
 	_channels_panel = Control.new()
 	_channels_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
