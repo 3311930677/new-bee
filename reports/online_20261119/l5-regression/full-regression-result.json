@@ -1,0 +1,12 @@
+{
+  "expected_cases": 79,
+  "passed_cases": 78,
+  "failed_cases": 1,
+  "exit_code": 1,
+  "failed_case": "VerifyPerf",
+  "standalone_verify_perf_exit_code": 0,
+  "runner_sha256": "235f15b43bbe3f3227ef24af01a942948001db98e3848dda6abe4a01bcaa9ade",
+  "runner_unchanged": true,
+  "load_screen_sha256": "61d017e4ceae223ab5d6055ed5c808aa22950e3376ebd88a3e1b197fc1083455",
+  "load_screen_unchanged": true
+}

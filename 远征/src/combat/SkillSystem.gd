@@ -177,6 +177,8 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 	# 目标集合
 	var etype := String(effect.get("type", ""))
 	var targets := _pick_targets(sim, caster, target_type)
+	if sim.pvp_mode and targets.size() > sim.pvp_aoe_cap and target_type in ["enemy_all", "enemy_front_all", "ally_all"]:
+		targets = targets.slice(0, sim.pvp_aoe_cap)
 	if target_type == "ally_single" and chosen_ally != null:
 		targets.clear()
 		targets.append(chosen_ally)
@@ -368,6 +370,8 @@ static func _apply_heal(sim: BattleSim, caster: Combatant, skill: Dictionary,
 	var total := 0
 	for t in targets:
 		var amt := DamageCalc.heal_amount(t.get_max_hp(), caster.get_atk(), hp_pct, atk_k)
+		if sim.pvp_mode:
+			amt = maxi(1, int(round(float(amt) * sim.pvp_heal_mult)))
 		total += t.heal(amt, caster, sim)
 	return total
 

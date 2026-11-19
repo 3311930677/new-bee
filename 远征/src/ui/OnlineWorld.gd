@@ -10,6 +10,7 @@ const SocialPanel := preload("res://src/ui/OnlineSocialPanel.gd")
 const CoopPanel := preload("res://src/ui/OnlineCoopPanel.gd")
 const MarketPanel := preload("res://src/ui/OnlineMarketPanel.gd")
 const GuildPanel := preload("res://src/ui/OnlineGuildPanel.gd")
+const PvpPanel := preload("res://src/ui/OnlinePvpPanel.gd")
 const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 
 var auto_connect := true
@@ -30,6 +31,7 @@ var _social_panel: Control
 var _coop_panel: Control
 var _market_panel: Control
 var _guild_panel: Control
+var _pvp_panel: Control
 var _coop_instance_id := ""
 var _world := Node2D.new()
 var _actors: Dictionary = {}
@@ -119,8 +121,10 @@ func _ready() -> void:
 		_button(actions2, "集市", open_market)
 	if Online.manifest.get("features", []).has("guilds"):
 		_button(actions2, "帮派", open_guild)
+	if Online.manifest.get("features", []).has("pvp_arena"):
+		_button(actions2, "演武", open_pvp)
 	if Online.manifest.get("features", []).has("town_journey"):
-		_button(actions2, "行囊与任务", open_journey)
+		_button(actions2, "行囊", open_journey)
 	_button(actions2, "返回角色", _back)
 	if auto_connect:
 		call_deferred("enter_world")
@@ -674,6 +678,7 @@ func _present_battle(value: Variant) -> void:
 		_close_coop()
 		_close_market()
 		_close_guild()
+		_close_pvp()
 	_hud.visible = battle.is_empty()
 	if battle.is_empty():
 		if is_instance_valid(_battle_page):
@@ -761,6 +766,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_market()
 		elif is_instance_valid(_guild_panel):
 			_close_guild()
+		elif is_instance_valid(_pvp_panel):
+			_close_pvp()
 		else:
 			_back()
 
@@ -774,6 +781,7 @@ func open_social() -> void:
 	_close_coop()
 	_close_market()
 	_close_guild()
+	_close_pvp()
 	_held = Vector2.ZERO
 	_social_panel = SocialPanel.new()
 	_hud.add_child(_social_panel)
@@ -863,6 +871,7 @@ func open_coop(tab_id := "dungeons") -> void:
 	_close_social()
 	_close_market()
 	_close_guild()
+	_close_pvp()
 	_held = Vector2.ZERO
 	_coop_panel = CoopPanel.new()
 	_hud.add_child(_coop_panel)
@@ -986,6 +995,7 @@ func open_market(tab_id := "market") -> void:
 	_close_coop()
 	_close_social()
 	_close_guild()
+	_close_pvp()
 	_held = Vector2.ZERO
 	_market_panel = MarketPanel.new()
 	_hud.add_child(_market_panel)
@@ -1081,6 +1091,7 @@ func open_guild(tab_id := "overview") -> void:
 	_close_coop()
 	_close_social()
 	_close_market()
+	_close_pvp()
 	_held = Vector2.ZERO
 	_guild_panel = GuildPanel.new()
 	_hud.add_child(_guild_panel)
@@ -1159,6 +1170,103 @@ func _close_guild() -> void:
 	_guild_panel = null
 
 
+func open_pvp(tab_id := "arena") -> void:
+	if _busy or not battle.is_empty() or is_instance_valid(_pvp_panel):
+		return
+	_close_profiles()
+	_close_journey()
+	_close_channels()
+	_close_coop()
+	_close_social()
+	_close_market()
+	_close_guild()
+	_held = Vector2.ZERO
+	_pvp_panel = PvpPanel.new()
+	_hud.add_child(_pvp_panel)
+	_pvp_panel.closed.connect(_close_pvp)
+	_pvp_panel.action_requested.connect(_on_pvp_action)
+	if not tab_id.is_empty():
+		_pvp_panel.set_tab(tab_id)
+	await _refresh_pvp()
+
+
+func _refresh_pvp(replay_data: Dictionary = {}) -> void:
+	if not is_instance_valid(_pvp_panel):
+		return
+	_busy = true
+	_pvp_panel.set_busy(true)
+	var ov: Dictionary = await Online.pvp_overview(_pvp_panel.selected_mode())
+	_busy = false
+	if not is_instance_valid(_pvp_panel):
+		return
+	_pvp_panel.set_busy(false)
+	if bool(ov.get("ok", false)):
+		_pvp_panel.apply_state(ov.data, replay_data)
+		_pvp_panel.set_status("昭元演武场已同步（1v1 / 2v2 / 3v3 独立段位）")
+	else:
+		_pvp_panel.set_status(String(ov.get("error", "演武场状态同步失败")))
+
+
+func _on_pvp_action(kind: String, payload: Dictionary) -> void:
+	if _busy or not is_instance_valid(_pvp_panel):
+		return
+	_busy = true
+	_pvp_panel.set_busy(true)
+	var res := {"ok": false}
+	var replay_data := {}
+	match kind:
+		"refresh":
+			res = {"ok": true}
+		"challenge_send":
+			res = await Online.send_pvp_challenge(String(payload.get("mode", "1v1")), String(payload.get("target_character_id", "")))
+		"challenge_respond":
+			res = await Online.respond_pvp_challenge(String(payload.get("id", "")), bool(payload.get("accept", false)))
+			if bool(res.get("ok", false)) and res.data.has("match"):
+				_pvp_panel.set_tab("match")
+		"queue_join":
+			res = await Online.join_pvp_queue(String(payload.get("mode", "1v1")), bool(payload.get("allow_random_fill", false)))
+			if bool(res.get("ok", false)) and res.data.has("match"):
+				_pvp_panel.set_tab("match")
+		"queue_leave":
+			res = await Online.leave_pvp_queue()
+		"match_ready":
+			res = await Online.ready_pvp_match(String(payload.get("match_id", "")), bool(payload.get("ready", true)))
+		"match_cmd":
+			res = await Online.pvp_battle_command(String(payload.get("match_id", "")), int(payload.get("sequence", 1)), String(payload.get("action", "attack")), String(payload.get("skill_id", "")), int(payload.get("target_uid", 0)))
+		"match_tick":
+			res = await Online.tick_pvp_match(String(payload.get("match_id", "")), int(payload.get("advance_ticks", 60)))
+		"match_reconnect_cycle":
+			var mid := String(payload.get("match_id", ""))
+			res = await Online.pvp_connection(mid, "disconnected")
+			if bool(res.get("ok", false)):
+				res = await Online.pvp_connection(mid, "reconnected")
+		"match_forfeit":
+			res = await Online.forfeit_pvp_match(String(payload.get("match_id", "")))
+		"replay":
+			res = await Online.replay_pvp_match(String(payload.get("match_id", "")))
+			if bool(res.get("ok", false)):
+				replay_data = res.data
+				_pvp_panel.set_tab("replay")
+		"season_claim":
+			res = await Online.claim_pvp_season_reward()
+		"honor_buy":
+			res = await Online.buy_pvp_honor_item(String(payload.get("item_id", "")))
+	_busy = false
+	if not is_instance_valid(_pvp_panel):
+		return
+	_pvp_panel.set_busy(false)
+	if not bool(res.get("ok", false)):
+		_pvp_panel.set_status(String(res.get("error", "演武操作未完成")))
+		return
+	await _refresh_pvp(replay_data)
+
+
+func _close_pvp() -> void:
+	if is_instance_valid(_pvp_panel):
+		_pvp_panel.queue_free()
+	_pvp_panel = null
+
+
 func _open_channels() -> void:
 	if is_instance_valid(_channels_panel) or not battle.is_empty():
 		return
@@ -1168,6 +1276,7 @@ func _open_channels() -> void:
 	_close_coop()
 	_close_market()
 	_close_guild()
+	_close_pvp()
 	_held = Vector2.ZERO
 	_channels_panel = Control.new()
 	_channels_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

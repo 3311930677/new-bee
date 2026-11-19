@@ -390,14 +390,14 @@ func pick_basic_target(sim: BattleSim) -> Combatant:
 		return all[sim.rng.randi_range(0, all.size() - 1)]
 	# 玩家可以用经典“攻”指令集火；强控状态与原近战前排规则仍优先。
 	var focus_uid := int(sim.role_focus_targets.get(uid, sim.role_focus_target_uid)) if sim.coop_mode else sim.role_focus_target_uid
-	if side == "ally" and kind == "role" and focus_uid >= 0:
+	if kind == "role" and focus_uid >= 0:
 		var focus := sim.unit_by_uid(focus_uid)
-		if focus != null and focus.alive and focus.side == "enemy":
+		if focus != null and focus.alive and focus.side != side:
 			var front_alive := _filter_row(enemies, ROW_FRONT)
 			if attack_range != "melee" or focus.row == ROW_FRONT or front_alive.is_empty():
 				return focus
-	# 敌方 AI 目标规则（§2.5）；我方单位统一 basic 规则
-	if side == "enemy":
+	# 敌方 AI 目标规则（§2.5）；角色/宠物统一 basic 规则
+	if kind == "monster" and side == "enemy":
 		match ai_type:
 			"front":
 				var front := _filter_row(enemies, ROW_FRONT)

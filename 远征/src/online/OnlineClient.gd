@@ -642,6 +642,85 @@ func logout() -> void:
 	clear_session()
 
 
+func pvp_overview(mode := "1v1") -> Dictionary:
+	return await _request(HTTPClient.METHOD_GET, "/v1/pvp/overview?mode=" + mode.uri_encode(), {}, "", true)
+
+
+func send_pvp_challenge(mode: String, target_character_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(target_character_id):
+		return _failure("切磋对象标识无效。", "invalid_character")
+	return await _send_command("/v1/pvp/challenges", {"mode": mode, "target_character_id": target_character_id}, request_id)
+
+
+func respond_pvp_challenge(challenge_id: String, accept: bool, request_id := "") -> Dictionary:
+	if not _valid_id(challenge_id):
+		return _failure("切磋邀请无效。", "invalid_challenge")
+	return await _send_command("/v1/pvp/challenges/%s/respond" % challenge_id, {"accept": accept}, request_id)
+
+
+func join_pvp_queue(mode: String, allow_random_fill := false, request_id := "") -> Dictionary:
+	return await _send_command("/v1/pvp/queue/join", {"mode": mode, "allow_random_fill": allow_random_fill}, request_id)
+
+
+func leave_pvp_queue(request_id := "") -> Dictionary:
+	return await _send_command("/v1/pvp/queue/leave", {}, request_id)
+
+
+func get_pvp_match(match_id: String) -> Dictionary:
+	if not _valid_id(match_id):
+		return _failure("竞技对局标识无效。", "invalid_match")
+	return await _request(HTTPClient.METHOD_GET, "/v1/pvp/matches/%s" % match_id, {}, "", true)
+
+
+func ready_pvp_match(match_id: String, ready: bool, request_id := "") -> Dictionary:
+	if not _valid_id(match_id):
+		return _failure("竞技对局标识无效。", "invalid_match")
+	return await _send_command("/v1/pvp/matches/%s/ready" % match_id, {"ready": ready}, request_id)
+
+
+func pvp_battle_command(match_id: String, sequence: int, action: String, skill_id := "", target_uid := 0, request_id := "") -> Dictionary:
+	if not _valid_id(match_id):
+		return _failure("竞技对局标识无效。", "invalid_match")
+	var payload := {"sequence": sequence, "action": action}
+	if not skill_id.is_empty():
+		payload["skill_id"] = skill_id
+	if target_uid > 0:
+		payload["target_uid"] = target_uid
+	return await _send_command("/v1/pvp/matches/%s/command" % match_id, payload, request_id)
+
+
+func tick_pvp_match(match_id: String, advance_ticks := 60) -> Dictionary:
+	if not _valid_id(match_id):
+		return _failure("竞技对局标识无效。", "invalid_match")
+	return await _request(HTTPClient.METHOD_POST, "/v1/pvp/matches/%s/tick" % match_id, {"advance_ticks": advance_ticks}, "", true)
+
+
+func pvp_connection(match_id: String, conn_status: String) -> Dictionary:
+	if not _valid_id(match_id):
+		return _failure("竞技对局标识无效。", "invalid_match")
+	return await _request(HTTPClient.METHOD_POST, "/v1/pvp/matches/%s/connection" % match_id, {"status": conn_status}, "", true)
+
+
+func forfeit_pvp_match(match_id: String, request_id := "") -> Dictionary:
+	if not _valid_id(match_id):
+		return _failure("竞技对局标识无效。", "invalid_match")
+	return await _send_command("/v1/pvp/matches/%s/forfeit" % match_id, {}, request_id)
+
+
+func replay_pvp_match(match_id: String) -> Dictionary:
+	if not _valid_id(match_id):
+		return _failure("竞技对局标识无效。", "invalid_match")
+	return await _request(HTTPClient.METHOD_GET, "/v1/pvp/matches/%s/replay" % match_id, {}, "", true)
+
+
+func claim_pvp_season_reward(request_id := "") -> Dictionary:
+	return await _send_command("/v1/pvp/season/claim", {}, request_id)
+
+
+func buy_pvp_honor_item(item_id: String, request_id := "") -> Dictionary:
+	return await _send_command("/v1/pvp/honor-shop/buy", {"item_id": item_id}, request_id)
+
+
 func clear_session() -> void:
 	_generation += 1
 	access_token = ""

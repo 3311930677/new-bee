@@ -32,6 +32,7 @@ type OnlineRules struct {
 	WorldBosses map[string]WorldBossRules `json:"world_bosses,omitempty"`
 	Guilds      *GuildRules              `json:"guilds,omitempty"`
 	Market      *MarketRules             `json:"market,omitempty"`
+	PvP         *PvPRules                `json:"pvp,omitempty"`
 }
 type EncounterRule struct {
 	MapID        string     `json:"map_id,omitempty"`
@@ -83,6 +84,11 @@ func (r OnlineRules) Validate() error {
 		}
 		if r.Market != nil {
 			if err := r.Market.validate(r.Journey.Items, r.Maps); err != nil {
+				return err
+			}
+		}
+		if r.PvP != nil {
+			if err := r.PvP.validate(r.Journey.Items); err != nil {
 				return err
 			}
 		}

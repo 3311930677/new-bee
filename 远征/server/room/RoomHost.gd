@@ -182,6 +182,15 @@ func _dispatch(payload: Dictionary) -> Dictionary:
 		_battles[id] = battle
 		_touched[id] = Time.get_ticks_msec()
 		return {"ok": true, "state": battle.snapshot()}
+	if method == "battle.replay":
+		if not args.get("inputs") is Array:
+			return {"ok": false, "error": "invalid_replay"}
+		if _battles.has(id):
+			return (_battles[id] as RefCounted).replay(args.inputs, int(args.get("target_tick", -1)))
+		var cold_battle := Battle.new()
+		if not cold_battle.setup(args):
+			return {"ok": false, "error": "battle_not_found"}
+		return cold_battle.replay(args.inputs, int(args.get("target_tick", -1)))
 	if not _battles.has(id):
 		return {"ok": false, "error": "battle_not_found"}
 	var battle: RefCounted = _battles[id]
@@ -198,8 +207,4 @@ func _dispatch(payload: Dictionary) -> Dictionary:
 			if not args.get("action") is Dictionary:
 				return {"ok": false, "error": "invalid_action"}
 			return battle.command(int(args.get("sequence", 0)), args.action)
-		"battle.replay":
-			if not args.get("inputs") is Array:
-				return {"ok": false, "error": "invalid_replay"}
-			return battle.replay(args.inputs, int(args.get("target_tick", -1)))
 	return {"ok": false, "error": "unknown_method"}

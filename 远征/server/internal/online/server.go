@@ -189,6 +189,20 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/guilds/leave", s.authorized(s.leaveGuild))
 	s.mux.HandleFunc("POST /v1/guilds/leader", s.authorized(s.transferGuildLeader))
 	s.mux.HandleFunc("POST /v1/guilds/claim-leadership", s.authorized(s.claimInactiveGuildLeader))
+	s.mux.HandleFunc("GET /v1/pvp/overview", s.authorized(s.pvpOverview))
+	s.mux.HandleFunc("POST /v1/pvp/challenges", s.authorized(s.sendPvPChallenge))
+	s.mux.HandleFunc("POST /v1/pvp/challenges/{id}/respond", s.authorized(s.respondPvPChallenge))
+	s.mux.HandleFunc("POST /v1/pvp/queue/join", s.authorized(s.joinPvPQueue))
+	s.mux.HandleFunc("POST /v1/pvp/queue/leave", s.authorized(s.leavePvPQueue))
+	s.mux.HandleFunc("GET /v1/pvp/matches/{id}", s.authorized(s.getPvPMatch))
+	s.mux.HandleFunc("POST /v1/pvp/matches/{id}/ready", s.authorized(s.readyPvPMatch))
+	s.mux.HandleFunc("POST /v1/pvp/matches/{id}/command", s.authorized(s.commandPvPMatch))
+	s.mux.HandleFunc("POST /v1/pvp/matches/{id}/tick", s.authorized(s.tickPvPMatch))
+	s.mux.HandleFunc("POST /v1/pvp/matches/{id}/connection", s.authorized(s.connectionPvPMatch))
+	s.mux.HandleFunc("POST /v1/pvp/matches/{id}/forfeit", s.authorized(s.forfeitPvPMatch))
+	s.mux.HandleFunc("GET /v1/pvp/matches/{id}/replay", s.authorized(s.replayPvPMatch))
+	s.mux.HandleFunc("POST /v1/pvp/season/claim", s.authorized(s.claimPvPSeasonReward))
+	s.mux.HandleFunc("POST /v1/pvp/honor-shop/buy", s.authorized(s.buyPvPHonorItem))
 	return s, nil
 }
 
@@ -330,6 +344,9 @@ func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
 		}
 		if s.cfg.Rules.Guilds != nil {
 			features = append(features, "guilds")
+		}
+		if s.cfg.Rules.PvP != nil {
+			features = append(features, "pvp_arena", "pvp_1v1", "pvp_2v2", "pvp_3v3")
 		}
 		if s.cfg.Rules.Market != nil {
 			features = append(features, "market_sandbox", "npc_floor_market")

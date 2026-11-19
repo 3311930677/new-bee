@@ -11,6 +11,8 @@ var external_clock := false
 
 
 static func battle_config(config: Dictionary) -> Dictionary:
+	if String(config.get("mode", "")) == "pvp":
+		return _pvp_battle_config(config)
 	if config.get("members") is Array and not (config.get("members") as Array).is_empty():
 		return _coop_battle_config(config)
 	var result := {"role_id": config.get("role_id"), "monster_id": config.get("monster_id"),
@@ -100,10 +102,94 @@ static func _coop_battle_config(config: Dictionary) -> Dictionary:
 	return result
 
 
+static func _clean_pvp_team(raw_team: Variant, want_size: int) -> Array:
+	if not (raw_team is Array):
+		return []
+	var arr := raw_team as Array
+	if arr.size() != want_size:
+		return []
+	var team: Array = []
+	for mv in arr:
+		if not (mv is Dictionary):
+			return []
+		var m := mv as Dictionary
+		var cid := String(m.get("character_id", ""))
+		var role_id := String(m.get("role_id", ""))
+		var level := int(m.get("level", 0))
+		if cid.is_empty() or not ["zs", "ck", "fs", "fz"].has(role_id) or level < 1 or level > 60:
+			return []
+		var lo := _clean_loadout(m.get("loadout", {}))
+		if lo.has("_invalid"):
+			return []
+		var entry := {"character_id": cid, "role_id": role_id, "level": level}
+		if not String(m.get("name", "")).is_empty():
+			entry["name"] = String(m.get("name", ""))
+		if not lo.is_empty():
+			entry["loadout"] = lo
+		team.append(entry)
+	return team
+
+
+static func _pvp_battle_config(config: Dictionary) -> Dictionary:
+	var fmt := String(config.get("pvp_format", ""))
+	var want_size := 1 if fmt == "1v1" else (2 if fmt == "2v2" else (3 if fmt == "3v3" else 0))
+	if want_size == 0:
+		return {}
+	var seed := int(config.get("seed", -1))
+	if seed < 0 or seed > 9007199254740991:
+		return {}
+	var team_a := _clean_pvp_team(config.get("team_a"), want_size)
+	var team_b := _clean_pvp_team(config.get("team_b"), want_size)
+	if team_a.is_empty() or team_b.is_empty():
+		return {}
+	var default_max := 7200 if want_size == 3 else 5400
+	return {
+		"mode": "pvp",
+		"pvp_format": fmt,
+		"seed": seed,
+		"team_a": team_a,
+		"team_b": team_b,
+		"pvp_max_ticks": clampi(int(config.get("pvp_max_ticks", default_max)), 300, BattleSim.MAX_TICKS),
+		"aoe_target_cap": clampi(int(config.get("aoe_target_cap", 3)), 1, 4),
+		"pvp_heal_mult": clampf(float(config.get("pvp_heal_mult", 0.85)), 0.4, 1.2),
+	}
+
+
+func _to_member_cfgs(arr: Array) -> Array:
+	var out: Array = []
+	for mv in arr:
+		var m := mv as Dictionary
+		var lo: Dictionary = m.get("loadout", {})
+		var g := {"atk_add": int(lo.get("attack", 0)), "def_add": int(lo.get("defense", 0)),
+			"hp_add": int(lo.get("health", 0))}
+		out.append({"character_id": String(m.get("character_id", "")),
+			"role_id": String(m.get("role_id", "zs")), "level": int(m.get("level", 1)),
+			"name": String(m.get("name", "")), "traits": [], "growth": g,
+			"active_pet": String(lo.get("active_pet", "")), "potions": int(lo.get("potions", 0))})
+	return out
+
+
 func setup(config: Dictionary) -> bool:
 	var normalized := battle_config(config)
 	if normalized.is_empty():
 		return false
+	if String(normalized.get("mode", "")) == "pvp":
+		initial = normalized
+		var a_cfgs := _to_member_cfgs(normalized.get("team_a", []) as Array)
+		var b_cfgs := _to_member_cfgs(normalized.get("team_b", []) as Array)
+		sim = BattleSim.new()
+		sim.setup(int(normalized.get("seed", 0)), {
+			"pvp_mode": true,
+			"members": a_cfgs,
+			"opponents": b_cfgs,
+			"pvp_max_ticks": int(normalized.get("pvp_max_ticks", 5400)),
+			"aoe_target_cap": int(normalized.get("aoe_target_cap", 3)),
+			"pvp_heal_mult": float(normalized.get("pvp_heal_mult", 0.85)),
+		}, {"theme": "forest"})
+		sim.manual_basic_attack = true
+		sim.auto_mode = false
+		opened_msec = Time.get_ticks_msec()
+		return sim.setup_error.is_empty()
 	if String(normalized.get("mode", "")) == "coop":
 		initial = normalized
 		var member_cfgs: Array = []
@@ -284,7 +370,27 @@ func apply_action(action: Dictionary) -> Dictionary:
 		"safe_defend":
 			var ok := sim.set_safe_defend(actor_uid, bool(action.get("enabled", true)))
 			return {"accepted": ok, "reason": "updated" if ok else "invalid_actor"}
+		"timeout_default":
+			var reason := sim.trigger_manual_attack_for(actor_uid)
+			if reason == "attacked":
+				return {"accepted": true, "reason": "timeout_attack"}
+			var ok := sim.set_safe_defend(actor_uid, true)
+			return {"accepted": ok, "reason": "timeout_defend" if ok else "invalid_actor"}
+		"forfeit":
+			if sim.pvp_mode:
+				var actor := sim.unit_by_uid(actor_uid)
+				if actor == null:
+					return {"accepted": false, "reason": "unknown_actor"}
+				sim.winner_side = "enemy" if actor.side == "ally" else "ally"
+				sim.result = "defeat" if sim.winner_side == "enemy" else "victory"
+				sim.finished = true
+				return {"accepted": true, "reason": "forfeited"}
+			sim.finished = true
+			sim.result = "flee"
+			return {"accepted": true, "reason": "fled"}
 		"flee":
+			if sim.pvp_mode:
+				return {"accepted": false, "reason": "pvp_use_forfeit"}
 			sim.finished = true
 			sim.result = "flee"
 			return {"accepted": true, "reason": "fled"}
@@ -303,6 +409,7 @@ func snapshot() -> Dictionary:
 			"skills": unit.skills.duplicate(true), "once_flags": unit.once_flags.duplicate(true)}
 		if sim.coop_mode:
 			u_row["coop_slot"] = unit.coop_slot
+			u_row["owner_uid"] = unit.owner_uid
 			u_row["downed"] = unit.downed
 			u_row["downed_ticks"] = unit.downed_ticks
 		units.append(u_row)
@@ -319,6 +426,7 @@ func snapshot() -> Dictionary:
 				continue
 			member_stats[String(cid_key)] = {
 				"uid": uid,
+				"side": u.side,
 				"hp": u.hp,
 				"max_hp": u.get_max_hp(),
 				"alive": u.alive,
@@ -334,6 +442,9 @@ func snapshot() -> Dictionary:
 				"safe_defend": bool(sim.safe_defend_uids.get(uid, false)),
 			}
 		state["coop_members"] = member_stats
+		if sim.pvp_mode:
+			state["pvp"] = true
+			state["winner_side"] = sim.winner_side
 	state["state_hash"] = JSON.stringify(state, "", true, true).sha256_text()
 	return state
 

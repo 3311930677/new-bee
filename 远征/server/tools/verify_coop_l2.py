@@ -1,4 +1,4 @@
-"""Verify L2 2-player co-op dungeon, RoomHost multi-role BattleSim, World Boss, and 46-table DB restore."""
+"""Verify L2 2-player co-op dungeon, RoomHost multi-role BattleSim, World Boss, and 54-table DB restore."""
 import argparse
 import hashlib
 import json
@@ -40,7 +40,7 @@ def main():
         "online_sources_sha256": fingerprint,
         "gateway_binary_sha256": hashlib.sha256(GATEWAY.read_bytes()).hexdigest(),
         "transport": "https-validating-debug-ca",
-        "scope": "L2 two native Godot clients, queue match, tidal_gate co-op puzzle + RoomHost BattleSim + disconnect/rejoin + personal drops + world boss + 46-table backup/restore",
+        "scope": "L2 two native Godot clients, queue match, tidal_gate co-op puzzle + RoomHost BattleSim + disconnect/rejoin + personal drops + world boss + 54-table backup/restore",
     }
 
     try:
@@ -120,9 +120,9 @@ def main():
         recovery.databases.append(recovery.target)
         restored = recovery.command("restore", database=recovery.target, folder=backup)
         (folder / "restore-report.json").write_text(json.dumps(restored, indent=2), encoding="utf8")
-        if len(manifest.get("tables", [])) != 46 or len(restored.get("tables_matched_before_session_invalidation", [])) != 46:
-            raise RuntimeError(f"expected 46 tables in backup/restore, got {len(manifest.get('tables', []))}")
-        report["tables_matched"] = 46
+        if len(manifest.get("tables", [])) != 54 or len(restored.get("tables_matched_before_session_invalidation", [])) != 54:
+            raise RuntimeError(f"expected 54 tables in backup/restore, got {len(manifest.get('tables', []))}")
+        report["tables_matched"] = 54
         report["passed"] = True
     except Exception as error:
         failures.append(str(error))
