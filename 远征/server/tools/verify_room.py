@@ -202,7 +202,50 @@ def main():
             and coop_members.get("char-fz", {}).get("safe_defend") is True,
             "authority simulates 4-class co-op party with scaled enemies and per-member actions",
         )
-        report |= {"passed": True, "final_state_hash": final["state"]["state_hash"], "ticks": final["state"]["tick"], "inputs": final["inputs"], "coop_members_tested": len(coop_members)}
+        pvp_id = str(uuid.uuid4())
+        pvp_cfg = {
+            "battle_id": pvp_id,
+            "mode": "pvp",
+            "pvp_format": "3v3",
+            "seed": 818283,
+            "pvp_max_ticks": 7200,
+            "aoe_target_cap": 3,
+            "pvp_heal_mult": 0.85,
+            "team_a": [
+                {"character_id": "a1", "name": "甲战", "role_id": "zs", "level": 20, "loadout": {"attack": 10, "defense": 6, "health": 50, "potions": 1, "active_pet": "pet_rockturtle"}},
+                {"character_id": "a2", "name": "甲刺", "role_id": "ck", "level": 20, "loadout": {"attack": 10, "potions": 1}},
+                {"character_id": "a3", "name": "甲法", "role_id": "fs", "level": 20, "loadout": {"attack": 11, "potions": 1}},
+            ],
+            "team_b": [
+                {"character_id": "b1", "name": "乙战", "role_id": "zs", "level": 20, "loadout": {"attack": 10, "defense": 6, "health": 50, "potions": 1, "active_pet": "pet_rockturtle"}},
+                {"character_id": "b2", "name": "乙辅", "role_id": "fz", "level": 20, "loadout": {"attack": 9, "health": 30, "potions": 1}},
+                {"character_id": "b3", "name": "乙法", "role_id": "fs", "level": 20, "loadout": {"attack": 11, "potions": 1}},
+            ],
+            "inputs": [
+                {"sequence": 1, "tick": 65, "action": {"character_id": "a1", "action": "attack"}},
+                {"sequence": 2, "tick": 70, "action": {"character_id": "b1", "action": "attack"}},
+                {"sequence": 3, "tick": 75, "action": {"character_id": "a3", "action": "timeout_default"}},
+            ],
+            "target_tick": 90,
+        }
+        pvp_sync = rpc.call("battle.sync", pvp_cfg)
+        pvp_units = pvp_sync.get("state", {}).get("units", [])
+        pvp_members = pvp_sync.get("state", {}).get("coop_members", {})
+        pvp_cold_id = str(uuid.uuid4())
+        pvp_replay = rpc.call("battle.replay", pvp_cfg | {"battle_id": pvp_cold_id, "inputs": pvp_sync.get("inputs", []), "target_tick": 90})
+        check(
+            pvp_sync.get("ok")
+            and pvp_sync.get("state", {}).get("pvp") is True
+            and len(pvp_members) == 6
+            and sum(1 for u in pvp_units if u.get("kind") == "role" and u.get("side") == "ally") == 3
+            and sum(1 for u in pvp_units if u.get("kind") == "role" and u.get("side") == "enemy") == 3
+            and pvp_members.get("a1", {}).get("actions") == 1
+            and pvp_members.get("b1", {}).get("actions") == 1
+            and pvp_replay.get("ok")
+            and pvp_replay.get("state", {}).get("state_hash") == pvp_sync.get("state", {}).get("state_hash"),
+            "authority simulates 3v3 PvP (6 roles + pets), timeout_default, and exact cold battle.replay",
+        )
+        report |= {"passed": True, "final_state_hash": final["state"]["state_hash"], "ticks": final["state"]["tick"], "inputs": final["inputs"], "coop_members_tested": len(coop_members), "pvp_members_tested": len(pvp_members)}
     except Exception as error:
         report |= {"passed": False, "error": str(error)}
     finally:

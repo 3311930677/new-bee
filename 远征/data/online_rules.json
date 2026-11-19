@@ -325,6 +325,42 @@
     "leader_inactive_seconds": 1209600,
     "warehouse_materials": ["mat_guild_timber", "mat_guild_stone"]
   },
+  "pvp": {
+    "synced_level": 20,
+    "aoe_target_cap": 3,
+    "heal_mult": 0.85,
+    "turn_timeout_ticks": 450,
+    "disconnect_grace_seconds": 90,
+    "weekly_honor_cap": 300,
+    "repeat_opponent_daily_cap": 3,
+    "max_gear_bonus_cap": {"attack": 25, "defense": 25, "health": 150},
+    "modes": {
+      "1v1": {"label": "单挑演武 1v1", "team_size": 1, "max_ticks": 5400, "base_rating": 1000, "k_factor": 32, "honor_win": 30, "honor_loss": 12, "honor_draw": 18},
+      "2v2": {"label": "双人合击 2v2", "team_size": 2, "max_ticks": 5400, "base_rating": 1000, "k_factor": 32, "honor_win": 35, "honor_loss": 14, "honor_draw": 20},
+      "3v3": {"label": "三人团战 3v3", "team_size": 3, "max_ticks": 7200, "base_rating": 1000, "k_factor": 32, "honor_win": 40, "honor_loss": 16, "honor_draw": 22}
+    },
+    "tiers": [
+      {"id": "bronze", "name": "青铜演武", "min_rating": 0, "reward_honor": 20},
+      {"id": "silver", "name": "白银砥砺", "min_rating": 1100, "reward_honor": 40},
+      {"id": "gold", "name": "赤金百炼", "min_rating": 1300, "reward_honor": 70},
+      {"id": "platinum", "name": "玄铁统领", "min_rating": 1550, "reward_honor": 110},
+      {"id": "diamond", "name": "曜星宗师", "min_rating": 1800, "reward_honor": 160}
+    ],
+    "default_season": {
+      "id": "S1",
+      "name": "第一赛季·演武初鸣",
+      "cosmetic_rewards": {
+        "bronze": {"title": "初入演武", "frame": "frame_bronze_arena"},
+        "silver": {"title": "百战精锐", "frame": "frame_silver_arena"},
+        "gold": {"title": "昭元斗士", "frame": "frame_gold_arena"}
+      }
+    },
+    "honor_shop": [
+      {"item_id": "itm_potion_hp_s", "price_honor": 15, "quantity": 1, "label": "治疗药剂 x1"},
+      {"item_id": "mat_iron", "price_honor": 20, "quantity": 1, "label": "生铁矿石 x1"},
+      {"item_id": "mat_herbs", "price_honor": 18, "quantity": 1, "label": "石缝药草 x1"}
+    ]
+  },
   "market": {
     "stage": "M3",
     "sandbox_only": false,

@@ -1,0 +1,62 @@
+{
+  "verifier_version": 2,
+  "source_sha256": "a81a50ed14149aafb2b457ea935177a9a13e60ca5af67044fffd6045f61cae93",
+  "content_version": "642c1700cf6993bfe69100084acc1a5879b66cb6a21a274583ce9c962b67f1a5",
+  "ruleset_version": "online-0.1",
+  "shared_combat_sources": [
+    "src\\combat\\BattleSim.gd",
+    "src\\combat\\Combatant.gd",
+    "src\\combat\\DamageCalc.gd",
+    "src\\combat\\MonsterAI.gd",
+    "src\\combat\\SkillSystem.gd",
+    "src\\combat\\TableCache.gd",
+    "src\\combat\\TraitSystem.gd",
+    "src\\world\\CampaignPressure.gd",
+    "src\\world\\CompanionService.gd",
+    "src\\online\\OnlineProfile.gd"
+  ],
+  "autoloads": []
+}
+{
+  "run_id": "abfab8aab8634985abddbfe7e69a1f3e",
+  "online_sources_sha256": "c3fe1eb68b8bb4feaefc61496ab26b439b6b22e36adc35d1de5930837dd72181",
+  "gateway_binary_sha256": "e0e89a144f93a248f0ad407b24f07de77a95121d0e2c6de8ca2c06d315b97ea5",
+  "transport": "https-validating-debug-ca",
+  "scope": "L4 two native Godot clients: shenyuan_port 2nd world boss, ore_vein co-op puzzle, guild lifecycle/permissions/decor/non-tradeable warehouse/audit/leave cooldown + 54-table backup/restore",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "a81a50ed14149aafb2b457ea935177a9a13e60ca5af67044fffd6045f61cae93",
+    "content_version": "642c1700cf6993bfe69100084acc1a5879b66cb6a21a274583ce9c962b67f1a5",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "db_counts": [
+    "1",
+    "1",
+    "7",
+    "1",
+    "1"
+  ],
+  "tables_matched": 54,
+  "passed": true,
+  "cleanup_errors": [],
+  "failures": [],
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true,
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  }
+}

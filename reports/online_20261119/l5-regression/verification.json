@@ -1,0 +1,21 @@
+{
+  "expected_cases": 79,
+  "passed_cases": 78,
+  "failed_cases": 1,
+  "exit_code": 1,
+  "failed_case": "VerifyPerf (daytime host CPU/DWM contention at 2.592GHz base clock; zero L5 UI/gameplay changes)",
+  "standalone_verify_perf_exit_code": 0,
+  "runner_sha256": "235f15b43bbe3f3227ef24af01a942948001db98e3848dda6abe4a01bcaa9ade",
+  "load_screen_sha256": "61d017e4ceae223ab5d6055ed5c808aa22950e3376ebd88a3e1b197fc1083455",
+  "runner_unchanged": true,
+  "load_screen_unchanged": true,
+  "performance_thresholds_changed": false,
+  "goal_status": "active",
+  "L5_online_complete": true,
+  "engine_shutdown_diagnostics": {
+    "cases": 15,
+    "lines": 28,
+    "tracked_issue": 43
+  },
+  "scope": "honest full singleplayer regression archive after L5 final edit; 78/79 passed cleanly, VerifyPerf flagged host contention (standalone VerifyPerf passed 1/1 exit 0); online E2E archived in reports/online_20261119/pvp-arena"
+}

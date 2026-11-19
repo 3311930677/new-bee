@@ -59,6 +59,12 @@ var rescue_counts: Dictionary = {}     # uid -> count
 var action_counts: Dictionary = {}     # uid -> count
 var safe_defend_uids: Dictionary = {}  # uid -> bool
 
+var pvp_mode := false
+var pvp_max_ticks := MAX_TICKS
+var pvp_aoe_cap := 3
+var pvp_heal_mult := 0.85
+var winner_side := ""
+
 
 # ---------- 组建 ----------
 ## ally_cfg: {role_id, level, traits[], active_pet, bench_pet, hp_override, potions}
@@ -83,6 +89,11 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rescue_counts.clear()
 	action_counts.clear()
 	safe_defend_uids.clear()
+	pvp_mode = false
+	pvp_max_ticks = MAX_TICKS
+	pvp_aoe_cap = 3
+	pvp_heal_mult = 0.85
+	winner_side = ""
 	_next_uid = 1
 	role_uid = 0
 	tick_count = 0
@@ -114,31 +125,20 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
 	pet_stats = (ally_cfg.get("pet_stats", {}) as Dictionary).duplicate(true)
 	var members_v: Variant = ally_cfg.get("members", [])
-	if members_v is Array and not (members_v as Array).is_empty():
+	if bool(ally_cfg.get("pvp_mode", false)):
+		pvp_mode = true
+		coop_mode = true
+		coop_downed_window_ticks = 0
+		pvp_max_ticks = clampi(int(ally_cfg.get("pvp_max_ticks", 5400)), 300, MAX_TICKS)
+		pvp_aoe_cap = clampi(int(ally_cfg.get("aoe_target_cap", 3)), 1, 4)
+		pvp_heal_mult = clampf(float(ally_cfg.get("pvp_heal_mult", 0.85)), 0.4, 1.2)
+		_spawn_pvp_side(ally_cfg.get("members", []) as Array, "ally")
+		_spawn_pvp_side(ally_cfg.get("opponents", []) as Array, "enemy")
+		potions_left = int(role_potions.get(role_uid, 0))
+	elif members_v is Array and not (members_v as Array).is_empty():
 		coop_mode = true
 		coop_downed_window_ticks = clampi(int(ally_cfg.get("downed_window_ticks", 450)), 0, 1800)
-		var members := members_v as Array
-		var cols := [2, 1, 3, 0]
-		for i in mini(4, members.size()):
-			var m_val: Variant = members[i]
-			if not (m_val is Dictionary):
-				continue
-			var m := m_val as Dictionary
-			var built := _build_role_unit(m, int(cols[i % cols.size()]))
-			if built != null:
-				var cid := String(m.get("character_id", "member_%d" % i))
-				built.coop_slot = cid
-				member_uids[cid] = built.uid
-				if role_uid == 0:
-					role_uid = built.uid
-				role_potions[built.uid] = maxi(0, int(m.get("potions", 0)))
-				role_potion_cd[built.uid] = 0
-				role_focus_targets[built.uid] = -1
-				rescue_counts[built.uid] = 0
-				action_counts[built.uid] = 0
-				var pet_id := String(m.get("active_pet", ""))
-				if not pet_id.is_empty():
-					_build_pet(pet_id, false, built.uid, int(cols[i % cols.size()]))
+		_spawn_pvp_side(members_v as Array, "ally")
 		potions_left = int(role_potions.get(role_uid, 0))
 	else:
 		_build_role(ally_cfg)
@@ -148,13 +148,14 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 			pet_bench_id = String(ally_cfg.bench_pet)
 		potions_left = int(ally_cfg.get("potions", 0))
 		potion_effect_mult = clampf(float(ally_cfg.get("potion_effect_mult",1.0)),0.9,1.1)
-	var cm: Variant = enemy_cfg.get("custom_mon", null)
-	if cm is Dictionary and not (cm as Dictionary).is_empty():
-		_build_custom_mon(cm as Dictionary)   # 演武场等：不走怪物池，直接给对手数据
-	else:
-		_build_enemies(String(enemy_cfg.get("theme", "forest")),
-			String(enemy_cfg.get("node_type", "normal")),
-			String(enemy_cfg.get("lead_mon", "")), bool(enemy_cfg.get("solo", false)))
+	if not pvp_mode:
+		var cm: Variant = enemy_cfg.get("custom_mon", null)
+		if cm is Dictionary and not (cm as Dictionary).is_empty():
+			_build_custom_mon(cm as Dictionary)   # 演武场等：不走怪物池，直接给对手数据
+		else:
+			_build_enemies(String(enemy_cfg.get("theme", "forest")),
+				String(enemy_cfg.get("node_type", "normal")),
+				String(enemy_cfg.get("lead_mon", "")), bool(enemy_cfg.get("solo", false)))
 	var coop_scale_v: Variant = enemy_cfg.get("coop_scaling", {})
 	if coop_mode and coop_scale_v is Dictionary and not (coop_scale_v as Dictionary).is_empty():
 		var cs := coop_scale_v as Dictionary
@@ -205,13 +206,37 @@ func new_uid() -> int:
 	return _next_uid - 1
 
 
+func _spawn_pvp_side(members: Array, p_side: String) -> void:
+	var cols := [2, 1, 3, 0]
+	for i in mini(4, members.size()):
+		var m_val: Variant = members[i]
+		if not (m_val is Dictionary):
+			continue
+		var m := m_val as Dictionary
+		var built := _build_role_unit(m, int(cols[i % cols.size()]), p_side)
+		if built != null:
+			var cid := String(m.get("character_id", "%s_member_%d" % [p_side, i]))
+			built.coop_slot = cid
+			member_uids[cid] = built.uid
+			if p_side == "ally" and role_uid == 0:
+				role_uid = built.uid
+			role_potions[built.uid] = maxi(0, int(m.get("potions", 0)))
+			role_potion_cd[built.uid] = 0
+			role_focus_targets[built.uid] = -1
+			rescue_counts[built.uid] = 0
+			action_counts[built.uid] = 0
+			var pet_id := String(m.get("active_pet", ""))
+			if not pet_id.is_empty():
+				_build_pet(pet_id, false, built.uid, int(cols[i % cols.size()]), p_side)
+
+
 func _build_role(cfg: Dictionary) -> void:
 	var u := _build_role_unit(cfg, 2)
 	if u != null:
 		role_uid = u.uid
 
 
-func _build_role_unit(cfg: Dictionary, p_col := 2) -> Combatant:
+func _build_role_unit(cfg: Dictionary, p_col := 2, p_side := "ally") -> Combatant:
 	var role := TableCache.get_role(String(cfg.get("role_id", "zs")))
 	if role.is_empty():
 		push_error("BattleSim 角色不存在：%s" % String(cfg.get("role_id", "")))
@@ -244,7 +269,7 @@ func _build_role_unit(cfg: Dictionary, p_col := 2) -> Combatant:
 	var custom_name := String(cfg.get("name", ""))
 	if not custom_name.is_empty():
 		role["name"] = custom_name
-	var u := Combatant.new(new_uid(), "role", "ally", role)
+	var u := Combatant.new(new_uid(), "role", p_side, role)
 	u.traits = ts
 	u.base_max_hp = maxi(1, int(stats.max_hp))
 	u.base_atk = maxi(1, int(stats.atk))
@@ -302,7 +327,7 @@ func _apply_skill_variant(base: Dictionary, mod: Dictionary) -> Dictionary:
 	return out
 
 
-func _build_pet(pet_id: String, is_bench_swap: bool, p_owner_uid := 0, p_col := 1) -> void:
+func _build_pet(pet_id: String, is_bench_swap: bool, p_owner_uid := 0, p_col := 1, p_side := "ally") -> void:
 	var pet := TableCache.get_pet(pet_id)
 	if pet.is_empty():
 		push_warning("宠物不存在：%s" % pet_id)
@@ -320,7 +345,7 @@ func _build_pet(pet_id: String, is_bench_swap: bool, p_owner_uid := 0, p_col := 
 	if owner != null and owner.traits != null:
 		stat_pct = owner.traits.pet_stat_pct()
 	var mult := (1.0 + stat_pct) * float(ps.get("stat_mult", 1.0))
-	var u := Combatant.new(new_uid(), "pet", "ally", pet)
+	var u := Combatant.new(new_uid(), "pet", p_side, pet)
 	u.owner_uid = resolved_owner_uid
 	u.companion_traits = (ps.get("companion_traits",{}) as Dictionary).duplicate(true)
 	u.base_max_hp = maxi(1, int((float(int(base.get("hp", 50))) + float(growth.get("hp", 0)) * gl * gmult) * mult))
@@ -517,13 +542,23 @@ func alive_units(side: String) -> Array[Combatant]:
 
 
 ## 经典“攻”指令只改玩家普攻的选敌优先级，不另写伤害或攻速规则。
+func alive_roles(side: String) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for u in units:
+		if u.alive and u.side == side and u.kind == "role":
+			out.append(u)
+	return out
+
+
 func set_role_focus_target(uid: int) -> bool:
 	return set_role_focus_target_for(role_uid, uid)
 
 
 func set_role_focus_target_for(actor_uid: int, target_uid: int) -> bool:
+	var actor := unit_by_uid(actor_uid)
 	var target := unit_by_uid(target_uid)
-	if target == null or not target.alive or target.side != "enemy":
+	var actor_side := actor.side if actor != null else "ally"
+	if target == null or not target.alive or target.side == actor_side:
 		return false
 	if actor_uid == role_uid:
 		role_focus_target_uid = target_uid
@@ -580,7 +615,7 @@ func rescue_ally(actor_uid: int, target_uid: int) -> Dictionary:
 		return {"accepted": false, "reason": "unavailable"}
 	var actor := unit_by_uid(actor_uid)
 	var target := unit_by_uid(target_uid)
-	if actor == null or target == null or actor.kind != "role" or target.kind != "role" or actor == target:
+	if actor == null or target == null or actor.kind != "role" or target.kind != "role" or actor == target or actor.side != target.side:
 		return {"accepted": false, "reason": "invalid_target"}
 	if not actor.alive or not actor.can_act():
 		return {"accepted": false, "reason": "actor_unavailable"}
@@ -761,7 +796,7 @@ func step() -> void:
 	for u in units:
 		if not u.alive:
 			continue
-		if u.side == "enemy" or u.kind == "pet":
+		if u.kind == "pet" or (u.kind == "monster" and u.side == "enemy"):
 			MonsterAI.decide(self, u)
 		elif auto_mode or bool(safe_defend_uids.get(u.uid, false)):
 			MonsterAI.decide_auto(self, u)
@@ -771,7 +806,58 @@ func step() -> void:
 	_apply_phases()
 	# 7. 死亡/胜负判定
 	tick_count += 1
-	if alive_units("enemy").is_empty():
+	if pvp_mode:
+		var ally_roles := alive_roles("ally")
+		var enemy_roles := alive_roles("enemy")
+		if enemy_roles.is_empty():
+			finished = true
+			result = "victory"
+			winner_side = "ally"
+			emit({"t": "victory"})
+		elif ally_roles.is_empty():
+			finished = true
+			result = "defeat"
+			winner_side = "enemy"
+			emit({"t": "defeat"})
+		elif tick_count >= pvp_max_ticks:
+			finished = true
+			if ally_roles.size() > enemy_roles.size():
+				result = "victory"
+				winner_side = "ally"
+				emit({"t": "victory"})
+			elif enemy_roles.size() > ally_roles.size():
+				result = "defeat"
+				winner_side = "enemy"
+				emit({"t": "defeat"})
+			else:
+				var ally_hp := 0.0
+				var ally_max := 0.0
+				var enemy_hp := 0.0
+				var enemy_max := 0.0
+				for u in units:
+					if u.kind != "role":
+						continue
+					if u.side == "ally":
+						ally_hp += float(maxi(0, u.hp))
+						ally_max += float(maxi(1, u.get_max_hp()))
+					elif u.side == "enemy":
+						enemy_hp += float(maxi(0, u.hp))
+						enemy_max += float(maxi(1, u.get_max_hp()))
+				var ally_pct := ally_hp / maxf(1.0, ally_max)
+				var enemy_pct := enemy_hp / maxf(1.0, enemy_max)
+				if ally_pct > enemy_pct + 0.0001:
+					result = "victory"
+					winner_side = "ally"
+					emit({"t": "victory"})
+				elif enemy_pct > ally_pct + 0.0001:
+					result = "defeat"
+					winner_side = "enemy"
+					emit({"t": "defeat"})
+				else:
+					result = "draw"
+					winner_side = "draw"
+					emit({"t": "timeout"})
+	elif alive_units("enemy").is_empty():
 		finished = true
 		result = "victory"
 		emit({"t": "victory"})

@@ -20,8 +20,8 @@ static func decide(sim: BattleSim, unit: Combatant) -> void:
 static func decide_auto(sim: BattleSim, unit: Combatant) -> void:
 	if not unit.can_act() or unit.kind != "role":
 		return
-	var allies := sim.alive_units("ally")
-	var enemies := sim.alive_units("enemy")
+	var allies := sim.alive_units(unit.side)
+	var enemies := sim.alive_units("enemy" if unit.side == "ally" else "ally")
 	if enemies.is_empty():
 		return
 	# 从后往前（5技 → 1技）

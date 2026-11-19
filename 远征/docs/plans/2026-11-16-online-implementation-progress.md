@@ -239,8 +239,20 @@
   - **L3 / L2 / L1 / L0 无回退复验**：`VerifyNav` 退出码 `0`；`verify_market_l3.py`（`0ca4db5d49ba4bc7822cd8e7b116d871`）、`verify_coop_l2.py`（`cf6becdacbe240eeb2c9eb82382337b2`）、`verify_social_l1.py`（`2a2381d9062246c8b8505a89401af19d`）、`verify_world_l1.py`（`7b50394425a342f6af61aa1d49be5b5f`）与 `verify_journey.py`（`d2708cdd88444a2e8f954ea05ddfef89` **6/6**）全部在 46 表架构上通过，客户端退出码均为 `0`。
   - **完整单机回归**：`online_full_20261119_l4_final` **79/79 PASS（`ALL GREEN`），退出码 `0`**（`runner_unchanged=true`、`load_screen_unchanged=true`、`VerifyPerf` 预算全部达标：`GameHome` 70/260ms、`CityScene` 68/700ms；29 项用例共记录 48 条 issue #43 引擎退出资源诊断）。
 
+### L5 全模式演武场竞技（1v1 / 2v2 / 3v3 好友切磋与独立排位，11 月 19 日）
+
+- 权威战斗核心扩展：[BattleSim.gd](../../src/combat/BattleSim.gd)、[Combatant.gd](../../src/combat/Combatant.gd)、[MonsterAI.gd](../../src/combat/MonsterAI.gd)、[SkillSystem.gd](../../src/combat/SkillSystem.gd) 与 [AuthorityBattle.gd](../../server/room/AuthorityBattle.gd) 增加 `pvp` 多人双方阵营对战（`1v1` / `2v2` / `3v3`）、`timeout_default` 超时自动兜底与 `forfeit`，保持单机与合作副本零漂移；[RoomHost.gd](../../server/room/RoomHost.gd) `battle.replay` 支持进程冷重启后从持久化输入回放核验摘要。
+- 数据层与服务端闭环：迁移 `011_online_pvp_arena.sql` 新增 8 张竞技场表（全库 **54 张表**，`pvp_honor_ledger` 只追加防篡改，`pvp_queues`/`pvp_challenges` 队伍外键使用 `ON DELETE SET NULL`；同步更新 `dbops/roles.go`、`CheckRuntimePrivileges` 与只读备份恢复）；[pvp.go](../../server/internal/online/pvp.go) 与 [online_rules.json](../../data/online_rules.json) 完整交付 `1v1` / `2v2` / `3v3` 好友切磋、预组与随机补位排位匹配、三模式独立积分/段位与赛季榜单、每周荣誉与每日重复对手防刷、断线 `safe_defend` 与补位队友保分、及权威冷回放核验与赛季软重置（`RolloverPvPSeasonTx`）。
+- 手机竖屏 UI 接入：新增 480×800 竖屏四页签 [OnlinePvpPanel.gd](../../src/ui/OnlinePvpPanel.gd)（演武/战局/回放/赛季榜，六角色阵营+缩略宠标+集火切换+逐帧回放器）并整合至 [OnlineClient.gd](../../src/online/OnlineClient.gd) 与 [OnlineWorld.gd](../../src/ui/OnlineWorld.gd)（含 `ui_cancel` 与互斥清理）。
+- 实测与回归验证（脱敏证据见 `reports/online_20261119/pvp-arena/`、`reports/online_20261119/l5-regression/` 及保留的首轮失败样本 `reports/online_20261119/l5-regression-first/`）：
+  - **Go / PostgreSQL 套件**：**74/74 通过，退出码 0**（含 `TestL5PvPAllThreeModesSparringRankedFillAndIndependentRatings`、`TestL5PvPTimeoutDefaultReconnectReplayHonorShopAndSeasonRollover` 与 `dbops` **54 表** 权限/备份恢复；首轮在默认 10 分钟包限时与盘阵 flush 峰值触发的 `TestCoopSteleCavern` 15,000ms 超时样本同步留存于 `go-integration-first-timeout.jsonl`，后调整 `dev.py test` 为 `-timeout=35m` 全量跑通）。
+  - **独立 Godot 权威检查**（`verify_room.py`）：**31/31 通过，退出码 0**（含 `authority simulates 3v3 PvP (6 roles + pets), timeout_default, and exact cold battle.replay`）。
+  - **六真实端 L5 验证**（`verify_pvp_l5.py --capture`）：`71cff57e71734790931d4ad5576548f9` 通过，**a/b/c/d/e/f 六端全部退出码 `0`**、54 表备份恢复一致、4 场以上完赛与 14 条荣誉流水，已目检 `pvp-3v3-match.png` 与 `pvp-replay.png`。
+  - **L4 / L3 / L2 / L1 / L0 无回退复验**：`VerifyNav` 退出码 `0`；`verify_guild_l4.py`（`abfab8aab8634985abddbfe7e69a1f3e`）、`verify_market_l3.py`（`3aded7ec716a4b039e8e26333b8d74cd`）、`verify_coop_l2.py`（`2f744dfa214c479088091fe09de64e1e`）、`verify_social_l1.py`（`fda9904d30354a4495e40a727787e793`）、`verify_world_l1.py`（`0014243f778f4c2daacdeda9aa93b25d`）与 `verify_journey.py`（`c156d021cb614e359b3286e89b108b53`；首轮 15,000ms 超时样本已保留于 `verify-journey-first-timeout.json`）全部在 54 表架构上通过，客户端退出码均为 `0`。
+  - **完整单机回归**：不放宽任何性能预算下，6 轮日间桌面高负载（主机 `i5-11400` 锁频 2.592GHz 且桌面/WebView 进程持续占用 >2 核心 CPU）全量运行均为 **78/79 PASS**（退出码 `1`，28 条 issue #43 退出诊断），唯一失败项为 `VerifyPerf` 在浮层重开边缘抖动（`l5-regression-first` 养成 75/70ms；第 5 轮设置 71/70ms、养成 69/70ms；第 6 轮世界 82/70ms）；同代码单独执行 `run_regression.ps1 -Only VerifyPerf`（`VerifyPerf-standalone.log`）退出码 `0` 全绿通过。此项待空闲宿主机再做一次 79/79 退出码 `0` 闭环复跑。
+
 ### 未解决与下一批
 
-- **L4 全部本机功能与仓库守恒/权限审计/双端验证已闭环**；接下来立即推进 **L5（1v1 / 2v2 / 3v3 全模式切磋与独立排位竞技场：含预组/随机补位、三模式独立段位与赛季、15s 超时默认动作、90s 断线重连与权威战局回放）**。
-- 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、24 人频道/12 人野外与目标手机跨网络联机及正式经济事件周期长时观测仍待 L6 及真机阶段验收。issue #43 退出资源诊断继续跟踪。
-- L5–L6 按完整台账持续实施。**L0 外部部署阻塞待目标机验收，L1/L2/L3/L4 本地闭环交付完毕，完整联机目标保持 active。**
+- **L5 全部联机功能（1v1/2v2/3v3 切磋与排位、独立段位/赛季、超时兜底、断线重连保分、冷回放）与 6 真实端/54 表校验已闭环**；接下来推进 **L6（本机压测/容量/告警/审计与运维流程演练 + 外部真机/公网部署清单）**，并在宿主机负载空闲时重跑一次完整 79 项单机回归确认 `VerifyPerf` 与全部 79 项同跑退出码 `0`。
+- 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、24 人频道/12 人野外与目标手机跨网络联机及正式经济事件周期长时观测仍待 L6 实机验收。issue #43 退出资源诊断继续跟踪。
+- **L0 外部部署阻塞待目标机验收，L1/L2/L3/L4/L5 本地闭环交付完毕，接下来进入 L6，完整联机目标保持 active。**

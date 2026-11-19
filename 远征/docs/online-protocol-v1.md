@@ -124,6 +124,17 @@
 - **其余合作副本与沉渊港公共首领**：[online_rules.json](../data/online_rules.json) 与迁移扩展 `shenyuan_port`（沉渊港）地图、传送门及 `ore_vein`（赤砂矿脉：`mine_rail_switch` 轨道机关 + `mon_siege`/`mon_mummy` + `mon_redsand_guard`）和 `stele_depths`（界碑深处：`resonance_ring` 共鸣环 + `mon_cultist`/`mon_triad_echo` + `mon_nameless_warden`）合作副本，产出可交易稀有材料与不可交易帮派建材 `mat_guild_timber`/`mat_guild_stone`；`GET /v1/world-boss/current` 支持多地区首领列表与 `?map_id=` 定向查询，`maple_road`（`mon_lost_beast`）与 `shenyuan_port`（`mon_salt_scale` 沉渊盐鳞王）均保持单账号同活动窗口领奖一次与独立阶段目标材料。
 - **帮派生命周期、共同据点、建材仓库与不可篡改审计**：迁移 `010_online_guilds.sql` 新增 6 张表（全库增至 **46 张表**），其中 `guild_audit_logs` 由触发器及数据库角色权限锁死只追加（无 `UPDATE`/`DELETE`）；提供 `GET /v1/guilds/state`、`POST /v1/guilds`、`POST /v1/guilds/invites`、`POST /v1/guilds/invites/{id}/respond`、`POST /v1/guilds/join-public`、`POST /v1/guilds/leave`、`POST /v1/guilds/permissions`、`POST /v1/guilds/warehouse/deposit`、`POST /v1/guilds/warehouse/withdraw`、`POST /v1/guilds/decorate`、`POST /v1/guilds/weekly-tasks/complete` 与 `POST /v1/guilds/takeover`。强制校验：帮派仓库只允许 `guild_building=true` 且非可交易建材（拒绝寄售装备/货币/普通可交易物）；离帮进入 `leave_cooldown_seconds`（600s）冷却期；成员上限由 `base_member_cap`（30）随协作周常提升至 `max_member_cap`（60）；会长离线超过 `leader_inactive_seconds`（14 天）由执事或最资深成员通过公开事务交接 `takeover`；未入帮玩家仍可通过个人周常与日常副本取得同等进度奖励。
 
+## 演武场 1v1 / 2v2 / 3v3 切磋与独立排位（L5 接入）
+
+清单发布 `pvp_arena`、`pvp_1v1`、`pvp_2v2` 与 `pvp_3v3` 功能位后，演武场（无公共地图自由攻击、无装备掉落、无经验倒扣）契约如下：
+- **权威多人阵营对战**：`BattleSim.gd`、`Combatant.gd`、`MonsterAI.gd`、`SkillSystem.gd` 与 `AuthorityBattle.gd` 在保持单机与合作副本口径零漂移的前提下支持 `mode: "pvp"`（`1v1` / `2v2` / `3v3`，双侧 `ally` / `enemy` 玩家队伍 + 随行宠物缩略参战、属性同步 Lv.20 + 有限装备构筑上限、`aoe_target_cap=3`、`heal_mult=0.85`、时间上限按存活人数→剩余总血量比例→平局结算），`RoomHost` 的 `battle.replay` 同步支持跨进程冷重启持久化状态重演校验。
+- **表驱动规则与独立账本**：[online_rules.json](../data/online_rules.json) `pvp` 段定义三模式参数、段位阈值、赛季及荣誉兑换目录；迁移 `011_online_pvp_arena.sql` 新增 `pvp_seasons`、`pvp_ratings`（`PRIMARY KEY (character_id, mode, season_id)` 保障三模式段位/胜负/连胜严格隔离）、`pvp_honor_wallets`、`pvp_honor_ledger`（只追加防篡改触发器与数据库最小权限禁止删改）、`pvp_queues`、`pvp_challenges`、`pvp_matches` 与 `pvp_match_participants`（全库 **54 张表**）。
+- **网关接口**：
+  - `GET /v1/pvp/overview?mode=1v1|2v2|3v3`：当前赛季、三模式各自独立积分/段位、荣誉点及每周荣誉上限（`weekly_honor_cap=300`）、匹配队列、待响应切磋邀请、活跃战局、最近对局及分模式榜单。
+  - **好友切磋（全三模式、不计分）**：`POST /v1/pvp/challenges` 与 `POST /v1/pvp/challenges/{id}/respond` 核验双方好友且非屏蔽、双方（及 `2v2`/`3v3` 队伍）人数匹配对应模式，完成后零积分变动。
+  - **独立排位（预组与随机补位）**：`POST /v1/pvp/queue/join`（`allow_random_fill`）与 `POST /v1/pvp/queue/leave` 支持 `1v1` 单人、`2v2` 预组 2 人或允许补位的单人、`3v3` 预组 3 人 / 2+1 补位 / 全散人补位；严格阻止人数不齐（如 2 打 1）、同账号自排与互屏配对。
+  - **战局驱动、超时默认动作、断线保护与权威回放**：`GET /v1/pvp/matches/{id}`、`POST /v1/pvp/matches/{id}/ready`、`POST /v1/pvp/matches/{id}/command`、`POST /v1/pvp/matches/{id}/tick`（超出 `turn_timeout_ticks=450` 即 15 秒时自动写入 `timeout_default` 防卡死）、`POST /v1/pvp/matches/{id}/connection`（`disconnected`/`reconnected` 切换 `safe_defend`；掉线/弃权方正常扣分，配合的随机补位队友享保分机制）、`POST /v1/pvp/matches/{id}/forfeit`、`GET /v1/pvp/matches/{id}/replay`（重演全部 `battle_inputs` 并核对 `replayed_hash == expected_hash`）、`POST /v1/pvp/season/claim` 与 `POST /v1/pvp/honor-shop/buy`。
+
 房间租约不授予战斗所有权；战斗接口每次仍重新验证账号、当前有效会话及选中在线角色。角色有未完成战斗或未确认结算时，不能切到别的角色或删除该角色。
 
 ## 战斗、结算与恢复
