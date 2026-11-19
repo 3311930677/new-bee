@@ -1,0 +1,16 @@
+{
+  "full_regression_tag": "online_full_20261119_l6_final",
+  "passed": 78,
+  "failed": 1,
+  "total": 79,
+  "exit_code": 1,
+  "failed_case": "VerifyPerf",
+  "failed_detail": "浮层「设置」第 1 次打开 145 ms 超预算 130 ms (GameHome=120/260ms, CityScene=65/700ms, 世界=117/64ms, 图鉴=85/36ms, 召唤=51/28ms, 兑换=75/20ms, 养成=66/43ms)",
+  "standalone_verifyperf_tag": "online_l6_verifyperf_standalone",
+  "standalone_exit_code": 1,
+  "standalone_detail": "设置第1次206/130ms, 第2次129/70ms; 养成第1次142/130ms, 第2次95/70ms (host contention without code changes to VerifyPerf.gd or offline UI panels)",
+  "issue_43_cases": 13,
+  "issue_43_diagnostics": 23,
+  "runner_unchanged": true,
+  "thresholds_unchanged": true
+}

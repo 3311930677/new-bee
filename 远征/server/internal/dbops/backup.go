@@ -1,7 +1,11 @@
 package dbops
 
 import (
+	"bytes"
 	"context"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -29,15 +33,19 @@ type TableDigest struct {
 }
 
 type BackupManifest struct {
-	Format        int           `json:"format"`
-	Database      string        `json:"database"`
-	Schema        string        `json:"schema"`
-	ServerVersion int           `json:"server_version"`
-	Started       time.Time     `json:"started_utc"`
-	Finished      time.Time     `json:"finished_utc"`
-	DumpSHA256    string        `json:"dump_sha256"`
-	DumpBytes     int64         `json:"dump_bytes"`
-	Tables        []TableDigest `json:"tables"`
+	Format          int           `json:"format"`
+	Database        string        `json:"database"`
+	Schema          string        `json:"schema"`
+	ServerVersion   int           `json:"server_version"`
+	Started         time.Time     `json:"started_utc"`
+	Finished        time.Time     `json:"finished_utc"`
+	DumpSHA256      string        `json:"dump_sha256"`
+	DumpBytes       int64         `json:"dump_bytes"`
+	Encrypted       bool          `json:"encrypted,omitempty"`
+	Cipher          string        `json:"cipher,omitempty"`
+	EncryptedSHA256 string        `json:"encrypted_sha256,omitempty"`
+	EncryptedBytes  int64         `json:"encrypted_bytes,omitempty"`
+	Tables          []TableDigest `json:"tables"`
 }
 
 // snapshotTables hashes rows in a repeatable-read snapshot. Raw rows, including
@@ -179,6 +187,20 @@ func writeJSONNew(path string, value any) error {
 // snapshot. The shared advisory lock excludes the application's migrator until
 // pg_dump completes. A manifest is published only for a complete successful dump.
 func Backup(ctx context.Context, db *pgxpool.Pool, dsn, pgBin, folder string) (*BackupManifest, error) {
+	return BackupWithKey(ctx, db, dsn, pgBin, folder, "")
+}
+
+// BackupWithKey exports a custom archive and optionally seals database.dump with
+// AES-256-GCM using a 64-character hex key loaded from keyFile, removing the
+// plaintext archive once the encrypted archive and digests are verified.
+func BackupWithKey(ctx context.Context, db *pgxpool.Pool, dsn, pgBin, folder, keyFile string) (*BackupManifest, error) {
+	var aesKey []byte
+	if keyFile != "" {
+		var err error
+		if aesKey, err = loadAESKeyHexFile(keyFile); err != nil {
+			return nil, err
+		}
+	}
 	if !filepath.IsAbs(folder) {
 		return nil, fmt.Errorf("backup directory must be absolute")
 	}
@@ -229,6 +251,24 @@ func Backup(ctx context.Context, db *pgxpool.Pool, dsn, pgBin, folder string) (*
 	if err != nil {
 		return nil, err
 	}
+	if len(aesKey) == 32 {
+		encDump := filepath.Join(folder, "database.dump.enc")
+		if err = encryptDumpFile(dump, encDump, aesKey); err != nil {
+			return nil, err
+		}
+		if err = os.Chmod(encDump, 0600); err != nil {
+			return nil, fmt.Errorf("encrypted backup file permissions unavailable")
+		}
+		manifest.Encrypted = true
+		manifest.Cipher = "AES-256-GCM"
+		manifest.EncryptedSHA256, manifest.EncryptedBytes, err = digestFile(encDump)
+		if err != nil {
+			return nil, err
+		}
+		if err = os.Remove(dump); err != nil {
+			return nil, fmt.Errorf("plaintext backup removal failed")
+		}
+	}
 	if err = tx.Commit(ctx); err != nil {
 		return nil, fmt.Errorf("backup snapshot completion failed")
 	}
@@ -261,9 +301,19 @@ func readManifest(folder string) (*BackupManifest, error) {
 	if !seen["schema_migrations"] || !seen["sessions"] || !seen["room_leases"] || !seen["wallet_ledger"] || !seen["battle_results"] {
 		return nil, fmt.Errorf("backup is missing required game tables")
 	}
-	digest, size, err := digestFile(filepath.Join(folder, "database.dump"))
-	if err != nil || digest != manifest.DumpSHA256 || size != manifest.DumpBytes {
-		return nil, fmt.Errorf("backup archive checksum mismatch")
+	if manifest.Encrypted {
+		if manifest.Cipher != "AES-256-GCM" || !digestShape.MatchString(manifest.EncryptedSHA256) || manifest.EncryptedBytes <= 0 {
+			return nil, fmt.Errorf("encrypted backup manifest is invalid")
+		}
+		digest, size, err := digestFile(filepath.Join(folder, "database.dump.enc"))
+		if err != nil || digest != manifest.EncryptedSHA256 || size != manifest.EncryptedBytes {
+			return nil, fmt.Errorf("encrypted backup archive checksum mismatch")
+		}
+	} else {
+		digest, size, err := digestFile(filepath.Join(folder, "database.dump"))
+		if err != nil || digest != manifest.DumpSHA256 || size != manifest.DumpBytes {
+			return nil, fmt.Errorf("backup archive checksum mismatch")
+		}
 	}
 	return &manifest, nil
 }
@@ -284,6 +334,12 @@ type RestoreReport struct {
 // Restore only trusted self-produced archives; checksums detect corruption,
 // not an attacker able to replace both the manifest and the archive.
 func Restore(ctx context.Context, admin *pgxpool.Pool, adminDSN, pgBin, folder, target string, roles Roles) (report *RestoreReport, err error) {
+	return RestoreWithKey(ctx, admin, adminDSN, pgBin, folder, target, roles, "")
+}
+
+// RestoreWithKey behaves identically to Restore and supports encrypted backups
+// sealed with AES-256-GCM using a 64-character hex key loaded from keyFile.
+func RestoreWithKey(ctx context.Context, admin *pgxpool.Pool, adminDSN, pgBin, folder, target string, roles Roles, keyFile string) (report *RestoreReport, err error) {
 	if err = roles.Validate(); err != nil {
 		return nil, err
 	}
@@ -293,6 +349,30 @@ func Restore(ctx context.Context, admin *pgxpool.Pool, adminDSN, pgBin, folder, 
 	manifest, err := readManifest(folder)
 	if err != nil {
 		return nil, err
+	}
+	dumpPath := filepath.Join(folder, "database.dump")
+	if manifest.Encrypted {
+		if keyFile == "" {
+			return nil, fmt.Errorf("encrypted backup requires -encrypt-key-file")
+		}
+		aesKey, keyErr := loadAESKeyHexFile(keyFile)
+		if keyErr != nil {
+			return nil, keyErr
+		}
+		tempFile, tempErr := os.CreateTemp("", "yz-restore-*.dump")
+		if tempErr != nil {
+			return nil, fmt.Errorf("temporary restore file unavailable")
+		}
+		dumpPath = tempFile.Name()
+		_ = tempFile.Close()
+		defer os.Remove(dumpPath)
+		if decErr := decryptDumpFile(filepath.Join(folder, "database.dump.enc"), dumpPath, aesKey); decErr != nil {
+			return nil, decErr
+		}
+		digest, size, digErr := digestFile(dumpPath)
+		if digErr != nil || digest != manifest.DumpSHA256 || size != manifest.DumpBytes {
+			return nil, fmt.Errorf("decrypted backup archive checksum mismatch")
+		}
 	}
 	var exists bool
 	var version int
@@ -332,7 +412,7 @@ func Restore(ctx context.Context, admin *pgxpool.Pool, adminDSN, pgBin, folder, 
 	if _, err = admin.Exec(ctx, "REVOKE ALL ON DATABASE "+quote(target)+" FROM PUBLIC"); err != nil {
 		return nil, fmt.Errorf("new restore database could not be isolated")
 	}
-	if err = pgCommand(ctx, pgBin, "pg_restore", adminDSN, "--no-password", "--dbname="+target, "--role="+roles.Migrator, "--no-owner", "--no-acl", "--single-transaction", "--exit-on-error", filepath.Join(folder, "database.dump")); err != nil {
+	if err = pgCommand(ctx, pgBin, "pg_restore", adminDSN, "--no-password", "--dbname="+target, "--role="+roles.Migrator, "--no-owner", "--no-acl", "--single-transaction", "--exit-on-error", dumpPath); err != nil {
 		return nil, err
 	}
 	db, err := pgxpool.NewWithConfig(ctx, config)
@@ -370,4 +450,167 @@ func Restore(ctx context.Context, admin *pgxpool.Pool, adminDSN, pgBin, folder, 
 		return nil, err
 	}
 	return report, nil
+}
+
+var encArchiveHeader = []byte("YZENC01\x00")
+
+func loadAESKeyHexFile(path string) ([]byte, error) {
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("backup encryption key file unavailable")
+	}
+	decoded, err := hex.DecodeString(strings.TrimSpace(string(raw)))
+	if err != nil || len(decoded) != 32 {
+		return nil, fmt.Errorf("backup encryption key file must contain 64 hex characters (32 bytes)")
+	}
+	return decoded, nil
+}
+
+func chunkAAD(seq uint64, final bool) []byte {
+	var aad [9]byte
+	binary.BigEndian.PutUint64(aad[:8], seq)
+	if final {
+		aad[8] = 1
+	}
+	return aad[:]
+}
+
+func encryptDumpFile(srcPath, dstPath string, key []byte) error {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return fmt.Errorf("backup cipher initialization failed")
+	}
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return fmt.Errorf("backup AEAD cipher unavailable")
+	}
+	src, err := os.Open(srcPath)
+	if err != nil {
+		return fmt.Errorf("backup source archive unavailable")
+	}
+	defer src.Close()
+	dst, err := os.OpenFile(dstPath, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
+	if err != nil {
+		return fmt.Errorf("encrypted backup archive cannot be created")
+	}
+	success := false
+	defer func() {
+		_ = dst.Close()
+		if !success {
+			_ = os.Remove(dstPath)
+		}
+	}()
+	if _, err = dst.Write(encArchiveHeader); err != nil {
+		return fmt.Errorf("encrypted backup header write failed")
+	}
+	buf := make([]byte, 64*1024)
+	var seq uint64
+	var lenBuf [4]byte
+	for {
+		n, readErr := io.ReadFull(src, buf)
+		final := readErr == io.EOF || readErr == io.ErrUnexpectedEOF
+		if readErr != nil && !final {
+			return fmt.Errorf("backup source read failed")
+		}
+		if n > 0 || (final && seq == 0) {
+			nonce := make([]byte, gcm.NonceSize())
+			if _, err = rand.Read(nonce); err != nil {
+				return fmt.Errorf("backup encryption nonce unavailable")
+			}
+			sealed := gcm.Seal(nonce, nonce, buf[:n], chunkAAD(seq, final))
+			binary.BigEndian.PutUint32(lenBuf[:], uint32(len(sealed)))
+			if _, err = dst.Write(lenBuf[:]); err != nil {
+				return fmt.Errorf("encrypted backup chunk header write failed")
+			}
+			if _, err = dst.Write(sealed); err != nil {
+				return fmt.Errorf("encrypted backup chunk write failed")
+			}
+			seq++
+		} else if final {
+			// Emit explicit authenticated empty final marker when dump size is a multiple of 64 KiB.
+			nonce := make([]byte, gcm.NonceSize())
+			if _, err = rand.Read(nonce); err != nil {
+				return fmt.Errorf("backup encryption nonce unavailable")
+			}
+			sealed := gcm.Seal(nonce, nonce, nil, chunkAAD(seq, true))
+			binary.BigEndian.PutUint32(lenBuf[:], uint32(len(sealed)))
+			if _, err = dst.Write(lenBuf[:]); err != nil {
+				return fmt.Errorf("encrypted backup EOF marker write failed")
+			}
+			if _, err = dst.Write(sealed); err != nil {
+				return fmt.Errorf("encrypted backup EOF write failed")
+			}
+			seq++
+		}
+		if final {
+			break
+		}
+	}
+	if err = dst.Sync(); err != nil {
+		return fmt.Errorf("encrypted backup sync failed")
+	}
+	success = true
+	return nil
+}
+
+func decryptDumpFile(srcPath, dstPath string, key []byte) error {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return fmt.Errorf("backup cipher initialization failed")
+	}
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return fmt.Errorf("backup AEAD cipher unavailable")
+	}
+	src, err := os.Open(srcPath)
+	if err != nil {
+		return fmt.Errorf("encrypted backup archive unavailable")
+	}
+	defer src.Close()
+	hdr := make([]byte, len(encArchiveHeader))
+	if _, err = io.ReadFull(src, hdr); err != nil || !bytes.Equal(hdr, encArchiveHeader) {
+		return fmt.Errorf("encrypted backup archive header invalid")
+	}
+	dst, err := os.OpenFile(dstPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
+	if err != nil {
+		return fmt.Errorf("temporary restore archive cannot be written")
+	}
+	defer dst.Close()
+
+	var seq uint64
+	var lenBuf [4]byte
+	for {
+		if _, err = io.ReadFull(src, lenBuf[:]); err != nil {
+			return fmt.Errorf("encrypted backup archive truncated before EOF marker")
+		}
+		recLen := binary.BigEndian.Uint32(lenBuf[:])
+		if recLen < uint32(gcm.NonceSize()+gcm.Overhead()) || recLen > 128*1024 {
+			return fmt.Errorf("encrypted backup record size invalid")
+		}
+		rec := make([]byte, recLen)
+		if _, err = io.ReadFull(src, rec); err != nil {
+			return fmt.Errorf("encrypted backup record truncated")
+		}
+		nonce, ct := rec[:gcm.NonceSize()], rec[gcm.NonceSize():]
+		if plain, openErr := gcm.Open(nil, nonce, ct, chunkAAD(seq, false)); openErr == nil {
+			if _, err = dst.Write(plain); err != nil {
+				return fmt.Errorf("temporary restore archive write failed")
+			}
+			seq++
+			continue
+		}
+		plain, openErr := gcm.Open(nil, nonce, ct, chunkAAD(seq, true))
+		if openErr != nil {
+			return fmt.Errorf("encrypted backup decryption or authentication failed")
+		}
+		if _, err = dst.Write(plain); err != nil {
+			return fmt.Errorf("temporary restore archive write failed")
+		}
+		var trailing [1]byte
+		if _, err = src.Read(trailing[:]); err != io.EOF {
+			return fmt.Errorf("encrypted backup archive contains unexpected trailing data")
+		}
+		break
+	}
+	return dst.Sync()
 }

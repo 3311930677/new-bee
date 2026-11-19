@@ -46,7 +46,7 @@ class DatabaseRecovery:
             raise RuntimeError("Disposable database drill SQL failed; credentials and query data were not logged")
         return result.stdout.strip()
 
-    def command(self, action, *, database=None, folder=None, expect_success=True):
+    def command(self, action, *, database=None, folder=None, encrypt_key_file=None, expect_success=True):
         args = [str(SERVER / "bin/dbops.exe"), "--action", action]
         for key, name in self.roles.items():
             args += ["--" + key + "-role", name]
@@ -54,6 +54,8 @@ class DatabaseRecovery:
             args += ["--database", database]
         if folder:
             args += ["--folder", str(folder), "--pg-bin", str(PG)]
+        if encrypt_key_file:
+            args += ["--encrypt-key-file", str(encrypt_key_file)]
         env = {key: value for key, value in environment().items() if not key.startswith("YUANZHENG_") and not key.upper().startswith("PG")}
         env |= {"YUANZHENG_DBADMIN_URL": self.url(self.database if action != "restore" else "postgres"),
                 "YUANZHENG_MIGRATION_DATABASE_URL": self.url(self.database, "migrator"),
@@ -123,7 +125,7 @@ class DatabaseRecovery:
             raise RuntimeError("Real pre-backup victories or active sessions are incomplete")
         backup = self.folder / "backup-private"
         manifest = self.command("backup", folder=backup)
-        if len(manifest.get("tables", [])) != 54:
+        if len(manifest.get("tables", [])) != 56:
             raise RuntimeError("Backup did not include every migrated game table")
         (self.folder / "backup-manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         stack.sql("INSERT INTO audit_events(action) VALUES('restore.drill.after_backup')")

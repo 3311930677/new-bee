@@ -71,6 +71,7 @@ python 远征/server/tools/verify_guild_l4.py --godot <Godot-4.7.2路径> --capt
 python 远征/server/tools/verify_pvp_l5.py --godot <Godot-4.7.2路径> --capture
 python 远征/server/tools/bootstrap_monitoring.py --proxy <本机实际代理>
 python 远征/server/tools/verify_operations.py --godot <Godot-4.7.2路径>
+python 远征/server/tools/verify_l6_operations.py --godot <Godot-4.7.2路径>
 ```
 
 第二条从当前共享战斗源码和全部 JSON 构建 `.local/room-project`，导入并检查脚本；真实 Go 签名客户端连接进程，检查签名、nonce、顺序、服务器时钟、重放、已提交状态校验、未提交输入/时钟回滚和移动判定。原单调时钟接口保留作私有探针；正式战斗同步由网关根据持久化时钟与输入驱动。

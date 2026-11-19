@@ -1,0 +1,20 @@
+Command exited with code 1.
+
+Command output:
+Godot  : C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: E:\new bee\远征
+UserDir: E:/new bee/远征/tools/_logs/user_sandbox_4a8d0a9bcdfa46e98b07569647f7038d/Godot/app_userdata/远征/
+Cases  : 1  (timeout 240s, quit-after 6000 frames)
+Logs   : E:\new bee\远征\tools\_logs
+Commit : a6b02499
+
+FAIL  VerifyPerf  <- exit code 1; missing completion line 'PERF_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      PERF_FAIL fails=4
+      ERROR: FAIL: 浮层「设置」第 1 次打开 206 ms 超预算 130 ms
+      ERROR: FAIL: 浮层「设置」第 2 次打开 129 ms 超预算 70 ms
+      ERROR: FAIL: 浮层「养成」第 1 次打开 142 ms 超预算 130 ms
+      ERROR: FAIL: 浮层「养成」第 2 次打开 95 ms 超预算 70 ms
+      log: E:\new bee\远征\tools\_logs\VerifyPerf.log
+
+FAILED: 1 / 1

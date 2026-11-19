@@ -95,7 +95,7 @@ func (s *Server) recoverAccount(w http.ResponseWriter, r *http.Request) {
 	defer tx.Rollback(r.Context())
 	var id string
 	var salt, hash []byte
-	err = tx.QueryRow(r.Context(), `SELECT id::text,recovery_salt,recovery_hash FROM accounts WHERE username=$1 FOR UPDATE`, body.Username).Scan(&id, &salt, &hash)
+	err = tx.QueryRow(r.Context(), `SELECT id::text,recovery_salt,recovery_hash FROM accounts WHERE username=$1 AND status='active' FOR UPDATE`, body.Username).Scan(&id, &salt, &hash)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		s.fail(w, err)
 		return

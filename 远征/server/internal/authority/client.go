@@ -99,9 +99,21 @@ func (c *Client) Call(ctx context.Context, method string, args any, out any) err
 	}
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
-	conn, err := (&net.Dialer{}).DialContext(ctx, "tcp", c.address)
-	if err != nil {
-		return operationError(ctx, err)
+	var conn net.Conn
+	for attempt := range 4 {
+		conn, err = (&net.Dialer{}).DialContext(ctx, "tcp", c.address)
+		if err == nil {
+			break
+		}
+		if ctx.Err() != nil || attempt == 3 {
+			return operationError(ctx, err)
+		}
+		delay := time.Duration(20+attempt*15) * time.Millisecond
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-time.After(delay):
+		}
 	}
 	defer conn.Close()
 	stop := context.AfterFunc(ctx, func() { _ = conn.Close() })

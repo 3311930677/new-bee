@@ -76,6 +76,7 @@ func CheckRuntimePrivileges(ctx context.Context, db *pgxpool.Pool) error {
         OR has_table_privilege('market_fills','UPDATE,DELETE,TRUNCATE,TRIGGER')
         OR has_table_privilege('guild_audit_logs','UPDATE,DELETE,TRUNCATE,TRIGGER')
         OR has_table_privilege('pvp_honor_ledger','UPDATE,DELETE,TRUNCATE,TRIGGER')
+        OR has_table_privilege('moderation_actions','UPDATE,DELETE,TRUNCATE,TRIGGER')
         OR has_table_privilege('inventory_items','DELETE,TRUNCATE,TRIGGER')
         OR EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema=current_schema()
           AND table_name='inventory_items' AND column_name NOT IN ('quantity','equipped_slot','version','updated_at')

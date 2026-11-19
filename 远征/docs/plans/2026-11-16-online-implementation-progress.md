@@ -251,8 +251,27 @@
   - **L4 / L3 / L2 / L1 / L0 无回退复验**：`VerifyNav` 退出码 `0`；`verify_guild_l4.py`（`abfab8aab8634985abddbfe7e69a1f3e`）、`verify_market_l3.py`（`3aded7ec716a4b039e8e26333b8d74cd`）、`verify_coop_l2.py`（`2f744dfa214c479088091fe09de64e1e`）、`verify_social_l1.py`（`fda9904d30354a4495e40a727787e793`）、`verify_world_l1.py`（`0014243f778f4c2daacdeda9aa93b25d`）与 `verify_journey.py`（`c156d021cb614e359b3286e89b108b53`；首轮 15,000ms 超时样本已保留于 `verify-journey-first-timeout.json`）全部在 54 表架构上通过，客户端退出码均为 `0`。
   - **完整单机回归**：不放宽任何性能预算下，6 轮日间桌面高负载（主机 `i5-11400` 锁频 2.592GHz 且桌面/WebView 进程持续占用 >2 核心 CPU）全量运行均为 **78/79 PASS**（退出码 `1`，28 条 issue #43 退出诊断），唯一失败项为 `VerifyPerf` 在浮层重开边缘抖动（`l5-regression-first` 养成 75/70ms；第 5 轮设置 71/70ms、养成 69/70ms；第 6 轮世界 82/70ms）；同代码单独执行 `run_regression.ps1 -Only VerifyPerf`（`VerifyPerf-standalone.log`）退出码 `0` 全绿通过。此项待空闲宿主机再做一次 79/79 退出码 `0` 闭环复跑。
 
-### 未解决与下一批
+### L6 本机运维、加密备份、压测告警与发布清单（11 月 19–20 日）
 
-- **L5 全部联机功能（1v1/2v2/3v3 切磋与排位、独立段位/赛季、超时兜底、断线重连保分、冷回放）与 6 真实端/54 表校验已闭环**；接下来推进 **L6（本机压测/容量/告警/审计与运维流程演练 + 外部真机/公网部署清单）**，并在宿主机负载空闲时重跑一次完整 79 项单机回归确认 `VerifyPerf` 与全部 79 项同跑退出码 `0`。
-- 当前尚无封测服务器。目标机系统身份和服务管理器、备份加密与异地持续恢复、告警实际送达、24 人频道/12 人野外与目标手机跨网络联机及正式经济事件周期长时观测仍待 L6 实机验收。issue #43 退出资源诊断继续跟踪。
-- **L0 外部部署阻塞待目标机验收，L1/L2/L3/L4/L5 本地闭环交付完毕，接下来进入 L6，完整联机目标保持 active。**
+- **数据库与权限演进（56 张表）**：新增迁移 `012_online_privacy_ops.sql`（扩展 `accounts.status/erased_at`、新建 `account_privacy_requests` 与带 `BEFORE UPDATE OR DELETE` 只追加防篡改触发器的 `moderation_actions`），同步更新 `CheckRuntimePrivileges`、`dbops/roles.go` 与最小权限测试。
+- **隐私合规、回环治理与高并发加固**：
+  - [privacy.go](../../server/internal/online/privacy.go)、[auth.go](../../server/internal/online/auth.go)、[account_recovery.go](../../server/internal/online/account_recovery.go) 与 [server.go](../../server/internal/online/server.go) 实现 `/v1/account/privacy/{summary,export,delete}`（剥离密码与恢复码哈希导出、二次口令+确认字擦除并吊销会话/租约/排队与好友屏蔽、匿名化角色并拦截后续登录/刷新/找回）。
+  - [operations.go](../../server/internal/online/operations.go) 扩展回环 `AdminHandler` 治理接口 `GET /ops/reports`、`POST /ops/reports/{id}/resolve`、`GET /ops/capacity` 与热停市开关 `POST /ops/config/market-pause`。
+  - L6 26 并发移动压测发现并修复两处并发竞争：[RoomHost.gd](../../server/room/RoomHost.gd) 兼容 `STATUS_CONNECTING` 过渡态并将连接上限提升至 128；[authority/client.go](../../server/internal/authority/client.go) 对发送前瞬态本地 SYN backlog 拒绝增加最多 4 次短退避重拨。
+- **加密备份与发布清单**：[backup.go](../../server/internal/dbops/backup.go) 与 [cmd/dbops/main.go](../../server/cmd/dbops/main.go) 新增 `-encrypt-key-file` 分块 `AES-256-GCM` 密封（`database.dump.enc` 并立即移除明文），验证缺密钥/错密钥/任意篡改拒绝及 `yz_restore_*` 56 表新库恢复；新增 [l6-release-checklist.md](../../docs/l6-release-checklist.md) 并同步更新 [online-protocol-v1.md](../../docs/online-protocol-v1.md)、[online-operations.md](../../docs/online-operations.md) 与 [server/README.md](../../server/README.md)。
+- **实测与回归验证（脱敏证据见 `reports/online_20261119/l6-operations/` 与 `reports/online_20261119/l6-regression/`，`SECRET_HITS=0`）**：
+  - **Go / PostgreSQL 全套件**：**78/78 包限定测试全部 PASS、0 失败，退出码 0**（含 `TestL6PrivacySummaryExportAndErasure`、`TestL6LoopbackOpsModerationCapacityAndMarketPause`、`TestL6SchemaRollbackFailClosed`、`TestEncryptedBackupWithAES256GCMAndTamperRejection`；并如实保留此前失败与超时样本 `go-integration-first-fail.jsonl` 与 `go-integration-77of78-timeout.jsonl`）。
+  - **L6 运维全链路演练**（`verify_l6_operations.py`，`run_id: 85f6817bc3e946bc9e55cb98262d8558`）：**30/30 检查项全部通过，退出码 0**——26 并发 TLS 客户端 330 请求 0 失败（`6.672s`、`49.46 RPS`、`p50=109ms / p95=1984ms / p99=4296ms`）、`lorin_wilds` 分线溢出（ch1=24, ch2=2）、钱包账本守恒（`2236==2236`）、真实 Prometheus 规则 `YuanzhengDependenciesUnavailable` 触发→本地 Webhook 送达→恢复双确认、AES-256-GCM 56 表加密备份与新库恢复（`sessions_revoked=25, leases_invalidated=26`）、过期客户端版本 `409` 拦截及全部在线进程关闭后的 `VerifyOnlineBoundary` 退出码 `0`。
+  - **56 表全量无回退复验**：`VerifyNav` 退出码 `0`、`verify_room.py` 退出码 `0`、`verify_pvp_l5.py`（`06c65ba82eeb4dd09392218148c9d96a`）、`verify_guild_l4.py`（`1a3983d0f0ae4aa4b46677024993cedc`）、`verify_market_l3.py`（`840194aa79c943ea88d88a02c28123d8`）、`verify_coop_l2.py`（`704f62e7eec84d38bea5c8c268c4f77e`）、`verify_social_l1.py`（`46d9f477fe88413aa3674100251b6d5f`）、`verify_world_l1.py`（`e8fbe1747226423fb11937467a53258e`）与 `verify_journey.py`（`b891fc10344c481390ce860e7afb3ca2`）全部在 56 表新库恢复检验下通过、退出码 `0`。
+  - **完整单机回归**：不放宽任何性能预算下，`online_full_20261119_l6_final` 运行 **78/79 PASS（退出码 `1`）**，唯一失败项为 `VerifyPerf` 设置浮层首次打开 `145ms / 130ms` 预算抖动（其余 `GameHome 120/260ms`、`CityScene 65/700ms` 等均达标，13 项用例共记录 23 条 issue #43 退出诊断；同晚宿主机负载下单独复跑 `VerifyPerf` `online_l6_verifyperf_standalone` 亦录得 `1/1 FAIL`，全部原始日志与 `verification.json` 已如实归档，未改阈值亦未遮掩）。
+
+### 外部环境阻塞与待签字项
+
+- **L0–L6 本地可控代码、测试、备份加密、告警通道演练与发布/回退规范已全部完成并推送 `main`**。
+- 受限于本机开发环境（无公网云主机、无正式域名权威 CA、无异网手机测试与外部值班通道、无异地对象存储 KMS），以下 6 项在 [l6-release-checklist.md](../../docs/l6-release-checklist.md) 登记为 **外部环境待验收阻塞（`EXT-01 ~ EXT-06`）**，不得视为已公网正式上线：
+  1. `EXT-01` 公网云主机 / VPC 安全组与内网隔离部署；
+  2. `EXT-02` 正式 CA HTTPS 证书与自动续期替换测试自签 CA；
+  3. `EXT-03` Android / iOS / Windows 真机 5G/Wi-Fi 异网广域网与断网重连签字；
+  4. `EXT-04` 外部 Alertmanager → 钉钉/飞书/PagerDuty/邮件值班告警实收送达演练；
+  5. `EXT-05` 异地对象存储 KMS 托管密文归档与 WAL 按时间点恢复（PITR）演练；
+  6. `EXT-06` 生产秘钥、管理员口令与最小权限操作系统身份正式交接；另继续跟踪单机 issue #43 引擎退出资源诊断。

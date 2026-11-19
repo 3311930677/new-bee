@@ -52,7 +52,7 @@ func _process(_delta: float) -> bool:
 			_battles[id].advance(now)
 	while _server.is_connection_available():
 		var socket := _server.take_connection()
-		if _peers.size() >= 32:
+		if _peers.size() >= 128:
 			socket.disconnect_from_host()
 			continue
 		_peers.append({"socket": socket, "in": PackedByteArray(), "out": PackedByteArray(), "sent": 0, "opened": now})
@@ -60,7 +60,10 @@ func _process(_delta: float) -> bool:
 		var peer: Dictionary = _peers[index]
 		var socket := peer.socket as StreamPeerTCP
 		socket.poll()
-		if socket.get_status() != StreamPeerTCP.STATUS_CONNECTED or now - int(peer.opened) > PEER_TIMEOUT_MSEC:
+		var status := socket.get_status()
+		if status == StreamPeerTCP.STATUS_CONNECTING and now - int(peer.opened) <= PEER_TIMEOUT_MSEC:
+			continue
+		if status != StreamPeerTCP.STATUS_CONNECTED or now - int(peer.opened) > PEER_TIMEOUT_MSEC:
 			_close(index)
 			continue
 		if (peer.out as PackedByteArray).is_empty():
