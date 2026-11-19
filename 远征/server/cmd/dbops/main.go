@@ -29,6 +29,7 @@ func run() error {
 	backupRole := flag.String("backup-role", "", "Read-only backup role")
 	pgBin := flag.String("pg-bin", "", "Absolute directory of trusted PostgreSQL tools")
 	folder := flag.String("folder", "", "Absolute new backup directory or existing trusted backup")
+	encryptKeyFile := flag.String("encrypt-key-file", "", "Optional path to a 64-char hex AES-256 backup encryption key file")
 	timeout := flag.Duration("timeout", 10*time.Minute, "Offline operation deadline, 1s to 60m")
 	flag.Parse()
 	if *timeout < time.Second || *timeout > time.Hour {
@@ -70,9 +71,9 @@ func run() error {
 	case "grant":
 		err = dbops.GrantRuntime(ctx, db, roles)
 	case "backup":
-		result, err = dbops.Backup(ctx, db, dsn, *pgBin, *folder)
+		result, err = dbops.BackupWithKey(ctx, db, dsn, *pgBin, *folder, *encryptKeyFile)
 	case "restore":
-		result, err = dbops.Restore(ctx, db, dsn, *pgBin, *folder, *database, roles)
+		result, err = dbops.RestoreWithKey(ctx, db, dsn, *pgBin, *folder, *database, roles, *encryptKeyFile)
 	}
 	if err != nil {
 		return err

@@ -1,0 +1,296 @@
+{
+  "format": 1,
+  "database": "yz_drill_0240b4b5c36f4ab0a5e9",
+  "schema": "game",
+  "server_version": 180007,
+  "started_utc": "2026-11-19T17:25:41.7013683Z",
+  "finished_utc": "2026-11-19T17:25:42.9691186Z",
+  "dump_sha256": "372a17b61639a3541009925d7b094a111748636bfb73b1e69c512fb5002c6d5b",
+  "dump_bytes": 234489,
+  "encrypted": true,
+  "cipher": "AES-256-GCM",
+  "encrypted_sha256": "49879e9b8b76a6fb87dc6598ece9558d603665df3e08ee995d6f571502db6419",
+  "encrypted_bytes": 234625,
+  "tables": [
+    {
+      "name": "account_privacy_requests",
+      "rows": 2,
+      "sha256": "5a3bee717003622eb74fe39216b3301c54b7dc11ca84afae06a1e80e4995c88c"
+    },
+    {
+      "name": "accounts",
+      "rows": 26,
+      "sha256": "51da7c21659773a2fc883ea54c0a00b77f32af5a1b81ac1cf42819cd6690fc43"
+    },
+    {
+      "name": "audit_events",
+      "rows": 32,
+      "sha256": "bbbc39ec725dfee7a2a29351ec79b8e36f67ac6ce3b63c9b69a9a77e99af0bf0"
+    },
+    {
+      "name": "battle_inputs",
+      "rows": 6,
+      "sha256": "61d810c9a1eec8f7fce45519cf6af9e97a3ccf9fb6f8a057a70ce31ba73cb07a"
+    },
+    {
+      "name": "battle_results",
+      "rows": 6,
+      "sha256": "6149ed671b7ab2bb245eb1481d6745aaa3046292041e41ecb50296e312a6ef01"
+    },
+    {
+      "name": "battle_reward_claims",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "battles",
+      "rows": 6,
+      "sha256": "07a904736df3960dc9200b03306a7459dd0f36684399f11f1224ae51585ad471"
+    },
+    {
+      "name": "character_progress",
+      "rows": 26,
+      "sha256": "688564f5470cfd369f2c7a064e7f797ef66a95eacb38a928f18a0985d0cd7243"
+    },
+    {
+      "name": "characters",
+      "rows": 26,
+      "sha256": "46da473487b304f41e742a9b2bd6995ab0e7cab00605139aa40494067be84a87"
+    },
+    {
+      "name": "chat_messages",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "command_receipts",
+      "rows": 279,
+      "sha256": "761e4bf5a9213da656af3fbc5b11a2b4acdf20d8ad4e221cc652308b7be9ef74"
+    },
+    {
+      "name": "coop_instance_drops",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "coop_instance_members",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "coop_instances",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "coop_queues",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "economy_alerts",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "friend_requests",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "friendships",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guild_audit_logs",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guild_invites",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guild_member_cooldowns",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guild_members",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guild_warehouse",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guilds",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "inventory_items",
+      "rows": 26,
+      "sha256": "d8ecccc5696b9c6e468834f6ed77f437378d42b9094b79d6cecbfa4566f57146"
+    },
+    {
+      "name": "inventory_ledger",
+      "rows": 26,
+      "sha256": "3258ff5f312bbec0f189ed1064dba6d686a6238d28ec610b3ac6357943b98110"
+    },
+    {
+      "name": "market_fills",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "market_orders",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "market_payouts",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "moderation_actions",
+      "rows": 1,
+      "sha256": "7df631c1a86859a064809f834d810eee3c11967e0813a2cd5e332fe874ff6708"
+    },
+    {
+      "name": "npc_interactions",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "parties",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "party_invites",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "party_members",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "player_blocks",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "player_reports",
+      "rows": 1,
+      "sha256": "2fb40ffbb6465313ac04d942981cf80577b042d1e1e08f3e406fe039ef27df96"
+    },
+    {
+      "name": "pvp_challenges",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pvp_honor_ledger",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pvp_honor_wallets",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pvp_match_participants",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pvp_matches",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pvp_queues",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pvp_ratings",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pvp_seasons",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "quest_events",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "room_instances",
+      "rows": 2,
+      "sha256": "bfc0eadef5a8af23dd5e4107f2ee822944daa000b9ea1db887cb3dca71519216"
+    },
+    {
+      "name": "room_leases",
+      "rows": 26,
+      "sha256": "aad716556c6d2e47931ec1960186322c97132915e609762423b905206983264a"
+    },
+    {
+      "name": "schema_migrations",
+      "rows": 12,
+      "sha256": "95c39d40ab4ca7cacbfc0cc1894e23b6a8904b34942649b83665a75c59471c4d"
+    },
+    {
+      "name": "security_notifications",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "sessions",
+      "rows": 26,
+      "sha256": "fc5403d9d53458b39e43cca887ddeba0780f6437d17b53081a50752dc8f99f1c"
+    },
+    {
+      "name": "trade_offers",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "trade_sessions",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "wallet_ledger",
+      "rows": 52,
+      "sha256": "24c55a327b5287183cdaeebb04f330451019bde32e2dcdc9fff00bc8f4b45cfc"
+    },
+    {
+      "name": "wallets",
+      "rows": 26,
+      "sha256": "897c7afd320a12ef580d579c965de972328568ab54099cf49e249a85392c041a"
+    },
+    {
+      "name": "world_boss_events",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "world_boss_participations",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -103,6 +103,9 @@ func NewServer(db *pgxpool.Pool, cfg Config) (*Server, error) {
 	s.mux.HandleFunc("POST /v1/account/recovery-code", s.authorized(s.replaceRecoveryCode))
 	s.mux.HandleFunc("GET /v1/account/notifications", s.authorized(s.securityNotifications))
 	s.mux.HandleFunc("POST /v1/account/notifications/{id}/acknowledge", s.authorized(s.acknowledgeSecurityNotification))
+	s.mux.HandleFunc("GET /v1/account/privacy/summary", s.authorized(s.privacySummary))
+	s.mux.HandleFunc("GET /v1/account/privacy/export", s.authorized(s.privacyExport))
+	s.mux.HandleFunc("POST /v1/account/privacy/delete", s.authorized(s.privacyDelete))
 	s.mux.HandleFunc("GET /v1/session", s.authorized(s.session))
 	s.mux.HandleFunc("GET /v1/characters", s.authorized(s.characters))
 	s.mux.HandleFunc("GET /v1/characters/deleted", s.authorized(s.deletedCharacters))
@@ -327,7 +330,7 @@ func (s *Server) health(w http.ResponseWriter, r *http.Request) {
 	respond(w, 200, map[string]any{"status": "ok", "protocol_version": ProtocolVersion, "ruleset_version": RulesetVersion})
 }
 func (s *Server) manifest(w http.ResponseWriter, r *http.Request) {
-	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery", "character_identity"}
+	features := []string{"accounts", "online_characters", "account_recovery", "character_recovery", "character_identity", "account_privacy"}
 	if s.cfg.Authority != nil {
 		features = append(features, "town_rooms", "authority_battles", "town_positions", "world_channels", "cross_map", "npc_isolation", "social_chat", "parties")
 		if s.cfg.Rules.Journey != nil {
@@ -373,7 +376,7 @@ func (s *Server) authorized(next privateHandler) http.HandlerFunc {
 		}
 		hash := sha256.Sum256([]byte(token))
 		var who identity
-		err := s.db.QueryRow(r.Context(), `SELECT id::text, account_id::text, coalesce(active_character_id::text,'') FROM sessions WHERE access_hash=$1 AND revoked_at IS NULL AND access_expires_at>now() AND expires_at>now()`, hash[:]).Scan(&who.SessionID, &who.AccountID, &who.CharacterID)
+		err := s.db.QueryRow(r.Context(), `SELECT s.id::text, s.account_id::text, coalesce(s.active_character_id::text,'') FROM sessions s JOIN accounts a ON a.id=s.account_id WHERE s.access_hash=$1 AND a.status='active' AND s.revoked_at IS NULL AND s.access_expires_at>now() AND s.expires_at>now()`, hash[:]).Scan(&who.SessionID, &who.AccountID, &who.CharacterID)
 		if errors.Is(err, pgx.ErrNoRows) {
 			s.fail(w, errAuth)
 			return

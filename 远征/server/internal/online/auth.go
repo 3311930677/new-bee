@@ -104,7 +104,7 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 	body.Username = strings.ToLower(strings.TrimSpace(body.Username))
 	var id string
 	var hash []byte
-	err := s.db.QueryRow(r.Context(), `SELECT id::text,password_hash FROM accounts WHERE username=$1`, body.Username).Scan(&id, &hash)
+	err := s.db.QueryRow(r.Context(), `SELECT id::text,password_hash FROM accounts WHERE username=$1 AND status='active'`, body.Username).Scan(&id, &hash)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		s.fail(w, err)
 		return
@@ -181,7 +181,7 @@ func (s *Server) refresh(w http.ResponseWriter, r *http.Request) {
 	}
 	defer tx.Rollback(r.Context())
 	var id, account string
-	err = tx.QueryRow(r.Context(), `SELECT id::text,account_id::text FROM sessions WHERE refresh_hash=$1`, tokenHash(body.RefreshToken)).Scan(&id, &account)
+	err = tx.QueryRow(r.Context(), `SELECT s.id::text,s.account_id::text FROM sessions s JOIN accounts a ON a.id=s.account_id WHERE s.refresh_hash=$1 AND a.status='active'`, tokenHash(body.RefreshToken)).Scan(&id, &account)
 	if errors.Is(err, pgx.ErrNoRows) {
 		s.fail(w, errAuth)
 		return

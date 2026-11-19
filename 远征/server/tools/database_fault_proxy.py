@@ -53,6 +53,7 @@ class DatabaseFaultProxy:
         class Server(socketserver.ThreadingTCPServer):
             allow_reuse_address = True
             daemon_threads = True
+            request_queue_size = 64
 
         self.server = Server(("127.0.0.1", 0), Handler)
         self.port = self.server.server_address[1]

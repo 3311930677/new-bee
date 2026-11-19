@@ -107,8 +107,8 @@ func TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase(t *testing
 	if result.err != nil {
 		t.Fatal(result.err)
 	}
-	if len(result.manifest.Tables) != 54 {
-		t.Fatalf("expected all 54 application tables, got %d", len(result.manifest.Tables))
+	if len(result.manifest.Tables) != 56 {
+		t.Fatalf("expected all 56 application tables, got %d", len(result.manifest.Tables))
 	}
 	target := "yz_restore_" + randomHex()[:20]
 	f.databases = append(f.databases, target)
@@ -116,7 +116,7 @@ func TestLogicalBackupMatchesExportedSnapshotAndRestoresToNewDatabase(t *testing
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !restored.ReadyForReview || restored.SessionsRevoked != 1 || restored.LeasesInvalidated != 1 || len(restored.TablesMatched) != 54 {
+	if !restored.ReadyForReview || restored.SessionsRevoked != 1 || restored.LeasesInvalidated != 1 || len(restored.TablesMatched) != 56 {
 		t.Fatal("restore did not validate all tables or invalidate sessions")
 	}
 	db := f.pool(t, target, "", "")
@@ -246,4 +246,79 @@ func TestFailedRestoreQuarantinesOnlyItsNewDatabase(t *testing.T) {
 		t.Fatal("failed restore published a successful review report")
 	}
 	t.Log("mismatched restored rows left only the new DB quarantined; source assets unchanged and no success report published")
+}
+
+func TestEncryptedBackupWithAES256GCMAndTamperRejection(t *testing.T) {
+	f := newFixture(t)
+	_, pair, charID := createTestCharacter(t, f.app)
+	seedRestoreFixtures(t, f, pair, charID)
+
+	keyFile := filepath.Join(t.TempDir(), "backup-aes256.key")
+	keyHex := "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\n"
+	if err := os.WriteFile(keyFile, []byte(keyHex), 0600); err != nil {
+		t.Fatal(err)
+	}
+	wrongKeyFile := filepath.Join(t.TempDir(), "wrong-aes256.key")
+	if err := os.WriteFile(wrongKeyFile, []byte(strings.Repeat("a", 64)+"\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+
+	folder := filepath.Join(t.TempDir(), "enc_backup")
+	manifest, err := BackupWithKey(f.ctx, f.reader, f.backupDSN, pgBin(t), folder, keyFile)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !manifest.Encrypted || manifest.Cipher != "AES-256-GCM" || len(manifest.Tables) != 56 || manifest.EncryptedBytes <= 0 {
+		t.Fatalf("unexpected encrypted manifest: %+v", manifest)
+	}
+	if _, err = os.Stat(filepath.Join(folder, "database.dump")); !os.IsNotExist(err) {
+		t.Fatal("plaintext database.dump remained alongside encrypted archive")
+	}
+	encPath := filepath.Join(folder, "database.dump.enc")
+	if _, err = os.Stat(encPath); err != nil {
+		t.Fatalf("missing encrypted archive: %v", err)
+	}
+
+	// Missing key rejected before CREATE DATABASE.
+	missingTarget := "yz_restore_" + randomHex()[:20]
+	f.databases = append(f.databases, missingTarget)
+	if _, err = RestoreWithKey(f.ctx, f.cluster, f.dsn, pgBin(t), folder, missingTarget, f.roles, ""); err == nil {
+		t.Fatal("encrypted restore succeeded without key file")
+	}
+
+	// Valid key restores cleanly to yz_restore_* and matches all 56 tables.
+	target := "yz_restore_" + randomHex()[:20]
+	f.databases = append(f.databases, target)
+	report, err := RestoreWithKey(f.ctx, f.cluster, f.dsn, pgBin(t), folder, target, f.roles, keyFile)
+	if err != nil {
+		t.Fatalf("encrypted restore failed: %v", err)
+	}
+	if !report.ReadyForReview || len(report.TablesMatched) != 56 || report.SessionsRevoked != 1 {
+		t.Fatalf("unexpected encrypted restore report: %+v", report)
+	}
+
+	// Wrong key on direct decrypt must fail authentication.
+	wrongKeyBytes, err := loadAESKeyHexFile(wrongKeyFile)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = decryptDumpFile(encPath, filepath.Join(t.TempDir(), "out.dump"), wrongKeyBytes); err == nil {
+		t.Fatal("wrong AES-256-GCM key decrypted backup")
+	}
+
+	// Flip a byte inside database.dump.enc -> manifest checksum check & AEAD reject it.
+	rawEnc, err := os.ReadFile(encPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rawEnc[len(rawEnc)-5] ^= 0xff
+	if err = os.WriteFile(encPath, rawEnc, 0600); err != nil {
+		t.Fatal(err)
+	}
+	tamperTarget := "yz_restore_" + randomHex()[:20]
+	f.databases = append(f.databases, tamperTarget)
+	if _, err = RestoreWithKey(f.ctx, f.cluster, f.dsn, pgBin(t), folder, tamperTarget, f.roles, keyFile); err == nil {
+		t.Fatal("tampered encrypted archive was restored")
+	}
+	t.Log("AES-256-GCM backup sealed without plaintext residue, restored 56 tables, and rejected missing/wrong keys + tampered ciphertext")
 }

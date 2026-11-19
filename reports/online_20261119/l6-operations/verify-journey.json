@@ -1,0 +1,135 @@
+{
+  "run_id": "b891fc10344c481390ce860e7afb3ca2",
+  "scope": "two native Godot clients, distinct roles, real town journey, owned items, pet battle, re-login and offline restore",
+  "online_sources_sha256": "38fff7403450826666ec50dd910fb23ea34d250792dc49185362b4ae9cbc26da",
+  "gateway_binary_sha256": "4a9585ce4d43de6f2644796f537961b0719056a4602387b2376339ff31fa507b",
+  "manifest": {
+    "verifier_version": 2,
+    "source_sha256": "3e2aedb9a33e31858a3659effe459339bd3e20f9d73a89d4ff205cefb5e95593",
+    "content_version": "642c1700cf6993bfe69100084acc1a5879b66cb6a21a274583ce9c962b67f1a5",
+    "ruleset_version": "online-0.1",
+    "shared_combat_sources": [
+      "src\\combat\\BattleSim.gd",
+      "src\\combat\\Combatant.gd",
+      "src\\combat\\DamageCalc.gd",
+      "src\\combat\\MonsterAI.gd",
+      "src\\combat\\SkillSystem.gd",
+      "src\\combat\\TableCache.gd",
+      "src\\combat\\TraitSystem.gd",
+      "src\\world\\CampaignPressure.gd",
+      "src\\world\\CompanionService.gd",
+      "src\\online\\OnlineProfile.gd"
+    ],
+    "autoloads": []
+  },
+  "transport": "https-validating-debug-ca",
+  "client_exit_codes": {
+    "a": 0,
+    "b": 0
+  },
+  "clients": [
+    {
+      "character_id": "8e767aff-74fc-4a03-8a02-6e9e4862071e",
+      "role_id": "zs",
+      "step": "complete"
+    },
+    {
+      "character_id": "a4b898df-4bbd-4a36-af39-c53b56a191e7",
+      "role_id": "fz",
+      "step": "complete"
+    }
+  ],
+  "characters": [
+    "fz|complete|125|15|8|4|3|2|4|1|3|2",
+    "zs|complete|125|15|8|4|3|2|4|1|3|2"
+  ],
+  "session_counts": [
+    "2",
+    "1",
+    "0"
+  ],
+  "database_restore": {
+    "tables_matched": 56,
+    "restored_characters": [
+      "fz|complete|125|15|8|4|3|2|4|1|3|2",
+      "zs|complete|125|15|8|4|3|2|4|1|3|2"
+    ],
+    "inventory_history_rows": 16,
+    "quest_history_rows": 16
+  },
+  "passed": true,
+  "checks": [
+    {
+      "name": "native journey completed by client a",
+      "passed": true
+    },
+    {
+      "name": "native journey completed by client b",
+      "passed": true
+    },
+    {
+      "name": "each owner has eight quest events, correct gear, two medicines, one real consumption and two victories",
+      "passed": true
+    },
+    {
+      "name": "independent SQL confirms two accounts, one town and no active sessions",
+      "passed": true
+    },
+    {
+      "name": "new database restore preserves both actual inventories and completed quest history",
+      "passed": true
+    }
+  ],
+  "offline_actions": [
+    {
+      "action": "provision",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "migrate",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "grant",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "gateway-reject-offline-credential",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-owner-role",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "gateway-reject-future-schema",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "migrate",
+      "exit_code": 1,
+      "expected_success": false
+    },
+    {
+      "action": "backup",
+      "exit_code": 0,
+      "expected_success": true
+    },
+    {
+      "action": "restore",
+      "exit_code": 0,
+      "expected_success": true
+    }
+  ],
+  "cleanup_errors": [],
+  "worker_errors": [],
+  "private_values_in_logs": false,
+  "player_data_unchanged": true,
+  "online_sources_unchanged": true
+}

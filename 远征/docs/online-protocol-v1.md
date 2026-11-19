@@ -135,6 +135,19 @@
   - **独立排位（预组与随机补位）**：`POST /v1/pvp/queue/join`（`allow_random_fill`）与 `POST /v1/pvp/queue/leave` 支持 `1v1` 单人、`2v2` 预组 2 人或允许补位的单人、`3v3` 预组 3 人 / 2+1 补位 / 全散人补位；严格阻止人数不齐（如 2 打 1）、同账号自排与互屏配对。
   - **战局驱动、超时默认动作、断线保护与权威回放**：`GET /v1/pvp/matches/{id}`、`POST /v1/pvp/matches/{id}/ready`、`POST /v1/pvp/matches/{id}/command`、`POST /v1/pvp/matches/{id}/tick`（超出 `turn_timeout_ticks=450` 即 15 秒时自动写入 `timeout_default` 防卡死）、`POST /v1/pvp/matches/{id}/connection`（`disconnected`/`reconnected` 切换 `safe_defend`；掉线/弃权方正常扣分，配合的随机补位队友享保分机制）、`POST /v1/pvp/matches/{id}/forfeit`、`GET /v1/pvp/matches/{id}/replay`（重演全部 `battle_inputs` 并核对 `replayed_hash == expected_hash`）、`POST /v1/pvp/season/claim` 与 `POST /v1/pvp/honor-shop/buy`。
 
+## 玩家隐私自助与回环运维治理（L6 接入）
+
+清单公布 `account_privacy` 功能位后，账号与运维边界扩展如下（全库 **56 张表**，迁移 `012_online_privacy_ops.sql` 新增 `accounts.status/erased_at`、`account_privacy_requests` 与只追加防篡改 `moderation_actions`）：
+- **玩家数据导出与不可逆擦除**：
+  - `GET /v1/account/privacy/summary`：返回账号状态、角色与安全通知摘要。
+  - `GET /v1/account/privacy/export`：导出个人账号、角色、钱包、安全通知与最近审计记录（严格不含 `password_hash`、`recovery_salt`、`recovery_hash`），并记录 `account_privacy_requests`（`export`）。
+  - `POST /v1/account/privacy/delete`：要求口令验证及 `confirmation == "DELETE"`；拒绝仍有活跃/未确认战斗、寄售挂单或进行中交易的账号；原子完成会话吊销、房间租约失效、秘境/演武排队与好友屏蔽清理、角色匿名软删（`已注销_...`）与账号擦除（`status='erased'`）；此后任何登录、刷新、找回或原令牌请求一律返回 `401`。
+- **受令牌保护的回环运维接口（仅绑定 `AdminListen`，不进入游戏公开路由）**：
+  - `GET /ops/reports`（支持 `?status=open|resolved`）：查看玩家举报及最新处分结果。
+  - `POST /ops/reports/{id}/resolve`：记录处分决定（`dismissed` / `warned` / `muted` / `suspended`）至仅追加触发器保护的 `moderation_actions` 表，并记入 `audit_events`。
+  - `GET /ops/capacity`：返回当前有效会话、分线/分图人数统计、活跃战斗/秘境/演武队列数、未处置举报及寄售开关状态。
+  - `POST /ops/config/market-pause`：支持在不重启进程的前提下紧急暂停/恢复寄售与市场交易，并记入审计事件。
+
 房间租约不授予战斗所有权；战斗接口每次仍重新验证账号、当前有效会话及选中在线角色。角色有未完成战斗或未确认结算时，不能切到别的角色或删除该角色。
 
 ## 战斗、结算与恢复
@@ -157,4 +170,4 @@ Godot 进程不连接数据库。网关提供已提交输入前缀、tick 和状
 
 ## 尚待接续
 
-就绪/私有指标与 TLS 验证见[运维说明](online-operations.md)。管理指标在单独的受令牌保护的回环监听中提供，游戏接口不暴露它；管理令牌不能用游戏令牌替代。公开部署、服务监督、实机跨网络及剩余运维证据仍需补齐。当前单机会话不能成为在线认证，客户端 GM 不提供任何服务端权限。上线前还需 L0–L6 中的社交、合作、经济、竞技、独立身份恢复通知、隐私/数据删除及运维验收。
+就绪/私有指标与 TLS 验证见[运维说明](online-operations.md)，上线发布、加密备份与外部验收阻塞清单见 [L6 发布清单](l6-release-checklist.md)。管理指标与 `/ops/*` 治理接口仅在受令牌保护的回环监听中提供，游戏公开接口不暴露它；管理令牌不能用游戏令牌替代。单机会话不能成为在线认证，客户端 GM 不提供任何服务端权限。公网主机部署、正式 CA 证书、异网真机广域网、外部值班告警送达与异地 PITR 演练受外部环境阻塞，已作为发布前提登记在发布清单中。

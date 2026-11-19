@@ -128,6 +128,12 @@ Windows 子进程置于带 `KILL_ON_JOB_CLOSE` 的独立 Job，监督器死亡�
 
 目标机应执行 `systemd-sysusers` 和 `systemd-analyze verify`，核对两身份及各自文件访问，再验证服务自动重启、依赖故障、停止后没有残留进程、重启上限、原角色回执恢复及告警。当前机器只有 Windows，未安装/启用这些 Linux 系统服务；交叉编译或读取配置不是上述运行时验收。目标服务器、域名和通知接收方配置后继续完成，不用模板追认部署成功。
 
+## 加密备份与 L6 发布回退流程
+
+- `dbops.exe` 新增 `--encrypt-key-file <64位hex路径>`，可在 `pg_dump` 校验完成后使用分块 `AES-256-GCM` 密封归档为 `database.dump.enc` 并立即移除明文 `database.dump`；`restore` 支持同参数密钥校验解封（缺密钥、错误密钥、清单或密文篡改均拒绝建库），恢复后强制吊销全部旧会话及房间租约。
+- `AdminHandler` 除 `/readyz`、`/livez`、`/metrics` 外提供受 `YUANZHENG_ADMIN_TOKEN` 保护的回环 `/ops/reports`、`/ops/reports/{id}/resolve`、`/ops/capacity` 与 `/ops/config/market-pause` 运营处置及紧急停市接口。
+- 运行时 `CheckMigrations` 在存在未知新迁移时严格 `fail-closed`，防止旧版二进制误连已前向迁移的数据库。完整的发布/回退步骤及 **待外部主机/账号签字的阻塞项 (`EXT-01 ~ EXT-06`)** 见 [L6 发布与外部验收清单](l6-release-checklist.md)。
+
 ## 后续发布门槛
 
-服务监督/重启、备份加密与异地留存/持续恢复、迁移和发布切换/回退、操作系统服务身份、手机跨网络验证、容量/费用和独立告警送达仍需逐项实现与取证。新数据库身份与逻辑恢复的实际验收结果登记在实施台账；不能仅据上面的工具说明推断通过。目标服务器、域名和真实通知接收方尚未配置，当前文档不宣称公网部署或通知已生效。
+当前 Windows 本机已交付 L0–L6 全部本地可验证能力（受限数据库角色、服务监督、Prometheus 指标与本地 Webhook 告警演练、26 并发与溢出压测、AES-256-GCM 加密备份与 56 表新库恢复、玩家隐私自助导出/注销与回环处置）；公网云主机与 VPC、正式 CA 证书、Android/iOS/Windows 真机异网与弱网广域网测试、外部值班通知实际接收方、以及异地对象存储 KMS/WAL PITR 演练仍受外部环境与资源限制尚未配置，本文档不虚构或宣称已完成公网真实生产上线。

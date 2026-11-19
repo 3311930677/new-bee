@@ -1,4 +1,4 @@
-"""Verify L5 1v1, 2v2, and 3v3 PvP Arena (sparring, independent ranked + random fill, 6-role RoomHost BattleSim, timeout default action, reconnect rating protection, replay, season/honor shop, and 54-table DB restore)."""
+"""Verify L5 1v1, 2v2, and 3v3 PvP Arena (sparring, independent ranked + random fill, 6-role RoomHost BattleSim, timeout default action, reconnect rating protection, replay, season/honor shop, and 56-table DB restore)."""
 import argparse
 import hashlib
 import json
@@ -42,7 +42,7 @@ def main():
         "online_sources_sha256": fingerprint,
         "gateway_binary_sha256": hashlib.sha256(GATEWAY.read_bytes()).hexdigest(),
         "transport": "https-validating-debug-ca",
-        "scope": "L5 six native Godot clients: 1v1 sparring + ranked, 2v2 premade vs random-fill + timeout_default + reconnect rating protection, 3v3 6-role + pet RoomHost simulation + cold replay + season/honor shop + 54-table backup/restore",
+        "scope": "L5 six native Godot clients: 1v1 sparring + ranked, 2v2 premade vs random-fill + timeout_default + reconnect rating protection, 3v3 6-role + pet RoomHost simulation + cold replay + season/honor shop + 56-table backup/restore",
     }
 
     try:
@@ -137,9 +137,9 @@ def main():
         recovery.databases.append(recovery.target)
         restored = recovery.command("restore", database=recovery.target, folder=backup)
         (folder / "restore-report.json").write_text(json.dumps(restored, indent=2), encoding="utf8")
-        if len(manifest.get("tables", [])) != 54 or len(restored.get("tables_matched_before_session_invalidation", [])) != 54:
-            raise RuntimeError(f"expected 54 tables in backup/restore, got {len(manifest.get('tables', []))}")
-        report["tables_matched"] = 54
+        if len(manifest.get("tables", [])) != 56 or len(restored.get("tables_matched_before_session_invalidation", [])) != 56:
+            raise RuntimeError(f"expected 56 tables in backup/restore, got {len(manifest.get('tables', []))}")
+        report["tables_matched"] = 56
         report["passed"] = True
     except Exception as error:
         failures.append(str(error))
