@@ -360,6 +360,76 @@ func _exit_tree() -> void:
 	# The platform cursor otherwise retains its texture beyond RenderingServer.
 	if DisplayServer.get_name() != "headless":
 		Input.set_custom_mouse_cursor(null)
+	_release_runtime_caches()
+
+
+func _release_runtime_caches() -> void:
+	_vignette_tex = null
+	_interface_theme = null
+	_spaced_font_cache.clear()
+	_art_font_cache.clear()
+	_avatar_tex = null
+	_tex_cache.clear()
+	_interface_backdrop = null
+	_hatch_tex = null
+	_wood_tex_cache.clear()
+	_paper_tex = null
+	# Release static Resource/Texture/Shader caches only on scripts already loaded in memory (fixes issue #43 exit leaks).
+	const STATIC_CACHE_SPECS := {
+		"res://src/ui/LoadScreen.gd": ["_warm_cache"],
+		"res://src/ui/KitV4.gd": ["_tex_cache", "_style_cache"],
+		"res://src/ui/ReviewFixUI.gd": ["_textures", "_showcase_pets"],
+		"res://src/ui/TravelChestUI.gd": ["_theme", "_sources", "_textures", "_disabled_shader"],
+		"res://src/ui/ChestPageUI.gd": ["_textures"],
+		"res://src/ui/FlowChestUI.gd": ["_textures"],
+		"res://src/ui/SettingsSkin.gd": ["_styles", "_textures", "_circle_mat"],
+		"res://src/ui/SettingsChestView.gd": ["_empty_sb"],
+		"res://src/ui/UiKit.gd": ["_styles"],
+		"res://src/ui/UIIcons.gd": ["_cache"],
+		"res://src/ui/UIWordmark.gd": ["_logo_texture", "_shader_cache"],
+		"res://src/ui/VisualTheme.gd": ["_tex_cache"],
+		"res://src/ui/InventoryQuestSkin.gd": ["_theme", "_textures"],
+		"res://src/ui/IllustratedUI.gd": ["_textures"],
+		"res://src/ui/RegionChestMap.gd": ["_visual_cache"],
+		"res://src/ui/PixelKit.gd": ["_label_font_cache"],
+		"res://src/ui/ArenaPanel.gd": ["_spaced_cache"],
+		"res://src/ui/JourneyPanel.gd": ["_spaced_cache"],
+		"res://src/ui/SlideCard.gd": ["_silhouette_mat"],
+		"res://src/ui/NameTagLayout.gd": ["_opaque_cache"],
+		"res://src/ui/home/TownHome.gd": ["_medal_pressed_cache", "_medal_disabled_cache", "_gilded_cache"],
+		"res://src/battle/BattleScene.gd": ["_battle_frames_cache", "_settle_font_cache"],
+		"res://src/explore/FlatMapGround.gd": ["_cache"],
+		"res://src/explore/TerrainSurface.gd": ["_textures"],
+		"res://src/world/AssetCompletion.gd": ["_cache"],
+		"res://src/world/BuildingGrounding.gd": ["_cache"],
+		"res://src/world/FrostCityArt.gd": ["_frames", "_portraits", "_props"],
+		"res://src/world/MonsterArt.gd": ["_textures"],
+		"res://src/world/MountVisual.gd": ["_cache"],
+		"res://src/world/ReferenceWorldArt.gd": ["_textures", "_frames"],
+		"res://src/world/SunnyTravelArt.gd": ["_textures", "_frames", "_grounds"],
+		"res://src/world/WorldArtFinish.gd": ["_character_material", "_turtle_texture"],
+		"res://src/world/WorldPropArt.gd": ["_ground_sources", "_sign", "_atlas", "_story_atlas", "_return_atlas"],
+	}
+	for path in STATIC_CACHE_SPECS:
+		if not ResourceLoader.has_cached(path):
+			continue
+		var scr: Variant = ResourceLoader.load(path)
+		if scr == null:
+			continue
+		for prop in STATIC_CACHE_SPECS[path]:
+			var val: Variant = scr.get(prop)
+			if val is Dictionary:
+				(val as Dictionary).clear()
+			elif val is Array:
+				(val as Array).clear()
+			elif val != null:
+				scr.set(prop, null)
+	if ResourceLoader.has_cached("res://src/ui/CampChestView.gd"):
+		var camp_scr: Variant = ResourceLoader.load("res://src/ui/CampChestView.gd")
+		if camp_scr != null and camp_scr.get("_AvatarButton") != null:
+			var av_cls: Variant = camp_scr.get("_AvatarButton")
+			if av_cls.has_method("clear_static_caches"):
+				av_cls.call("clear_static_caches")
 
 
 ## 移动端 / 触控触发 ESC（ui_cancel）：发送标准 ESC 按键事件，走完整 _input -> _gui_input -> _unhandled_input 传播链
@@ -6197,6 +6267,8 @@ func _build_res_index() -> void:
 
 ## 把目录里的 png 登记进索引；strip_prefix=true 时剥掉 NNN_ 编号前缀（source 母稿的命名）
 func _scan_png_dir(dir_path: String, strip_prefix: bool) -> void:
+	if FileAccess.file_exists(dir_path + "/.gdignore"):
+		return
 	for f in DirAccess.get_files_at(dir_path):
 		if not f.ends_with(".png"):
 			continue
@@ -6741,10 +6813,18 @@ func _banner_text(text: String) -> String:
 ## 开放式书法题签；保留横幅工厂的尺寸与调用方式。
 func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> Control:
 	var root := WoodPlaque.new()
-	root.custom_minimum_size = Vector2(w, h)
+	var clean := _banner_text(text)
+	var fnt := spaced_art_font(2 if clean.length() > 6 else 3)
+	var target_fs := mini(font_size + (4 if clean.length() > 6 else 12), int(h * 0.80))
+	target_fs = maxi(24, target_fs)
+	var measured_w := fnt.get_string_size(clean, HORIZONTAL_ALIGNMENT_LEFT, -1, target_fs).x
+	var final_w := maxf(float(w), minf(436.0, measured_w + 72.0))
+	while target_fs > 24 and fnt.get_string_size(clean, HORIZONTAL_ALIGNMENT_LEFT, -1, target_fs).x > final_w - 56.0:
+		target_fs -= 2
+	root.custom_minimum_size = Vector2(final_w, h)
 	root.size = root.custom_minimum_size
-	var l := serif_label(_banner_text(text), mini(font_size+12, int(h*0.82)), Color("f4dfb5"))
-	l.add_theme_font_override("font", spaced_art_font(3))
+	var l := serif_label(clean, target_fs, Color("f4dfb5"))
+	l.add_theme_font_override("font", fnt)
 	l.add_theme_color_override("font_shadow_color", Color("141008", 0.9))
 	l.add_theme_constant_override("shadow_offset_y", 1)
 	root.setup(l, Color("203938"))

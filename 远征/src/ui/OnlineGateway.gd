@@ -109,6 +109,7 @@ func _ready() -> void:
 	_role.custom_minimum_size.y = 44
 	for role_name in ROLE_NAMES:
 		_role.add_item(role_name)
+	_style_option(_role)
 	create.add_child(_role)
 	var identity_row := HBoxContainer.new()
 	identity_row.add_theme_constant_override("separation", 12)
@@ -125,11 +126,13 @@ func _ready() -> void:
 	_gender.custom_minimum_size.y = 44
 	for words in Profile.GENDER_NAMES:
 		_gender.add_item("性别：" + words)
+	_style_option(_gender)
 	identity_options.add_child(_gender)
 	_avatar = OptionButton.new()
 	_avatar.custom_minimum_size.y = 44
 	for words in Profile.AVATAR_NAMES:
 		_avatar.add_item("头像：" + words)
+	_style_option(_avatar)
 	identity_options.add_child(_avatar)
 	_role.item_selected.connect(func(_index: int) -> void: _update_avatar_preview())
 	_avatar.item_selected.connect(func(_index: int) -> void: _update_avatar_preview())
@@ -167,8 +170,56 @@ func _input_field(parent: Control, placeholder: String, secret: bool) -> LineEdi
 	field.custom_minimum_size.y = 44
 	field.add_theme_font_override("font", G.font_reg)
 	field.add_theme_font_size_override("font_size", G.FS_SM)
+	field.add_theme_color_override("font_color", G.PARCHMENT)
+	field.add_theme_color_override("font_placeholder_color", Color("9c8d73"))
+	field.add_theme_color_override("caret_color", G.GOLD_BRIGHT)
+	var sb_n := StyleBoxFlat.new()
+	sb_n.bg_color = Color("1b1613", 0.96)
+	sb_n.border_color = Color("b8924d", 0.85)
+	sb_n.set_border_width_all(1)
+	sb_n.set_corner_radius_all(4)
+	sb_n.content_margin_left = 10
+	sb_n.content_margin_top = 6
+	sb_n.content_margin_right = 10
+	sb_n.content_margin_bottom = 6
+	var sb_f := sb_n.duplicate() as StyleBoxFlat
+	sb_f.border_color = G.GOLD_BRIGHT
+	sb_f.set_border_width_all(2)
+	field.add_theme_stylebox_override("normal", sb_n)
+	field.add_theme_stylebox_override("focus", sb_f)
+	field.add_theme_stylebox_override("read_only", sb_n)
 	parent.add_child(field)
 	return field
+
+
+func _style_option(opt: OptionButton) -> void:
+	opt.add_theme_font_override("font", G.font_reg)
+	opt.add_theme_font_size_override("font_size", G.FS_SM)
+	opt.add_theme_color_override("font_color", G.PARCHMENT)
+	opt.add_theme_color_override("font_hover_color", G.GOLD_BRIGHT)
+	opt.add_theme_color_override("font_pressed_color", G.GOLD_BRIGHT)
+	opt.add_theme_color_override("font_focus_color", G.PARCHMENT)
+	opt.add_theme_color_override("font_disabled_color", Color("7a6d58"))
+	var sb_n := StyleBoxFlat.new()
+	sb_n.bg_color = Color("1b1613", 0.96)
+	sb_n.border_color = Color("b8924d", 0.85)
+	sb_n.set_border_width_all(1)
+	sb_n.set_corner_radius_all(4)
+	sb_n.content_margin_left = 10
+	sb_n.content_margin_top = 6
+	sb_n.content_margin_right = 10
+	sb_n.content_margin_bottom = 6
+	var sb_h := sb_n.duplicate() as StyleBoxFlat
+	sb_h.bg_color = Color("261e19", 0.98)
+	sb_h.border_color = G.GOLD_BRIGHT
+	var sb_d := sb_n.duplicate() as StyleBoxFlat
+	sb_d.bg_color = Color("14110e", 0.72)
+	sb_d.border_color = Color("6e5a3a", 0.5)
+	opt.add_theme_stylebox_override("normal", sb_n)
+	opt.add_theme_stylebox_override("hover", sb_h)
+	opt.add_theme_stylebox_override("pressed", sb_h)
+	opt.add_theme_stylebox_override("focus", sb_h)
+	opt.add_theme_stylebox_override("disabled", sb_d)
 
 
 func _button(parent: Control, words: String, action: Callable, tracked := true) -> Control:
@@ -319,7 +370,11 @@ func _refresh_roster() -> void:
 			continue
 		var character := value as Dictionary
 		var role_index := Profile.ROLE_IDS.find(String(character.get("role_id", "zs")))
-		var words := "%s\n%s · %s · Lv.%d" % [character.get("nickname", ""), ROLE_NAMES[maxi(0, role_index)], Profile.gender_name(String(character.get("gender_id", "unspecified"))), int(character.get("level", 1))]
+		var gender_id := String(character.get("gender_id", "unspecified"))
+		var role_title := String(ROLE_NAMES[maxi(0, role_index)])
+		var words := "%s\n%s · Lv.%d" % [character.get("nickname", ""), role_title, int(character.get("level", 1))]
+		if _identity_available() and gender_id != "unspecified":
+			words = "%s\n%s · %s · Lv.%d" % [character.get("nickname", ""), role_title, Profile.gender_name(gender_id), int(character.get("level", 1))]
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		_roster.add_child(row)

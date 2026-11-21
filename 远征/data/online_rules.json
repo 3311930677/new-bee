@@ -58,9 +58,9 @@
       "mat_guild_stone": {"name": "界碑石料", "icon": "itm_potion_hp_s", "kind": "material", "tradeable": false, "guild_building": true}
     },
     "points": {
-      "npc_steward": {"name": "闻叔", "position": [418, 1325], "radius": 112},
+      "npc_steward": {"name": "闻叔", "position": [462, 1325], "radius": 112},
       "south_signpost": {"name": "城南路标", "position": [600, 1588], "radius": 96},
-      "npc_scribe": {"name": "青姨", "position": [418, 1740], "radius": 112}
+      "npc_scribe": {"name": "青姨", "position": [462, 1740], "radius": 112}
     },
     "steps": [
       {"id": "s01", "title": "城门来信", "goal": "去城中找闻叔，领取出行装备。", "event": "interact", "target_id": "npc_steward", "dialogue": "北门古道的界碑忽然失了声。先穿好护甲、备好兵刃，再去城南看看。", "reward": "supplies"},

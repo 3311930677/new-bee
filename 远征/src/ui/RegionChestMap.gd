@@ -193,9 +193,9 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	_shell.layout(safe_override)
 	Page.place(_map,Vector2.ZERO,_shell.stage.size)
 	if _quest_button!=null:
-		Page.place(_quest_button,Vector2(_map.size.x-168,_map.size.y-56),Vector2(54,44))
-	Page.place(_locator,Vector2(_map.size.x-108,_map.size.y-56),Vector2(44,44))
-	Page.place(_zoom_button,Vector2(_map.size.x-56,_map.size.y-56),Vector2(44,44))
+		Page.place(_quest_button,Vector2(_map.size.x-166,10),Vector2(54,40))
+	Page.place(_locator,Vector2(_map.size.x-106,10),Vector2(44,40))
+	Page.place(_zoom_button,Vector2(_map.size.x-56,10),Vector2(44,40))
 	_apply_zoom()
 	_clamp()
 	_update_edges()
@@ -228,14 +228,14 @@ func select(id:String,animate:bool=true) -> void:
 		var btn_text:="乘驿车前往" if can_travel else "暂不可乘车"
 		_travel_button=Flow.button(btn_text,func():_on_travel_pressed(id),can_travel)
 		_travel_button.name="TravelToRegionButton"
-		_travel_button.custom_minimum_size=Vector2(132,42)
+		_travel_button.custom_minimum_size=Vector2(118,42)
 		_travel_button.disabled=not can_travel
 		_travel_button.caption.add_theme_font_size_override("font_size",G.FS_XS)
 		head_row.add_child(_travel_button)
 	else:
 		var j_btn:=Flow.button("驿路与传世",_open_journey_modal)
 		j_btn.name="OpenJourneyPanelButton"
-		j_btn.custom_minimum_size=Vector2(132,42)
+		j_btn.custom_minimum_size=Vector2(118,42)
 		j_btn.caption.add_theme_font_size_override("font_size",G.FS_XS)
 		head_row.add_child(j_btn)
 	var travel_line:="驿路已通：可点击右上「乘驿车前往」直达，或沿相邻路牌步行。" if bool(j_status.get("ok",false)) and id!=_current else (String(j_status.get("line","沿相邻路牌步行前往")) if id!=_current else "点击右上「驿路与传世」可打开驿站列表与传世首领挑战。")

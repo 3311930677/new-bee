@@ -9,6 +9,9 @@ const PositionStream := preload("res://src/online/WorldPositionStream.gd")
 const REQUEST_TIMEOUT := 20.0
 const RESPONSE_LIMIT := 256 * 1024
 
+static var _local_http_re: RegEx
+static var _uuid_re: RegEx
+
 var base_url := "http://127.0.0.1:18080"
 var manifest: Dictionary = {}
 var characters: Array = []
@@ -32,15 +35,22 @@ func _ready() -> void:
 	_local_content_version = Profile.content_version()
 
 
+func _exit_tree() -> void:
+	clear_session()
+	_active_requests.clear()
+	_debug_tls_options = null
+
+
 func is_authenticated() -> bool:
 	return not access_token.is_empty()
 
 
 func configure(url: String) -> bool:
 	url = url.strip_edges().trim_suffix("/")
-	var local_http := RegEx.create_from_string("^http://(127\\.0\\.0\\.1|localhost|\\[::1\\])(:[0-9]{1,5})?$")
+	if _local_http_re == null:
+		_local_http_re = RegEx.create_from_string("^http://(127\\.0\\.0\\.1|localhost|\\[::1\\])(:[0-9]{1,5})?$")
 	var has_forbidden := url.contains("@") or url.contains("?") or url.contains("#") or url.contains(" ")
-	if has_forbidden or (not url.begins_with("https://") and not (OS.is_debug_build() and local_http.search(url) != null)):
+	if has_forbidden or (not url.begins_with("https://") and not (OS.is_debug_build() and _local_http_re.search(url) != null)):
 		last_error = "请输入 HTTPS 服务器地址；本机开发可使用本地地址。"
 		return false
 	if url != base_url:
@@ -746,7 +756,9 @@ func new_request_id() -> String:
 
 
 func _valid_id(id: String) -> bool:
-	return RegEx.create_from_string("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$").search(id) != null
+	if _uuid_re == null:
+		_uuid_re = RegEx.create_from_string("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+	return _uuid_re.search(id) != null
 
 
 func _apply_tokens(data: Dictionary) -> void:
@@ -791,7 +803,7 @@ func _send_command(path: String, payload: Dictionary, explicit_key: String, meth
 		key = String(_pending_commands[intent])
 	var result: Dictionary = await _request(method, path, payload, key, true)
 	var status := int(result.get("status", 0))
-	if bool(result.get("ok", false)) or status in [400, 404, 409]:
+	if bool(result.get("ok", false)) or status in [400, 403, 404, 409, 422]:
 		_pending_commands.erase(intent)
 	return result
 

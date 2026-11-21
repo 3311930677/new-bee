@@ -50,6 +50,7 @@ func _ready() -> void:
 	column.add_child(_units)
 	_skills = OptionButton.new()
 	_skills.custom_minimum_size.y = 44
+	_style_option(_skills)
 	column.add_child(_skills)
 	_feedback = G.gold_label("攻、技、物、逃，由你决定下一步。", G.FS_SM, false)
 	_feedback.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -62,17 +63,42 @@ func _ready() -> void:
 	_actions.add_theme_constant_override("h_separation", 10)
 	_actions.add_theme_constant_override("v_separation", 10)
 	column.add_child(_actions)
-	_button(_actions, "攻 · 普通攻击", _emit_action.bind("attack"))
+	_button(_actions, "攻 · 普通攻击", _emit_action.bind("attack"), true)
 	_button(_actions, "技 · 选中技能", _emit_action.bind("skill"))
 	_potion_button = _button(_actions, "物 · 治疗药剂", _emit_action.bind("potion"))
 	_button(_actions, "逃 · 退出战斗", _emit_action.bind("flee"))
-	_ack = _button(column, "确认结算 · 返回城镇", func() -> void: acknowledge_requested.emit())
+	_ack = _button(column, "确认结算 · 返回城镇", func() -> void: acknowledge_requested.emit(), true)
 	_ack.hide()
 	_button(column, "暂离 · 返回在线角色", func() -> void: leave_requested.emit())
 
 
-func _button(parent: Control, text: String, action: Callable) -> Control:
-	var button := G.ghost_button(text, 0, 50, G.FS_MD)
+func _style_option(opt: OptionButton) -> void:
+	opt.add_theme_font_override("font", G.font_reg)
+	opt.add_theme_font_size_override("font_size", G.FS_SM)
+	opt.add_theme_color_override("font_color", G.PARCHMENT)
+	opt.add_theme_color_override("font_hover_color", G.GOLD_BRIGHT)
+	opt.add_theme_color_override("font_pressed_color", G.GOLD_BRIGHT)
+	opt.add_theme_color_override("font_focus_color", G.PARCHMENT)
+	var sb_n := StyleBoxFlat.new()
+	sb_n.bg_color = Color("1b1613", 0.96)
+	sb_n.border_color = Color("b8924d", 0.85)
+	sb_n.set_border_width_all(1)
+	sb_n.set_corner_radius_all(4)
+	sb_n.content_margin_left = 10
+	sb_n.content_margin_top = 6
+	sb_n.content_margin_right = 10
+	sb_n.content_margin_bottom = 6
+	var sb_h := sb_n.duplicate() as StyleBoxFlat
+	sb_h.bg_color = Color("261e19", 0.98)
+	sb_h.border_color = G.GOLD_BRIGHT
+	opt.add_theme_stylebox_override("normal", sb_n)
+	opt.add_theme_stylebox_override("hover", sb_h)
+	opt.add_theme_stylebox_override("pressed", sb_h)
+	opt.add_theme_stylebox_override("focus", sb_h)
+
+
+func _button(parent: Control, text: String, action: Callable, primary := false) -> Control:
+	var button := G.gold_button(text, 0, 50, G.FS_MD) if primary else G.ghost_button(text, 0, 50, G.FS_MD)
 	button.custom_minimum_size.y = 50
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.gui_input.connect(func(event: InputEvent) -> void:
@@ -133,12 +159,22 @@ func present(value: Dictionary) -> void:
 		var unit_kind := String(unit.get("kind", ""))
 		var template := String(unit.get("template_id", ""))
 		if not _cards.has(uid):
+			var is_ally := unit_kind == "role" or String(unit.get("side", "")) == "ally"
+			var panel := PanelContainer.new()
+			var p_sb := StyleBoxFlat.new()
+			p_sb.bg_color = Color("16120f", 0.92)
+			p_sb.border_color = Color("4bb887", 0.80) if is_ally else Color("cf5648", 0.80)
+			p_sb.set_border_width_all(1)
+			p_sb.set_corner_radius_all(6)
+			p_sb.set_content_margin_all(8)
+			panel.add_theme_stylebox_override("panel", p_sb)
 			var row := HBoxContainer.new()
-			row.custom_minimum_size.y = 96
+			row.custom_minimum_size.y = 88
 			row.add_theme_constant_override("separation", 12)
+			panel.add_child(row)
 			var portrait: Control
 			if unit_kind == "role":
-				portrait = preload("res://src/ui/FieldUI.gd").portrait(String(Online.selected_character.get("role_id", "zs")), Vector2.ZERO, Vector2(92, 96))
+				portrait = preload("res://src/ui/FieldUI.gd").portrait(String(Online.selected_character.get("role_id", "zs")), Vector2.ZERO, Vector2(84, 88))
 			else:
 				var picture := TextureRect.new()
 				if template == "pet_rockturtle":
@@ -149,36 +185,48 @@ func present(value: Dictionary) -> void:
 				picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 				picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 				portrait = picture
-			portrait.custom_minimum_size = Vector2(92, 96)
+			portrait.custom_minimum_size = Vector2(84, 88)
 			row.add_child(portrait)
 			var card := VBoxContainer.new()
 			card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			card.add_theme_constant_override("separation", 10)
+			card.add_theme_constant_override("separation", 6)
 			row.add_child(card)
 			var caption := G.gold_label("", G.FS_MD)
 			card.add_child(caption)
 			var health := ProgressBar.new()
-			health.custom_minimum_size.y = 26
+			health.custom_minimum_size.y = 20
 			health.show_percentage = false
 			var track := StyleBoxFlat.new()
 			track.bg_color = G.BG_DEEP
-			track.border_color = G.GOLD
+			track.border_color = Color("8c7040", 0.85)
 			track.set_border_width_all(1)
 			track.set_corner_radius_all(3)
 			var fill := StyleBoxFlat.new()
-			fill.bg_color = G.GOLD_BRIGHT
+			fill.bg_color = Color("3fa876") if is_ally else Color("cc4438")
 			fill.set_corner_radius_all(3)
 			health.add_theme_stylebox_override("background", track)
 			health.add_theme_stylebox_override("fill", fill)
 			card.add_child(health)
+			var energy := ProgressBar.new()
+			energy.custom_minimum_size.y = 8
+			energy.max_value = 100
+			energy.show_percentage = false
+			var e_track := track.duplicate() as StyleBoxFlat
+			var e_fill := StyleBoxFlat.new()
+			e_fill.bg_color = Color("4b8fd4")
+			e_fill.set_corner_radius_all(2)
+			energy.add_theme_stylebox_override("background", e_track)
+			energy.add_theme_stylebox_override("fill", e_fill)
+			card.add_child(energy)
 			var note := G.gold_label("", G.FS_SM, false)
 			card.add_child(note)
-			_units.add_child(row)
-			_cards[uid] = {"row": row, "caption": caption, "health": health, "note": note}
+			_units.add_child(panel)
+			_cards[uid] = {"panel": panel, "row": row, "caption": caption, "health": health, "energy": energy, "note": note}
 		var card: Dictionary = _cards[uid]
 		(card.caption as Label).text = String(Online.selected_character.get("nickname", "旅人")) if unit_kind == "role" else String(unit.get("name", "对手"))
 		(card.health as ProgressBar).max_value = maxi(1, int(unit.get("max_hp", 1)))
 		(card.health as ProgressBar).value = int(unit.get("hp", 0))
+		(card.energy as ProgressBar).value = clampi(int(unit.get("energy", 0)), 0, 100)
 		(card.note as Label).text = "气血 %d/%d · 能量 %d" % [int(unit.get("hp", 0)), int(unit.get("max_hp", 0)), int(unit.get("energy", 0))]
 		if unit_kind == "role":
 			var selected := _skills.selected
@@ -194,7 +242,7 @@ func present(value: Dictionary) -> void:
 				_skills.select(clampi(selected, 0, _skills.item_count - 1))
 	for uid in _cards.keys():
 		if not live_cards.has(uid):
-			(_cards[uid].row as Control).queue_free()
+			(_cards[uid].panel as Control).queue_free()
 			_cards.erase(uid)
 	var last: Dictionary = battle.get("last_input", {})
 	if not last.is_empty():

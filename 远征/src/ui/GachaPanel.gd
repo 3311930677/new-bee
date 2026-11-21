@@ -179,7 +179,7 @@ func _build() -> void:
 	head.add_child(Craft.label("✦ 本期主打",Vector2(18,10),Vector2(180,24),G.FS_XS,Craft.GOLD))
 	head.add_child(Craft.label(String(feat.get("name","")),Vector2(18,38),Vector2(198,44),G.FS_BIG,Craft.WHITE,false,true))
 	head.add_child(Craft.label(String(RARITY_NAME.get(rarity,"普通"))+" · 灵宠",Vector2(20,86),Vector2(182,24),G.FS_SM,hue.lightened(.22)))
-	head.add_child(Craft.label("世界首领亦可结伴",Vector2(20,130),Vector2(192,24),G.FS_XS,Craft.MUTED))
+	head.add_child(Craft.label("世界首领亦可结伴",Vector2(20,120),Vector2(192,24),G.FS_XS,Craft.MUTED))
 	var halo := Finesse.Sigil.new()
 	halo.position = Vector2(207,-17)
 	halo.size = Vector2(204,204)
@@ -226,7 +226,7 @@ func _build() -> void:
 		pity.add_child(ring_tr)
 	var track := Panel.new()
 	track.position = Vector2(14,40)
-	track.size = Vector2(172,10)
+	track.size = Vector2(346,10)
 	var track_style := StyleBoxFlat.new()
 	track_style.bg_color = Color("101a28")
 	track_style.border_color = Color("5e4b38")
@@ -316,10 +316,10 @@ func _pool_card(p: Dictionary) -> Panel:
 		frame_tr.modulate = Color(1, 1, 1, 0.55)
 		frame_tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		root.add_child(frame_tr)
-	var pic := _tex_rect(pid,44,44,hue)
-	pic.position = Vector2(29,3)
+	var pic := _tex_rect(pid,42,42,hue)
+	pic.position = Vector2(30,3)
 	root.add_child(pic)
-	var name_l := Craft.label(String(p.get("name",pid)),Vector2(4,48),Vector2(94,22),G.FS_XS,Craft.WHITE)
+	var name_l := Craft.label(String(p.get("name",pid)),Vector2(4,44),Vector2(94,22),G.FS_XS,Craft.WHITE)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	root.add_child(name_l)
@@ -416,10 +416,10 @@ func _refresh_top() -> void:
 		if _pity_sub != null:
 			_pity_sub.text = "还差 %d 抽必得史诗" % maxi(0, pmax - pity)
 		if _pity_bar != null:
-			_pity_bar.size = Vector2(roundi(170.0 * ratio), 8)
+			_pity_bar.size = Vector2(roundi(344.0 * ratio), 8)
 		if _pity_gem != null:
-			# Diamond stays inside the 170 px fill track, including empty/full states.
-			var cx := clampf(15.0 + 170.0 * ratio, 17.0, 183.0)
+			# Diamond stays inside the 344 px fill track, including empty/full states.
+			var cx := clampf(15.0 + 344.0 * ratio, 17.0, 357.0)
 			_pity_gem.position = Vector2(cx - 4.0, 41.0)
 	_refresh_free()
 

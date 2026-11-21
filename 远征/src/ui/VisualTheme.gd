@@ -233,12 +233,16 @@ static func heading(item: Control) -> void:
 	var c := palette(item)
 	var sz := item.size
 	if sz.x < 20: return
+	var label_w := 0.0
+	for ch in item.get_children():
+		if ch is Control:
+			label_w = maxf(label_w, (ch as Control).size.x)
 	var plaque_tex := _kit_tex("res://assets/ui/kit_20261013/plaque_title.png")
 	if plaque_tex != null and sz.y >= 34:
-		var pw := clampf(sz.x + 28.0, 180.0, 340.0)
+		var pw := clampf(maxf(sz.x + 28.0, label_w + 68.0), 180.0, 444.0)
 		var ph := clampf(sz.y + 8.0, 44.0, 62.0)
 		var pr := Rect2((sz.x - pw) * 0.5, (sz.y - ph) * 0.5, pw, ph)
-		item.draw_texture_rect(plaque_tex, pr, false)
+		draw_nine(item, plaque_tex, pr, 22.0)
 	var center := Vector2(sz.x*0.5,sz.y-2)
 	var wings := maxf(10,sz.x*0.5-38)
 	item.draw_line(center+Vector2(-wings,0),center+Vector2(-9,0),Color("e2c48c",0.78),1)

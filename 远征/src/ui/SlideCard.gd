@@ -84,6 +84,18 @@ static func page(card: Control, deck_w: float, h: float, gutter := 40.0) -> Cont
 
 
 # ---------- 构建 ----------
+const _SILHOUETTE_CODE := "shader_type canvas_item; void fragment(){ vec4 t=texture(TEXTURE,UV); COLOR=vec4(vec3(0.055,0.095,0.13),t.a); }"
+static var _silhouette_mat: ShaderMaterial = null
+static func clear_static_caches() -> void:
+	_silhouette_mat = null
+static func _shared_silhouette_mat() -> ShaderMaterial:
+	if _silhouette_mat == null:
+		var silhouette := Shader.new()
+		silhouette.code = _SILHOUETTE_CODE
+		_silhouette_mat = ShaderMaterial.new()
+		_silhouette_mat.shader = silhouette
+	return _silhouette_mat
+
 func _build() -> void:
 	_sb = StyleBoxFlat.new()
 	# 只留版面留白：卡面（硬影 + 纸底 + 切角 + 做旧）全部走 _draw，
@@ -308,11 +320,7 @@ class _ArtInner extends Control:
 			if fit == "cover":
 				pic.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 			if dim and stage:
-				var silhouette := Shader.new()
-				silhouette.code = "shader_type canvas_item; void fragment(){ vec4 t=texture(TEXTURE,UV); COLOR=vec4(vec3(0.055,0.095,0.13),t.a); }"
-				var material := ShaderMaterial.new()
-				material.shader = silhouette
-				pic.material = material
+				pic.material = SlideCard._shared_silhouette_mat()
 			elif dim:
 				pic.modulate = Color(0.34, 0.31, 0.29, 0.9)
 			add_child(pic)

@@ -35,6 +35,7 @@ const RARITY := [
 
 const MANIFEST_PATH := "res://data/commercial_20261028.json"
 const KEY_ALIASES := {
+	"badge_dot": "red_dot",
 	"paper_card": "card_paper",
 	"modal_frame": "panel_iron",
 	"card_bg": "panel_iron",
@@ -105,6 +106,11 @@ const KEY_ALIASES := {
 }
 static var _manifest: Dictionary = {}
 static var _tex_cache: Dictionary = {}
+static var _style_cache: Dictionary = {}
+
+static func clear_cache() -> void:
+	_tex_cache.clear()
+	_style_cache.clear()
 
 
 static func is_cancel(event: InputEvent) -> bool:
@@ -140,26 +146,39 @@ static func commercial_path(key: String) -> String:
 	return ""
 
 
+## 商业素材取图：优先走 ResourceLoader（同一个 Resource，全进程一份，重开面板是零成本）。
+## 曾经先用 Image.load_from_file 从磁盘原图解码，理由是想绕开导入产物的压缩；但实测两点都不成立：
+##   1. 这批图的 .import 是 compress/mode=0 + size_limit=0，导入产物就是原始 RGBA，像素与
+##      load_from_file 的结果逐字节相同（tools/ProbeTexEq 验证），没有任何质量收益；
+##   2. 代价是每开一次面板就在 CPU 上重新解码一次 PNG——role_stage_bg 960×640 / 1.1MB，
+##      实测让「养成」第二次打开从 44ms 涨到 57~70ms，正好压在 70ms 预算线上。
+## 所以只有 load() 失败（例如导出包里漏了资源）才退回磁盘解码，作为兜底而非主路径。
 static func commercial_tex(key: String) -> Texture2D:
 	if _tex_cache.has(key):
 		return _tex_cache[key]
 	var resolved: String = String(KEY_ALIASES.get(key, key))
+	if resolved != key and _tex_cache.has(resolved):
+		var hit: Texture2D = _tex_cache[resolved]
+		_tex_cache[key] = hit
+		return hit
 	var path := commercial_path(key)
 	var tex: Texture2D = null
-	if not path.is_empty():
+	if not path.is_empty() and ResourceLoader.exists(path):
+		tex = load(path) as Texture2D
+	if tex == null and not path.is_empty():
 		var abs_p := ProjectSettings.globalize_path(path)
 		if FileAccess.file_exists(abs_p):
 			var img := Image.load_from_file(abs_p)
 			if img != null and not img.is_empty():
 				tex = ImageTexture.create_from_image(img)
-		if tex == null and ResourceLoader.exists(path):
-			tex = load(path) as Texture2D
 	if tex == null:
 		tex = UiKit.tex(key)
 	if tex == null and resolved != key:
 		tex = UiKit.tex(resolved)
 	if tex != null:
 		_tex_cache[key] = tex
+		if resolved != key:
+			_tex_cache[resolved] = tex
 	return tex
 
 
@@ -168,6 +187,14 @@ static func kit_tex(id: String) -> Texture2D:
 	var t := UiKit.tex(id)
 	return t if t != null else UiKit.tex(resolved)
 
+
+static func style_shared(id: String, content_margin := -1) -> StyleBox:
+	var ck := "%s:%d" % [id, content_margin]
+	if _style_cache.has(ck):
+		return _style_cache[ck]
+	var sb := style(id, content_margin)
+	_style_cache[ck] = sb
+	return sb
 
 static func style(id: String, content_margin := -1) -> StyleBox:
 	var resolved: String = String(KEY_ALIASES.get(id, id))
@@ -548,9 +575,9 @@ class ProgressStrip extends Control:
 		resized.connect(queue_redraw)
 
 	func _draw() -> void:
-		var track_sb := KitV4.style("bar_track", 0)
+		var track_sb := KitV4.style_shared("bar_track", 0)
 		if track_sb == null:
-			track_sb = KitV4.style("bar_frame", 0)
+			track_sb = KitV4.style_shared("bar_frame", 0)
 		if track_sb != null:
 			draw_style_box(track_sb, Rect2(Vector2.ZERO, size))
 		else:
@@ -559,7 +586,7 @@ class ProgressStrip extends Control:
 		var fill_w := maxf(0.0, (size.x - 4.0) * ratio)
 		if fill_w > 0.5:
 			var fill_rect := Rect2(Vector2(2.0, 2.0), Vector2(fill_w, maxf(2.0, size.y - 4.0)))
-			var fill_sb := KitV4.style("bar_fill_" + bar_kind, 0)
+			var fill_sb := KitV4.style_shared("bar_fill_" + bar_kind, 0)
 			if fill_sb != null:
 				draw_style_box(fill_sb, fill_rect)
 			else:

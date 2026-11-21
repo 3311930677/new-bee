@@ -10,6 +10,7 @@ const UI := preload("res://src/ui/TravelChestUI.gd")
 const KitV4 := preload("res://src/ui/KitV4.gd")
 const Page := preload("res://src/ui/ChestPageUI.gd")
 const FixUI := preload("res://src/ui/ReviewFixUI.gd")
+const Icons := preload("res://src/ui/UIIcons.gd")
 var _page: Control
 var _stage: Control
 var _stage_bg: TextureRect
@@ -19,9 +20,11 @@ var _heading: Control
 var _back: Button
 var _hero: Control
 var _portrait: TextureRect
+var _hero_name_plate: PanelContainer
 var _hero_name: Label
 var _pool: TextureRect
 var _stats: GridContainer
+var _stat_rows: Array = []
 var _surround_slots: Dictionary = {}
 var _top_tabs: HBoxContainer
 var _recommend: Button
@@ -69,9 +72,7 @@ func _build() -> void:
 	_pool = Page.picture(UI.texture("stage_pool"), Vector2(256, 60))
 	_pool.modulate.a = .65
 	_page.add_child(_pool)
-	_hero = Field.portrait(G.selected_role, Vector2.ZERO, Vector2(200, 200))
-	_page.add_child(_hero)
-	# §4.4-2 职业半身立绘
+	# §4.4-2 职业半身立绘（仅无商业立绘时惰性构建像素动画回退，省去首开与重开的 SpriteFrames 开销）
 	_portrait = TextureRect.new()
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -102,9 +103,26 @@ func _build() -> void:
 		cell.pressed.connect(func(): _open(target_page))
 		_page.add_child(cell)
 		_surround_slots[sid_key] = cell
+	_hero_name_plate = PanelContainer.new()
+	_hero_name_plate.name = "HeroNamePlate"
+	_hero_name_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var np_sb := StyleBoxFlat.new()
+	np_sb.bg_color = Color(0.06, 0.04, 0.03, 0.82)
+	np_sb.border_color = Color(KitV4.TRIM, 0.72)
+	np_sb.set_border_width_all(1)
+	np_sb.set_corner_radius_all(4)
+	np_sb.content_margin_left = 10
+	np_sb.content_margin_right = 10
+	np_sb.content_margin_top = 1
+	np_sb.content_margin_bottom = 1
+	_hero_name_plate.add_theme_stylebox_override("panel", np_sb)
+	_page.add_child(_hero_name_plate)
 	_hero_name = UI.label("", "section")
 	_hero_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_page.add_child(_hero_name)
+	_hero_name.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_hero_name.add_theme_color_override("font_outline_color", Color("090605", 0.95))
+	_hero_name.add_theme_constant_override("outline_size", 3)
+	_hero_name_plate.add_child(_hero_name)
 
 	# §4.4-4 横排双列 6 格属性卡（生命/攻击/防御/暴击/速度/能量回复）
 	var stats_card := PanelContainer.new()
@@ -132,37 +150,40 @@ func _build() -> void:
 	_tray = UI.Tray.new()
 	_page.add_child(_tray)
 
-	# §4.4-5 顶部 6 枚圆形图文页签（C-05，可升级带红点）
+	# §4.4-5 顶部 6 枚圆形图文页签（C-05，可升级带红点；统一使用语义清晰的像素图标）
 	_top_tabs = HBoxContainer.new()
 	_top_tabs.name = "TopGrowthTabs"
 	_top_tabs.add_theme_constant_override("separation", 6)
 	_page.add_child(_top_tabs)
+	var tsb := KitV4.style_shared("tab_inactive", 8)
+	var empty_focus := StyleBoxEmpty.new()
 	for tdef in [
-		["equip", "装备", "tab_equip"],
-		["talent", "天赋", "tab_talent"],
-		["skill", "技能", "tab_skill"],
-		["pet", "灵宠", "tab_pet"],
-		["mount", "坐骑", "tab_mount"],
-		["title", "称号", "tab_title"],
+		["equip", "装备", "shield"],
+		["talent", "天赋", "spark"],
+		["skill", "技能", "book"],
+		["pet", "灵宠", "paw"],
+		["mount", "坐骑", "mount"],
+		["title", "称号", "crown"],
 	]:
 		var tid: String = tdef[0]
 		var tname: String = tdef[1]
-		var tkey: String = tdef[2]
+		var pkey: String = tdef[2]
 		var tb := Button.new()
 		tb.name = "TabIcon_" + tid
 		tb.custom_minimum_size = Vector2(56, 54)
 		tb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tb.focus_mode = Control.FOCUS_NONE
-		var tsb := KitV4.style("tab_inactive", 8)
 		for st in ["normal", "hover", "pressed"]:
 			tb.add_theme_stylebox_override(st, tsb)
-		tb.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+		tb.add_theme_stylebox_override("focus", empty_focus)
 		var ic := TextureRect.new()
-		ic.texture = KitV4.commercial_tex(tkey)
+		var ptex: Texture2D = Icons.texture(pkey)
+		ic.texture = ptex if ptex != null else KitV4.commercial_tex("tab_" + tid)
 		ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		ic.position = Vector2(14, 3)
-		ic.size = Vector2(28, 28)
+		ic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		ic.position = Vector2(18, 5)
+		ic.size = Vector2(26, 26)
 		ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		tb.add_child(ic)
 		var tl := UI.label(tname, "tag", KitV4.CREAM)
@@ -212,8 +233,7 @@ func _layout(safe_override: Rect2 = Rect2()) -> void:
 	var tray_h := minf(roundf(clampf(392.0 + extra * 0.55, 392.0, 560.0)), safe.size.y - 340.0)
 	var top := safe.end.y - tray_h
 	Page.place(_stage, Vector2.ZERO, get_viewport_rect().size)
-	if _stage_bg != null:
-		Page.place(_stage_bg, Vector2.ZERO, get_viewport_rect().size)
+	# The stage background already fills _page through its anchors.
 	Page.place(_back, Vector2(x + 12, y + 8), Vector2(44, 44))
 	_heading.clip_text = true
 	Page.place(_heading, Vector2(x + 68, y + 10), Vector2(safe.size.x - 80, 40))
@@ -233,9 +253,12 @@ func _layout(safe_override: Rect2 = Rect2()) -> void:
 		var pw := hero_h * (256.0 / 384.0)
 		Page.place(_portrait, Vector2(cx - pw * 0.5, hero_y), Vector2(pw, hero_h))
 		_portrait.visible = true
-		_hero.visible = false
+		if _hero != null: _hero.visible = false
 	else:
 		if _portrait != null: _portrait.visible = false
+		if _hero == null:
+			_hero = Field.portrait(G.selected_role, Vector2.ZERO, Vector2(200, 200))
+			_page.add_child(_hero)
 		_hero.visible = true
 		Page.place(_hero, Vector2(cx - hero_h * 0.5, hero_y), Vector2(hero_h, hero_h))
 
@@ -256,18 +279,23 @@ func _layout(safe_override: Rect2 = Rect2()) -> void:
 			Page.place(rc, Vector2(right_x, slot_start_y + i * slot_step), slot_sz)
 
 	_hero_name.clip_text = true
-	Page.place(_hero_name, Vector2(x + 16, name_y), Vector2(safe.size.x - 32, 26))
+	var plate_w := minf(safe.size.x - 108.0, 286.0)
+	Page.place(_hero_name_plate, Vector2(cx - plate_w * 0.5, name_y - 2.0), Vector2(plate_w, 28.0))
 	var sc: Control = _page.get_node_or_null("StatsCard")
 	if sc != null:
 		Page.place(sc, Vector2(x + 16, stats_y), Vector2(safe.size.x - 32, stats_h))
 
 	Page.place(_tray, Vector2(x, top), Vector2(safe.size.x, tray_h))
 	Page.place(_top_tabs, Vector2(x + 16, top + 8), Vector2(safe.size.x - 32, 54))
+	var tab_w := maxf(48.0, (safe.size.x - 32.0 - 30.0) / 6.0)
 	for tb_c in _top_tabs.get_children():
 		var tb: Control = tb_c
+		var ic_n: Control = tb.get_child(0) as Control
+		if ic_n != null:
+			ic_n.position.x = roundf((tab_w - ic_n.size.x) * 0.5)
 		var tl: Label = tb.get_child(1) as Label
 		if tl != null:
-			tl.size.x = maxf(48.0, (safe.size.x - 32.0 - 30.0) / 6.0)
+			tl.size.x = tab_w
 	Page.place(_recommend, Vector2(x + 16, top + 66), Vector2(safe.size.x - 32, 42))
 	Page.place(_row_scroll, Vector2(x + 16, top + 112), Vector2(safe.size.x - 32, maxf(80.0, tray_h - 122.0)))
 
@@ -356,8 +384,7 @@ func _refresh() -> void:
 				cell.item_image.modulate = Color(1, 1, 1, 0.55)
 		cell.queue_redraw()
 
-	# 刷新双列 6 格属性卡（主数值金色 + 养成加成绿色括号）
-	Page.clear(_stats)
+	# 刷新双列 6 格属性卡（复用已有节点，避免每次刷新销毁重建 24 个控件）
 	var stat_entries := [
 		["生命", str(total_hp), "+%d" % maxi(0, total_hp - base_hp) if total_hp > base_hp else ""],
 		["攻击", str(total_atk), "+%d" % maxi(0, total_atk - base_atk) if total_atk > base_atk else ""],
@@ -366,21 +393,33 @@ func _refresh() -> void:
 		["速度", "%.2f" % total_spd, "+%.2f" % (total_spd - base_spd) if total_spd > base_spd + 0.005 else ""],
 		["回能", "%d%%" % (100 + en_pct), "+%d%%" % en_pct if en_pct > 0 else ""],
 	]
-	for se in stat_entries:
-		var srow := HBoxContainer.new()
-		srow.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		srow.add_theme_constant_override("separation", 4)
-		var slbl := UI.label(String(se[0]), "caption", KitV4.MUTED)
-		slbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		srow.add_child(slbl)
-		var sval := UI.label(String(se[1]), "number", KitV4.BRIGHT)
-		sval.add_theme_font_size_override("font_size", G.FS_XS)
-		srow.add_child(sval)
-		if not String(se[2]).is_empty():
-			var sbon := UI.label("(%s)" % String(se[2]), "tag", KitV4.GOOD)
+	if _stat_rows.size() != stat_entries.size():
+		Page.clear(_stats)
+		_stat_rows.clear()
+		for se in stat_entries:
+			var srow := HBoxContainer.new()
+			srow.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			srow.add_theme_constant_override("separation", 4)
+			var slbl := UI.label(String(se[0]), "caption", KitV4.MUTED)
+			slbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			srow.add_child(slbl)
+			var sval := UI.label("", "number", KitV4.BRIGHT)
+			sval.add_theme_font_size_override("font_size", G.FS_XS)
+			srow.add_child(sval)
+			var sbon := UI.label("", "tag", KitV4.GOOD)
 			sbon.add_theme_font_size_override("font_size", G.FS_XS)
 			srow.add_child(sbon)
-		_stats.add_child(srow)
+			_stats.add_child(srow)
+			_stat_rows.append({"val": sval, "bon": sbon})
+	for i in stat_entries.size():
+		var se: Array = stat_entries[i]
+		var rec: Dictionary = _stat_rows[i]
+		(rec.val as Label).text = String(se[1])
+		var bonus_txt := String(se[2])
+		var bon_lbl := rec.bon as Label
+		bon_lbl.visible = not bonus_txt.is_empty()
+		if bon_lbl.visible:
+			bon_lbl.text = "(%s)" % bonus_txt
 
 	_next_id = "talent" if left > 0 else ""
 	_summary.text = "尚有 %d 点天赋待分配" % left if left > 0 else "天赋点已分配完毕"

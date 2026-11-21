@@ -8,6 +8,9 @@ static var _regions:Dictionary={}
 static var _textures:Dictionary={}
 static var _pixel_regions:Dictionary={}
 static var _showcase_pets:Dictionary={}
+static func clear_cache() -> void:
+	_textures.clear()
+	_showcase_pets.clear()
 static func texture(id:String) -> Texture2D:
 	if _textures.has(id):return _textures[id]
 	var completed := Completion.texture(id)
@@ -25,14 +28,17 @@ static func texture(id:String) -> Texture2D:
 	var atlas:=AtlasTexture.new()
 	var file_rel:=String(entry.file)
 	var base_tex:Texture2D=null
-	if file_rel.begins_with("pet_show/"):
-		var abs_p:=ProjectSettings.globalize_path(ROOT+file_rel)
+	var full_res:=ROOT+file_rel
+	if ResourceLoader.exists(full_res):
+		base_tex=load(full_res) as Texture2D
+	if base_tex==null and file_rel.begins_with("pet_show/"):
+		var abs_p:=ProjectSettings.globalize_path(full_res)
 		if FileAccess.file_exists(abs_p):
 			var img:=Image.load_from_file(abs_p)
 			if img!=null and not img.is_empty():
 				base_tex=ImageTexture.create_from_image(img)
 	if base_tex==null:
-		base_tex=load(ROOT+file_rel)
+		base_tex=load(full_res)
 	atlas.atlas=base_tex
 	var scaling:=atlas.atlas.get_size()/Vector2(entry.source_size[0],entry.source_size[1])
 	atlas.region=Rect2(Vector2(entry.rect[0],entry.rect[1])*scaling,Vector2(entry.rect[2],entry.rect[3])*scaling)
@@ -54,13 +60,18 @@ static func pet(id:String) -> Texture2D:
 		var base_id:=id.trim_suffix("_hd")
 		if _showcase_pets.has(base_id):return _showcase_pets[base_id]
 		var hd_path:=ROOT+"pet_show/"+base_id+"_hd.png"
-		var abs_hd:=ProjectSettings.globalize_path(hd_path)
-		if FileAccess.file_exists(abs_hd):
-			var img:=Image.load_from_file(abs_hd)
-			if img!=null and not img.is_empty():
-				var it:=ImageTexture.create_from_image(img)
-				_showcase_pets[base_id]=it
-				return it
+		var hd_tex:Texture2D=null
+		if ResourceLoader.exists(hd_path):
+			hd_tex=load(hd_path) as Texture2D
+		if hd_tex==null:
+			var abs_hd:=ProjectSettings.globalize_path(hd_path)
+			if FileAccess.file_exists(abs_hd):
+				var img:=Image.load_from_file(abs_hd)
+				if img!=null and not img.is_empty():
+					hd_tex=ImageTexture.create_from_image(img)
+		if hd_tex!=null:
+			_showcase_pets[base_id]=hd_tex
+			return hd_tex
 		id=base_id
 	var tex:=texture(id)
 	return tex if tex!=null else G.res_tex(id)

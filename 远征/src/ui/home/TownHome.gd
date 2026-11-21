@@ -72,6 +72,12 @@ const CAP_W := 73.0
 
 static var _medal_pressed_cache: Texture2D = null
 static var _medal_disabled_cache: Texture2D = null
+static var _gilded_cache: Dictionary = {}
+
+static func clear_static_caches() -> void:
+	_medal_pressed_cache = null
+	_medal_disabled_cache = null
+	_gilded_cache.clear()
 
 var host: Control = null
 var content: Control              # 所有可点内容；打开面板时 GameHome 只隐藏它，背景保留
@@ -89,8 +95,8 @@ var _shown_role_id := ""
 var _preview_pose_idx := 0
 const PREVIEW_POSES := [&"idle", &"walk_down", &"walk_left", &"walk_right", &"walk_up"]
 const PREVIEW_POSE_NAMES := ["待机", "朝南", "朝西", "朝东", "朝北"]
-const HERO_SCALE := 0.80
-var _hero_eff_scale := 0.80
+const HERO_SCALE := 0.78
+var _hero_eff_scale := 0.78
 var _top: Control
 var _hud_bottom: Control
 var _toast: Label
@@ -165,11 +171,11 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 	_hud_bottom.position = Vector2(0, safe.end.y - 200.0)
 	_quest.position.y=16.0-minf(extra*.26,78)
 	var short_lift:=maxf(0,800.0-vh)
-	_hero_sprite.position=Vector2(HERO_FEET.x,HERO_FEET.y-61.0*_hero_eff_scale-short_lift)
+	_hero_sprite.position=Vector2(HERO_FEET.x,HERO_FEET.y-52.0*_hero_eff_scale-short_lift)
 	if _pet_sprite != null:
 		_pet_sprite.position = Vector2(HERO_FEET.x + 68.0, HERO_FEET.y - 20.0 - short_lift)
 	_hero_shadow.position=HERO_FEET-Vector2(0,short_lift)
-	_hero_plate.position=Vector2(HERO_FEET.x-58,HERO_FEET.y+4-short_lift)
+	_hero_plate.position=Vector2(HERO_FEET.x-62.0,HERO_FEET.y+6.0-short_lift)
 	_hero_hit.position.y-=short_lift*scene_scale
 	_toast.scale=Vector2.ONE*width_factor
 	_toast.position = Vector2(0, vh * 0.42)
@@ -306,13 +312,13 @@ func _build_scene() -> void:
 		ptw.tween_property(_pet_sprite, "scale:y", 0.94, 0.9).set_trans(Tween.TRANS_SINE)
 		ptw.tween_property(_pet_sprite, "scale:y", 1.04, 0.9).set_trans(Tween.TRANS_SINE)
 
-	_hero_plate = _plate(Vector2(HERO_FEET.x - 58.0, HERO_FEET.y + 4.0), Vector2(116, 22))
+	_hero_plate = _plate(Vector2(HERO_FEET.x - 62.0, HERO_FEET.y + 6.0), Vector2(124, 24))
 	_hero_plate.name = "HeroRolePlate"
 	_scene.add_child(_hero_plate)
-	_hero_role_label = _label("", FONT_SERIF, G.FS_XS, GOLD, 3)
+	_hero_role_label = _label("", FONT_SERIF, 14, GOLD, 3)
 	_hero_role_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hero_role_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_hero_role_label.position = Vector2(0, -1)
+	_hero_role_label.position = Vector2(0, 0)
 	_hero_role_label.size = _hero_plate.size
 	_hero_plate.add_child(_hero_role_label)
 	_sync_hero_role(true)
@@ -371,18 +377,19 @@ func _load_png_tex(path: String) -> Texture2D:
 
 func _role_sprite_frames(role_id: String) -> SpriteFrames:
 	var rid := _valid_role_id(role_id)
-	var town_idle_path := DIR + "hero_town_idle_%s.png" % rid
-	var town_dirs_path := DIR + "hero_town_dirs_%s.png" % rid
-	var tex: Texture2D = _load_png_tex(town_idle_path)
+	var slug := _role_slug(rid)
+	var role_idle_path := "res://image/role/%s/%s_idle.png" % [rid, slug]
+	var walk_tres_path := "res://image/role/%s/%s_walk_frames.tres" % [rid, slug]
+	var tex: Texture2D = _load_png_tex(role_idle_path)
+	if tex == null:
+		tex = _load_png_tex(DIR + "hero_town_idle_%s.png" % rid)
 	if tex == null:
 		tex = load(DIR + "hero_town_idle.png")
-	var dir_tex: Texture2D = _load_png_tex(town_dirs_path)
-	if dir_tex == null:
-		dir_tex = tex
+	var walk_frames: SpriteFrames = load(walk_tres_path) as SpriteFrames if ResourceLoader.exists(walk_tres_path) else null
 	var frames := SpriteFrames.new()
 	if frames.has_animation(&"default"):
 		frames.remove_animation(&"default")
-	var cell_w := int(tex.get_width() / 4) if tex != null else 96
+	var cell_w := int(tex.get_width() / 4) if tex != null else 128
 	var cell_h := int(tex.get_height()) if tex != null else 128
 	for anim_name in [&"idle", &"loop"]:
 		frames.add_animation(anim_name)
@@ -395,15 +402,25 @@ func _role_sprite_frames(role_id: String) -> SpriteFrames:
 				at.region = Rect2(c * cell_w, 0, cell_w, cell_h)
 				frames.add_frame(anim_name, at)
 	var dir_names := [&"walk_down", &"walk_left", &"walk_right", &"walk_up"]
+	var walk_keys := [&"down", &"left", &"right", &"up"]
 	for d_idx in dir_names.size():
 		var dir_anim: StringName = dir_names[d_idx]
 		frames.add_animation(dir_anim)
-		frames.set_animation_speed(dir_anim, 5.0)
+		frames.set_animation_speed(dir_anim, 6.0)
 		frames.set_animation_loop(dir_anim, true)
-		if dir_tex != null:
+		var wkey: StringName = walk_keys[d_idx]
+		var added := false
+		if walk_frames != null:
+			var cand: StringName = dir_anim if walk_frames.has_animation(dir_anim) else (wkey if walk_frames.has_animation(wkey) else &"")
+			if cand != &"":
+				var fc := walk_frames.get_frame_count(cand)
+				for fi in fc:
+					frames.add_frame(dir_anim, walk_frames.get_frame_texture(cand, fi))
+				added = fc > 0
+		if not added and tex != null:
 			var at := AtlasTexture.new()
-			at.atlas = dir_tex
-			at.region = Rect2(d_idx * cell_w, 0, cell_w, cell_h)
+			at.atlas = tex
+			at.region = Rect2((d_idx % 4) * cell_w, 0, cell_w, cell_h)
 			frames.add_frame(dir_anim, at)
 	return frames
 
@@ -417,9 +434,7 @@ func _sync_hero_role(force: bool = false) -> void:
 		_preview_pose_idx = 0
 		_hero_sprite.sprite_frames = _role_sprite_frames(rid)
 		_hero_sprite.set_meta("role_id", rid)
-		var ftex: Texture2D = _hero_sprite.sprite_frames.get_frame_texture(&"idle", 0)
-		var base_h := float(ftex.get_height()) if ftex != null else 128.0
-		_hero_eff_scale = maxf(HERO_SCALE, 152.0 / maxf(base_h, 1.0))
+		_hero_eff_scale = HERO_SCALE
 		_hero_sprite.scale = Vector2.ONE * _hero_eff_scale
 	var pose: StringName = PREVIEW_POSES[_preview_pose_idx % PREVIEW_POSES.size()]
 	if not _hero_sprite.sprite_frames.has_animation(pose):
@@ -461,7 +476,7 @@ func _build_plaques() -> void:
 		# 进树后图标才按 icon_max_width 缩到 32，这里按最终最小宽度重新定尺寸
 		b.size = Vector2(b.get_combined_minimum_size().x, 44)
 		_plaques[p[0]] = b
-		var dot := _red_dot(Vector2(b.size.x - 10, -2))
+		var dot := _red_dot(Vector2(b.size.x - 14, 2))
 		dot.visible = false
 		b.add_child(dot)
 		_plaque_dots[p[0]] = dot
@@ -564,14 +579,20 @@ func _build_top_bar() -> void:
 	_top.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(_top)
 
-	# §4.1-1 玩家卡（左上，232×74，半透明玄漆 player_card_bg）：点击打开角色总览
+	# §4.1-1 玩家卡（左上，232×76，半透明玄漆双金边）：点击打开角色总览
 	var pcard := Button.new()
 	pcard.name = "PlayerCardEntry"
 	pcard.focus_mode = Control.FOCUS_NONE
-	pcard.position = Vector2(8, 8)
-	pcard.size = Vector2(232, 74)
+	pcard.position = Vector2(8, 6)
+	pcard.size = Vector2(232, 76)
 	pcard.tooltip_text = "查看角色总览"
-	var pcard_sb := KitV4.style("player_card_bg", 0)
+	var pcard_sb := StyleBoxFlat.new()
+	pcard_sb.bg_color = Color(0.09, 0.07, 0.06, 0.90)
+	pcard_sb.border_color = BRONZE
+	pcard_sb.set_border_width_all(2)
+	pcard_sb.set_corner_radius_all(6)
+	pcard_sb.shadow_color = Color(0, 0, 0, 0.45)
+	pcard_sb.shadow_size = 3
 	for st in ["normal", "hover", "pressed"]:
 		pcard.add_theme_stylebox_override(st, pcard_sb)
 	pcard.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
@@ -584,7 +605,7 @@ func _build_top_bar() -> void:
 	_avatar.flat = true
 	_avatar.focus_mode = Control.FOCUS_NONE
 	_avatar.tooltip_text = "查看角色总览 / 更换头像"
-	_avatar.position = Vector2(8, 8)
+	_avatar.position = Vector2(10, 6)
 	_avatar.size = Vector2(76, 76)
 	_avatar.pressed.connect(_on_entry.bind("growth", "角色总览"))
 	_top.add_child(_avatar)
@@ -611,43 +632,44 @@ func _build_top_bar() -> void:
 	ring_node.size = Vector2(76, 76)
 	ring_node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_avatar.add_child(ring_node)
-	_exp_pct_label = _label("0%", FONT_BOLD, G.FS_XS, KitV4.JADE, 2)
+	_exp_pct_label = _label("0%", FONT_BOLD, 13, KitV4.JADE, 2)
 	_exp_pct_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_exp_pct_label.position = Vector2(36, 0)
-	_exp_pct_label.size = Vector2(40, 16)
+	_exp_pct_label.size = Vector2(40, 18)
 	_exp_pct_label.visible = false
 	_avatar.add_child(_exp_pct_label)
 	var seal_tex := UiKitLib.tex("level_seal")
 	var badge := TextureRect.new()
 	badge.texture = seal_tex if seal_tex != null else load(DIR + "level_badge.png")
 	badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	badge.position = Vector2(12, 54)
+	badge.position = Vector2(12, 52)
 	badge.size = Vector2(52, 22)
 	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_avatar.add_child(badge)
-	_level = _label("", FONT_BOLD, G.FS_XS, CREAM, 3)
+	_level = _label("", FONT_BOLD, 13, CREAM, 3)
 	_level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_level.position = Vector2(0, 1)
-	_level.size = Vector2(52, 20)
+	_level.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_level.position = Vector2(0, 0)
+	_level.size = Vector2(52, 22)
 	badge.add_child(_level)
 	if host != null:
 		host._avatar_frame = _avatar
 		host._avatar_pic = _avatar_pic
 
-	# 玩家卡右侧三行：名字（衬线 17）、职业（暖灰 13）、战力（亮金 14）
-	_name = _label("", FONT_SERIF, G.FS_MD, CREAM, 3)
-	_name.position = Vector2(88, 12)
-	_name.size = Vector2(146, 22)
+	# 玩家卡右侧三行：名字（衬线 16）、职业（暖灰 13）、战力（亮金 14）
+	_name = _label("", FONT_SERIF, 16, CREAM, 3)
+	_name.position = Vector2(88, 9)
+	_name.size = Vector2(146, 24)
 	_name.clip_text = true
 	_top.add_child(_name)
-	_role_line = _label("", FONT_BOLD, G.FS_XS, KitV4.MUTED, 2)
-	_role_line.position = Vector2(88, 35)
-	_role_line.size = Vector2(146, 18)
+	_role_line = _label("", FONT_BOLD, 13, KitV4.MUTED, 2)
+	_role_line.position = Vector2(88, 33)
+	_role_line.size = Vector2(146, 20)
 	_role_line.clip_text = true
 	_top.add_child(_role_line)
-	_power_line = _label("", FONT_BOLD, G.FS_XS, KitV4.BRIGHT, 3)
-	_power_line.position = Vector2(88, 54)
-	_power_line.size = Vector2(146, 20)
+	_power_line = _label("", FONT_BOLD, 14, KitV4.BRIGHT, 3)
+	_power_line.position = Vector2(88, 51)
+	_power_line.size = Vector2(146, 22)
 	_power_line.clip_text = true
 	_top.add_child(_power_line)
 
@@ -695,7 +717,7 @@ func _build_top_bar() -> void:
 	act_strip.name = "LeftOpsStrip"
 	act_strip.focus_mode = Control.FOCUS_NONE
 	act_strip.position = Vector2(8, 86)
-	act_strip.size = Vector2(216, 28)
+	act_strip.size = Vector2(232, 28)
 	act_strip.tooltip_text = "查看今日活跃与限时活动"
 	var ops_sb := StyleBoxFlat.new()
 	ops_sb.bg_color = Color(0.10, 0.08, 0.07, 0.88)
@@ -707,7 +729,7 @@ func _build_top_bar() -> void:
 	act_strip.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	act_strip.pressed.connect(_on_entry.bind("activity", "活动"))
 	_top.add_child(act_strip)
-	var ops_lbl := _label("活跃度 80/100 · 活动进行中", FONT_BOLD, G.FS_XS, KitV4.JADE, 2)
+	var ops_lbl := _label("活跃度 80/100 · 活动进行中", FONT_BOLD, 13, KitV4.JADE, 2)
 	ops_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	ops_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	ops_lbl.size = act_strip.size
@@ -748,14 +770,15 @@ func _build_top_bar() -> void:
 		cap.add_child(skin)
 		cap.mouse_entered.connect(func(): skin.modulate = Color(1.15, 1.1, 1.05))
 		cap.mouse_exited.connect(func(): skin.modulate = Color.WHITE)
-		var c_icon := _tex(PIX + "%s.png" % c[2], Vector2(1, 4))
+		var c_icon := _tex(PIX + "%s.png" % c[2], Vector2(3, 7))
 		c_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		c_icon.size = Vector2(24, 24)
+		c_icon.size = Vector2(20, 20)
 		skin.add_child(c_icon)
-		var num := _label(_fmt(int(_wallet().get(c[0], 0))), FONT_BOLD, G.FS_XS, CREAM, 3)
+		var num := _label(_fmt(int(_wallet().get(c[0], 0))), FONT_BOLD, 12, CREAM, 3)
 		num.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		num.position = Vector2(20, 6)
-		num.size = Vector2(CAP_W - 24, 22)
+		num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		num.position = Vector2(24, 6)
+		num.size = Vector2(CAP_W - 29, 22)
 		num.clip_text = true
 		num.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		skin.add_child(num)
@@ -798,12 +821,12 @@ func _build_top_bar() -> void:
 			btn.add_child(tr)
 		else:
 			btn.add_child(_tex(PIX + "%s.png" % r[2], Vector2(12, 12)))
-		var plate := _plate(Vector2(8, 42), Vector2(40, 22))
+		var plate := _plate(Vector2(6, 42), Vector2(44, 22))
 		btn.add_child(plate)
-		var t := _label(rtitle, FONT_SERIF, G.FS_XS, CREAM, 3)
+		var t := _label(rtitle, FONT_SERIF, 13, CREAM, 3)
 		t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		t.position = Vector2(0, -1)
+		t.position = Vector2(0, 0)
 		t.size = plate.size
 		plate.add_child(t)
 		var rdot := _red_dot(Vector2(42, 2))
@@ -837,8 +860,8 @@ func _build_bottom() -> void:
 	_quest.add_theme_stylebox_override("hover", qs)
 	_quest.add_theme_stylebox_override("pressed", qs)
 	_quest.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-	_quest.position = Vector2(72, 16)
-	_quest.size = Vector2(336, 56)
+	_quest.position = Vector2(62, 15)
+	_quest.size = Vector2(356, 58)
 	_quest.pressed.connect(_on_entry.bind("quest", "主线任务"))
 	_hud_bottom.add_child(_quest)
 	var seal := Panel.new()
@@ -848,23 +871,23 @@ func _build_bottom() -> void:
 	seal_sb.set_border_width_all(1)
 	seal_sb.set_corner_radius_all(15)
 	seal.add_theme_stylebox_override("panel", seal_sb)
-	seal.position = Vector2(12, 13)
+	seal.position = Vector2(18, 14)
 	seal.size = Vector2(30, 30)
 	seal.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_quest.add_child(seal)
-	var seal_l := _label("主", FONT_SERIF, G.FS_SM, CREAM, 2)
+	var seal_l := _label("主", FONT_SERIF, 15, CREAM, 2)
 	seal_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	seal_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	seal_l.size = seal.size
 	seal.add_child(seal_l)
-	_quest_title = _label("主线 · 夜叩边城", FONT_SERIF, G.FS_XS, KitV4.BRIGHT, 3)
-	_quest_title.position = Vector2(48, 6)
-	_quest_title.size = Vector2(224, 22)
+	_quest_title = _label("主线 · 夜叩边城", FONT_SERIF, 14, KitV4.BRIGHT, 3)
+	_quest_title.position = Vector2(54, 7)
+	_quest_title.size = Vector2(228, 22)
 	_quest_title.clip_text = true
 	_quest.add_child(_quest_title)
-	_quest_goal = _label("与城门守将交谈  1/3", FONT_BOLD, G.FS_XS, CREAM, 2)
-	_quest_goal.position = Vector2(48, 28)
-	_quest_goal.size = Vector2(224, 22)
+	_quest_goal = _label("与城门守将交谈  1/3", FONT_BOLD, 13, CREAM, 2)
+	_quest_goal.position = Vector2(54, 29)
+	_quest_goal.size = Vector2(228, 22)
 	_quest_goal.clip_text = true
 	_quest_goal.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_quest.add_child(_quest_goal)
@@ -875,16 +898,16 @@ func _build_bottom() -> void:
 	go_sb.set_border_width_all(1)
 	go_sb.set_corner_radius_all(4)
 	go_chip.add_theme_stylebox_override("panel", go_sb)
-	go_chip.position = Vector2(276, 15)
-	go_chip.size = Vector2(48, 26)
+	go_chip.position = Vector2(288, 16)
+	go_chip.size = Vector2(50, 26)
 	go_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_quest.add_child(go_chip)
-	var go_lbl := _label("前往", FONT_SERIF, G.FS_XS, CREAM, 2)
+	var go_lbl := _label("前往", FONT_SERIF, 13, CREAM, 2)
 	go_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	go_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	go_lbl.size = go_chip.size
 	go_chip.add_child(go_lbl)
-	_quest_dot = _red_dot(Vector2(320, -2))
+	_quest_dot = _red_dot(Vector2(338, -2))
 	_quest_dot.visible = false
 	_quest.add_child(_quest_dot)
 
@@ -973,6 +996,10 @@ func _build_bottom() -> void:
 
 ## 图标按亮度改成暗铜到奶油金，与圆章的金红色板一致（原图是蓝钢色）。
 func _gilded(tex: Texture2D) -> Texture2D:
+	if tex == null: return null
+	var ck := tex.resource_path if not tex.resource_path.is_empty() else str(tex.get_instance_id())
+	if _gilded_cache.has(ck):
+		return _gilded_cache[ck]
 	var img := tex.get_image()
 	img.convert(Image.FORMAT_RGBA8)
 	var dark := Color("4a2c16")
@@ -984,7 +1011,9 @@ func _gilded(tex: Texture2D) -> Texture2D:
 			var t := clampf(c.get_luminance() * 1.25, 0.0, 1.0)
 			var g := dark.lerp(lit, t)
 			img.set_pixel(x, y, Color(g.r, g.g, g.b, c.a))
-	return ImageTexture.create_from_image(img)
+	var out := ImageTexture.create_from_image(img)
+	_gilded_cache[ck] = out
+	return out
 
 
 ## 圆章按下态（压暗）/ 禁用态（去色）。
@@ -1017,12 +1046,12 @@ func _nav_button(def: Array, pos: Vector2) -> TextureButton:
 	# 内孔垫深色圆底，图标居中在孔里；文字放在下方的小牌子上，压住下沿金属环但不碰图标
 	btn.add_child(_disc(Vector2(20, 20), 40, HOLE_DARK))
 	btn.add_child(_tex(DIR + "icons/%s_32.png" % def[2], Vector2(24, 20)))
-	var plate := _plate(Vector2(18, 54), Vector2(44, 22))
+	var plate := _plate(Vector2(16, 54), Vector2(48, 22))
 	btn.add_child(plate)
-	var t := _label(display_title, FONT_SERIF, G.FS_XS, CREAM, 3)
+	var t := _label(display_title, FONT_SERIF, 13, CREAM, 3)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	t.position = Vector2(0, -1)
+	t.position = Vector2(0, 0)
 	t.size = plate.size
 	plate.add_child(t)
 	var ndot := _red_dot(Vector2(56, 8))
@@ -1112,7 +1141,7 @@ func _label(text: String, font: Font, size_px: int, color: Color, outline: int) 
 	var l := Label.new()
 	l.text = text
 	l.add_theme_font_override("font", font)
-	l.add_theme_font_size_override("font_size", maxi(size_px, G.FS_XS))
+	l.add_theme_font_size_override("font_size", maxi(size_px, 13))
 	l.add_theme_color_override("font_color", color)
 	if outline > 0:
 		l.add_theme_constant_override("outline_size", outline)

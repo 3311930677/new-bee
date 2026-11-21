@@ -6,6 +6,7 @@ signal action_requested(kind: String, payload: Dictionary)
 
 var _status: Label
 var _tab := "dungeons"
+var _tab_btns: Dictionary = {}
 var _overview: Dictionary = {}
 var _instance: Dictionary = {}
 var _world_boss: Dictionary = {}
@@ -21,7 +22,7 @@ var _busy := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	G.veil(self, 0.94, true)
+	G.veil(self, 0.96, true)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]:
@@ -41,7 +42,7 @@ func _ready() -> void:
 	col.add_child(tabs)
 	for entry in [["dungeons", "集结"], ["instance", "副本"], ["drops", "掉落箱"], ["boss", "首领"]]:
 		var key := String(entry[0])
-		_btn(tabs, String(entry[1]), func() -> void:
+		_tab_btns[key] = _btn(tabs, String(entry[1]), func() -> void:
 			_tab = key
 			_rebuild())
 
@@ -60,6 +61,69 @@ func _ready() -> void:
 	col.add_child(footer)
 	_btn(footer, "刷新状态", func() -> void: action_requested.emit("refresh", {}))
 	_btn(footer, "关闭副本", func() -> void: closed.emit())
+	_refresh_tabs()
+
+
+func _refresh_tabs() -> void:
+	for k in _tab_btns:
+		_set_btn_active(_tab_btns[k] as Control, String(k) == _tab)
+
+
+func _set_btn_active(btn: Control, active: bool) -> void:
+	if not is_instance_valid(btn):
+		return
+	btn.set_meta("primary_action", active)
+	var lbl := btn.get_child(0) as Label
+	if lbl != null:
+		lbl.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Color("d8c8a8"))
+	btn.queue_redraw()
+
+
+func _hp_bar(parent: Control, cur_val: int, max_val: int, fill_col: Color, h := 10) -> void:
+	var bar := ProgressBar.new()
+	bar.custom_minimum_size.y = h
+	bar.max_value = maxi(1, max_val)
+	bar.value = clampi(cur_val, 0, maxi(1, max_val))
+	bar.show_percentage = false
+	var track := StyleBoxFlat.new()
+	track.bg_color = G.BG_DEEP
+	track.border_color = Color("6e5a3a", 0.75)
+	track.set_border_width_all(1)
+	track.set_corner_radius_all(3)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = fill_col
+	fill.set_corner_radius_all(2)
+	bar.add_theme_stylebox_override("background", track)
+	bar.add_theme_stylebox_override("fill", fill)
+	parent.add_child(bar)
+
+
+func _role_name(id: String) -> String:
+	return String({"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星"}.get(id, id))
+
+
+func _status_name(st: String) -> String:
+	return String({"ready": "等待就绪", "active": "进行中", "completed": "已通关", "retreated": "已撤退", "idle": "备战中", "online": "在线", "offline": "离线", "disconnected": "断线护防", "scheduled": "预告中", "defeated": "已讨伐", "closed": "已结束"}.get(st, st))
+
+
+func _map_name(mid: String) -> String:
+	return String({"lorin_wilds": "昭元边城", "maple_road": "枫林古道", "shenyuan_port": "沉渊港"}.get(mid, mid))
+
+
+func _tier_name(t: String) -> String:
+	return String({"none": "未达标", "basic": "基础赏", "bronze": "基础赏", "silver": "精锐赏", "elite": "精锐赏", "gold": "首功赏", "mvp": "首功赏", "full": "全额赏", "assist": "协战赏", "stage": "阶段赏", "defeat": "讨伐赏"}.get(t, t))
+
+
+func _dungeon_name(did: String) -> String:
+	return String({"stele_cavern": "失声碑窟", "tidal_gate": "退潮水闸", "ore_vein": "赤砂矿脉", "abyss_core": "界碑深处"}.get(did, did))
+
+
+func _diff_name(d: String) -> String:
+	return "普通" if d == "standard" else "困难"
+
+
+func _goal_name(g: String) -> String:
+	return "首通" if g == "first_clear" else ("素材" if g == "materials" else "助战")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -139,6 +203,7 @@ func _card(title: String, body_lines: Array[String]) -> VBoxContainer:
 
 
 func _rebuild() -> void:
+	_refresh_tabs()
 	if _list == null:
 		return
 	for child in _list.get_children():
@@ -157,8 +222,8 @@ func _rebuild() -> void:
 func _build_dungeons() -> void:
 	var q: Dictionary = _overview.get("queue", {})
 	if String(q.get("status", "")) == "queued":
-		var q_box := _card("正在寻找队友：%s" % String(q.get("dungeon_id", "")), [
-			"难度：%s  目标：%s" % [String(q.get("difficulty", "")), String(q.get("goal", ""))],
+		var q_box := _card("正在寻找队友：%s" % _dungeon_name(String(q.get("dungeon_id", ""))), [
+			"难度：%s  目标：%s" % [_diff_name(String(q.get("difficulty", ""))), _goal_name(String(q.get("goal", "")))],
 			"已加入公开匹配队列，凑齐2-4名兼容旅人后自动生成副本实例。",
 		])
 		_btn(q_box, "取消匹配", func() -> void: action_requested.emit("queue_leave", {}))
@@ -171,23 +236,23 @@ func _build_dungeons() -> void:
 
 	var opts := _card("入队筛选（无需固定职业，四职皆可）", [
 		"当前筛选：难度=%s  目标=%s  仅好友=%s" % [
-			"普通" if _difficulty == "standard" else "困难",
-			"首通" if _goal == "first_clear" else ("素材" if _goal == "materials" else "助战"),
+			_diff_name(_difficulty),
+			_goal_name(_goal),
 			"是" if _friends_only else "否",
 		],
 	])
 	var r1 := HBoxContainer.new()
 	r1.add_theme_constant_override("separation", 6)
 	opts.add_child(r1)
-	_btn(r1, "普通", func() -> void: _difficulty = "standard"; _rebuild())
-	_btn(r1, "困难", func() -> void: _difficulty = "heroic"; _rebuild())
-	_btn(r1, "仅好友:%s" % ("开" if _friends_only else "关"), func() -> void: _friends_only = not _friends_only; _rebuild())
+	_set_btn_active(_btn(r1, "普通", func() -> void: _difficulty = "standard"; _rebuild()), _difficulty == "standard")
+	_set_btn_active(_btn(r1, "困难", func() -> void: _difficulty = "heroic"; _rebuild()), _difficulty == "heroic")
+	_set_btn_active(_btn(r1, "仅好友:%s" % ("开" if _friends_only else "关"), func() -> void: _friends_only = not _friends_only; _rebuild()), _friends_only)
 	var r2 := HBoxContainer.new()
 	r2.add_theme_constant_override("separation", 6)
 	opts.add_child(r2)
-	_btn(r2, "首通", func() -> void: _goal = "first_clear"; _rebuild())
-	_btn(r2, "素材", func() -> void: _goal = "materials"; _rebuild())
-	_btn(r2, "助战", func() -> void: _goal = "mentor"; _rebuild())
+	_set_btn_active(_btn(r2, "首通", func() -> void: _goal = "first_clear"; _rebuild()), _goal == "first_clear")
+	_set_btn_active(_btn(r2, "素材", func() -> void: _goal = "materials"; _rebuild()), _goal == "materials")
+	_set_btn_active(_btn(r2, "助战", func() -> void: _goal = "mentor"; _rebuild()), _goal == "mentor")
 
 	for dv in _overview.get("dungeons", []):
 		var d := dv as Dictionary
@@ -231,7 +296,7 @@ func _build_instance() -> void:
 	var stage_v: Variant = _instance.get("current_stage", {})
 	var stage: Dictionary = stage_v if stage_v is Dictionary else {}
 	var head_lines: Array[String] = [
-		"状态：%s  房间：%d/%d  检查点：%d  人数：%d" % [st, mini(stage_idx + 1, stage_total), stage_total, cp + 1, int(_instance.get("member_count", 1))],
+		"状态：%s · 关卡 %d/%d · 存档点 %d · 人数 %d" % [_status_name(st), mini(stage_idx + 1, stage_total), stage_total, cp + 1, int(_instance.get("member_count", 1))],
 		"当前阶段：%s · %s" % [String(stage.get("name", "已通关")), String(stage.get("hint", ""))],
 	]
 	var room_state: Dictionary = _instance.get("room_state", {}) if _instance.get("room_state") is Dictionary else {}
@@ -246,31 +311,34 @@ func _build_instance() -> void:
 		_btn(r_row, "确认准备就绪", func() -> void: action_requested.emit("instance_ready", {"instance_id": iid, "ready": true}))
 		_btn(r_row, "取消准备", func() -> void: action_requested.emit("instance_ready", {"instance_id": iid, "ready": false}))
 
-	var members_lines: Array[String] = []
 	var downed_uid := 0
 	var bsnap: Dictionary = _instance.get("battle_snapshot", {}) if _instance.get("battle_snapshot") is Dictionary else {}
 	var coop_m: Dictionary = bsnap.get("coop_members", {}) if bsnap.get("coop_members") is Dictionary else {}
+	var m_card := _card("队员与参与状态", [])
 	for mv in _instance.get("members", []):
 		var m := mv as Dictionary
 		var cid := String(m.get("character_id", ""))
 		var cs: Dictionary = coop_m.get(cid, {}) if coop_m.get(cid) is Dictionary else {}
 		var hp_txt := ""
 		if not cs.is_empty():
-			hp_txt = " HP:%d/%d" % [int(cs.get("hp", 0)), int(cs.get("max_hp", 0))]
+			hp_txt = " · 气血 %d/%d" % [int(cs.get("hp", 0)), int(cs.get("max_hp", 0))]
 			if bool(cs.get("downed", false)):
-				hp_txt += "[倒地可救]"
+				hp_txt += " [倒地可救]"
 				downed_uid = int(cs.get("uid", 0))
-		members_lines.append("%s (%s) Lv.%d%s [%s%s%s]%s" % [
+		var mlbl := G.gold_label("%s（%s）Lv.%d%s [%s%s%s]%s" % [
 			String(m.get("nickname", "")),
-			String(m.get("role_id", "")),
+			_role_name(String(m.get("role_id", ""))),
 			int(m.get("synced_level", 1)),
 			(" 导师同步" if bool(m.get("is_mentor", false)) else ""),
-			String(m.get("status", "")),
-			("·已准备" if bool(m.get("ready", false)) else ""),
-			("·[挂机警示]" if bool(m.get("afk_warn", false)) else ""),
+			_status_name(String(m.get("status", ""))),
+			(" · 已准备" if bool(m.get("ready", false)) else ""),
+			(" · 挂机警示" if bool(m.get("afk_warn", false)) else ""),
 			hp_txt,
-		])
-	_card("队员与参与状态", members_lines)
+		], G.FS_SM, false, G.GOLD_BRIGHT if cid == _self_char_id else G.PARCHMENT)
+		mlbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		m_card.add_child(mlbl)
+		if not cs.is_empty():
+			_hp_bar(m_card, int(cs.get("hp", 0)), int(cs.get("max_hp", 1)), Color("3fa876"), 8)
 
 	if st == "active":
 		var skind := String(stage.get("kind", ""))
@@ -297,15 +365,17 @@ func _build_instance() -> void:
 		elif skind in ["battle", "boss"]:
 			var bstatus := String(_instance.get("battle_status", "idle"))
 			if bstatus != "active":
-				var sbox := _card("阶段战斗准备", ["当前阶段为 %s，确认队友在线后开启权威多人战。" % String(stage.get("name", ""))])
+				var sbox := _card("阶段战斗准备", ["当前阶段为 %s，确认队友在线后开启多人协同战斗。" % String(stage.get("name", ""))])
 				_btn(sbox, "开启权威多人战斗", func() -> void: action_requested.emit("battle_start", {"instance_id": iid}))
 			else:
-				var enemy_lines: Array[String] = ["Tick: %d  状态: %s" % [int(_instance.get("battle_tick", 0)), bstatus]]
+				var bbox := _card("多人战况 · 用时 %.1f 秒 · %s" % [float(_instance.get("battle_tick", 0)) / 30.0, _status_name(bstatus)], [])
 				for uv in bsnap.get("units", []):
 					var u := uv as Dictionary
 					if String(u.get("side", "")) == "enemy":
-						enemy_lines.append("%s HP:%d/%d %s" % [String(u.get("name", "")), int(u.get("hp", 0)), int(u.get("max_hp", 0)), ("已击败" if not bool(u.get("alive", true)) else "")])
-				var bbox := _card("多人权威战况", enemy_lines)
+						var elbl := G.gold_label("%s · 气血 %d/%d %s" % [String(u.get("name", "")), int(u.get("hp", 0)), int(u.get("max_hp", 0)), ("（已击败）" if not bool(u.get("alive", true)) else "")], G.FS_SM, false, Color("f0b4a8"))
+						elbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+						bbox.add_child(elbl)
+						_hp_bar(bbox, int(u.get("hp", 0)), int(u.get("max_hp", 1)), Color("cc4438"), 12)
 				var cmd1 := HBoxContainer.new()
 				cmd1.add_theme_constant_override("separation", 6)
 				bbox.add_child(cmd1)
@@ -361,14 +431,15 @@ func _build_world_boss() -> void:
 		var objs: Array = boss.get("objectives", ["inspect_trail", "disrupt_howl"])
 		var p: Dictionary = boss.get("participation", {}) if boss.get("participation") is Dictionary else {}
 		var lines: Array[String] = [
-			"地点：%s  状态：%s  阶段：%d" % [map_id, String(boss.get("state", "")), int(boss.get("stage", 0))],
+			"地点：%s · 状态：%s · 第 %d 阶段" % [_map_name(map_id), _status_name(String(boss.get("state", ""))), int(boss.get("stage", 0))],
 			"首领生命：%d / %d" % [int(boss.get("current_hp", 0)), int(boss.get("max_hp", 0))],
-			"个人记录：阶段任务=%d  输出=%d  奖档=%s" % [int(p.get("objective_steps", 0)), int(p.get("damage_dealt", 0)), String(p.get("reward_tier", "none"))],
+			"个人战绩：阶段目标 %d · 累计伤害 %d · 奖档：%s" % [int(p.get("objective_steps", 0)), int(p.get("damage_dealt", 0)), _tier_name(String(p.get("reward_tier", "none")))],
 			"每账号每次公共首领窗口仅领一次主奖励；迟到仍可做阶段目标领取基础材料。",
 		]
 		var box := _card(String(boss.get("name", "公共首领")), lines)
+		_hp_bar(box, int(boss.get("current_hp", 0)), int(boss.get("max_hp", 1)), Color("cc4438"), 14)
 		if eid.is_empty():
-			_btn(box, "切至 %s 激活事件" % map_id, func() -> void: action_requested.emit("wb_select_map", {"map_id": map_id}))
+			_btn(box, "切至 %s 激活事件" % _map_name(map_id), func() -> void: action_requested.emit("wb_select_map", {"map_id": map_id}))
 			continue
 		var obj1 := String(objs[0]) if objs.size() > 0 else "inspect_trail"
 		var obj2 := String(objs[1]) if objs.size() > 1 else obj1
@@ -380,5 +451,6 @@ func _build_world_boss() -> void:
 		var row2 := HBoxContainer.new()
 		row2.add_theme_constant_override("separation", 6)
 		box.add_child(row2)
-		_btn(row2, "协同讨伐(权威)", func() -> void: action_requested.emit("wb_engage", {"event_id": eid}))
+		var engage_btn := _btn(row2, "协同讨伐(权威)", func() -> void: action_requested.emit("wb_engage", {"event_id": eid}))
+		_set_btn_active(engage_btn, true)
 		_btn(row2, "领取首领赏赐", func() -> void: action_requested.emit("wb_claim", {"event_id": eid}))

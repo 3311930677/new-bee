@@ -70,11 +70,14 @@ class Prop extends Node2D:
 	var display_size := Vector2(64,64)
 	var canopy := false
 	var opacity := 1.0
+	var _hero_ref: Node2D = null
+	func _ready() -> void:
+		set_process(canopy)
 	func _process(delta: float) -> void:
-		if not canopy: return
-		var hero := get_tree().get_first_node_in_group("reference_hero") as Node2D
+		if not is_instance_valid(_hero_ref):
+			_hero_ref = get_tree().get_first_node_in_group("reference_hero") as Node2D
 		var rect := Rect2(global_position-Vector2(display_size.x*0.5,display_size.y),display_size)
-		var behind := hero != null and rect.grow(-8).has_point(hero.global_position)
+		var behind := _hero_ref != null and rect.grow(-8).has_point(_hero_ref.global_position)
 		var target := 0.4 if behind else 1.0
 		var next := move_toward(opacity,target,delta*3.0)
 		if not is_equal_approx(next,opacity):

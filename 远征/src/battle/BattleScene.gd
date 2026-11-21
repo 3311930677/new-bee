@@ -159,6 +159,11 @@ const BATTLE_ROWS := [  # [动画名, 行号, 是否循环, 帧率]
 	["hit", 3, false, 10.0], ["death", 4, false, 6.0],
 ]
 static var _battle_frames_cache := {}
+static var _settle_font_cache := {}
+
+static func clear_static_caches() -> void:
+	_battle_frames_cache.clear()
+	_settle_font_cache.clear()
 
 ## 按职业构建战斗五态帧；无素材返回 null（调用方回退行走帧）
 static func battle_frames(role_id: String) -> SpriteFrames:
@@ -167,13 +172,14 @@ static func battle_frames(role_id: String) -> SpriteFrames:
 	var path: String = ROLE_BATTLE_SHEET.get(role_id, "")
 	var tex: Texture2D = null
 	if path != "":
-		var abs_path := ProjectSettings.globalize_path(path)
-		if FileAccess.file_exists(abs_path):
-			var img := Image.load_from_file(abs_path)
-			if img != null and not img.is_empty():
-				tex = ImageTexture.create_from_image(img)
+		if ResourceLoader.exists(path):
+			tex = load(path) as Texture2D
 		if tex == null:
-			tex = load(path)
+			var abs_path := ProjectSettings.globalize_path(path)
+			if FileAccess.file_exists(abs_path):
+				var img := Image.load_from_file(abs_path)
+				if img != null and not img.is_empty():
+					tex = ImageTexture.create_from_image(img)
 	var frames: SpriteFrames = null
 	if tex != null:
 		frames = SpriteFrames.new()
@@ -235,6 +241,10 @@ var sim := BattleSim.new()
 ## 直接写 speed，若 _build_hud 再赋一次默认值就会把人家设的档吃掉——曾经因此让
 ## 「12 倍速跑完一场」变成 1 倍速，用例等到超时也等不到结算。
 var speed := -1.0
+## 手动普攻基准值（由开局 cfg 决定）。高速档临时放开后靠它恢复，避免单向锁死。
+var _manual_basic_base := true
+## 上一条由玩家下达的指令；常驻显示，不依赖时间窗口。
+var _order_text := ""
 
 var _acc := 0.0
 var _views: Dictionary = {}          # uid -> UnitView
@@ -310,8 +320,9 @@ func _ready() -> void:
 	if seed_v == 0:
 		seed_v = randi()
 	sim.setup(seed_v, _cfg.get("ally", {}), _cfg.get("enemy", {}))
-	# 普攻持续进行；玩家手动保留技能、集火、药剂和换宠的时机选择。
-	sim.manual_basic_attack = false
+	# 手动模式下主角普攻与技能均由玩家触发；开启「自动」后才自动普攻与施放技能。
+	_manual_basic_base = not bool(_cfg.get("headless_auto_basic", false))
+	sim.manual_basic_attack = _manual_basic_base
 	var init_role := sim.role_unit()
 	if init_role != null:
 		init_role.attack_timer = init_role.basic_threshold()
@@ -413,9 +424,9 @@ func _build_classic_region_floor() -> void:
 		scenery.name = "ClassicRegionFloor"
 		scenery.texture = backdrop
 		scenery.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		scenery.stretch_mode = TextureRect.STRETCH_SCALE
-		scenery.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-		# 保留完整 skyline；战斗区噪点已在 art_v2 素材中按纵向分区收敛。
+		scenery.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		scenery.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		# 保留完整 skyline；战斗区保留高精像素与手绘笔触。
 		scenery.position = Vector2.ZERO
 		scenery.size = Vector2(VIEW_W,maxf(VIEW_H,get_viewport_rect().size.y))
 		scenery.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1092,7 +1103,7 @@ func _select_enemy_target(uid: int, from_field := false) -> void:
 	if sim.set_role_focus_target(target.uid):
 		_sync_views()
 		_refresh_hud()
-	if from_field and already_focused and is_processing() and speed > 0.0:
+	if (from_field or already_focused) and (not sim.auto_mode or already_focused) and is_processing() and speed > 0.0:
 		_command_attack()
 
 
@@ -1117,6 +1128,11 @@ func _command_switch_target() -> void:
 	_close_page()
 
 
+## 记录玩家最近一次下达的指令；模式条常驻显示「上令」，让指挥感一直可见。
+func flash_order(text: String) -> void:
+	_order_text = text
+
+
 func _command_attack() -> void:
 	if sim.finished:
 		_close_page()
@@ -1134,9 +1150,16 @@ func _command_attack() -> void:
 	if target == null:
 		target = enemies[0]
 	sim.set_role_focus_target(target.uid)
-	if sim.manual_basic_attack and is_processing() and speed > 0.0:
-		sim.trigger_manual_attack()
-		_consume_events()
+	# 手动 = 一次点击一刀：只在战斗推进中、且普攻真正就绪时出手。
+	# 旧逻辑会把 attack_timer 拉满抢跑，或在冷却中预输入后于冷却结束时自动补一刀，
+	# 玩家体感就是「切了手动还在自动攻击」。现在冷却中点按只由按钮变灰与「蓄势中」表达，
+	# 不再排队、不再弹提示；托管时此按钮只负责集火。
+	# 用 cur_speed() 而非原始 speed：speed=-1 代表「用设置默认档」，不该被当成暂停。
+	var role := sim.role_unit()
+	if not sim.auto_mode and is_processing() and cur_speed() > 0.0:
+		if role != null and role.alive and role.can_act() and sim.role_attack_ready():
+			sim.trigger_manual_attack()
+			_consume_events()
 	_sync_views()
 	_refresh_hud()
 	_close_page()
@@ -1377,15 +1400,24 @@ func _process(delta: float) -> void:
 			_refresh_omens()   # 收招后预兆环必须消失，别留在结算画面上
 			_show_result()
 		return
-	if speed > 4.0:
-		sim.manual_basic_attack = false
-	_acc += delta * cur_speed() * time_scale
-	while _acc >= TICK_SEC:
-		_acc -= TICK_SEC
-		sim.step()
-		_consume_events()
-		if sim.finished:
-			break
+	# 只有回归/观战用的 >8 倍速才临时放开主角自动普攻；回到常规倍速立即恢复手动。
+	# 旧写法是单向写入（一旦置 false 永不恢复），且判断用原始 speed 而非 cur_speed()。
+	sim.manual_basic_attack = _manual_basic_base and cur_speed() <= 8.0
+	# 手动模式的战术暂停：打开技能/道具页时世界停下来等玩家下指令，这是「手动」最强的信号。
+	# 只停 sim 步进，tick 总数与伤害/AI/能量规则一行未改；动画与 HUD 照常刷新。
+	# 自动模式永不暂停；设置里可用 battle_tactical_pause=false 关掉。
+	var tactical_pause: bool = not sim.auto_mode and _command_page != "root" \
+		and bool(G.setting_get("battle_tactical_pause", true))
+	if tactical_pause:
+		_acc = 0.0
+	else:
+		_acc += delta * cur_speed() * time_scale
+		while _acc >= TICK_SEC:
+			_acc -= TICK_SEC
+			sim.step()
+			_consume_events()
+			if sim.finished:
+				break
 	_sync_views()
 	_refresh_omens()
 	_refresh_hud()
@@ -1402,7 +1434,13 @@ func _on_event(e: Dictionary) -> void:
 	if _chest!=null and String(e.get("t","")) in ["basic","cast_start"]:
 		_chest._acting_uid=int(e.get("src",e.get("uid",-1)))
 		_chest._acting_until=Time.get_ticks_msec()+800
-		if int(e.get("src",-1))==sim.role_uid:_chest._auto_focus_uid=int(e.get("uid",-1))
+		if int(e.get("src",-1))==sim.role_uid:
+			_chest._auto_focus_uid=int(e.get("uid",-1))
+			# 挂在内核事件上：无论攻击从按钮、点敌人卡片还是别的入口触发，都能拿到回执。
+			# 托管模式不算玩家下达指令，不打扰托管条。
+			if not sim.auto_mode:
+				if String(e.t)=="basic": flash_order("普攻")
+				elif String(e.t)=="cast_start": flash_order(String(e.get("name","技能")))
 	var t := String(e.t)
 	var src: UnitView = _views.get(int(e.get("src", -1)))
 	var dst: UnitView = _views.get(int(e.get("uid", -1)))
@@ -1964,10 +2002,15 @@ func _on_speed(e: InputEvent) -> void:
 
 func _on_auto(e: InputEvent) -> void:
 	if _chest!=null:
-		if e is InputEventMouseButton and e.pressed:sim.auto_mode=not sim.auto_mode;_chest.refresh()
+		if e is InputEventMouseButton and e.pressed:
+			sim.auto_mode=not sim.auto_mode
+			if not sim.auto_mode: sim.manual_attack_queued = false
+			_chest.refresh()
 		return
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		sim.auto_mode = not sim.auto_mode
+		if not sim.auto_mode:
+			sim.manual_attack_queued = false
 		_chip_set_active(_auto_btn, sim.auto_mode)
 
 
@@ -2333,9 +2376,13 @@ static func _settle_sb_tex(path: String, l: float, t: float, r: float, b: float)
 static func _settle_font_spaced(base_font: Font, glyph_space: int) -> Font:
 	if base_font == null or glyph_space == 0:
 		return base_font
+	var key := "%d:%d" % [base_font.get_instance_id(), glyph_space]
+	if _settle_font_cache.has(key):
+		return _settle_font_cache[key]
 	var fv := FontVariation.new()
 	fv.base_font = base_font
 	fv.spacing_glyph = glyph_space
+	_settle_font_cache[key] = fv
 	return fv
 
 

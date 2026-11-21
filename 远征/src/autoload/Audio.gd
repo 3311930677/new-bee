@@ -52,6 +52,21 @@ func _ready() -> void:
 	add_child(_ambient)
 	_apply_vol()
 
+
+func _exit_tree() -> void:
+	_cancel_fade()
+	if _bgm != null:
+		_bgm.stop()
+		_bgm.stream = null
+	if _ambient != null:
+		_ambient.stop()
+		_ambient.stream = null
+	for voice in _sfx_pool:
+		if voice != null:
+			voice.stop()
+			voice.stream = null
+	_cache.clear()
+
 func _cancel_fade() -> void:
 	_generation += 1
 	if _fade != null and _fade.is_valid(): _fade.kill()

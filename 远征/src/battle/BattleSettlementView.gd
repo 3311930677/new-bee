@@ -30,11 +30,11 @@ func _ready() -> void:
 	_column.add_child(_scroll)
 	var body := VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_theme_constant_override("separation", 14)
+	body.add_theme_constant_override("separation", 10)
 	_scroll.add_child(body)
 	# 1. 顶部仪式区（E-03/E-04 头饰 + G-01 光芒 + 书法牌匾 + E-11 宝箱）
 	var ceremony := Control.new()
-	ceremony.custom_minimum_size = Vector2(0, 128)
+	ceremony.custom_minimum_size = Vector2(0, 112)
 	ceremony.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ceremony.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	body.add_child(ceremony)
@@ -64,13 +64,11 @@ func _ready() -> void:
 	ceremony.add_child(banner)
 	var stamp := Reading.label("★ ★ ★\n胜利" if win else "败退", G.FS_BIG, Color("fff3c4") if win else Color("b4c2d0"))
 	if G.font_art != null:
-		var fv := FontVariation.new()
-		fv.base_font = G.font_art
-		fv.spacing_glyph = 10
-		stamp.add_theme_font_override("font", fv)
+		stamp.add_theme_font_override("font", G.spaced_art_font(6))
 	stamp.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	stamp.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	stamp.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	stamp.offset_left = -6
 	ceremony.add_child(stamp)
 	var chest_tex: Texture2D = KitV4.commercial_tex("chest_open" if win else "chest_closed")
 	if chest_tex != null:
@@ -136,15 +134,15 @@ func _ready() -> void:
 			body.add_child(adv)
 			adv.add_child(Reading.label(words, G.FS_MD, Reading.TEXT))
 	# 3. 角色状态与四维战功录
-	body.add_child(Reading.label("%s  ·  Lv.%d    剩余生命 %d / %d  ·  协战伙伴：%s" % [
+	body.add_child(Reading.label("%s · Lv.%d    剩余生命 %d / %d\n协战伙伴：%s" % [
 		report.get("role_name", "旅人"), int(report.get("level", 1)),
 		int(report.get("hp_left", 0)), int(report.get("hp_max", 1)), report.get("pet_name", "无")
-	], G.FS_MD, Reading.TEXT))
+	], G.FS_SM, Reading.TEXT))
 	_section(body, "四维战功录")
 	var stats := GridContainer.new()
 	stats.columns = 2
 	stats.add_theme_constant_override("h_separation", 10)
-	stats.add_theme_constant_override("v_separation", 10)
+	stats.add_theme_constant_override("v_separation", 8)
 	body.add_child(stats)
 	for pair in [["战斗用时", "%.1f 秒" % float(report.get("seconds", 0))], ["最高单击", str(report.get("best_hit", 0))], ["我方输出", str(report.get("damage_out", 0))], ["承受伤害", str(report.get("damage_in", 0))]]:
 		var card := Reading.frame(false)
@@ -154,6 +152,9 @@ func _ready() -> void:
 		card.add_child(rows)
 		rows.add_child(Reading.label(pair[0], G.FS_SM, Color("c7b69a")))
 		rows.add_child(Reading.label(pair[1], G.FS_LG, Color("ffe298")))
+	var tail_pad := Control.new()
+	tail_pad.custom_minimum_size = Vector2(0, 8)
+	body.add_child(tail_pad)
 	_confirm = Reading.button(String(report.get("action", "继续征途")), true)
 	_confirm.name = "ConfirmSettlement"
 	_confirm.custom_minimum_size.y = 60

@@ -256,12 +256,14 @@ func _save_name() -> void:
 		_name_hint.text = "昵称不能为空"
 		_name_hint.add_theme_color_override("font_color", Color("a04a3a"))
 		Audio.sfx("ui_locked")
+		if _chest != null and _chest.has_method("sync_name_hint"): _chest.sync_name_hint()
 		return
 	G.player_name = nm
 	G.save_game()
 	Audio.sfx("ui_confirm")
 	_name_hint.text = "已保存：%s" % nm
 	_name_hint.add_theme_color_override("font_color", Color("4a7a44"))
+	if _chest != null and _chest.has_method("sync_name_hint"): _chest.sync_name_hint()
 
 
 func _open_avatar() -> void:

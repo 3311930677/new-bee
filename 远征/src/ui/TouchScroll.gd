@@ -18,7 +18,7 @@ func _ready() -> void:
 	get_v_scroll_bar().custom_minimum_size.x = 5
 
 func gesture_active() -> bool:
-	return _pointer != -2 or _dragging or Time.get_ticks_msec() < _recent_until
+	return _dragging or Time.get_ticks_msec() < _recent_until
 
 func _input(event: InputEvent) -> void:
 	if not is_visible_in_tree():return

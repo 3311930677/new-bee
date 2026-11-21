@@ -260,6 +260,9 @@ func _enhance(state:Dictionary,worn:bool) -> void:
 	sockets.add_child(UI.label("宝石孔位","caption",UI.AGED))
 	for i in G.equip_gem_sockets():sockets.add_child(host._socket_box(int(state.get("uid",0)),state.get("gems",[]),i))
 	_body.add_child(Page.line("词条："+" · ".join((state.get("affixes",[]) as Array).map(func(a):return Page.affix_label(a))) if not (state.get("affixes",[]) as Array).is_empty() else "词条尚未精炼 · 切换精炼页签整备","caption",UI.AGED))
+	var enh_pad := Control.new()
+	enh_pad.custom_minimum_size = Vector2(0, 12)
+	_body.add_child(enh_pad)
 
 func _gems(state: Dictionary, worn: bool) -> void:
 	var row := HBoxContainer.new()

@@ -88,11 +88,11 @@ func _ready() -> void:
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	bottom.offset_left = 16
 	bottom.offset_right = -16
-	bottom.offset_top = -236
-	bottom.offset_bottom = -16
+	bottom.offset_top = -212
+	bottom.offset_bottom = -14
 	bottom.add_theme_constant_override("separation", 6)
 	_hud.add_child(bottom)
-	_challenge_button = _button(bottom, "城南试炼 · 靠近野狼后挑战", _perform_journey_action)
+	_challenge_button = _button(bottom, "城南试炼 · 靠近野狼后挑战", _perform_journey_action, true)
 	var arrows := HBoxContainer.new()
 	arrows.add_theme_constant_override("separation", 8)
 	bottom.add_child(arrows)
@@ -130,9 +130,10 @@ func _ready() -> void:
 		call_deferred("enter_world")
 
 
-func _button(parent: Control, words: String, action: Callable) -> Control:
-	var button := G.ghost_button(words, 0, 50, G.FS_MD)
-	button.custom_minimum_size.y = 50
+func _button(parent: Control, words: String, action: Callable, primary := false) -> Control:
+	var h := 48 if primary else 44
+	var button := G.gold_button(words, 0, h, G.FS_MD) if primary else G.ghost_button(words, 0, h, G.FS_SM)
+	button.custom_minimum_size.y = h
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.gui_input.connect(func(event: InputEvent) -> void:
 		if G.ui_blocked:
@@ -224,15 +225,40 @@ func _render_map(map_id: String) -> void:
 	_marker_key = ""
 	var cfg := TableCache.main_world_map(map_id)
 	if _floor != null and not cfg.is_empty():
-		_floor.texture = load(String(cfg.get("background", ""))) as Texture2D
+		var floor_tex: Texture2D = Art.texture(map_id + "_floor") if Art.active(map_id) else null
+		if floor_tex == null:
+			floor_tex = load(String(cfg.get("background", ""))) as Texture2D
+		_floor.texture = floor_tex
 		if _floor.texture != null:
 			_floor.scale = Vector2(float(cfg.get("map_cols", 25)) * 48, float(cfg.get("map_rows", 44)) * 48) / _floor.texture.get_size()
+	if _camera != null and not cfg.is_empty():
+		_camera.limit_left = 0
+		_camera.limit_top = 0
+		_camera.limit_right = int(float(cfg.get("map_cols", 25)) * 48.0)
+		_camera.limit_bottom = int(float(cfg.get("map_rows", 44)) * 48.0)
 	var before_count := _world.get_child_count()
-	for id in cfg.get("city_building_positions", {}):
-		var at: Array = cfg.city_building_positions[id]
+	var city_buildings: Dictionary = cfg.get("city_building_positions", {})
+	for id in city_buildings:
+		var at: Array = city_buildings[id]
 		Art.add_prop(_world, "ledger" if id == "gate" else String(id), Vector2(at[0], at[1]), "props" if id == "gate" else "buildings")
+	if Art.active(map_id) and city_buildings.is_empty():
+		for row_v in cfg.get("reference_scenery", []):
+			if row_v is Dictionary:
+				var row := row_v as Dictionary
+				var at: Array = row.get("at", [])
+				if at.size() == 2:
+					Art.add_prop(_world, String(row.get("id", "")), Vector2(float(at[0]), float(at[1])), String(row.get("group", "foliage")), false)
 	for idx in range(before_count, _world.get_child_count()):
 		_map_props.append(_world.get_child(idx))
+
+
+func _attach_marker_tag(parent: Node2D, at: Vector2, extent: Vector2, text: String, ink: Color) -> void:
+	var tag := Field.surface(at, extent)
+	var lbl := Field.label(text, Vector2.ZERO, extent, G.FS_SM, ink, true)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	tag.add_child(lbl)
+	parent.add_child(tag)
 
 
 func _sync_world_markers() -> void:
@@ -240,7 +266,7 @@ func _sync_world_markers() -> void:
 	if not _world.has_node("TrainingWolf") and has_wolf:
 		var enc_id := "training_wolf" if _encounters.has("training_wolf") else "maple_wolf"
 		var enc: Dictionary = _encounters[enc_id]
-		var target := Node2D.new()
+		var target := _GroundMarker.new()
 		target.name = "TrainingWolf"
 		var at: Array = enc.position
 		target.position = Vector2(at[0], at[1])
@@ -251,10 +277,7 @@ func _sync_world_markers() -> void:
 		picture.position.y = -36
 		picture.scale = Vector2.ONE * 0.75
 		target.add_child(picture)
-		var caption := G.gold_label("城南试炼 · 野狼" if enc_id == "training_wolf" else "古道野狼", G.FS_SM)
-		caption.position = Vector2(-90, -112)
-		caption.size = Vector2(180, 30)
-		target.add_child(caption)
+		_attach_marker_tag(target, Vector2(-78, -94), Vector2(156, 26), "城南试炼 · 野狼" if enc_id == "training_wolf" else "古道野狼", G.GOLD_BRIGHT)
 	for npc_value in _npcs:
 		if not npc_value is Dictionary:
 			continue
@@ -271,9 +294,7 @@ func _sync_world_markers() -> void:
 		marker.position = Vector2(float(at[0]), float(at[1]))
 		_world.add_child(marker)
 		_map_props.append(marker)
-		var tag := Field.surface(Vector2(-72, -62), Vector2(144, 30))
-		tag.add_child(Field.label("◇ " + String(npc.get("name", "旅人")), Vector2.ZERO, Vector2(144, 30), G.FS_SM, G.PARCHMENT, true))
-		marker.add_child(tag)
+		_attach_marker_tag(marker, Vector2(-72, -62), Vector2(144, 30), "◇ " + String(npc.get("name", "旅人")), G.PARCHMENT)
 	for portal_value in _portals:
 		if not portal_value is Dictionary:
 			continue
@@ -290,9 +311,7 @@ func _sync_world_markers() -> void:
 		pnode.position = Vector2(float(at[0]), float(at[1]))
 		_world.add_child(pnode)
 		_map_props.append(pnode)
-		var tag := Field.surface(Vector2(-92, -46), Vector2(184, 32))
-		tag.add_child(Field.label("◈ " + String(portal.get("label", "传送门")), Vector2.ZERO, Vector2(184, 32), G.FS_SM, G.GOLD_BRIGHT, true))
-		pnode.add_child(tag)
+		_attach_marker_tag(pnode, Vector2(-92, -46), Vector2(184, 32), "◈ " + String(portal.get("label", "传送门")), G.GOLD_BRIGHT)
 
 
 func _update_field_prompt() -> void:
@@ -643,13 +662,15 @@ func send_action(action: Dictionary, request_id := "") -> Dictionary:
 	if _busy or battle.is_empty():
 		return {"ok": false, "code": "busy"}
 	_busy = true
-	_battle_page.set_busy(true)
+	if is_instance_valid(_battle_page):
+		_battle_page.set_busy(true)
 	var result: Dictionary = await Online.battle_command(String(battle.id), action, request_id)
 	if bool(result.get("ok", false)):
 		_present_battle(result.data.get("battle"))
 	_show_error(result)
 	_busy = false
-	_battle_page.set_busy(false)
+	if is_instance_valid(_battle_page):
+		_battle_page.set_busy(false)
 	return result
 
 
@@ -730,7 +751,7 @@ func _process(delta: float) -> void:
 		else:
 			refresh_world()
 		return
-	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and not is_instance_valid(_channels_panel) and not is_instance_valid(_social_panel) and not is_instance_valid(_coop_panel) and _move_elapsed >= 0.15:
+	if battle.is_empty() and not is_instance_valid(_profiles) and not is_instance_valid(_journey_panel) and not is_instance_valid(_channels_panel) and not is_instance_valid(_social_panel) and not is_instance_valid(_coop_panel) and not is_instance_valid(_market_panel) and not is_instance_valid(_guild_panel) and not is_instance_valid(_pvp_panel) and _move_elapsed >= 0.15:
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		if direction.is_zero_approx():
 			direction = _held
@@ -1368,6 +1389,13 @@ func _close_profiles() -> void:
 	_profiles = null
 
 
+class _GroundMarker extends Node2D:
+	func _draw() -> void:
+		draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.3))
+		draw_circle(Vector2.ZERO, 26, Color(G.BG_DEEP, 0.34))
+		draw_set_transform(Vector2.ZERO)
+
+
 class Traveller extends Node2D:
 	var identity: Dictionary = {}
 	var _texture: Texture2D
@@ -1383,12 +1411,27 @@ class Traveller extends Node2D:
 		region.atlas = source
 		region.region = Rect2(0, 0, source.get_width() / 4.0, source.get_height())
 		_texture = region
-		var caption := G.gold_label(String(identity.get("nickname", "旅人")), G.FS_SM, true, G.GOLD_BRIGHT if String(identity.get("id", "")) == String(Online.selected_character.get("id", "")) else G.PARCHMENT)
-		caption.add_theme_color_override("font_outline_color", G.BG_DEEP)
-		caption.add_theme_constant_override("outline_size", 5)
-		caption.position = Vector2(-110, -122)
-		caption.size = Vector2(220, 28)
-		add_child(caption)
+		var is_self := String(identity.get("id", "")) == String(Online.selected_character.get("id", ""))
+		var pill := PanelContainer.new()
+		pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("14100d", 0.86)
+		sb.border_color = G.GOLD_BRIGHT if is_self else Color("b8924d", 0.85)
+		sb.set_border_width_all(1)
+		sb.set_corner_radius_all(4)
+		sb.content_margin_left = 8
+		sb.content_margin_top = 2
+		sb.content_margin_right = 8
+		sb.content_margin_bottom = 2
+		pill.add_theme_stylebox_override("panel", sb)
+		var caption := G.gold_label(String(identity.get("nickname", "旅人")), G.FS_SM, true, G.GOLD_BRIGHT if is_self else G.PARCHMENT, false)
+		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		pill.add_child(caption)
+		add_child(pill)
+		var min_sz := pill.get_combined_minimum_size()
+		pill.size = min_sz
+		pill.position = Vector2(-min_sz.x * 0.5, -126)
+		pill.resized.connect(func() -> void: pill.position.x = -pill.size.x * 0.5)
 	func update_position(at: Vector2, interpolate: bool) -> void:
 		if not interpolate:
 			position = at

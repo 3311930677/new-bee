@@ -13,9 +13,9 @@ const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
 const SunnyArt:=preload("res://src/world/SunnyTravelArt.gd")
 const HudStyle := preload("res://src/ui/WorldHUD.gd")
 const TILE := 48.0
-const NPC_R := 52.0        # 人物交互半径
-const BUILD_R := 26.0      # 建筑轮廓外扩的交互边距
-const REARM_R := 90.0      # 走出这么远才允许再次触发
+const NPC_R := 56.0        # 人物交互半径
+const BUILD_R := 36.0      # 建筑轮廓外扩的交互边距
+const REARM_R := 68.0      # 走出这么远才允许再次触发
 
 const Journal := preload("res://src/ui/JournalUI.gd")
 const KitV4 := preload("res://src/ui/KitV4.gd")
@@ -551,7 +551,7 @@ func _check_interact() -> void:
 			b.cooled = false
 	for n in _npcs:
 		var nd: float = n.position.distance_to(_player.position)
-		var trig_r := 24.0 if (n.guest and _embedded_map != null) else NPC_R
+		var trig_r := 44.0 if (n.guest and _embedded_map != null) else NPC_R
 		if not n.cooled and nd < trig_r and nd < best_d:
 			best = n
 			best_d = nd
@@ -595,9 +595,11 @@ func _panel_base(title: String, w: float, h: float) -> Control:
 	G.veil(layer, 0.72, true)
 	var visible_h := maxf(VIEW_H, get_viewport_rect().size.y)
 	var banner := G.banner_box(title, 260, 48)
-	banner.position = Vector2((VIEW_W - 260.0) * 0.5, (visible_h - h) * 0.5 - 58.0)
+	banner.name = "PanelBanner"
+	banner.position = Vector2((VIEW_W - banner.size.x) * 0.5, (visible_h - h) * 0.5 - 58.0)
 	layer.add_child(banner)
 	var panel := G.parchment_box(w, h, 16.0)
+	panel.name = "PanelBox"
 	panel.position = Vector2((VIEW_W - w) * 0.5, (visible_h - h) * 0.5)
 	layer.add_child(panel)
 	var content := Control.new()
@@ -619,6 +621,19 @@ func _close_panel() -> void:
 
 
 func _panel_back(content: Control, y: float, w := 120.0) -> void:
+	var panel := content.get_parent() as Control
+	if panel != null:
+		var min_panel_h := y + 38.0 + 30.0
+		if min_panel_h > panel.custom_minimum_size.y:
+			var visible_h := maxf(VIEW_H, get_viewport_rect().size.y)
+			panel.custom_minimum_size.y = min_panel_h
+			panel.size.y = min_panel_h
+			panel.position.y = (visible_h - min_panel_h) * 0.5
+			var layer := panel.get_parent()
+			if layer != null:
+				var banner := layer.get_node_or_null("PanelBanner") as Control
+				if banner != null:
+					banner.position.y = panel.position.y - 58.0
 	var back := G.ghost_button("返回", w, 38)
 	back.position = Vector2(((content.get_parent() as Control).custom_minimum_size.x - 32.0 - w) * 0.5, y)
 	back.gui_input.connect(func(e: InputEvent):
@@ -1161,7 +1176,9 @@ func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
 			at.region = Rect2(16, 4, 96, 96)
 			return at
 		return null
-	var tex := G.res_tex("%s_portrait" % npc_id)
+	# Dedicated portraits are optional; port residents have an idle-strip fallback.
+	var portrait_id := "%s_portrait" % npc_id
+	var tex: Texture2D = G.res_tex(portrait_id) if not G.res_path(portrait_id).is_empty() else null
 	if tex == null and NPC_PORTRAIT_ALIAS.has(npc_id):
 		tex = G.res_tex(NPC_PORTRAIT_ALIAS[npc_id])
 	if tex == null and (npc_id.begins_with("npc_port_") or npc_id == "npc_harbormaster"):
@@ -1583,30 +1600,34 @@ func _campaign_response(id: String) -> String:
 
 
 func _open_campaign_response(id: String) -> void:
-	var content := _panel_base("归路仍在 · " + ("封渊留路" if String(G.prog.flags.get("act4_ending","")) == "seal" else "留声守望"),432,300)
+	var content := _panel_base("归路仍在 · " + ("封渊留路" if String(G.prog.flags.get("act4_ending","")) == "seal" else "留声守望"),432,340)
 	var intro := G.text_label(_campaign_response(id),G.FS_SM,Color("4b351e"))
-	intro.position = Vector2(8,12)
+	intro.position = Vector2(8,10)
 	intro.custom_minimum_size = Vector2(384,112)
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(intro)
 	var note := G.text_label("三城与归路碑仍可往返。渊口外环北侧出现了无名巡界者，可自由撤退。",G.FS_SM,Color("3d5360"))
-	note.position = Vector2(8,132)
-	note.custom_minimum_size = Vector2(384,65)
+	note.position = Vector2(8,128)
+	note.custom_minimum_size = Vector2(384,64)
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(note)
 	if id in ["npc_harbormaster","npc_frost_envoy"]:
-		_return_job_button(content,"沿路托付",Vector2(8,197),176,func():
-			_close_panel()
-			_open_npc_jobs(G.city_npc(id)))
+		var jobs_btn := G.gold_button("沿路托付",176,44,G.FS_SM)
+		jobs_btn.position = Vector2(8 if id == "npc_harbormaster" else 112, 198)
+		jobs_btn.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_npc_jobs(G.city_npc(id)))
+		content.add_child(jobs_btn)
 	if id == "npc_harbormaster":
 		var services := G.gold_button("港务事务",176,44,G.FS_SM)
-		services.position = Vector2(208,197)
+		services.position = Vector2(208,198)
 		services.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_close_panel()
 				_open_port_services())
 		content.add_child(services)
-	_panel_back(content,246)
+	_panel_back(content,256)
 
 
 func _open_abyss_boss_codex(mid := "mon_abyss_avatar") -> void:

@@ -52,10 +52,14 @@ func _ready() -> void:
 	_name=UI.label("","hero")
 	_name.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	shell.stage.add_child(_name)
-	_job=UI.label("","caption",UI.AGED)
+	_job=UI.label("","caption",Color("e4d6bc"))
+	_job.add_theme_color_override("font_outline_color", Color("0b0806", 0.94))
+	_job.add_theme_constant_override("outline_size", 3)
 	_job.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	shell.stage.add_child(_job)
 	_tags=UI.label("","caption",UI.GOLD)
+	_tags.add_theme_color_override("font_outline_color", Color("0b0806", 0.94))
+	_tags.add_theme_constant_override("outline_size", 3)
 	_tags.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	shell.stage.add_child(_tags)
 	_pool=Page.picture(UI.texture("stage_pool"),Vector2(256,60))
@@ -77,9 +81,11 @@ func _ready() -> void:
 	_mini_card.add_theme_stylebox_override("panel",mc_sb)
 	_mini_card.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	shell.stage.add_child(_mini_card)
-	_mini_tag=UI.label("滑动旋转","caption",KitV4.MUTED)
+	_mini_tag=UI.label("滑动旋转","caption",Color("d6c6a8"))
 	_mini_tag.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	_mini_tag.add_theme_font_size_override("font_size",G.FS_XS)
+	_mini_tag.add_theme_font_size_override("font_size", G.FS_DENSE)
+	_mini_tag.add_theme_color_override("font_outline_color", Color("090605", 0.95))
+	_mini_tag.add_theme_constant_override("outline_size", 2)
 	_mini_card.add_child(_mini_tag)
 	_shadow=_StageShadow.new()
 	shell.stage.add_child(_shadow)
@@ -113,7 +119,7 @@ func _ready() -> void:
 		rb.name="RoleTab_"+rid_str
 		rb.skin="tab"
 		rb.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		rb.custom_minimum_size=Vector2(0,56)
+		rb.custom_minimum_size=Vector2(0,60)
 		rb.caption.add_theme_font_size_override("font_size",G.FS_XS)
 		var emb_tex:=KitV4.commercial_tex("emblem_"+rid_str)
 		if emb_tex!=null:
@@ -125,12 +131,11 @@ func _ready() -> void:
 			emb.set_anchors_preset(Control.PRESET_CENTER_TOP)
 			emb.offset_left=-12
 			emb.offset_right=12
-			emb.offset_top=3
-			emb.offset_bottom=27
+			emb.offset_top=5
+			emb.offset_bottom=29
 			emb.mouse_filter=Control.MOUSE_FILTER_IGNORE
 			rb.add_child(emb)
 			rb.caption.vertical_alignment=VERTICAL_ALIGNMENT_BOTTOM
-			rb.caption.offset_bottom=-4
 		_role_tabs.add_child(rb)
 
 	# §4.3-5,6 性别两枚小号切换钮放在昵称行左侧 + 凹槽昵称框 + 骰子随机按钮
@@ -150,10 +155,11 @@ func _ready() -> void:
 		_sex.add_child(sb_sex)
 	host._name_edit=Flow.field("输入角色昵称")
 	host._name_edit.max_length=12
+	host._name_edit.custom_minimum_size=Vector2(100,44)
 	host._name_edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	row.add_child(host._name_edit)
 	var random:=Flow.button("🎲 随机",func():host._name_edit.text=G.random_name();_sync_name())
-	random.custom_minimum_size=Vector2(68,44)
+	random.custom_minimum_size=Vector2(84,44)
 	random.size_flags_horizontal=Control.SIZE_SHRINK_END
 	row.add_child(random)
 	_rule=Flow.text("昵称最长 12 个字符","caption",UI.AGED)
@@ -255,8 +261,7 @@ func refresh() -> void:
 			pip.add_theme_stylebox_override("panel",psb)
 	# 更新 5 个招牌技能图标横排
 	if _skill_row!=null:
-		for c in _skill_row.get_children():
-			c.queue_free()
+		Page.clear(_skill_row)
 		for sk_v in _role_skills(rid):
 			var sk:Dictionary=sk_v
 			var sid:=String(sk.get("id",""))
@@ -317,6 +322,10 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	shell.tray_height=minf(416,safe.size.y-284)
 	shell.layout(safe_override)
+	if shell.scroll!=null and shell.body!=null:
+		var body_w:=maxf(280.0,shell.scroll.size.x-6.0)
+		shell.body.custom_minimum_size.x=body_w
+		shell.body.size.x=body_w
 	var width:float=shell.stage.size.x
 	var height:float=shell.stage.size.y
 	Page.place(_name,Vector2(72,2),Vector2(width-144,38))
@@ -329,13 +338,13 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 		var port_w:=port_h*(256.0/384.0)
 		Page.place(_portrait,Vector2((width-port_w)*.5,82.0),Vector2(port_w,port_h))
 		Page.place(_pool,Vector2(width*.5-128,feet_y-36.0),Vector2(256,52))
-		var mini_sz:=Vector2(88,92)
-		var mini_pos:=Vector2(width-mini_sz.x-54.0,maxf(86.0,height-mini_sz.y-12.0))
+		var mini_sz:=Vector2(92,102)
+		var mini_pos:=Vector2(width-mini_sz.x-54.0,maxf(82.0,height-mini_sz.y-10.0))
 		Page.place(_mini_card,mini_pos,mini_sz)
-		Page.place(_mini_tag,Vector2(0,mini_sz.y-20.0),Vector2(mini_sz.x,18.0))
+		Page.place(_mini_tag,Vector2(2,mini_sz.y-24.0),Vector2(mini_sz.x-4.0,20.0))
 		_mini_card.visible=true
 		host._anim.scale=Vector2(0.58,0.58)
-		var foot_pos:=mini_pos+Vector2(mini_sz.x*.5,mini_sz.y-24.0)
+		var foot_pos:=mini_pos+Vector2(mini_sz.x*.5,mini_sz.y-30.0)
 		host._anim.position=foot_pos-Vector2(0,32.0)
 		if _shadow!=null:_shadow.position=foot_pos
 	else:

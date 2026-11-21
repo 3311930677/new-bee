@@ -483,13 +483,44 @@ func _build_supplies(gems: bool) -> void:
 	if ids.is_empty():
 		_detail_body.add_child(Page.line("暂无宝石" if gems else "暂无材料", "section"))
 		_detail_body.add_child(Page.line("沿途掉落和兑换所得会收纳在这里。", "caption", UI.AGED))
-	_detail_body.add_child(Page.line(G.gem_label(_sel_supply) if gems and not _sel_supply.is_empty() else G.item_name(_sel_supply) if not _sel_supply.is_empty() else "宝石镶嵌与合成" if gems else "行旅材料","object"))
-	if not _sel_supply.is_empty():
-		_detail_body.add_child(Page.line("持有 ×%d · %s" % [G.item_count(_sel_supply),"宝石" if gems else "随行物品"],"body"))
-		var description:=Page.line(Descriptions.describe(_sel_supply),"caption",UI.AGED)
-		description.name="ItemUsage"
-		_detail_body.add_child(description)
-	_detail_body.add_child(Page.line("可堆叠，不占装备格。点击上方物品可切换说明。","caption",UI.AGED))
+		return
+	if _sel_supply.is_empty():
+		_detail_body.add_child(Page.line("宝石镶嵌与合成" if gems else "行旅材料", "object"))
+		_detail_body.add_child(Page.line("点击上方%s图标，查看持有数量与用途详情。" % ("宝石" if gems else "材料"), "caption", UI.AGED))
+		_detail_body.add_child(Page.line("可堆叠，不占装备格。", "caption", UI.AGED))
+		return
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 12)
+	_detail_body.add_child(top)
+	var icon_cell := Art.ItemCell.new()
+	icon_cell.custom_minimum_size = Vector2(64, 64)
+	icon_cell.size = Vector2(64, 64)
+	icon_cell.rarity_rank = 3 if gems else 2
+	icon_cell.rarity = G.equip_rarity_color(icon_cell.rarity_rank)
+	icon_cell.item_image.texture = G.res_tex(G.item_icon(_sel_supply))
+	icon_cell.image_px = 52
+	icon_cell.disabled = true
+	icon_cell.focus_mode = Control.FOCUS_NONE
+	top.add_child(icon_cell)
+	var names := VBoxContainer.new()
+	names.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top.add_child(names)
+	var supply_title := G.gem_label(_sel_supply) if gems else G.item_name(_sel_supply)
+	names.add_child(Page.line(supply_title, "object", icon_cell.rarity.darkened(0.15)))
+	names.add_child(Page.line("持有 ×%d · %s" % [G.item_count(_sel_supply), "宝石" if gems else "随行物品"], "body"))
+	var desc_box := PanelContainer.new()
+	var desc_sb := StyleBoxFlat.new()
+	desc_sb.bg_color = Color("987a4f", 0.16)
+	desc_sb.border_color = Color("856843", 0.5)
+	desc_sb.set_border_width_all(1)
+	desc_sb.set_corner_radius_all(0)
+	desc_sb.set_content_margin_all(6)
+	desc_box.add_theme_stylebox_override("panel", desc_sb)
+	_detail_body.add_child(desc_box)
+	var description := Page.line(Descriptions.describe(_sel_supply), "caption", UI.AGED)
+	description.name = "ItemUsage"
+	desc_box.add_child(description)
+	_detail_body.add_child(Page.line("可堆叠，不占装备格。点击上方物品可切换说明。", "caption", UI.AGED))
 
 func _build_pending_tab() -> void:
 	var box:=VBoxContainer.new()

@@ -33,7 +33,7 @@ const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 const MON_COLOR := {
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
 }
-const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此字段时的口径）
+const INTERACT_R := 56.0      # 非战斗物件交互半径（maps.json 无此字段时的口径）
 const ThirdActGroundScript := preload("res://src/explore/ThirdActGround.gd")
 const FourthActGroundScript := preload("res://src/explore/FourthActGround.gd")
 const ReturnJourneyPropsScript := preload("res://src/explore/ReturnJourneyProps.gd")
@@ -2478,7 +2478,10 @@ func on_quest_entity(e: _QuestEntity) -> void:
 	var res := G.claim_waystone_cache() if e.kind == "cache" and e.eid == G.WAYSTONE_CACHE_ID \
 		else G.side_entity_interact(e.kind, e.eid, _main_map_id, e.quest)
 	if not bool(res.get("ok", false)):
-		if String(res.get("reason", "")) == "no_progress":
+		var err_line := String(res.get("line", res.get("err", "")))
+		if not err_line.is_empty():
+			_toast(err_line)
+		elif String(res.get("reason", "")) == "no_progress" or not e.quest.is_empty():
 			_toast("这里眼下没有可做的事")
 		return
 	e.used = true
@@ -2697,6 +2700,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _city_content != null and bool(_city_content.call("has_modal")):
 		return
 	if G.ui_blocked:  # 全屏浮层（GM 控制台）优先，ESC 让给它
+		return
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if not _modal_open() and not _map_done and _battle == null and _player != null:
+			if _try_world_tap_interact((event as InputEventMouseButton).position):
+				if get_viewport() != null:
+					get_viewport().set_input_as_handled()
+				return
 		return
 	if not event.is_action_pressed("ui_cancel"):
 		return
@@ -5793,20 +5803,22 @@ class _QuestEntity extends Node2D:
 			return
 		if used or map_ref == null or map_ref._player == null:
 			return
+		# Fishing and puzzle decisions require the existing interact button/click.
+		# Proximity alone must not open a modal or consume the clue that unlocks a gate.
+		if kind in ["fishing", "puzzle", "puzzle_choice"]:
+			queue_redraw()
+			return
 		if kind in ["journey_return", "special_event", "trade_contract", "trial", "trial_board", "oath", "world_commission", "trade", "fishing", "puzzle_choice", "align", "switch", "repair", "mark", "frost_herb_route", "first_order_bridge"] or \
 				(kind == "road_mail" and mail_action == "board"):
-			if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 32:
+			if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 14:
 				trade_cooled = false
 			elif trade_cooled:
 				return
 		if map_ref._modal_open():
 			return  # 覆盖层期间不触发（与 _Interactable 同口径）
-		if kind=="fishing":
-			queue_redraw()
-			return  # A fishing destination requires the nearby interaction button.
-		# 所有机关/剧情/采集点每次接近只触发一次；离开范围后才重新武装。
+		# 其余剧情/采集点每次接近只触发一次；离开范围后重新武装，或点击交互随时重开。
 		# 使用独立接触锁，保留各类交互已有的 trade_cooled 校验。
-		if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 32:
+		if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 14:
 			_contact_latched = false
 		if position.distance_to(map_ref._player.position) < MapScene.INTERACT_R and not _contact_latched:
 			_contact_latched = true
@@ -6535,14 +6547,20 @@ func _tick_round_interaction() -> void:
 	_round_interact.visible = false
 	_round_target = null
 	if _modal_open() or G.ui_blocked: return
-	var best := 100.0
+	var best := 112.0
 	if is_instance_valid(_city_content):
 		for npc in _city_content._npcs:
 			if not is_instance_valid(npc): continue
 			var d: float = npc.position.distance_to(_player.position)
-			if d < best and not npc.cooled:
+			if d < best:
 				best = d
 				_round_target = npc
+		for b in _city_content._buildings:
+			if not is_instance_valid(b): continue
+			var bd: float = b.dist_to(_player.position)
+			if bd < 48.0 and bd + 16.0 < best:
+				best = bd
+				_round_target = b
 	for entity in _quest_entities:
 		if not is_instance_valid(entity): continue
 		var d := entity.position.distance_to(_player.position)
@@ -6559,19 +6577,81 @@ func _tick_round_interaction() -> void:
 		_round_interact.scale = Vector2(0.82, 0.82)
 		var tw := create_tween()
 		tw.tween_property(_round_interact, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	var radius := 52.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R
+	var is_building: bool = _city_content != null and _round_target in _city_content._buildings
+	var radius: float = 48.0 if is_building else (58.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R)
 	_round_interact.disabled = best >= radius
-	_round_interact.get_node("Caption").text = "靠近" if best >= radius else ("交谈" if (not _round_target is _QuestEntity and not _round_target is _Interactable) else "垂钓" if _round_target is _QuestEntity and _round_target.kind=="fishing" else "交互")
+	_round_interact.get_node("Caption").text = "靠近" if best >= radius else ("进入" if is_building else ("交谈" if (not _round_target is _QuestEntity and not _round_target is _Interactable) else "垂钓" if _round_target is _QuestEntity and _round_target.kind=="fishing" else "交互"))
 
 func _round_interact_pressed() -> void:
 	if not is_instance_valid(_round_target) or _modal_open(): return
-	var radius := 52.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R
-	if _round_target.position.distance_to(_player.position) >= radius: return
-	if _round_target is _QuestEntity: on_quest_entity(_round_target)
-	elif _round_target is _Interactable: on_interactable(_round_target)
+	var is_building: bool = _city_content != null and _round_target in _city_content._buildings
+	var dist: float = float(_round_target.call("dist_to", _player.position)) if is_building else _round_target.position.distance_to(_player.position)
+	var radius: float = 48.0 if is_building else (58.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R)
+	if dist >= radius: return
+	if _round_target is _QuestEntity:
+		(_round_target as _QuestEntity).trade_cooled = false
+		(_round_target as _QuestEntity)._contact_latched = false
+		on_quest_entity(_round_target)
+	elif _round_target is _Interactable:
+		(_round_target as _Interactable).contact_cd = 0.0
+		on_interactable(_round_target)
+	elif is_building:
+		_round_target.set("cooled", true)
+		_city_content._open_building(_round_target.data)
 	elif _city_content != null:
-		_round_target.set("cooled",true)
-		_city_content._open_dialog(_round_target.data,_round_target.guest)
+		_round_target.set("cooled", true)
+		_city_content._open_dialog(_round_target.data, _round_target.guest)
+
+func _try_world_tap_interact(screen_pos: Vector2) -> bool:
+	for entity in _quest_entities:
+		if not is_instance_valid(entity) or entity.used or entity.kind == "feedback": continue
+		var origin := entity.get_global_transform_with_canvas().origin
+		var hit_rect := Rect2(origin + Vector2(-44, -84), Vector2(88, 96))
+		if is_instance_valid(entity._caption_label) and entity._caption_label.visible:
+			hit_rect = hit_rect.merge(entity._caption_label.get_global_rect().grow(6))
+		if hit_rect.has_point(screen_pos):
+			if entity.position.distance_to(_player.position) < INTERACT_R + 28.0:
+				entity.trade_cooled = false
+				entity._contact_latched = false
+				on_quest_entity(entity)
+			else:
+				_toast("请再走近一些再互动")
+			return true
+	if is_instance_valid(_interactable) and not _interactable.used:
+		var origin := _interactable.get_global_transform_with_canvas().origin
+		if Rect2(origin + Vector2(-44, -76), Vector2(88, 88)).has_point(screen_pos):
+			if _interactable.position.distance_to(_player.position) < INTERACT_R + 28.0:
+				_interactable.contact_cd = 0.0
+				on_interactable(_interactable)
+			else:
+				_toast("请再走近一些再互动")
+			return true
+	if is_instance_valid(_city_content):
+		for npc in _city_content._npcs:
+			if not is_instance_valid(npc): continue
+			var origin: Vector2 = npc.get_global_transform_with_canvas().origin
+			var hit_rect := Rect2(origin + Vector2(-40, -84), Vector2(80, 92))
+			if is_instance_valid(npc._name_l) and npc._name_l.visible:
+				hit_rect = hit_rect.merge(npc._name_l.get_global_rect().grow(6))
+			if hit_rect.has_point(screen_pos):
+				if npc.position.distance_to(_player.position) < 76.0:
+					npc.set("cooled", true)
+					_city_content._open_dialog(npc.data, npc.guest)
+				else:
+					_toast("请走近后再与「%s」交谈" % String(npc.data.get("name", "居民")))
+				return true
+		for b in _city_content._buildings:
+			if not is_instance_valid(b): continue
+			var origin: Vector2 = b.get_global_transform_with_canvas().origin
+			var hit_rect := Rect2(origin + Vector2(-b._w * 0.45, -b._h * 0.85), Vector2(b._w * 0.9, b._h * 0.9))
+			if hit_rect.has_point(screen_pos):
+				if b.dist_to(_player.position) < 56.0:
+					b.set("cooled", true)
+					_city_content._open_building(b.data)
+				else:
+					_toast("请走近「%s」门口再进入" % String(b.data.get("name", "建筑")))
+				return true
+	return false
 
 func _name_tag_exclusions() -> Array[Rect2]:
 	var areas: Array[Rect2]=[]

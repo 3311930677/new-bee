@@ -297,23 +297,37 @@ func _build() -> void:
 			_refresh())
 	content.add_child(_duel_stage)
 
+	var top_band := ColorRect.new()
+	top_band.position = Vector2(0, 0)
+	top_band.size = Vector2(404, 24)
+	top_band.color = Color(0.05, 0.04, 0.06, 0.62)
+	top_band.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_duel_stage.add_child(top_band)
+
+	var bot_band := ColorRect.new()
+	bot_band.position = Vector2(0, 102)
+	bot_band.size = Vector2(404, 34)
+	bot_band.color = Color(0.05, 0.04, 0.06, 0.70)
+	bot_band.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_duel_stage.add_child(bot_band)
+
 	var vs_lbl := _styled_label("战", G.font_art, 24, Color("fff0c2"), HORIZONTAL_ALIGNMENT_CENTER, 4)
 	vs_lbl.position = Vector2(177, 26)
 	vs_lbl.size = Vector2(50, 48)
 	_duel_stage.add_child(vs_lbl)
 
 	_foe_tip = _styled_label("", G.font_reg, 11, Color("ffe29a"), HORIZONTAL_ALIGNMENT_CENTER, 3)
-	_foe_tip.position = Vector2(72, 6)
-	_foe_tip.size = Vector2(260, 18)
+	_foe_tip.position = Vector2(42, 3)
+	_foe_tip.size = Vector2(320, 18)
 	_duel_stage.add_child(_foe_tip)
 
 	_hero_tag_l = _styled_label("", G.font_serif, 13, Color("f6e8cc"), HORIZONTAL_ALIGNMENT_CENTER, 3)
-	_hero_tag_l.position = Vector2(10, 102)
+	_hero_tag_l.position = Vector2(10, 107)
 	_hero_tag_l.size = Vector2(176, 22)
 	_duel_stage.add_child(_hero_tag_l)
 
 	_foe_l = _styled_label("", G.font_serif, 13, Color("ffd896"), HORIZONTAL_ALIGNMENT_CENTER, 3)
-	_foe_l.position = Vector2(218, 102)
+	_foe_l.position = Vector2(218, 107)
 	_foe_l.size = Vector2(176, 22)
 	_duel_stage.add_child(_foe_l)
 

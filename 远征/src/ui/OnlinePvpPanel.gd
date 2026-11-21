@@ -7,6 +7,7 @@ signal action_requested(kind: String, payload: Dictionary)
 var _status: Label
 var _list: VBoxContainer
 var _tab := "arena"
+var _tab_btns: Dictionary = {}
 var _mode := "1v1"
 var _allow_fill := true
 var _overview: Dictionary = {}
@@ -18,7 +19,7 @@ var _busy := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	G.veil(self, 0.94, true)
+	G.veil(self, 0.96, true)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]:
@@ -40,7 +41,7 @@ func _ready() -> void:
 	col.add_child(tabs)
 	for entry in [["arena", "演武"], ["match", "战局"], ["replay", "回放"], ["season", "赛季榜"]]:
 		var key := String(entry[0])
-		_btn(tabs, String(entry[1]), func() -> void:
+		_tab_btns[key] = _btn(tabs, String(entry[1]), func() -> void:
 			_tab = key
 			_rebuild())
 
@@ -59,6 +60,65 @@ func _ready() -> void:
 	col.add_child(footer)
 	_btn(footer, "刷新演武", func() -> void: action_requested.emit("refresh", {"mode": _mode}))
 	_btn(footer, "离开演武场", func() -> void: closed.emit())
+	_refresh_tabs()
+
+
+func _refresh_tabs() -> void:
+	for k in _tab_btns:
+		_set_btn_active(_tab_btns[k] as Control, String(k) == _tab)
+
+
+func _set_btn_active(btn: Control, active: bool) -> void:
+	if not is_instance_valid(btn):
+		return
+	btn.set_meta("primary_action", active)
+	var lbl := btn.get_child(0) as Label
+	if lbl != null:
+		lbl.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Color("d8c8a8"))
+	btn.queue_redraw()
+
+
+func _bar(parent: Control, cur_v: int, max_v: int, fill_col: Color, h := 9) -> void:
+	var bar := ProgressBar.new()
+	bar.custom_minimum_size.y = h
+	bar.max_value = maxi(1, max_v)
+	bar.value = clampi(cur_v, 0, maxi(1, max_v))
+	bar.show_percentage = false
+	var track := StyleBoxFlat.new()
+	track.bg_color = G.BG_DEEP
+	track.border_color = Color("6e5a3a", 0.7)
+	track.set_border_width_all(1)
+	track.set_corner_radius_all(2)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = fill_col
+	fill.set_corner_radius_all(2)
+	bar.add_theme_stylebox_override("background", track)
+	bar.add_theme_stylebox_override("fill", fill)
+	parent.add_child(bar)
+
+
+func _role_name(id: String) -> String:
+	return String({"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星"}.get(id, id))
+
+
+func _status_name(st: String) -> String:
+	return String({"ready": "备战就绪", "active": "激战中", "completed": "已完结", "queued": "匹配中", "aborted": "已中止"}.get(st, st))
+
+
+func _side_name(s: String) -> String:
+	return String({"ally": "蓝方阵", "enemy": "红方阵", "draw": "平局"}.get(s, s))
+
+
+func _kind_name(k: String) -> String:
+	return "切磋" if k == "sparring" else ("排位" if k == "ranked" else k)
+
+
+func _reason_name(r: String) -> String:
+	return String({"ko": "击败对手", "knockout": "击倒致胜", "forfeit": "认输结算", "forfeited": "已认输", "aborted_before_start": "开局前取消", "timeout": "计时结算", "draw": "平局", "attacked": "命中", "cast": "施放技能", "used": "使用药剂", "timeout_default": "超时兜底", "focused": "切换集火", "ok": "确认"}.get(r, r))
+
+
+func _act_name(a: String) -> String:
+	return String({"attack": "普攻", "skill": "技能", "potion": "喝药", "focus": "集火", "defend": "防御", "forfeit": "认输", "auto_basic": "自动普攻", "auto_defend": "自动防御"}.get(a, a))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -108,12 +168,12 @@ func _btn(parent: Control, label_text: String, cb: Callable) -> Control:
 	return b
 
 
-func _card(title: String, body_lines: Array[String]) -> VBoxContainer:
+func _card(title: String, body_lines: Array[String], border_col := Color(0.76, 0.63, 0.34, 0.65)) -> VBoxContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.10, 0.09, 0.08, 0.92)
-	style.border_color = Color(0.76, 0.63, 0.34, 0.65)
+	style.border_color = border_col
 	style.set_border_width_all(1)
 	style.set_corner_radius_all(6)
 	style.set_content_margin_all(10)
@@ -139,6 +199,7 @@ func _card(title: String, body_lines: Array[String]) -> VBoxContainer:
 
 
 func _rebuild() -> void:
+	_refresh_tabs()
 	if _list == null:
 		return
 	for ch in _list.get_children():
@@ -170,15 +231,15 @@ func _build_arena() -> void:
 	mbox.add_child(mrow)
 	for m in ["1v1", "2v2", "3v3"]:
 		var mk := String(m)
-		_btn(mrow, ("✓ " + mk) if mk == _mode else mk, func() -> void:
+		_set_btn_active(_btn(mrow, ("✓ " + mk) if mk == _mode else mk, func() -> void:
 			_mode = mk
-			action_requested.emit("refresh", {"mode": _mode}))
+			action_requested.emit("refresh", {"mode": _mode})), mk == _mode)
 
 	var q_v: Variant = _overview.get("queue")
 	if q_v is Dictionary and not (q_v as Dictionary).is_empty():
 		var q := q_v as Dictionary
 		var qbox := _card("排位匹配中 (%s)" % String(q.get("mode", _mode)), [
-			"随机补位：%s · 状态：%s" % ["开启" if bool(q.get("allow_random_fill", false)) else "关闭", String(q.get("status", ""))],
+			"随机补位：%s · 状态：%s" % ["开启" if bool(q.get("allow_random_fill", false)) else "关闭", _status_name(String(q.get("status", "")))],
 		])
 		_btn(qbox, "取消匹配", func() -> void: action_requested.emit("queue_leave", {}))
 	else:
@@ -188,15 +249,15 @@ func _build_arena() -> void:
 		var qrow := HBoxContainer.new()
 		qrow.add_theme_constant_override("separation", 6)
 		qbox.add_child(qrow)
-		_btn(qrow, "补位:%s" % ("开" if _allow_fill else "关"), func() -> void:
+		_set_btn_active(_btn(qrow, "补位:%s" % ("开" if _allow_fill else "关"), func() -> void:
 			_allow_fill = not _allow_fill
-			_rebuild())
+			_rebuild()), _allow_fill)
 		_btn(qrow, "加入 %s 排位" % _mode, func() -> void:
 			action_requested.emit("queue_join", {"mode": _mode, "allow_random_fill": _allow_fill}))
 
 	var active_v: Variant = _overview.get("active_match")
 	if active_v is Dictionary and not (active_v as Dictionary).is_empty():
-		var abox := _card("当前有进行中对局", ["状态：%s · 请切换至「战局」页操作。" % String((active_v as Dictionary).get("status", ""))])
+		var abox := _card("当前有进行中对局", ["状态：%s · 请切换至「战局」页操作。" % _status_name(String((active_v as Dictionary).get("status", "")))])
 		_btn(abox, "进入战局", func() -> void:
 			_tab = "match"
 			_rebuild())
@@ -248,10 +309,10 @@ func _build_match() -> void:
 	var tout := int(m.get("turn_timeout_ticks", 450))
 	var remain_sec := maxf(0.0, float(tout - (tick - last_act)) / 30.0)
 
-	var head := _card("%s %s · 状态：%s · Tick %d" % [
+	var head := _card("%s %s · 状态：%s · 时长 %.1f 秒" % [
 		String(m.get("mode", "1v1")),
 		"好友切磋" if String(m.get("match_kind", "")) == "sparring" else "排位赛",
-		st, tick,
+		_status_name(st), float(tick) / 30.0,
 	], [
 		"本方阵营：%s · 操作倒计时：%.1f 秒（超时将执行自动普攻/防御兜底，已触发 %d 次）" % [
 			"蓝方阵" if my_side == "ally" else "红方阵", remain_sec, int(m.get("timeout_defaults_applied", 0)),
@@ -261,7 +322,7 @@ func _build_match() -> void:
 		var rrow := HBoxContainer.new()
 		rrow.add_theme_constant_override("separation", 6)
 		head.add_child(rrow)
-		_btn(rrow, "确认入场就绪", func() -> void: action_requested.emit("match_ready", {"match_id": mid, "ready": true}))
+		_set_btn_active(_btn(rrow, "确认入场就绪", func() -> void: action_requested.emit("match_ready", {"match_id": mid, "ready": true})), true)
 		_btn(rrow, "取消退场", func() -> void: action_requested.emit("match_forfeit", {"match_id": mid}))
 		return
 
@@ -284,14 +345,14 @@ func _build_match() -> void:
 			else:
 				ally_roles.append(u)
 
-	_render_team_band("对手阵容（点击选为集火目标）", opp_roles, pets_by_owner, true, mid, seq)
-	_render_team_band("我方阵容（最多3人+缩略宠标）", ally_roles, pets_by_owner, false, mid, seq)
+	_render_team_band("对手阵容（点击下方按钮选为集火目标）", opp_roles, pets_by_owner, true, mid, seq)
+	_render_team_band("我方阵容（最多 3 人 · 附带随行伙伴）", ally_roles, pets_by_owner, false, mid, seq)
 
-	var act_box := _card("权威指令（仅提交己方意图）", [])
+	var act_box := _card("演武指令", [])
 	var r1 := HBoxContainer.new()
 	r1.add_theme_constant_override("separation", 6)
 	act_box.add_child(r1)
-	_btn(r1, "普攻", func() -> void: action_requested.emit("match_cmd", {"match_id": mid, "sequence": seq, "action": "attack", "target_uid": _selected_target_uid}))
+	_set_btn_active(_btn(r1, "普攻", func() -> void: action_requested.emit("match_cmd", {"match_id": mid, "sequence": seq, "action": "attack", "target_uid": _selected_target_uid})), true)
 	_btn(r1, "技能一", func() -> void: action_requested.emit("match_cmd", {"match_id": mid, "sequence": seq, "action": "skill", "skill_id": "s1", "target_uid": _selected_target_uid}))
 	_btn(r1, "喝药", func() -> void: action_requested.emit("match_cmd", {"match_id": mid, "sequence": seq, "action": "potion"}))
 	var r2 := HBoxContainer.new()
@@ -303,19 +364,27 @@ func _build_match() -> void:
 
 
 func _render_team_band(title: String, roles: Array[Dictionary], pets_by_owner: Dictionary, selectable: bool, mid: String, seq: int) -> void:
-	var lines: Array[String] = []
+	var border_col := Color("cf5648", 0.85) if selectable else Color("4b94d4", 0.85)
+	var box := _card(title, [], border_col)
+	var hp_col := Color("cc4438") if selectable else Color("3fa876")
 	for u in roles:
 		var uid := int(u.get("uid", 0))
 		var pet_note := ""
 		if pets_by_owner.has(uid):
 			var p: Dictionary = pets_by_owner[uid]
-			pet_note = " [宠:%s]" % String(p.get("name", "岩龟"))
-		var mark := "★集火 " if selectable and _selected_target_uid == uid else ""
-		lines.append("%s%s HP:%d/%d 能量:%d %s%s" % [
+			pet_note = " · 宠:%s" % String(p.get("name", "岩龟"))
+		var focused := selectable and _selected_target_uid == uid
+		var mark := "★集火 " if focused else ""
+		var alive := bool(u.get("alive", true))
+		var lbl_col := G.GOLD_BRIGHT if focused else (Color("8f8376") if not alive else (Color("f0b4a8") if selectable else Color("a8d8f0")))
+		var lbl := G.gold_label("%s%s · 气血 %d/%d · 能量 %d · %s%s" % [
 			mark, String(u.get("name", "")), int(u.get("hp", 0)), int(u.get("max_hp", 0)),
-			int(u.get("energy", 0)), ("已阵亡" if not bool(u.get("alive", true)) else "存活"), pet_note,
-		])
-	var box := _card(title, lines)
+			int(u.get("energy", 0)), ("已阵亡" if not alive else "存活"), pet_note,
+		], G.FS_SM, false, lbl_col)
+		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		box.add_child(lbl)
+		_bar(box, int(u.get("hp", 0)), int(u.get("max_hp", 1)), hp_col, 9)
+		_bar(box, clampi(int(u.get("energy", 0)), 0, 100), 100, Color("4b8fd4"), 5)
 	if selectable and not roles.is_empty():
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 6)
@@ -324,9 +393,11 @@ func _render_team_band(title: String, roles: Array[Dictionary], pets_by_owner: D
 			if not bool(u.get("alive", true)):
 				continue
 			var uid := int(u.get("uid", 0))
-			_btn(row, "锁定:%s" % String(u.get("name", "")).left(4), func() -> void:
+			var is_sel := _selected_target_uid == uid
+			var btn := _btn(row, ("%s:%s" % ["★已锁" if is_sel else "锁定", String(u.get("name", "")).left(4)]), func() -> void:
 				_selected_target_uid = uid
 				action_requested.emit("match_cmd", {"match_id": mid, "sequence": seq, "action": "focus", "target_uid": uid}))
+			_set_btn_active(btn, is_sel)
 
 
 func _build_replay() -> void:
@@ -334,11 +405,11 @@ func _build_replay() -> void:
 		var ins: Array = _replay.get("inputs", []) if _replay.get("inputs") is Array else []
 		_replay_step = clampi(_replay_step, 0, ins.size())
 		var lines: Array[String] = [
-			"模式：%s (%s) · 胜方：%s (%s)" % [
-				String(_replay.get("mode", "")), String(_replay.get("match_kind", "")),
-				String(_replay.get("winner_side", "")), String(_replay.get("result_reason", "")),
+			"模式：%s（%s）· 胜方：%s（%s）" % [
+				String(_replay.get("mode", "")), _kind_name(String(_replay.get("match_kind", ""))),
+				_side_name(String(_replay.get("winner_side", ""))), _reason_name(String(_replay.get("result_reason", ""))),
 			],
-			"重演校验：%s · 状态摘要一致：%s" % [
+			"重演校验：%s · 状态摘要 %s" % [
 				"通过" if bool(_replay.get("replay_verified", false)) else "异常",
 				String(_replay.get("replayed_hash", "")).left(12),
 			],
@@ -347,9 +418,9 @@ func _build_replay() -> void:
 		for i in range(maxi(0, _replay_step - 4), _replay_step):
 			var ev := ins[i] as Dictionary
 			var act: Dictionary = ev.get("action", {}) if ev.get("action") is Dictionary else {}
-			lines.append("#%d Tick=%d %s (%s)" % [
-				int(ev.get("sequence", i + 1)), int(ev.get("tick", 0)),
-				String(act.get("action", "")), String(ev.get("reason", "")),
+			lines.append("#%d %.1fs %s（%s）" % [
+				int(ev.get("sequence", i + 1)), float(ev.get("tick", 0)) / 30.0,
+				_act_name(String(act.get("action", ""))), _reason_name(String(ev.get("reason", ""))),
 			])
 		var rbox := _card("权威战局回放器", lines)
 		var ctrl := HBoxContainer.new()
@@ -379,11 +450,11 @@ func _build_replay() -> void:
 			"切磋" if String(r.get("match_kind", "")) == "sparring" else "排位",
 			"胜利" if String(r.get("winner_side", "")) == String(r.get("my_side", "")) else ("平局" if String(r.get("winner_side", "")) == "draw" else "惜败"),
 		], [
-			"段位分：%s%d · 荣誉 +%d · 时长 %d Tick" % [
+			"段位分：%s%d · 荣誉 +%d · 时长 %.1f 秒" % [
 				"+" if int(r.get("rating_delta", 0)) >= 0 else "",
 				int(r.get("rating_delta", 0)),
 				int(r.get("honor_delta", 0)),
-				int(r.get("battle_tick", 0)),
+				float(r.get("battle_tick", 0)) / 30.0,
 			],
 		])
 		_btn(box, "查看权威回放", func() -> void: action_requested.emit("replay", {"match_id": mid}))
@@ -415,13 +486,14 @@ func _build_season() -> void:
 				action_requested.emit("honor_buy", {"item_id": iid}))
 
 	var lb: Array = _overview.get("leaderboard", []) if _overview.get("leaderboard") is Array else []
-	var lblines: Array[String] = ["当前榜模式：%s" % String(_overview.get("leaderboard_mode", _mode))]
+	var lb_mode := String(_overview.get("leaderboard_mode", _mode))
+	var lblines: Array[String] = ["当前榜模式：%s" % lb_mode]
 	for rowv in lb:
 		if not rowv is Dictionary:
 			continue
 		var r := rowv as Dictionary
-		lblines.append("#%d %s (%s) · %s %d分 (%d胜)" % [
-			int(r.get("rank", 0)), String(r.get("nickname", "")), String(r.get("role_id", "")),
+		lblines.append("#%d %s（%s）· %s %d分 (%d胜)" % [
+			int(r.get("rank", 0)), String(r.get("nickname", "")), _role_name(String(r.get("role_id", ""))),
 			String(r.get("tier_name", "")), int(r.get("rating", 1000)), int(r.get("wins", 0)),
 		])
 	var lbox := _card("独立模式排位榜单", lblines)
@@ -430,6 +502,6 @@ func _build_season() -> void:
 	lbox.add_child(lrow)
 	for m in ["1v1", "2v2", "3v3"]:
 		var mk := String(m)
-		_btn(lrow, "%s榜" % mk, func() -> void:
+		_set_btn_active(_btn(lrow, "%s榜" % mk, func() -> void:
 			_mode = mk
-			action_requested.emit("refresh", {"mode": mk}))
+			action_requested.emit("refresh", {"mode": mk})), mk == lb_mode)

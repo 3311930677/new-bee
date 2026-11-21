@@ -191,8 +191,11 @@ class ItemCell extends Button:
 		heading.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		heading.clip_text = true
 		add_child(heading)
-		amount = UI.label("","tag",UI.AGED)
+		amount = UI.label("","tag",UI.GOLD)
 		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		amount.add_theme_font_size_override("font_size", G.FS_DENSE)
+		amount.add_theme_color_override("font_outline_color", Color("090605", 0.96))
+		amount.add_theme_constant_override("outline_size", 3)
 		add_child(amount)
 		flag = UI.label("","tag",UI.COPPER)
 		add_child(flag)
@@ -235,8 +238,14 @@ class ItemCell extends Button:
 		heading.visible=show_name
 		heading.position = Vector2(4,size.y-30)
 		heading.size = Vector2(size.x-8,22)
-		amount.position = Vector2(4,4)
-		amount.size = Vector2(size.x-10,22)
+		if show_name:
+			amount.position = Vector2(4,4)
+			amount.size = Vector2(size.x-10,20)
+		else:
+			if not amount.text.is_empty():
+				draw_rect(Rect2(Vector2(3, size.y - 21), Vector2(size.x - 6, 18)), Color(0.05, 0.04, 0.03, 0.78))
+			amount.position = Vector2(4, size.y - 21)
+			amount.size = Vector2(size.x - 8, 19)
 		flag.position = Vector2(5,size.y-24)
 		flag.size = Vector2(30,22)
 		flag.text="装" if worn else ""

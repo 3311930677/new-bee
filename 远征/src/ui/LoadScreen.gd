@@ -389,8 +389,12 @@ func _collect_queue() -> void:
 			var logical := file_name.trim_suffix(".remap")
 			if logical.ends_with(".png") and ResourceLoader.exists(folder + logical):
 				_queue.append(folder + logical)
-	for key in ["summon_hall_bg", "vfx_summon_pillar", "market_canopy", "bg_character_stage", "tab_equip", "tab_talent", "tab_skill", "tab_pet", "tab_mount", "tab_title", "nav_role", "nav_partner", "nav_quest", "nav_event", "nav_mail", "nav_bag", "nav_notice", "nav_menu", "slot_sil_weapon", "slot_sil_armor", "slot_sil_accessory"]:
+	for key in ["summon_hall_bg", "vfx_summon_pillar", "market_canopy", "bg_character_stage", "inset_pit", "tab_inactive", "slot_empty", "red_dot", "tab_equip", "tab_talent", "tab_skill", "tab_pet", "tab_mount", "tab_title", "nav_role", "nav_partner", "nav_quest", "nav_event", "nav_mail", "nav_bag", "nav_notice", "nav_menu", "slot_sil_weapon", "slot_sil_armor", "slot_sil_accessory"]:
 		_queue.append("commercial:" + key)
+	for ikey in ["shield", "spark", "book", "paw", "mount", "crown"]:
+		_queue.append("ui_icon:" + ikey)
+	for item_id in ["tpl_sword_basic", "tpl_armor_basic", "tpl_accessory_basic"]:
+		_queue.append("fix_item:" + item_id)
 	for key in ["bar_fill_exp", "currency_capsule", "rail_socket", "rail_socket_selected", "nav_base", "nav_socket", "nav_socket_selected", "sortie_medal", "pity_ring", "red_dot"]:
 		var kit_path: String = "res://assets/ui/kit_20261013/" + key + ".png"
 		if ResourceLoader.exists(kit_path): _queue.append(kit_path)
@@ -419,6 +423,12 @@ func _process(_d: float) -> void:
 		elif path.begins_with("commercial:"):
 			var texture := CommercialKit.commercial_tex(path.trim_prefix("commercial:"))
 			if texture != null: _warm_cache.append(texture)
+		elif path.begins_with("ui_icon:"):
+			var icon_tex := G.NavigationIcons.texture(path.trim_prefix("ui_icon:"))
+			if icon_tex != null: _warm_cache.append(icon_tex)
+		elif path.begins_with("fix_item:"):
+			var item_tex := ReviewFix.item(path.trim_prefix("fix_item:"))
+			if item_tex != null: _warm_cache.append(item_tex)
 		elif path.begins_with("res_texture:"):
 			var texture := G.res_tex(path.trim_prefix("res_texture:"))
 			if texture != null: _warm_cache.append(texture)

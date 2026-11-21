@@ -19,7 +19,15 @@ var _speed_value:Label
 var _reset_modal:Control
 var _speed_prev:Button
 var _name_pad:Control
+static var _empty_sb:StyleBoxEmpty = null
+static func clear_static_caches() -> void:
+	_empty_sb = null
+static func _shared_empty_sb() -> StyleBoxEmpty:
+	if _empty_sb == null:
+		_empty_sb = StyleBoxEmpty.new()
+	return _empty_sb
 func _ready() -> void:
+	set_process(false)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	shell=Flow.Shell.new("设置",0)
 	shell.closed=func():host._on_back()
@@ -37,7 +45,7 @@ func _ready() -> void:
 	back.name="SettingsBack"
 	back.icon=Kit.texture("back")
 	back.flat=true
-	for state in ["normal","hover","pressed","focus","disabled","hover_pressed"]:back.add_theme_stylebox_override(state,StyleBoxEmpty.new())
+	for state in ["normal","hover","pressed","focus","disabled","hover_pressed"]:back.add_theme_stylebox_override(state,_shared_empty_sb())
 	back.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	back.tooltip_text="返回"
 	back.focus_mode=Control.FOCUS_ALL
@@ -401,9 +409,10 @@ func _save(parent:Control) -> void:
 	host._reset_btn.caption.add_theme_color_override("font_color",Color("f3c9b8"))
 	parent.add_child(host._reset_btn)
 	host._reset_hint=_caption(parent,Flow.text("重置会清除本机当前存档","caption",UI.RED),Color("c0453a"))
-## 昵称提示只在有话说时占位（参考稿"保存昵称"下面没有空行）
-func _process(_delta:float) -> void:
-	if _name_pad!=null:_name_pad.visible=not host._name_hint.text.is_empty()
+## 昵称提示只在有话说时占位（参考稿"保存昵称"下面没有空行），由保存动作触发更新避免每帧轮询
+func sync_name_hint() -> void:
+	if _name_pad!=null and host._name_hint!=null:
+		_name_pad.visible=not host._name_hint.text.is_empty()
 func reset_confirm() -> void:
 	host._reset_armed=true
 	_reset_modal=Page.confirm(self,"重置存档","此操作会清除本机当前进度，确认继续？",func():host.execute_reset();G.go(host.TITLE_PATH))

@@ -17,10 +17,11 @@ assets_regen/refs/
 # Local distributables are verified separately, never committed.
 exports/
 *.apk
+*.apk.idsig
+*.idsig
 *.aab
 *.pck
 
-# 临时测试截图与运行日志
+# 临时测试截图与运行日志（远征/shots 截图回归图不再纳入 Git 追踪）
 tools/*_log.txt
-shots/test_*
-shots/round4_test_*
+shots/

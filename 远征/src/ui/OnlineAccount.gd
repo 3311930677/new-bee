@@ -96,6 +96,24 @@ func _field(parent: Control, placeholder: String, secret: bool) -> LineEdit:
 	field.custom_minimum_size.y = 44
 	field.add_theme_font_override("font", G.font_reg)
 	field.add_theme_font_size_override("font_size", G.FS_SM)
+	field.add_theme_color_override("font_color", G.PARCHMENT)
+	field.add_theme_color_override("font_placeholder_color", Color("9c8d73"))
+	field.add_theme_color_override("caret_color", G.GOLD_BRIGHT)
+	var sb_n := StyleBoxFlat.new()
+	sb_n.bg_color = Color("1b1613", 0.96)
+	sb_n.border_color = Color("b8924d", 0.85)
+	sb_n.set_border_width_all(1)
+	sb_n.set_corner_radius_all(4)
+	sb_n.content_margin_left = 10
+	sb_n.content_margin_top = 6
+	sb_n.content_margin_right = 10
+	sb_n.content_margin_bottom = 6
+	var sb_f := sb_n.duplicate() as StyleBoxFlat
+	sb_f.border_color = G.GOLD_BRIGHT
+	sb_f.set_border_width_all(2)
+	field.add_theme_stylebox_override("normal", sb_n)
+	field.add_theme_stylebox_override("focus", sb_f)
+	field.add_theme_stylebox_override("read_only", sb_n)
 	parent.add_child(field)
 	return field
 

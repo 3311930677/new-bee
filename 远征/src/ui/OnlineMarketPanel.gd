@@ -6,6 +6,7 @@ signal action_requested(kind: String, payload: Dictionary)
 
 var _status: Label
 var _tab := "market"
+var _tab_btns: Dictionary = {}
 var _summary: Dictionary = {}
 var _orders: Array = []
 var _payouts: Array = []
@@ -19,7 +20,7 @@ var _busy := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	G.veil(self, 0.94, true)
+	G.veil(self, 0.96, true)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]:
@@ -38,7 +39,7 @@ func _ready() -> void:
 	col.add_child(tabs)
 	for entry in [["market", "集市"], ["sell", "寄售"], ["payouts", "收件箱"], ["trade", "面对面"]]:
 		var key := String(entry[0])
-		_btn(tabs, String(entry[1]), func() -> void:
+		_tab_btns[key] = _btn(tabs, String(entry[1]), func() -> void:
 			_tab = key
 			_rebuild())
 
@@ -56,6 +57,20 @@ func _ready() -> void:
 	col.add_child(footer)
 	_btn(footer, "刷新集市", func() -> void: action_requested.emit("refresh", {}))
 	_btn(footer, "关闭集市", func() -> void: closed.emit())
+	_refresh_tabs()
+
+
+func _refresh_tabs() -> void:
+	for k in _tab_btns:
+		var btn := _tab_btns[k] as Control
+		if not is_instance_valid(btn):
+			continue
+		var active := String(k) == _tab
+		btn.set_meta("primary_action", active)
+		var lbl := btn.get_child(0) as Label
+		if lbl != null:
+			lbl.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Color("d8c8a8"))
+		btn.queue_redraw()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -90,6 +105,7 @@ func apply_state(summary: Dictionary, orders: Array, payouts: Array, sessions: A
 
 
 func _rebuild() -> void:
+	_refresh_tabs()
 	if _list == null:
 		return
 	for child in _list.get_children():
@@ -105,14 +121,41 @@ func _rebuild() -> void:
 			_build_trade_tab()
 
 
+func _cat_name(c: String) -> String:
+	return String({"commodity": "商货", "equipment": "装备", "material": "材料", "consumable": "消耗品"}.get(c, c))
+
+
+func _payout_kind_name(k: String) -> String:
+	return String({"sale_proceeds": "售出货款", "cancel_return": "撤单退回", "expired_return": "过期退回"}.get(k, k))
+
+
+func _payout_status_name(s: String) -> String:
+	return String({"pending": "待领取", "claimed": "已领取"}.get(s, s))
+
+
+func _role_name(id: String) -> String:
+	return String({"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星"}.get(id, id))
+
+
+func _props_text(props: Dictionary) -> String:
+	var key_names := {"atk": "攻击", "attack": "攻击", "def": "防御", "defense": "防御", "hp": "气血", "health": "气血", "spd": "速度", "speed": "速度", "crit": "暴击", "rarity": "品质"}
+	var parts: Array[String] = []
+	for k in props:
+		var ks := String(k)
+		var v: Variant = props[k]
+		parts.append("%s %s" % [String(key_names.get(ks, ks)), str(v)])
+	return " · ".join(parts)
+
+
 func _build_market_tab() -> void:
 	var header := _card("%s · 金币: %d" % [String(_summary.get("region_label", "昭元集市")), int(_summary.get("gold", 0))])
-	_add_line(header, "阶段: %s · 上架费 %d%% · 成交税 %d%% · 待领 %d · 异常预警 %d" % [
-		String(_summary.get("stage", "M3")),
+	var alerts := int(_summary.get("open_alerts", 0))
+	var alert_note := " · 异常提示 %d" % alerts if alerts > 0 else ""
+	_add_line(header, "集市税率：上架费 %d%% · 成交税 %d%% · 待领 %d%s" % [
 		int(_summary.get("listing_fee_bps", 100)) / 100,
 		int(_summary.get("tax_bps", 400)) / 100,
 		int(_summary.get("pending_payouts", 0)),
-		int(_summary.get("open_alerts", 0)),
+		alert_note,
 	], G.PARCHMENT)
 	var ev := String(_summary.get("region_event", ""))
 	if not ev.is_empty():
@@ -128,9 +171,11 @@ func _build_market_tab() -> void:
 			var tpl := String(g.get("template_id", ""))
 			var buy_p := int(g.get("npc_buy_price", 0))
 			var sell_p := int(g.get("npc_sell_price", 0))
-			_add_line(npc_card, "%s | NPC买 %dg / 收 %dg | 挂单量 %d | 近成交 %d~%d" % [
-				String(g.get("name", tpl)), buy_p, sell_p, int(g.get("open_qty", 0)),
-				int(g.get("recent_min", 0)), int(g.get("recent_max", 0)),
+			var rmin := int(g.get("recent_min", 0))
+			var rmax := int(g.get("recent_max", 0))
+			var recent_str := "暂无成交" if (rmin == 0 and rmax == 0) else ("%d~%dg" % [rmin, rmax])
+			_add_line(npc_card, "%s · 行商价 买 %dg / 收 %dg · 挂单 %d · 近成交 %s" % [
+				String(g.get("name", tpl)), buy_p, sell_p, int(g.get("open_qty", 0)), recent_str,
 			], G.PARCHMENT)
 			var row := HBoxContainer.new()
 			row.add_theme_constant_override("separation", 6)
@@ -152,13 +197,13 @@ func _build_market_tab() -> void:
 		var unit_p := int(o.get("unit_price", 0))
 		var rem := int(o.get("remaining_qty", 0))
 		var mine := bool(o.get("mine", false))
-		var line := "%s x%d | 单价 %dg | 卖家: %s [%s]" % [
+		var line := "%s x%d · 单价 %dg · 卖家: %s [%s]" % [
 			String(o.get("name", "")), rem, unit_p, String(o.get("seller_name", "")),
-			"我的" if mine else String(o.get("category", "")),
+			"我的" if mine else _cat_name(String(o.get("category", ""))),
 		]
 		var props: Variant = o.get("item_properties", {})
 		if props is Dictionary and not (props as Dictionary).is_empty():
-			line += " 词条:" + JSON.stringify(props)
+			line += " · " + _props_text(props as Dictionary)
 		_add_line(board, line, G.GOLD_BRIGHT if mine else G.PARCHMENT)
 		var btns := HBoxContainer.new()
 		btns.add_theme_constant_override("separation", 6)
@@ -189,8 +234,8 @@ func _build_sell_tab() -> void:
 		var uid := String(it.get("item_uid", ""))
 		var qty := int(it.get("quantity", 0))
 		var base_p := maxi(1, int(it.get("base_price", 15)))
-		_add_line(card, "%s x%d | 参考价 %dg | %s" % [
-			String(it.get("name", "")), qty, base_p, String(it.get("market_category", "")),
+		_add_line(card, "%s x%d · 参考价 %dg · %s" % [
+			String(it.get("name", "")), qty, base_p, _cat_name(String(it.get("market_category", ""))),
 		], G.PARCHMENT)
 		var btns := HBoxContainer.new()
 		btns.add_theme_constant_override("separation", 6)
@@ -217,12 +262,12 @@ func _build_payouts_tab() -> void:
 		var st := String(p.get("status", ""))
 		var gold := int(p.get("gold_amount", 0))
 		var qty := int(p.get("quantity", 0))
-		var desc := "%s | " % String(p.get("kind", ""))
+		var desc := "%s · " % _payout_kind_name(String(p.get("kind", "")))
 		if gold > 0:
 			desc += "金币 +%dg " % gold
 		if qty > 0:
 			desc += "%s x%d " % [String(p.get("name", "")), qty]
-		desc += "[%s]" % st
+		desc += "[%s]" % _payout_status_name(st)
 		_add_line(card, desc, G.GOLD_BRIGHT if st == "pending" else G.PARCHMENT)
 		if st == "pending":
 			_btn(card, "领取附件", func() -> void:
@@ -258,8 +303,13 @@ func _build_trade_tab() -> void:
 		card.add_child(btns)
 		_btn(btns, "放 10g", func() -> void:
 			action_requested.emit("trade_offer", {"trade_id": tid, "gold": 10}))
-		_btn(btns, "确认交换", func() -> void:
+		var confirm_btn := _btn(btns, "确认交换", func() -> void:
 			action_requested.emit("trade_confirm", {"trade_id": tid, "revision": rev}))
+		confirm_btn.set_meta("primary_action", true)
+		var confirm_lbl := confirm_btn.get_child(0) as Label
+		if confirm_lbl != null:
+			confirm_lbl.add_theme_color_override("font_color", G.GOLD_BRIGHT)
+		confirm_btn.queue_redraw()
 		_btn(btns, "取消交易", func() -> void:
 			action_requested.emit("trade_cancel", {"trade_id": tid}))
 		return
@@ -275,7 +325,7 @@ func _build_trade_tab() -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 6)
 		start_card.add_child(row)
-		var lbl: Label = G.gold_label("%s (%s Lv.%d)" % [String(f.get("nickname", "")), String(f.get("role_id", "")), int(f.get("level", 1))], G.FS_SM, false)
+		var lbl: Label = G.gold_label("%s（%s Lv.%d）" % [String(f.get("nickname", "")), _role_name(String(f.get("role_id", ""))), int(f.get("level", 1))], G.FS_SM, false)
 		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(lbl)
 		_btn(row, "发起交换", func() -> void:

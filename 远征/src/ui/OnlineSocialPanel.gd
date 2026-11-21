@@ -6,10 +6,12 @@ signal action_requested(kind: String, payload: Dictionary)
 
 var _status: Label
 var _tab := "party"
+var _tab_btns: Dictionary = {}
 var _social: Dictionary = {}
 var _messages: Array = []
 var _entities: Array = []
 var _list: VBoxContainer
+var _chat_bar: HBoxContainer
 var _chat_channel := "room"
 var _chat_input: LineEdit
 var _busy := false
@@ -17,7 +19,7 @@ var _busy := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	G.veil(self, 0.94, true)
+	G.veil(self, 0.96, true)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]:
@@ -36,7 +38,7 @@ func _ready() -> void:
 	col.add_child(tabs)
 	for entry in [["party", "队伍"], ["friends", "好友"], ["chat", "聊天"], ["blocks", "屏蔽"]]:
 		var key := String(entry[0])
-		_btn(tabs, String(entry[1]), func() -> void:
+		_tab_btns[key] = _btn(tabs, String(entry[1]), func() -> void:
 			_tab = key
 			_rebuild())
 
@@ -49,16 +51,18 @@ func _ready() -> void:
 	_list.add_theme_constant_override("separation", 10)
 	scroll.add_child(_list)
 
-	var chat_bar := HBoxContainer.new()
-	chat_bar.add_theme_constant_override("separation", 8)
-	col.add_child(chat_bar)
+	_chat_bar = HBoxContainer.new()
+	_chat_bar.add_theme_constant_override("separation", 8)
+	_chat_bar.visible = (_tab == "chat")
+	col.add_child(_chat_bar)
 	_chat_input = LineEdit.new()
 	_chat_input.placeholder_text = "输入消息……"
 	_chat_input.max_length = 120
 	_chat_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_chat_input.custom_minimum_size.y = 44
-	chat_bar.add_child(_chat_input)
-	var send_btn := _btn(chat_bar, "发送", func() -> void:
+	_style_line_edit(_chat_input)
+	_chat_bar.add_child(_chat_input)
+	var send_btn := _btn(_chat_bar, "发送", func() -> void:
 		if _busy or _chat_input.text.strip_edges().is_empty():
 			return
 		var text := _chat_input.text.strip_edges()
@@ -66,12 +70,50 @@ func _ready() -> void:
 		action_requested.emit("chat_send", {"channel_kind": _chat_channel, "content": text}))
 	send_btn.size_flags_horizontal = Control.SIZE_SHRINK_END
 	send_btn.custom_minimum_size = Vector2(104, 44)
+	send_btn.set_meta("primary_action", true)
+	send_btn.queue_redraw()
 
 	var footer := HBoxContainer.new()
 	footer.add_theme_constant_override("separation", 8)
 	col.add_child(footer)
 	_btn(footer, "刷新", func() -> void: action_requested.emit("refresh", {}))
 	_btn(footer, "关闭社交", func() -> void: closed.emit())
+	_refresh_tabs()
+
+
+func _style_line_edit(field: LineEdit) -> void:
+	field.add_theme_font_override("font", G.font_reg)
+	field.add_theme_font_size_override("font_size", G.FS_SM)
+	field.add_theme_color_override("font_color", G.PARCHMENT)
+	field.add_theme_color_override("font_placeholder_color", Color("9c8d73"))
+	field.add_theme_color_override("caret_color", G.GOLD_BRIGHT)
+	var sb_n := StyleBoxFlat.new()
+	sb_n.bg_color = Color("1b1613", 0.96)
+	sb_n.border_color = Color("b8924d", 0.85)
+	sb_n.set_border_width_all(1)
+	sb_n.set_corner_radius_all(4)
+	sb_n.content_margin_left = 10
+	sb_n.content_margin_top = 6
+	sb_n.content_margin_right = 10
+	sb_n.content_margin_bottom = 6
+	var sb_f := sb_n.duplicate() as StyleBoxFlat
+	sb_f.border_color = G.GOLD_BRIGHT
+	sb_f.set_border_width_all(2)
+	field.add_theme_stylebox_override("normal", sb_n)
+	field.add_theme_stylebox_override("focus", sb_f)
+
+
+func _refresh_tabs() -> void:
+	for k in _tab_btns:
+		var btn := _tab_btns[k] as Control
+		if not is_instance_valid(btn):
+			continue
+		var active := String(k) == _tab
+		btn.set_meta("primary_action", active)
+		var lbl := btn.get_child(0) as Label
+		if lbl != null:
+			lbl.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Color("d8c8a8"))
+		btn.queue_redraw()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -111,6 +153,9 @@ func present(social: Dictionary, msgs: Array, nearby: Array) -> void:
 
 
 func _rebuild() -> void:
+	_refresh_tabs()
+	if _chat_bar != null:
+		_chat_bar.visible = (_tab == "chat")
 	if _list == null:
 		return
 	for ch in _list.get_children():
@@ -122,7 +167,7 @@ func _rebuild() -> void:
 			if party is Dictionary:
 				var info := party as Dictionary
 				var leader_id := String(info.get("leader_id", ""))
-				_status.text = "当前队伍（%d/4） · 版本 v%d" % [(info.get("members", []) as Array).size(), int(info.get("version", 1))]
+				_status.text = "当前队伍（%d/4）" % (info.get("members", []) as Array).size()
 				for m in info.get("members", []):
 					if not m is Dictionary:
 						continue
@@ -221,16 +266,24 @@ func _rebuild() -> void:
 			var kind_bar := HBoxContainer.new()
 			kind_bar.add_theme_constant_override("separation", 6)
 			_list.add_child(kind_bar)
+			var ch_names := {"room": "频道", "nearby": "附近", "party": "队伍"}
 			for ch_k in [["room", "频道"], ["nearby", "附近"], ["party", "队伍"]]:
 				var ck := String(ch_k[0])
-				_btn(kind_bar, ("[" + String(ch_k[1]) + "]") if _chat_channel == ck else String(ch_k[1]), func() -> void:
+				var ch_btn := _btn(kind_bar, String(ch_k[1]), func() -> void:
 					_chat_channel = ck
 					_rebuild())
-			_status.text = "当前聊天频道：%s · 共 %d 条可见消息" % [_chat_channel, _messages.size()]
+				var is_cur := _chat_channel == ck
+				ch_btn.set_meta("primary_action", is_cur)
+				var clbl := ch_btn.get_child(0) as Label
+				if clbl != null:
+					clbl.add_theme_color_override("font_color", G.GOLD_BRIGHT if is_cur else Color("d8c8a8"))
+				ch_btn.queue_redraw()
+			_status.text = "当前聊天频道：%s · 共 %d 条可见消息" % [String(ch_names.get(_chat_channel, _chat_channel)), _messages.size()]
 			for msg in _messages:
 				if msg is Dictionary:
 					var m := msg as Dictionary
-					var l := G.gold_label("[%s] %s：%s" % [String(m.get("channel_kind", "")), String(m.get("sender_nickname", "旅人")), String(m.get("content", ""))], G.FS_SM, false)
+					var mk := String(m.get("channel_kind", ""))
+					var l := G.gold_label("[%s] %s：%s" % [String(ch_names.get(mk, mk)), String(m.get("sender_nickname", "旅人")), String(m.get("content", ""))], G.FS_SM, false)
 					l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 					_list.add_child(l)
 		"blocks":

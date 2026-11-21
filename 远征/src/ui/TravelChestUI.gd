@@ -176,7 +176,11 @@ class ChestButton extends Button:
 		caption.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		add_child(caption)
-		subtitle = UI.label("","body" if family=="hero" else "caption",UI.AGED)
+		var sub_col := Color("f8e4b8") if family in ["primary","hero"] else UI.AGED
+		subtitle = UI.label("","body" if family=="hero" else "caption",sub_col)
+		if family in ["primary","hero"]:
+			subtitle.add_theme_color_override("font_outline_color", Color("1b0a07", 0.96))
+			subtitle.add_theme_constant_override("outline_size", 2)
 		subtitle.name = "Subtitle"
 		subtitle.clip_text = true
 		subtitle.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -238,13 +242,16 @@ class ChestButton extends Button:
 			caption.position = Vector2(0,size.y-24+offset)
 			caption.size = Vector2(size.x,22)
 		elif not subtitle.text.is_empty():
-			caption.position=Vector2(0,offset)
-			caption.size=Vector2(size.x,32)
-			subtitle.position=Vector2(8,32+offset)
-			subtitle.size=Vector2(size.x-16,22)
+			var sub_h := 20.0
+			var cap_h := maxf(24.0, size.y - sub_h - 10.0)
+			caption.position=Vector2(6, 2.0 + offset)
+			caption.size=Vector2(size.x - 12.0, cap_h)
+			subtitle.position=Vector2(8, size.y - sub_h - 6.0 + offset)
+			subtitle.size=Vector2(size.x - 16.0, sub_h)
 		else:
 			caption.position = Vector2(caption_inset,offset)
-			caption.size = Vector2(size.x-caption_inset,size.y)
+			var bottom_pad := 10.0 if caption.vertical_alignment == VERTICAL_ALIGNMENT_BOTTOM else 0.0
+			caption.size = Vector2(size.x-caption_inset,maxf(18.0,size.y-bottom_pad))
 	func _draw() -> void:
 		_layout()
 		if _state_material != null: _state_material.set_shader_parameter("gray",1.0 if disabled else 0.0)

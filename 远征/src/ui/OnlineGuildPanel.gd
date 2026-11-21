@@ -6,6 +6,7 @@ signal action_requested(kind: String, payload: Dictionary)
 
 var _status: Label
 var _tab := "overview"
+var _tab_btns: Dictionary = {}
 var _state: Dictionary = {}
 var _pack_items: Array = []
 var _friends: Array = []
@@ -17,7 +18,7 @@ var _busy := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	G.veil(self, 0.94, true)
+	G.veil(self, 0.96, true)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]:
@@ -36,7 +37,7 @@ func _ready() -> void:
 	col.add_child(tabs)
 	for entry in [["overview", "总览"], ["members", "成员"], ["warehouse", "仓库日志"], ["build", "据点招募"]]:
 		var key := String(entry[0])
-		_btn(tabs, String(entry[1]), func() -> void:
+		_tab_btns[key] = _btn(tabs, String(entry[1]), func() -> void:
 			_tab = key
 			_rebuild())
 
@@ -54,6 +55,43 @@ func _ready() -> void:
 	col.add_child(footer)
 	_btn(footer, "刷新帮派", func() -> void: action_requested.emit("refresh", {}))
 	_btn(footer, "关闭帮派", func() -> void: closed.emit())
+	_refresh_tabs()
+
+
+func _refresh_tabs() -> void:
+	for k in _tab_btns:
+		var btn := _tab_btns[k] as Control
+		if not is_instance_valid(btn):
+			continue
+		var active := String(k) == _tab
+		btn.set_meta("primary_action", active)
+		var lbl := btn.get_child(0) as Label
+		if lbl != null:
+			lbl.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Color("d8c8a8"))
+		btn.queue_redraw()
+
+
+func _style_line_edit(field: LineEdit) -> void:
+	field.custom_minimum_size.y = 42
+	field.add_theme_font_override("font", G.font_reg)
+	field.add_theme_font_size_override("font_size", G.FS_SM)
+	field.add_theme_color_override("font_color", G.PARCHMENT)
+	field.add_theme_color_override("font_placeholder_color", Color("9c8d73"))
+	field.add_theme_color_override("caret_color", G.GOLD_BRIGHT)
+	var sb_n := StyleBoxFlat.new()
+	sb_n.bg_color = Color("1b1613", 0.96)
+	sb_n.border_color = Color("b8924d", 0.85)
+	sb_n.set_border_width_all(1)
+	sb_n.set_corner_radius_all(4)
+	sb_n.content_margin_left = 10
+	sb_n.content_margin_top = 6
+	sb_n.content_margin_right = 10
+	sb_n.content_margin_bottom = 6
+	var sb_f := sb_n.duplicate() as StyleBoxFlat
+	sb_f.border_color = G.GOLD_BRIGHT
+	sb_f.set_border_width_all(2)
+	field.add_theme_stylebox_override("normal", sb_n)
+	field.add_theme_stylebox_override("focus", sb_f)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -85,6 +123,7 @@ func apply_state(state: Dictionary, pack_items: Array, friends: Array, self_char
 
 
 func _rebuild() -> void:
+	_refresh_tabs()
 	if _list == null:
 		return
 	for child in _list.get_children():
@@ -105,12 +144,44 @@ func _rebuild() -> void:
 			_build_stronghold(g)
 
 
+func _role_name(id: String) -> String:
+	return String({"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星"}.get(id, id))
+
+
+func _rank_name(rk: String) -> String:
+	return String({"leader": "会长", "officer": "执事", "member": "成员"}.get(rk, rk))
+
+
+func _decor_name(d: String) -> String:
+	return String({"oak_banner": "橡木战旗", "gold_banner": "金穗战旗", "stele_crest": "界碑徽石"}.get(d, d))
+
+
+func _audit_action_name(act: String) -> String:
+	return String({
+		"create": "创立帮派",
+		"join": "加入帮派",
+		"leave": "退出帮派",
+		"permission": "调整权限",
+		"decorate": "更新据点装饰",
+		"warehouse_deposit": "存入仓库",
+		"warehouse_withdraw": "取出仓库",
+		"weekly_task": "提交周任务",
+		"transfer_leader": "移交会长",
+		"claim_leadership": "接任会长",
+	}.get(act, act))
+
+
+func _mat_name(tpl: String) -> String:
+	return String({"mat_guild_timber": "帮派筑木", "mat_stele_stone": "界碑石料"}.get(tpl, tpl))
+
+
 func _build_unguilded() -> void:
 	var card := _card("创立或加入帮派（不加帮派仍可正常成长）")
 	_add_line(card, "创帮要求：完成第 II 幕（或 Lv.3+）并消耗 %d 金币。初始上限 30 人，协作周任务可扩至 60 人；不提供压倒单人战力的攻防数值加成。" % int(_state.get("create_cost_gold", 50)), G.PARCHMENT)
 	_name_input = LineEdit.new()
 	_name_input.placeholder_text = "输入帮派名称（2-16字）"
 	_name_input.text = "星火远征帮"
+	_style_line_edit(_name_input)
 	card.add_child(_name_input)
 	_btn(card, "创立帮派", func() -> void:
 		action_requested.emit("create", {"name": _name_input.text.strip_edges(), "motto": "同行远征，共守界碑"}))
@@ -135,8 +206,8 @@ func _build_unguilded() -> void:
 func _build_overview(g: Dictionary) -> void:
 	var card := _card("%s · 成员 %d / %d" % [String(g.get("name", "")), int(g.get("member_count", 0)), int(g.get("member_cap", 30))])
 	_add_line(card, "公告：%s" % String(g.get("announcement", "")), G.GOLD_BRIGHT)
-	_add_line(card, "共同据点 Lv.%d | 旗帜：%s | 周协作分：%d" % [
-		int(g.get("decor_level", 1)), String(g.get("decor_banner", "oak_banner")), int(g.get("weekly_coop_points", 0)),
+	_add_line(card, "共同据点 Lv.%d · 战旗：%s · 周协作分：%d" % [
+		int(g.get("decor_level", 1)), _decor_name(String(g.get("decor_banner", "oak_banner"))), int(g.get("weekly_coop_points", 0)),
 	], G.PARCHMENT)
 	if bool(g.get("can_claim_inactive", false)):
 		_btn(card, "原会长久未上线 · 接任会长", func() -> void: action_requested.emit("claim_inactive", {}))
@@ -151,9 +222,9 @@ func _build_members(g: Dictionary) -> void:
 			continue
 		var m := mv as Dictionary
 		var cid := String(m.get("character_id", ""))
-		var rk := String(m.get("rank", "member"))
-		_add_line(card, "%s (%s Lv.%d) [%s] 招:%s 仓:%s 宣:%s | 贡献:%d" % [
-			String(m.get("nickname", "")), String(m.get("role_id", "")), int(m.get("level", 1)), rk,
+		var rk := _rank_name(String(m.get("rank", "member")))
+		_add_line(card, "%s（%s Lv.%d）[%s] 招:%s 仓:%s 宣:%s · 贡献 %d" % [
+			String(m.get("nickname", "")), _role_name(String(m.get("role_id", ""))), int(m.get("level", 1)), rk,
 			"✓" if bool(m.get("can_invite", false)) else "×",
 			"✓" if bool(m.get("can_manage_warehouse", false)) else "×",
 			"✓" if bool(m.get("can_edit_announcement", false)) else "×",
@@ -209,9 +280,12 @@ func _build_warehouse(g: Dictionary) -> void:
 		if not lv is Dictionary:
 			continue
 		var l := lv as Dictionary
-		_add_line(log_card, "[#%d] %s -> %s %s %s" % [
-			int(l.get("id", 0)), String(l.get("actor", "")), String(l.get("action", "")),
-			String(l.get("template_id", "")), ("x%d" % int(l.get("quantity", 0))) if int(l.get("quantity", 0)) > 0 else "",
+		var act_label := _audit_action_name(String(l.get("action", "")))
+		var mat := _mat_name(String(l.get("template_id", "")))
+		var qty_str := (" ×%d" % int(l.get("quantity", 0))) if int(l.get("quantity", 0)) > 0 else ""
+		var detail := (" " + mat + qty_str) if not mat.is_empty() else qty_str
+		_add_line(log_card, "[#%d] %s · %s%s" % [
+			int(l.get("id", 0)), String(l.get("actor", "")), act_label, detail,
 		], G.PARCHMENT)
 
 

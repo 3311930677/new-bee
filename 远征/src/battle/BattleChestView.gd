@@ -33,6 +33,7 @@ var _energy_graph:Control
 var _page_energy_graph:Control
 var _enemy_key:=""
 var _target_hint:Label
+var _mode_bg:ColorRect
 var _auto_focus_uid:=-1
 var _portraits:Dictionary={}
 var _badges:Dictionary={}
@@ -60,8 +61,12 @@ func _ready() -> void:
 	_enemy_scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
 	add_child(_enemy_scroll)
 	_enemy_strip=HBoxContainer.new();_enemy_strip.add_theme_constant_override("separation",4);_enemy_scroll.add_child(_enemy_strip)
+	_mode_bg=ColorRect.new()
+	_mode_bg.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	add_child(_mode_bg)
 	_target_hint=UI.label("敌方目标 · 横向滑动选择","tag",UI.AGED)
 	_target_hint.add_theme_font_size_override("font_size",G.FS_DENSE)
+	_target_hint.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	add_child(_target_hint)
 	_role_avatar_frame=Control.new()
 	_role_avatar_frame.mouse_filter=Control.MOUSE_FILTER_IGNORE
@@ -91,10 +96,13 @@ func _ready() -> void:
 	_target_subtitle=_buttons.target.subtitle
 	_add("flee","撤退",retreat)
 	_add("speed","×1",func():host.speed=BattleScene.next_speed(host.cur_speed());refresh())
-	_add("auto","自动",func():host.sim.auto_mode=not host.sim.auto_mode;refresh())
+	_add("auto","切自动",func():
+		host.sim.auto_mode=not host.sim.auto_mode
+		refresh()
+		host._show_tip("已切换为自动战斗 · 自动施放技能" if host.sim.auto_mode else "已切换为手动操作 · 点击攻击或技能主动出击"))
 	host._auto_btn=_buttons.auto
 	host._speed_btn=_buttons.speed
-	_buttons.attack.tooltip_text="指定普攻集火目标；普攻持续进行，自动模式同时托管技能"
+	_buttons.attack.tooltip_text="普攻就绪时点击出一刀，未就绪需等待亮起；自动模式下由托管接管"
 	_buttons.target.tooltip_text="循环选择可攻击的敌方目标，或直接点击敌方单位/目标卡"
 	var title_text: String = {"normal":"遭遇战","elite":"精英战","boss":"首领战"}.get(String(host._cfg.get("enemy",{}).get("node_type","normal")),"遭遇战")
 	var title := BattleTitleBanner.new(title_text)
@@ -143,7 +151,10 @@ func _add(id:String,words:String,callback:Callable,main:bool=false) -> void:
 	b.text=words
 	b.caption.text=words
 	b.set_meta("command",id)
-	b.pressed.connect(callback)
+	b.pressed.connect(func():
+		if id in ["skill","item","partner","target"]:
+			host.flash_order(String({"skill":"技能","item":"道具","partner":"换伙伴","target":"换目标"}[id]))
+		callback.call())
 	if id in ["flee","speed","auto"]:add_child(b)
 	else:commands.add_child(b)
 	var icon:=Page.picture(Flow.texture({"attack":"attack_icon","skill":"skill","item":"potion","partner":"partner","target":"attack_icon","flee":"retreat","speed":"speed","auto":"auto_off"}[id]),Vector2(40,40) if main else Vector2(28,28))
@@ -165,7 +176,8 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 		host._field.scale=Vector2.ONE*field_scale
 		host._field.position.x=x+(_safe.size.x-480*field_scale)*.5
 	Page.place(tray,Vector2(x,bottom-264),Vector2(_safe.size.x,264))
-	Page.place(_target_hint,Vector2(x+16,bottom-260),Vector2(_safe.size.x-32,22))
+	Page.place(_mode_bg,Vector2(x+20,bottom-258),Vector2(_safe.size.x-40,22))
+	Page.place(_target_hint,Vector2(x+26,bottom-258),Vector2(_safe.size.x-52,22))
 	Page.place(_enemy_scroll,Vector2(x+12,bottom-234),Vector2(_safe.size.x-24,60))
 	Page.place(_role_avatar_frame,Vector2(x+12,bottom-158),Vector2(32,32))
 	var gauge_width:=(_safe.size.x-76)
@@ -191,7 +203,7 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 		var b:Button=_buttons[id]
 		var icon:TextureRect=b.get_node("CommandIcon")
 		icon.position=Vector2((b.size.x-icon.size.x)*.5,16 if id=="attack" else 4)
-		if b.has_node("CommandGlyph"):b.get_node("CommandGlyph").position=Vector2(4,2) if id=="target" else Vector2((b.size.x-40)*.5,16)
+		if b.has_node("CommandGlyph"):b.get_node("CommandGlyph").position=Vector2(4,2) if id=="target" else Vector2((b.size.x-40)*.5,8)
 	Page.place(_page,Vector2(x,bottom-416),Vector2(_safe.size.x,416))
 	Page.place(_page_back,Vector2(8,12),Vector2(44,44))
 	Page.place(_page_title,Vector2(64,12),Vector2(minf(200,_safe.size.x-220),32))
@@ -216,22 +228,72 @@ func refresh() -> void:
 		_energy_graph.markers=role.skills.map(func(s):return int(s.def.get("cost",0)))
 	var partners:Array=sim.alive_units("ally")
 	_pet.text=""
+	var has_pet := false
 	for unit in partners:
-		if unit.kind=="pet":_pet.text="%s %d/%d"%[unit.name.left(4),unit.hp,unit.get_max_hp()];_pet_graph.caption.text=unit.name.left(4);_pet_graph.update(unit.hp,unit.get_max_hp());break
+		if unit.kind=="pet":
+			has_pet = true
+			_pet.text="%s %d/%d"%[unit.name.left(4),unit.hp,unit.get_max_hp()]
+			_pet_graph.caption.text=unit.name.left(4)
+			_pet_graph.update(unit.hp,unit.get_max_hp())
+			break
+	if not has_pet:
+		_pet_graph.caption.text="伙伴"
+		_pet_graph.value.text="未出战"
+		_pet_graph.current=0
+		_pet_graph.maximum=1
+		_pet_graph.queue_redraw()
 	var target:Combatant=sim.unit_by_uid(sim.role_focus_target_uid)
 	var actor:Combatant=sim.unit_by_uid(_acting_uid) if Time.get_ticks_msec()<_acting_until else null
 	var actor_name:=String(host._cfg.get("player_name","旅人")) if actor!=null and actor.kind=="role" and host._classic_presentation() else actor.name if actor!=null else ""
-	_now.text=(actor_name.left(6)+"行动" if actor!=null else "连续战斗")+(" · 自动中" if sim.auto_mode else "")+" · 目标："+(target.name if target!=null and target.alive else "自动选敌")
+	var idle_label := "自动战斗中" if sim.auto_mode or not sim.manual_basic_attack else "主角待命 · 点攻击"
+	_now.text=(actor_name.left(6)+"行动" if actor!=null else idle_label)+(" · 自动" if sim.auto_mode else " · 手动")+" · 目标："+(target.name if target!=null and target.alive else "自动选敌")
 	_buttons.skill.caption.text="可放 %d"%usable
+	_buttons.skill.selected=usable>0 and not sim.auto_mode
+	_buttons.skill.queue_redraw()
 	_buttons.item.caption.text="道具 %d"%sim.potions_left
 	_buttons.partner.disabled=sim.pet_bench_id.is_empty() or sim.pet_swap_used
 	_buttons.partner.tooltip_text="本场已换过" if sim.pet_swap_used else "没有替补伙伴" if sim.pet_bench_id.is_empty() else "换上替补伙伴 · 每场一次"
 	_buttons.speed.caption.text="×%d"%int(host.cur_speed())
-	_buttons.auto.caption.text="自动中" if sim.auto_mode else "自动"
-	_buttons.auto.caption.add_theme_color_override("font_color",KitV4.GOOD if sim.auto_mode else UI.PAPER)
+	# 按钮写「点下去会发生什么」，不写当前状态：旧文案显示"手动"，玩家误以为点它会进入手动。
+	# 当前模式由下方状态行的「· 自动 / · 手动」与图标承担。
+	_buttons.auto.caption.text="切手动" if sim.auto_mode else "切自动"
+	_buttons.auto.selected=sim.auto_mode
+	_buttons.auto.caption.add_theme_color_override("font_color",KitV4.GOOD if sim.auto_mode else UI.GOLD)
 	_buttons.auto.get_node("CommandIcon").texture=Flow.texture("auto_on" if sim.auto_mode else "auto_off")
+	_buttons.auto.tooltip_text="当前：自动战斗（点击改为手动操作）" if sim.auto_mode else "当前：手动操作（点击改为自动战斗）"
+	_buttons.auto.queue_redraw()
 	_enemy_cards(sim)
-	_buttons.attack.subtitle.text="集火 · "+target.name.left(5) if target!=null and target.alive else "自动选敌"
+	# 模式条：手动 = 指挥台（金 / 等待指令 / 战术暂停提示），自动 = 托管台（青 / AI 代打）。
+	# 两者配色、文案、指令栏亮度都不同，切模式时第一眼就能看出差别。
+	var manual := not sim.auto_mode
+	var paused: bool = manual and host._command_page != "root"
+	# 「上令」常驻：玩家能看到自己上一条指令，指挥感不依赖一闪而过的回执。
+	var last_order := String(host._order_text)
+	var order_tag := "" if last_order.is_empty() else " · 上令 "+last_order
+	var bar_text := ""
+	if not manual:
+		bar_text = "自动托管 · AI 代打中 · 点右上「切手动」接管"
+	elif paused:
+		bar_text = "手动指挥 · 战斗暂停 · 选好指令后继续"+order_tag
+	elif sim.role_attack_ready():
+		bar_text = "手动指挥 · 待命 · 点「攻击」下达指令"+order_tag
+	else:
+		bar_text = "手动指挥 · 蓄势中 · 等攻击亮起"+order_tag
+	_target_hint.text=bar_text
+	_target_hint.add_theme_color_override("font_color",Color("f2c76a") if manual else Color("9fe1cb"))
+	_mode_bg.color=Color("33260f",0.94) if manual else Color("0e2b2e",0.94)
+	commands.modulate.a=1.0 if manual else 0.55
+	_target_hint.tooltip_text="敌方目标 %d · 横向滑动选择"%sim.alive_units("enemy").size()
+	# 普攻就绪时把「攻击」点亮并写明状态，玩家能一眼看出手动模式在等自己点、而不是在自动打。
+	var atk_ready := sim.role_attack_ready()
+	_buttons.attack.selected=atk_ready and not sim.auto_mode
+	_buttons.attack.caption.add_theme_color_override("font_color",UI.GOLD if (atk_ready or sim.auto_mode) else Color("8a8276"))
+	# 「集火」是既有回归断言与玩家认知的关键词，改状态文案时不能丢。
+	var atk_state := ("可出击" if atk_ready else "蓄势中")+" · 集火"
+	if sim.auto_mode:
+		_buttons.attack.subtitle.text="集火 · "+target.name.left(4) if target!=null and target.alive else "自动选敌"
+	else:
+		_buttons.attack.subtitle.text=atk_state+" · "+target.name.left(4) if target!=null and target.alive else atk_state
 	var next:Combatant=_next_target(role)
 	_buttons.target.caption.text="换目标"
 	_target_subtitle.text="下个 · "+_enemy_name(next) if next!=null else "没有目标"
@@ -288,7 +350,8 @@ func show_page(id:String) -> void:
 	host._page_energy_l.visible=false
 	commands.visible=false
 	Page.clear(_page_body)
-	_page_title.text="技能" if id=="skills" else "道具与伙伴"
+	# 手动模式打开指令页会战术暂停；模式条此时被弹页盖住，把状态写进页标题。
+	_page_title.text=("技能" if id=="skills" else "道具")+("" if host.sim.auto_mode else " · 战斗暂停")
 	var role:Combatant=host.sim.role_unit()
 	if id=="skills" and role!=null:
 		for skill in role.skills:
@@ -361,7 +424,8 @@ func _enemy_cards(sim:BattleSim) -> void:
 			var chip:=Fix.EnemyChip.new(_portrait(units[i].uid));_enemy_strip.add_child(chip)
 			chip.mouse_filter=Control.MOUSE_FILTER_PASS
 			chip.selected.connect(func(uid:int):host._select_enemy_target(uid,false))
-	_target_hint.text="敌方目标 %d · 横向滑动选择"%units.size()
+	# 模式条文案由 refresh() 统一持有；这里只更新 tooltip，避免把模式覆盖掉。
+	_target_hint.tooltip_text="敌方目标 %d · 横向滑动选择"%units.size()
 	for i in _enemy_strip.get_child_count():
 		var chip=_enemy_strip.get_child(i);chip.unit=units[i];chip.number=i+1;chip.display_name=_enemy_name(units[i])
 		chip.custom_minimum_size=Vector2(148,60)
@@ -420,11 +484,11 @@ class Attack extends UI.ChestButton:
 	const Flow=preload("res://src/ui/FlowChestUI.gd")
 	func _init() -> void:super("攻击","primary")
 	func _layout() -> void:
-		caption.position=Vector2(0,size.y-55)
-		caption.size=Vector2(size.x,32)
+		caption.position=Vector2(4,size.y-56)
+		caption.size=Vector2(size.x-8,30)
 		caption.add_theme_font_size_override("font_size",G.FS_LG)
-		subtitle.position=Vector2(5,size.y-24)
-		subtitle.size=Vector2(size.x-10,22)
+		subtitle.position=Vector2(6,size.y-27)
+		subtitle.size=Vector2(size.x-12,20)
 		subtitle.add_theme_font_size_override("font_size",G.FS_XS)
 	func _draw() -> void:
 		var k_tex:Texture2D=KitV4.commercial_tex("btn_primary_pressed" if is_pressed() else ("btn_primary_hover" if is_hovered() else "btn_primary_normal"))
@@ -478,9 +542,9 @@ class CommandGlyph extends Control:
 			draw_colored_polygon(PackedVector2Array([Vector2(25,12),Vector2(25,21),Vector2(17,16)]),UI.COPPER)
 			draw_colored_polygon(PackedVector2Array([Vector2(3,16),Vector2(3,7),Vector2(11,12)]),UI.COPPER)
 		else:
-			draw_arc(Vector2(18,20),16,-PI*.8,PI*.1,16,UI.GOLD,3)
+			draw_arc(Vector2(20,22),17,-PI*.75,PI*.05,16,Color(UI.GOLD, 0.55),2.5,true)
 			var blade:=PackedVector2Array([Vector2(7,29),Vector2(25,7),Vector2(34,3),Vector2(31,13),Vector2(12,34)])
-			draw_colored_polygon(blade,Color("d7e0e5"));draw_polyline(blade+PackedVector2Array([blade[0]]),UI.NIGHT,2)
+			draw_colored_polygon(blade,Color("e4edf2"));draw_polyline(blade+PackedVector2Array([blade[0]]),UI.NIGHT,2)
 			draw_line(Vector2(5,27),Vector2(16,36),UI.COPPER,4);draw_line(Vector2(8,32),Vector2(3,38),UI.COPPER,4)
 class NumberBadge extends Node2D:
 	const UI=preload("res://src/ui/TravelChestUI.gd")

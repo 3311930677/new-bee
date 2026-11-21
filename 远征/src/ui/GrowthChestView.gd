@@ -205,7 +205,7 @@ func _talent() -> void:
 		var t_row := Page.GrowthRow.new("", selection)
 		t_tex = t_row.image.texture if t_row.image != null and t_row.image.texture != null else Page.texture("skill")
 	_art.texture = t_tex
-	_art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_name.text=String(selected.get("name","天赋修习"))
 	_status.text="剩余天赋点 %d / %d" % [G.talent_points_left(),G.talent_points_total()]
 	_details.text=String(selected.get("desc",""))+"\n每 5 级获得 1 点，可免费重置；需本系投入 %d 点" % maxi(0,int(selected.get("tier",1))-1)
@@ -356,7 +356,7 @@ class TalentPathStrip extends Control:
 		_nodes = nodes
 		_sel = sel
 		_on_pick = on_pick
-		custom_minimum_size = Vector2(0, 140)
+		custom_minimum_size = Vector2(0, 156)
 		size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	func _ready() -> void:
@@ -369,6 +369,7 @@ class TalentPathStrip extends Control:
 		var w := maxf(340.0, size.x)
 		var pad_x := 34.0
 		var step_x := (w - pad_x * 2.0) / 4.0
+		var empty_sb := StyleBoxEmpty.new()
 		for i in _nodes.size():
 			var nd: Dictionary = _nodes[i]
 			var nid := String(nd.get("id", ""))
@@ -378,7 +379,7 @@ class TalentPathStrip extends Control:
 			var can_add := G.talent_can_add(nid)
 			var row_idx := 0 if i < 5 else 1
 			var col_idx := i if i < 5 else (9 - i)
-			var c := Vector2(pad_x + float(col_idx) * step_x, 34.0 if row_idx == 0 else 102.0)
+			var c := Vector2(pad_x + float(col_idx) * step_x, 34.0 if row_idx == 0 else 108.0)
 			_centers.append(c)
 			var nsz := Vector2(54, 54) if tier == 10 else Vector2(46, 46)
 			var btn := Button.new()
@@ -386,7 +387,7 @@ class TalentPathStrip extends Control:
 			btn.size = nsz
 			btn.focus_mode = Control.FOCUS_NONE
 			for st in ["normal", "hover", "pressed", "focus", "disabled"]:
-				btn.add_theme_stylebox_override(st, StyleBoxEmpty.new())
+				btn.add_theme_stylebox_override(st, empty_sb)
 			var fkey := "talent_node_ult" if tier == 10 else ("talent_node_max" if cur >= mx else ("talent_node_avail" if (can_add or cur > 0) else "talent_node_locked"))
 			var ftex := KitV4.commercial_tex(fkey)
 			if ftex != null:
@@ -403,6 +404,7 @@ class TalentPathStrip extends Control:
 				itr.texture = itex
 				itr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 				itr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				itr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 				itr.position = Vector2(8, 8)
 				itr.size = nsz - Vector2(16, 16)
 				itr.modulate = Color.WHITE if (cur > 0 or can_add) else Color(0.5, 0.5, 0.5, 0.85)
@@ -411,8 +413,10 @@ class TalentPathStrip extends Control:
 			var lv_lbl := UI.label("%d/%d" % [cur, mx], "tag", KitV4.BRIGHT if cur >= mx else (KitV4.CREAM if cur > 0 else KitV4.MUTED))
 			lv_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			lv_lbl.add_theme_font_size_override("font_size", G.FS_DENSE)
-			lv_lbl.position = Vector2(-4, nsz.y - 12)
-			lv_lbl.size = Vector2(nsz.x + 8, 18)
+			lv_lbl.add_theme_color_override("font_outline_color", Color("090605", 0.96))
+			lv_lbl.add_theme_constant_override("outline_size", 3)
+			lv_lbl.position = Vector2(-4, nsz.y + 1)
+			lv_lbl.size = Vector2(nsz.x + 8, 16)
 			lv_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			btn.add_child(lv_lbl)
 			btn.pressed.connect(func(): _on_pick.call(nid))

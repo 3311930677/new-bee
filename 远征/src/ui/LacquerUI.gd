@@ -182,11 +182,18 @@ class Action extends Button:
 		_layout()
 	func _layout() -> void:
 		if art != null:
-			art.position = Vector2((size.x - icon_size) * 0.5, 2 if size.y <= 44 else size.y * 0.12)
-			art.size = Vector2(icon_size,icon_size)
-			if caption.text.is_empty(): art.position.y = (size.y-icon_size)*0.5
-			caption.position = Vector2(0, size.y - 18)
-			caption.size = Vector2(size.x,18)
+			if not disc and size.y <= 46 and not caption.text.is_empty():
+				var isz := minf(icon_size, 20.0)
+				art.position = Vector2((size.x - isz) * 0.5, 3)
+				art.size = Vector2(isz, isz)
+				caption.position = Vector2(0, size.y - 20)
+				caption.size = Vector2(size.x, 17)
+			else:
+				art.position = Vector2((size.x - icon_size) * 0.5, 2 if size.y <= 44 else size.y * 0.12)
+				art.size = Vector2(icon_size,icon_size)
+				if caption.text.is_empty(): art.position.y = (size.y-icon_size)*0.5
+				caption.position = Vector2(0, size.y - 18)
+				caption.size = Vector2(size.x,18)
 		elif glyph_label.text.is_empty():
 			caption.position = Vector2.ZERO
 			caption.size = size

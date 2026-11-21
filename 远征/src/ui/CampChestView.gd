@@ -320,11 +320,18 @@ func _continue_journey() -> void:
 
 class _AvatarButton extends Button:
 	const Chest = preload("res://src/ui/TravelChestUI.gd")
+	static var _mask_mat: ShaderMaterial = null
+	static var _empty_sb: StyleBoxEmpty = null
 	var picture: TextureRect
+	static func clear_static_caches() -> void:
+		_mask_mat = null
+		_empty_sb = null
 	func _ready() -> void:
 		tooltip_text = "更换头像"
 		focus_mode = Control.FOCUS_ALL
-		for state in ["normal","hover","pressed","focus","disabled"]: add_theme_stylebox_override(state,StyleBoxEmpty.new())
+		if _empty_sb == null:
+			_empty_sb = StyleBoxEmpty.new()
+		for state in ["normal","hover","pressed","focus","disabled"]: add_theme_stylebox_override(state,_empty_sb)
 		picture = TextureRect.new()
 		picture.texture = G.avatar_texture()
 		picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -332,11 +339,12 @@ class _AvatarButton extends Button:
 		picture.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		picture.position = Vector2(6,6)
 		picture.size = Vector2(44,44)
-		var mask := Shader.new()
-		mask.code = "shader_type canvas_item; varying vec4 tint; void vertex(){tint=COLOR;} void fragment(){vec4 c=texture(TEXTURE,UV)*tint; c.a*=1.0-smoothstep(0.49,0.5,length(UV-vec2(0.5))); COLOR=c;}"
-		var masked := ShaderMaterial.new()
-		masked.shader = mask
-		picture.material = masked
+		if _mask_mat == null:
+			var mask := Shader.new()
+			mask.code = "shader_type canvas_item; varying vec4 tint; void vertex(){tint=COLOR;} void fragment(){vec4 c=texture(TEXTURE,UV)*tint; c.a*=1.0-smoothstep(0.49,0.5,length(UV-vec2(0.5))); COLOR=c;}"
+			_mask_mat = ShaderMaterial.new()
+			_mask_mat.shader = mask
+		picture.material = _mask_mat
 		picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(picture)
 		for event in [mouse_entered,mouse_exited,focus_entered,focus_exited]: event.connect(queue_redraw)

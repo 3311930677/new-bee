@@ -6,7 +6,11 @@ static var _manifest:Dictionary={}
 static var _textures:Dictionary={}
 static var _frames:Dictionary={}
 static func active(id:String)->bool:
-	return String(TableCache.main_world_map(id).get("art_profile",""))=="reference_complete" and ResourceLoader.exists(ROOT+id+"_floor.png")
+	var cfg := TableCache.main_world_map(id)
+	if String(cfg.get("art_profile","")) != "reference_complete":
+		return false
+	var floor_root := String(cfg.get("reference_floor_root", ROOT))
+	return ResourceLoader.exists(floor_root + id + "_floor.png") or ResourceLoader.exists(ROOT + id + "_floor.png")
 static func manifest()->Dictionary:
 	if _manifest.is_empty():_manifest=JSON.parse_string(FileAccess.get_file_as_string(ROOT+"sprite_manifest.json"))
 	return _manifest
@@ -62,17 +66,21 @@ class Scenery extends Node2D:
 	var solid:=false
 	var canopy:=false
 	var opacity:=1.0
+	var _hero_ref:Node2D=null
 	func _ready()->void:
+		set_process(canopy)
 		if solid:
 			var body:=StaticBody2D.new();body.collision_layer=2;body.collision_mask=0
 			var shape:=CollisionShape2D.new();var circle:=CircleShape2D.new();circle.radius=14
 			shape.shape=circle;shape.position=Vector2(0,-6);body.add_child(shape);add_child(body)
 	func _process(delta:float)->void:
-		if not canopy:return
-		var hero:=get_tree().get_first_node_in_group("reference_hero") as Node2D
-		var behind:=hero!=null and Rect2(global_position-Vector2(display_size.x*.5,display_size.y),display_size).grow(-12).has_point(hero.global_position)
-		opacity=move_toward(opacity,.35 if behind else 1.0,delta*3)
-		queue_redraw()
+		if not is_instance_valid(_hero_ref):
+			_hero_ref=get_tree().get_first_node_in_group("reference_hero") as Node2D
+		var behind:=_hero_ref!=null and Rect2(global_position-Vector2(display_size.x*.5,display_size.y),display_size).grow(-12).has_point(_hero_ref.global_position)
+		var next:=move_toward(opacity,.35 if behind else 1.0,delta*3)
+		if not is_equal_approx(next,opacity):
+			opacity=next
+			queue_redraw()
 	func _draw()->void:
 		draw_set_transform(Vector2(0,2),0,Vector2(1,.25));draw_circle(Vector2.ZERO,minf(42,display_size.x*.24),Color("3e4b2f",.16));draw_set_transform(Vector2.ZERO)
 		draw_texture_rect(art,Rect2(Vector2(-display_size.x*.5,-display_size.y),display_size),false,Color(1,1,1,opacity))

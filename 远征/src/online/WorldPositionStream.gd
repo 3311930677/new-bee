@@ -4,6 +4,8 @@ const ENDPOINT := "/v1/rooms/positions"
 const BUFFER_LIMIT := 64 * 1024
 const IDLE_MS := 2500
 
+static var _uri_re: RegEx
+
 var _http: HTTPClient
 var _headers: PackedStringArray
 var _path := ""
@@ -14,7 +16,9 @@ var _last_data := 0
 
 func open(base: String, token: String, content_version: String, tls: TLSOptions) -> bool:
 	close()
-	var uri := RegEx.create_from_string("^(https?)://(\\[[0-9A-Fa-f:.]+\\]|[^:/?#@\\s]+)(?::([0-9]{1,5}))?(/[^?#@\\s]*)?$").search(base)
+	if _uri_re == null:
+		_uri_re = RegEx.create_from_string("^(https?)://(\\[[0-9A-Fa-f:.]+\\]|[^:/?#@\\s]+)(?::([0-9]{1,5}))?(/[^?#@\\s]*)?$")
+	var uri := _uri_re.search(base)
 	if uri == null or token.is_empty():
 		return false
 	var https := uri.get_string(1) == "https"
